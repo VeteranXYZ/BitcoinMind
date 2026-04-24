@@ -1,0 +1,158 @@
+/* ═══════════════════════════════════════════════════════
+   BitcoinMind Design System
+   Single source of truth for all design tokens.
+   No rules here — only custom properties.
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+
+  /* ── Colors ─────────────────────────────────────────── */
+  --bg:        oklch(0.09 0.022 62);
+  --bg-deep:   oklch(0.065 0.016 58);
+  --surf:      oklch(0.135 0.028 65);
+  --surf-2:    oklch(0.175 0.034 67);
+  --bdr:       oklch(0.235 0.032 67);
+  --bdr-2:     oklch(0.31 0.040 70);
+  --tx:        oklch(0.91 0.032 82);
+  --tx-2:      oklch(0.64 0.026 76);
+  --tx-3:      oklch(0.40 0.020 68);
+  --gold:      oklch(0.68 0.12 74);
+  --gold-dim:  oklch(0.68 0.12 74 / 0.13);
+  --gold-glow: oklch(0.68 0.12 74 / 0.25);
+  --gold-hi:   oklch(0.80 0.13 82);
+  --nav-glass: oklch(0.09 0.022 62 / 0.88);
+
+  /* Tag palette — bg / foreground pairs */
+  --tag-essential-bg:        oklch(0.68 0.12 74  / 0.16);
+  --tag-essential-fg:        oklch(0.80 0.12 80);
+  --tag-philosophy-bg:       oklch(0.68 0.12 280 / 0.16);
+  --tag-philosophy-fg:       oklch(0.78 0.10 288);
+  --tag-economics-bg:        oklch(0.68 0.12 232 / 0.16);
+  --tag-economics-fg:        oklch(0.78 0.10 238);
+  --tag-technical-bg:        oklch(0.68 0.12 162 / 0.16);
+  --tag-technical-fg:        oklch(0.78 0.10 168);
+  --tag-history-bg:          oklch(0.72 0.11 95  / 0.16);
+  --tag-history-fg:          oklch(0.80 0.10 98);
+  --tag-free-bg:             oklch(0.68 0.12 148 / 0.16);
+  --tag-free-fg:             oklch(0.78 0.10 152);
+  --tag-freemium-bg:         oklch(0.68 0.12 74  / 0.16);
+  --tag-freemium-fg:         oklch(0.80 0.12 80);
+  --tag-paid-bg:             oklch(0.68 0.11 28  / 0.16);
+  --tag-paid-fg:             oklch(0.78 0.09 32);
+  --tag-beginner-bg:         oklch(0.68 0.12 148 / 0.16);
+  --tag-beginner-fg:         oklch(0.78 0.10 152);
+  --tag-intermediate-bg:     oklch(0.72 0.11 95  / 0.16);
+  --tag-intermediate-fg:     oklch(0.80 0.10 98);
+  --tag-advanced-bg:         oklch(0.68 0.11 28  / 0.16);
+  --tag-advanced-fg:         oklch(0.78 0.09 32);
+
+  /* ── Typography ─────────────────────────────────────── */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-body:  'Lora', Georgia, serif;
+  --font-mono:  'DM Mono', 'Courier New', monospace;
+
+  /* Fluid / responsive sizes */
+  --fz-hero:  clamp(84px, 13vw, 168px);
+  --fz-ph:    clamp(48px, 8vw,  96px);
+  --fz-sec:   clamp(28px, 4vw,  44px);
+  --fz-step:  clamp(21px, 2.8vw,28px);
+  --fz-note:  clamp(24px, 4vw,  38px);
+  --fz-quote: clamp(16px, 2vw,  20px);
+
+  /* Fixed sizes */
+  --fz-2xs:  8.5px;
+  --fz-xs:   9px;
+  --fz-xs1:  10px;
+  --fz-xs2:  10.5px;
+  --fz-sm:   11px;
+  --fz-sm1:  12px;
+  --fz-sm2:  12.5px;
+  --fz-base: 13.5px;
+  --fz-md:   15px;
+  --fz-md1:  15.5px;
+  --fz-lg:   16px;
+  --fz-lg1:  17px;
+  --fz-lg2:  18px;
+  --fz-xl:   21px;
+  --fz-2xl:  24px;
+  --fz-3xl:  26px;
+  --fz-4xl:  28px;
+
+  /* Font weights */
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semi:   600;
+  --fw-bold:   700;
+  --fw-black:  900;
+
+  /* Line heights */
+  --lh-hero:    0.88;
+  --lh-title:   1.05;
+  --lh-snug:    1.18;
+  --lh-card:    1.22;
+  --lh-normal:  1.6;
+  --lh-relaxed: 1.68;
+  --lh-base:    1.78;
+  --lh-loose:   1.8;
+  --lh-looser:  1.9;
+  --lh-full:    1.92;
+
+  /* Letter spacing */
+  --ls-tightest: -0.04em;
+  --ls-tighter:  -0.03em;
+  --ls-tight:    -0.025em;
+  --ls-snug:     -0.02em;
+  --ls-card:     -0.015em;
+  --ls-normal:   -0.01em;
+  --ls-0:        0em;
+  --ls-1:        0.03em;
+  --ls-2:        0.04em;
+  --ls-3:        0.05em;
+  --ls-4:        0.06em;
+  --ls-5:        0.08em;
+  --ls-6:        0.10em;
+  --ls-7:        0.12em;
+  --ls-8:        0.14em;
+  --ls-9:        0.20em;
+  --ls-10:       0.22em;
+  --ls-11:       0.24em;
+
+  /* ── Spacing scale ──────────────────────────────────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  10px;
+  --sp-4:  12px;
+  --sp-5:  14px;
+  --sp-6:  16px;
+  --sp-7:  18px;
+  --sp-8:  20px;
+  --sp-9:  22px;
+  --sp-10: 24px;
+  --sp-11: 26px;
+  --sp-12: 28px;
+  --sp-13: 32px;
+  --sp-14: 36px;
+  --sp-15: 40px;
+  --sp-16: 44px;
+  --sp-17: 48px;
+  --sp-18: 52px;
+  --sp-19: 56px;
+  --sp-20: 60px;
+  --sp-21: 64px;
+  --sp-22: 68px;
+  --sp-23: 72px;
+  --sp-24: 80px;
+  --sp-25: 88px;
+  --sp-26: 96px;
+
+  /* ── Layout ─────────────────────────────────────────── */
+  --max-w:    1200px;
+  --pad:      clamp(24px, 5.5vw, 88px);
+  --radius:   3px;
+  --radius-sm: 2px;
+
+  /* ── Transitions ────────────────────────────────────── */
+  --ease-card: 0.22s ease;
+  --ease-fast: 0.15s;
+  --ease-slow: 0.3s;
+}
