@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Pulse — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700;1,900&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        oklch(0.09 0.022 62);
+  --bg-deep:   oklch(0.065 0.016 58);
+  --surf:      oklch(0.135 0.028 65);
+  --surf-2:    oklch(0.175 0.034 67);
+  --bdr:       oklch(0.235 0.032 67);
+  --bdr-2:     oklch(0.31 0.040 70);
+  --tx:        oklch(0.91 0.032 82);
+  --tx-2:      oklch(0.64 0.026 76);
+  --tx-3:      oklch(0.40 0.020 68);
+  --gold:      oklch(0.68 0.12 74);
+  --gold-dim:  oklch(0.68 0.12 74 / 0.13);
+  --gold-glow: oklch(0.68 0.12 74 / 0.25);
+  --gold-hi:   oklch(0.80 0.13 82);
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-body:  'Lora', Georgia, serif;
+  --font-mono:  'DM Mono', 'Courier New', monospace;
+
+  --fz-hero:  clamp(84px, 13vw, 168px);
+  --fz-sec:   clamp(28px, 4vw,  44px);
+  --fz-quote: clamp(16px, 2vw,  20px);
+  --fz-2xs: 8.5px;
+  --fz-xs1: 10px;
+  --fz-sm:  11px;
+  --fz-base: 13.5px;
+  --fz-lg:  16px;
+
+  --fw-normal: 400;
+  --fw-medium: 500;
+
+  --lh-hero:    0.88;
+  --lh-snug:    1.18;
+  --lh-base:    1.78;
+
+  --ls-tighter:  -0.03em;
+  --ls-7:        0.12em;
+  --ls-9:        0.20em;
+
+  --sp-2:  8px;
+  --sp-3:  10px;
+  --sp-6:  16px;
+  --sp-9:  22px;
+  --sp-11: 26px;
+  --sp-13: 32px;
+  --sp-15: 40px;
+  --sp-17: 48px;
+  --sp-22: 68px;
+  --sp-24: 80px;
+
+  --max-w:    1200px;
+  --pad:      clamp(24px, 5.5vw, 88px);
+
+  --ease-slow: 0.3s;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--font-body);
+  font-size: var(--fz-base);
+  line-height: var(--lh-base);
+  min-height: 100vh;
+}
+
+.c {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.hero {
+  padding: var(--sp-24) 0 var(--sp-17);
+}
+
+.hero-eye {
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs1);
+  letter-spacing: var(--ls-9);
+  color: var(--tx-3);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-15);
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: var(--fz-hero);
+  font-weight: 900;
+  line-height: var(--lh-hero);
+  letter-spacing: var(--ls-tighter);
+  margin-bottom: var(--sp-13);
+}
+
+.hero-t1 { display: block; color: var(--tx); }
+.hero-t2 { display: block; color: var(--gold-hi); font-style: italic; }
+
+.hero-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fz-quote);
+  color: var(--tx-2);
+  max-width: 600px;
+  margin-bottom: var(--sp-9);
+}
+
+.hero-by {
+  font-family: var(--font-mono);
+  font-size: var(--fz-sm);
+  color: var(--tx-3);
+}
+
+/* ── THE PULSE ───────────────────────────────────── */
+.pulse {
+  margin: var(--sp-22) 0;
+  padding: var(--sp-22) 0;
+  border-top: 1px solid var(--bdr);
+  border-bottom: 1px solid var(--bdr);
+}
+
+.pulse-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-15);
+}
+
+.pulse-lbl {
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs1);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-9);
+  color: var(--tx-3);
+  text-transform: uppercase;
+}
+
+.pulse-live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fz-2xs);
+  letter-spacing: var(--ls-7);
+  color: var(--gold);
+  text-transform: uppercase;
+  opacity: 0.65;
+  animation: pulse-breath 4s ease-in-out infinite;
+  transition: opacity var(--ease-slow);
+}
+
+.pulse-live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.pulse-live--flash { animation: pulse-live-flash 0.7s ease-out; }
+
+@keyframes pulse-breath {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 0.95; }
+}
+
+@keyframes pulse-live-flash {
+  0%   { opacity: 0.65; transform: scale(1); }
+  30%  { opacity: 1;    transform: scale(1.08); }
+  100% { opacity: 0.65; transform: scale(1); }
+}
+
+.pulse-line {
+  font-family: var(--font-serif);
+  font-size: var(--fz-sec);
+  font-weight: var(--fw-normal);
+  font-style: italic;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tighter);
+  color: var(--tx);
+  margin: 0 0 var(--sp-15);
+  max-width: 980px;
+}
+
+.pulse-num {
+  font-style: italic;
+  color: var(--gold-hi);
+  transition: opacity var(--ease-slow);
+}
+
+.pulse-num--flash { animation: pulse-num-flash 0.7s ease-out; }
+
+@keyframes pulse-num-flash {
+  0%   { opacity: 0.4; }
+  60%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.pulse-track {
+  position: relative;
+  height: 1px;
+  background: var(--bdr);
+  margin: var(--sp-13) 0 var(--sp-3);
+  overflow: visible;
+}
+
+.pulse-mark {
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-dim);
+  transform: translate(-50%, -50%);
+  transition: left 0.4s ease-out;
+}
+
+.pulse-mark--step { animation: pulse-mark-step 0.7s ease-out; }
+
+@keyframes pulse-mark-step {
+  0%   { box-shadow: 0 0 0 3px var(--gold-dim); }
+  40%  { box-shadow: 0 0 0 7px var(--gold-glow); }
+  100% { box-shadow: 0 0 0 3px var(--gold-dim); }
+}
+
+.pulse-ends {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--fz-2xs);
+  letter-spacing: var(--ls-7);
+  color: var(--tx-3);
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .pulse { margin: var(--sp-17) 0; padding: var(--sp-17) 0; }
+  .pulse-line { margin-bottom: var(--sp-13); }
+  .pulse-track { margin: var(--sp-11) 0 var(--sp-3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-live,
+  .pulse-live--flash,
+  .pulse-num--flash,
+  .pulse-mark,
+  .pulse-mark--step {
+    animation: none !important;
+    transition: none !important;
+  }
+  .pulse-live { opacity: 0.8; }
+}
+
+/* Test controls — remove in production */
+.test-bar {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--surf);
+  border: 1px solid var(--bdr);
+  padding: var(--sp-3) var(--sp-6);
+  font-family: var(--font-mono);
+  font-size: var(--fz-sm);
+  color: var(--tx-2);
+  cursor: pointer;
+  border-radius: 2px;
+  z-index: 100;
+}
+.test-bar:hover { color: var(--gold-hi); border-color: var(--gold); }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const GENESIS_TS = 1231006505000;
+const HALVING_INTERVAL = 210000;
+const FALLBACK_HEIGHT = 893247;
+
+function spellNumber(n) {
+  if (n === 0) return 'zero';
+  const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
+                'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen',
+                'seventeen', 'eighteen', 'nineteen'];
+  const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+  function under1000(num) {
+    if (num < 20) return ones[num];
+    if (num < 100) {
+      const t = Math.floor(num / 10);
+      const o = num % 10;
+      return tens[t] + (o ? '-' + ones[o] : '');
+    }
+    const h = Math.floor(num / 100);
+    const r = num % 100;
+    return ones[h] + ' hundred' + (r ? ' ' + under1000(r) : '');
+  }
+
+  const millions = Math.floor(n / 1000000);
+  const thousands = Math.floor((n % 1000000) / 1000);
+  const rest = n % 1000;
+
+  const parts = [];
+  if (millions) parts.push(under1000(millions) + ' million');
+  if (thousands) parts.push(under1000(thousands) + ' thousand');
+  if (rest) parts.push(under1000(rest));
+  return parts.join(' ');
+}
+
+function ageSinceGenesis(now = Date.now()) {
+  const genesis = new Date(GENESIS_TS);
+  const current = new Date(now);
+  let years = current.getUTCFullYear() - genesis.getUTCFullYear();
+  let months = current.getUTCMonth() - genesis.getUTCMonth();
+  let days = current.getUTCDate() - genesis.getUTCDate();
+  if (days < 0) {
+    months -= 1;
+    const prevMonth = new Date(Date.UTC(current.getUTCFullYear(), current.getUTCMonth(), 0));
+    days += prevMonth.getUTCDate();
+  }
+  if (months < 0) { years -= 1; months += 12; }
+  return { years, months, days };
+}
+
+function nextHalvingDate(currentHeight) {
+  const nextHalvingHeight = Math.ceil((currentHeight + 1) / HALVING_INTERVAL) * HALVING_INTERVAL;
+  const blocksRemaining = nextHalvingHeight - currentHeight;
+  const msRemaining = blocksRemaining * 10 * 60 * 1000;
+  const date = new Date(Date.now() + msRemaining);
+  const month = date.toLocaleString('en-US', { month: 'short' });
+  return { month, year: date.getFullYear() };
+}
+
+function halvingProgress(currentHeight) {
+  const epochStart = Math.floor(currentHeight / HALVING_INTERVAL) * HALVING_INTERVAL;
+  return (currentHeight - epochStart) / HALVING_INTERVAL;
+}
+
+function Pulse() {
+  const [height, setHeight] = useState(() => {
+    try {
+      const cached = localStorage.getItem('pulse_height');
+      const parsed = cached ? parseInt(cached, 10) : NaN;
+      return Number.isFinite(parsed) && parsed >= FALLBACK_HEIGHT ? parsed : FALLBACK_HEIGHT;
+    } catch (e) { return FALLBACK_HEIGHT; }
+  });
+  const [pulsed, setPulsed] = useState(false);
+  const [now, setNow] = useState(Date.now());
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    let consecutiveFailures = 0;
+
+    async function poll() {
+      try {
+        const res = await fetch('https://mempool.space/api/blocks/tip/height');
+        if (!res.ok) throw new Error('not ok');
+        const text = await res.text();
+        const newHeight = parseInt(text, 10);
+        if (cancelled) return;
+        if (Number.isFinite(newHeight) && newHeight > 0) {
+          consecutiveFailures = 0;
+          setHeight(prev => {
+            if (newHeight > prev) {
+              try { localStorage.setItem('pulse_height', String(newHeight)); } catch (e) {}
+              setPulsed(true);
+              setTimeout(() => { if (!cancelled) setPulsed(false); }, 700);
+              return newHeight;
+            }
+            return prev;
+          });
+        }
+      } catch (e) {
+        consecutiveFailures += 1;
+        if (consecutiveFailures >= 5 && !cancelled) setVisible(false);
+      }
+    }
+
+    poll();
+    const interval = setInterval(poll, 30000);
+    return () => { cancelled = true; clearInterval(interval); };
+  }, []);
+
+  useEffect(() => {
+    const tick = setInterval(() => setNow(Date.now()), 60000);
+    return () => clearInterval(tick);
+  }, []);
+
+  // Test trigger — simulates a new block
+  useEffect(() => {
+    window.simulateBlock = () => {
+      setHeight(prev => {
+        const next = prev + 1;
+        setPulsed(true);
+        setTimeout(() => setPulsed(false), 700);
+        return next;
+      });
+    };
+  }, []);
+
+  if (!visible) return null;
+
+  const heightInWords = spellNumber(height);
+  const { years, months, days } = ageSinceGenesis(now);
+  const halving = nextHalvingDate(height);
+  const progress = halvingProgress(height);
+
+  const yearsWord = `${spellNumber(years)} year${years === 1 ? '' : 's'}`;
+  const monthsWord = `${spellNumber(months)} month${months === 1 ? '' : 's'}`;
+  const daysWord = `${spellNumber(days)} day${days === 1 ? '' : 's'}`;
+
+  return (
+    <section className="pulse" aria-label="Bitcoin network status">
+      <div className="pulse-hd">
+        <span className="pulse-lbl">The Pulse</span>
+        <span className={`pulse-live ${pulsed ? 'pulse-live--flash' : ''}`} aria-hidden="true">
+          <span className="pulse-live-dot" /> live
+        </span>
+      </div>
+
+      <p className="pulse-line" aria-live="polite">
+        At block <em className={pulsed ? 'pulse-num pulse-num--flash' : 'pulse-num'}>{heightInWords}</em>,
+        Bitcoin is {yearsWord}, {monthsWord}, and {daysWord} old.
+      </p>
+
+      <div className="pulse-track">
+        <div
+          className={`pulse-mark ${pulsed ? 'pulse-mark--step' : ''}`}
+          style={{ left: `${(progress * 100).toFixed(3)}%` }}
+          aria-hidden="true"
+        />
+      </div>
+      <div className="pulse-ends">
+        <span>Genesis &middot; Jan 2009</span>
+        <span>{halving.month} {halving.year} &middot; Halving</span>
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  return (
+    <div className="hero">
+      <div className="c">
+        <div className="hero-eye">bitcoinmind.com &middot; est. 2024</div>
+        <h1 className="hero-title">
+          <span className="hero-t1">Bitcoin</span>
+          <span className="hero-t2">Mind</span>
+        </h1>
+        <p className="hero-quote">"Curated resources for people who want to understand Bitcoin, not just own it."</p>
+        <p className="hero-by">A public record by Haitian Zhang &middot; Updated April 2026</p>
+
+        <Pulse />
+      </div>
+      <button className="test-bar" onClick={() => window.simulateBlock && window.simulateBlock()}>
+        ▸ Simulate new block
+      </button>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
