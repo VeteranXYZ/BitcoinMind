@@ -271,27 +271,24 @@ function Footer() {
     </footer>
   );
 }
-
 // ═══════════════════════════════════════════════════════════════════
-// THE PULSE — Block-time visualization for BitcoinMind
+// THE PULSE — v3 (final)
 // ───────────────────────────────────────────────────────────────────
-// Paste this entire block INSIDE the existing <script type="text/babel">
-// in index.html, AFTER the `function Footer()` definition and BEFORE
-// `function ReadingProgress()`.
+// REPLACES the entire previous Pulse component block in index.html.
+// (If you already pasted v1, find the block starting with
+// `// THE PULSE — Block-time...` and replace through end of `function Pulse()`.)
+//
+// Changes from v1:
+// • Block height now shown as Arabic numerals (946,539) in mono font
+// • Time-since-genesis kept as spelled-out italic serif
+// • Sentence shortened — never wraps past two lines
+// • Day precision dropped — months is enough
 // ═══════════════════════════════════════════════════════════════════
 
-// Genesis block: mined Jan 3, 2009 18:15:05 UTC
 const GENESIS_TS = 1231006505000;
-
-// Halving every 210,000 blocks
 const HALVING_INTERVAL = 210000;
+const FALLBACK_HEIGHT = 946000; // bump on each deploy
 
-// Fallback values — used until the API responds.
-// These are deliberately close-to-current so the page never looks stale
-// even if mempool.space is unreachable. Update these on each deploy.
-const FALLBACK_HEIGHT = 946537;
-
-// Convert a number into spelled-out English (works up to ~999,999,999)
 function spellNumber(n) {
   if (n === 0) return 'zero';
   const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
@@ -311,41 +308,20 @@ function spellNumber(n) {
     return ones[h] + ' hundred' + (r ? ' ' + under1000(r) : '');
   }
 
-  const millions = Math.floor(n / 1000000);
-  const thousands = Math.floor((n % 1000000) / 1000);
-  const rest = n % 1000;
-
-  const parts = [];
-  if (millions) parts.push(under1000(millions) + ' million');
-  if (thousands) parts.push(under1000(thousands) + ' thousand');
-  if (rest) parts.push(under1000(rest));
-  return parts.join(' ');
+  return under1000(n);
 }
 
-// Compute years/months/days since genesis
 function ageSinceGenesis(now = Date.now()) {
   const genesis = new Date(GENESIS_TS);
   const current = new Date(now);
-
   let years = current.getUTCFullYear() - genesis.getUTCFullYear();
   let months = current.getUTCMonth() - genesis.getUTCMonth();
-  let days = current.getUTCDate() - genesis.getUTCDate();
-
-  if (days < 0) {
-    months -= 1;
-    // Days in previous month
-    const prevMonth = new Date(Date.UTC(current.getUTCFullYear(), current.getUTCMonth(), 0));
-    days += prevMonth.getUTCDate();
-  }
-  if (months < 0) {
-    years -= 1;
-    months += 12;
-  }
-  return { years, months, days };
+  const days = current.getUTCDate() - genesis.getUTCDate();
+  if (days < 0) months -= 1;
+  if (months < 0) { years -= 1; months += 12; }
+  return { years, months };
 }
 
-// Estimate the next halving date from current height
-// (4 years ≈ 210,000 blocks, ~10 min/block)
 function nextHalvingDate(currentHeight) {
   const nextHalvingHeight = Math.ceil((currentHeight + 1) / HALVING_INTERVAL) * HALVING_INTERVAL;
   const blocksRemaining = nextHalvingHeight - currentHeight;
@@ -355,7 +331,6 @@ function nextHalvingDate(currentHeight) {
   return { month, year: date.getFullYear() };
 }
 
-// Progress within current halving epoch (0..1)
 function halvingProgress(currentHeight) {
   const epochStart = Math.floor(currentHeight / HALVING_INTERVAL) * HALVING_INTERVAL;
   return (currentHeight - epochStart) / HALVING_INTERVAL;
@@ -367,15 +342,12 @@ function Pulse() {
       const cached = localStorage.getItem('pulse_height');
       const parsed = cached ? parseInt(cached, 10) : NaN;
       return Number.isFinite(parsed) && parsed >= FALLBACK_HEIGHT ? parsed : FALLBACK_HEIGHT;
-    } catch (e) {
-      return FALLBACK_HEIGHT;
-    }
+    } catch (e) { return FALLBACK_HEIGHT; }
   });
   const [pulsed, setPulsed] = useState(false);
   const [now, setNow] = useState(Date.now());
   const [visible, setVisible] = useState(true);
 
-  // Poll for new block height
   useEffect(() => {
     let cancelled = false;
     let consecutiveFailures = 0;
@@ -401,10 +373,7 @@ function Pulse() {
         }
       } catch (e) {
         consecutiveFailures += 1;
-        // After 5 consecutive failures (~2.5 min), hide silently
-        if (consecutiveFailures >= 5 && !cancelled) {
-          setVisible(false);
-        }
+        if (consecutiveFailures >= 5 && !cancelled) setVisible(false);
       }
     }
 
@@ -413,7 +382,6 @@ function Pulse() {
     return () => { cancelled = true; clearInterval(interval); };
   }, []);
 
-  // Tick every minute to keep "days since genesis" fresh after midnight UTC
   useEffect(() => {
     const tick = setInterval(() => setNow(Date.now()), 60000);
     return () => clearInterval(tick);
@@ -421,14 +389,12 @@ function Pulse() {
 
   if (!visible) return null;
 
-  const heightInWords = spellNumber(height);
-  const { years, months, days } = ageSinceGenesis(now);
+  const { years, months } = ageSinceGenesis(now);
   const halving = nextHalvingDate(height);
   const progress = halvingProgress(height);
 
   const yearsWord = `${spellNumber(years)} year${years === 1 ? '' : 's'}`;
   const monthsWord = `${spellNumber(months)} month${months === 1 ? '' : 's'}`;
-  const daysWord = `${spellNumber(days)} day${days === 1 ? '' : 's'}`;
 
   return (
     <section className="pulse" aria-label="Bitcoin network status">
@@ -440,8 +406,7 @@ function Pulse() {
       </div>
 
       <p className="pulse-line" aria-live="polite">
-        At block <em className={pulsed ? 'pulse-num pulse-num--flash' : 'pulse-num'}>{heightInWords}</em>,
-        Bitcoin is {yearsWord}, {monthsWord}, and {daysWord} old.
+        At block <span className={pulsed ? 'pulse-num pulse-num--flash' : 'pulse-num'}>{height.toLocaleString('en-US')}</span> &mdash; {yearsWord} and {monthsWord} since genesis.
       </p>
 
       <div className="pulse-track">
@@ -458,6 +423,7 @@ function Pulse() {
     </section>
   );
 }
+
   
 function ReadingProgress() {
   useEffect(() => {
