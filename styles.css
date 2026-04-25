@@ -679,3 +679,165 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 @media (max-width: 640px) {
   .grid-auto { grid-template-columns: 1fr; }
 }
+/* ═══════════════════════════════════════════════════════════════════
+   THE PULSE — Append to the END of styles.css
+   Uses only existing design-system tokens. No new variables introduced.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.pulse {
+  margin: var(--sp-22) 0 var(--sp-22);
+  padding: var(--sp-22) 0;
+  border-top: 1px solid var(--bdr);
+  border-bottom: 1px solid var(--bdr);
+}
+
+.pulse-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-15);
+}
+
+.pulse-lbl {
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs1);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-9);
+  color: var(--tx-3);
+  text-transform: uppercase;
+}
+
+.pulse-live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: var(--fz-2xs);
+  letter-spacing: var(--ls-7);
+  color: var(--gold);
+  text-transform: uppercase;
+  opacity: 0.65;
+  animation: pulse-breath 4s ease-in-out infinite;
+  transition: opacity var(--ease-slow);
+}
+
+.pulse-live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: inline-block;
+}
+
+.pulse-live--flash {
+  animation: pulse-live-flash 0.7s ease-out;
+}
+
+@keyframes pulse-breath {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 0.95; }
+}
+
+@keyframes pulse-live-flash {
+  0%   { opacity: 0.65; transform: scale(1); }
+  30%  { opacity: 1;    transform: scale(1.08); }
+  100% { opacity: 0.65; transform: scale(1); }
+}
+
+.pulse-line {
+  font-family: var(--font-serif);
+  font-size: var(--fz-sec);
+  font-weight: var(--fw-normal);
+  font-style: italic;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tighter);
+  color: var(--tx);
+  margin: 0 0 var(--sp-15);
+  max-width: 980px;
+}
+
+.pulse-num {
+  font-style: italic;
+  color: var(--gold-hi);
+  transition: opacity var(--ease-slow);
+}
+
+.pulse-num--flash {
+  animation: pulse-num-flash 0.7s ease-out;
+}
+
+@keyframes pulse-num-flash {
+  0%   { opacity: 0.4; }
+  60%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.pulse-track {
+  position: relative;
+  height: 1px;
+  background: var(--bdr);
+  margin: var(--sp-13) 0 var(--sp-3);
+  overflow: visible;
+}
+
+.pulse-mark {
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-dim);
+  transform: translate(-50%, -50%);
+  transition: left 0.4s ease-out;
+}
+
+.pulse-mark--step {
+  animation: pulse-mark-step 0.7s ease-out;
+}
+
+@keyframes pulse-mark-step {
+  0%   { box-shadow: 0 0 0 3px var(--gold-dim); }
+  40%  { box-shadow: 0 0 0 7px var(--gold-glow); }
+  100% { box-shadow: 0 0 0 3px var(--gold-dim); }
+}
+
+.pulse-ends {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--fz-2xs);
+  letter-spacing: var(--ls-7);
+  color: var(--tx-3);
+  text-transform: uppercase;
+}
+
+/* ── Mobile adjustments ─────────────────────────────────── */
+@media (max-width: 640px) {
+  .pulse {
+    margin: var(--sp-17) 0;
+    padding: var(--sp-17) 0;
+  }
+  .pulse-line {
+    margin-bottom: var(--sp-13);
+  }
+  .pulse-track {
+    margin: var(--sp-11) 0 var(--sp-3);
+  }
+  .pulse-ends {
+    font-size: var(--fz-2xs);
+  }
+}
+
+/* ── Reduced motion: respect the user ───────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .pulse-live,
+  .pulse-live--flash,
+  .pulse-num--flash,
+  .pulse-mark,
+  .pulse-mark--step {
+    animation: none !important;
+    transition: none !important;
+  }
+  .pulse-live { opacity: 0.8; }
+}
