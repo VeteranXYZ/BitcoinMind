@@ -845,3 +845,169 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 .hero-title {
   font-size: clamp(72px, 11vw, 132px);
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE MENU — append to the end of styles.css
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* The MENU button sits in the nav bar.
+   Hidden on desktop — visible only when viewport < 720px. */
+.nav-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs1);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-9);
+  color: var(--tx-2);
+  text-transform: uppercase;
+  padding: var(--sp-3) 0;
+  cursor: pointer;
+  transition: color var(--ease-fast);
+}
+
+.nav-menu-btn:hover,
+.nav-menu-btn:focus-visible {
+  color: var(--gold-hi);
+  outline: none;
+}
+
+/* On mobile: hide horizontal links, show MENU button.
+   720px chosen so iPad portrait still gets desktop nav. */
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .nav-menu-btn { display: inline-block; }
+}
+
+/* ── The full-screen menu ────────────────────────────────── */
+
+.mm {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--pad);
+  animation: mm-in 0.22s ease-out;
+  overscroll-behavior: contain;
+}
+
+@keyframes mm-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Top bar holds the CLOSE button, mirrors the nav bar height. */
+.mm-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.mm-close {
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs1);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-9);
+  color: var(--gold);
+  text-transform: uppercase;
+  padding: var(--sp-3) 0;
+  cursor: pointer;
+}
+
+.mm-close:focus-visible {
+  outline: 1px solid var(--bdr-2);
+  outline-offset: 4px;
+}
+
+/* The list of menu items. Centered vertically in remaining space. */
+.mm-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--sp-13) 0;
+  gap: var(--sp-3);
+}
+
+.mm-item {
+  background: none;
+  border: none;
+  text-align: left;
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 7vw, 40px);
+  font-weight: var(--fw-normal);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tighter);
+  color: var(--tx);
+  padding: var(--sp-6) 0;
+  cursor: pointer;
+  transition: color var(--ease-fast), transform var(--ease-fast);
+  /* Each item fades in with a small stagger */
+  opacity: 0;
+  animation: mm-item-in 0.32s ease-out forwards;
+  animation-delay: inherit;
+}
+
+.mm-item:hover { color: var(--gold-hi); }
+.mm-item:active { transform: translateX(2px); }
+
+.mm-item:focus-visible {
+  color: var(--gold-hi);
+  outline: none;
+}
+
+/* Current page: italic + gold, matching the site's signature */
+.mm-item--on {
+  font-style: italic;
+  color: var(--gold-hi);
+}
+
+@keyframes mm-item-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer: imprint-page styling */
+.mm-foot {
+  flex-shrink: 0;
+  padding: var(--sp-9) 0 var(--sp-15);
+  font-family: var(--font-mono);
+}
+
+.mm-foot-rule {
+  height: 1px;
+  background: var(--bdr);
+  margin-bottom: var(--sp-11);
+}
+
+.mm-foot-l1 {
+  font-size: var(--fz-xs1);
+  letter-spacing: var(--ls-9);
+  color: var(--tx-3);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-2);
+}
+
+.mm-foot-l2 {
+  font-size: var(--fz-sm);
+  color: var(--tx-3);
+  letter-spacing: var(--ls-2);
+}
+
+/* Reduced motion: kill animations */
+@media (prefers-reduced-motion: reduce) {
+  .mm,
+  .mm-item {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
