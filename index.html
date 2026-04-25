@@ -262,7 +262,17 @@ function TodaysPick({ setPage }) {
 }
 
 function Footer() {
-  // ═══════════════════════════════════════════════════════════════════
+  return (
+    <footer>
+      <div className="ft-in">
+        <span className="ft-copy">© 2026 BitcoinMind · Powered by Hiei</span>
+        <span className="ft-upd">Last updated: April 2026</span>
+      </div>
+    </footer>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // THE PULSE — Block-time visualization for BitcoinMind
 // ───────────────────────────────────────────────────────────────────
 // Paste this entire block INSIDE the existing <script type="text/babel">
@@ -448,17 +458,7 @@ function Pulse() {
     </section>
   );
 }
-
-  return (
-    <footer>
-      <div className="ft-in">
-        <span className="ft-copy">© 2026 BitcoinMind · Powered by Hiei</span>
-        <span className="ft-upd">Last updated: April 2026</span>
-      </div>
-    </footer>
-  );
-}
-
+  
 function ReadingProgress() {
   useEffect(() => {
     const bar = document.getElementById('pb');
