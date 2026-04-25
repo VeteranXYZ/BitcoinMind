@@ -821,6 +821,238 @@ function NotesPage() {
   );
 }
 
+// ═══ FRAMES №1 — A History of Hardness ════════════════════════════════
+
+const FRAME_ONE = {
+  number: '№1',
+  title: 'A History of Hardness',
+  subtitle: 'Five thousand years of money, told through the question every era had to answer:',
+  question: '"What stops you from making more?"',
+  nodes: [
+    {
+      n: '01',
+      year: '3000 BCE',
+      title: 'Yap',
+      epigraph: 'Stone too heavy to steal',
+      hardness: 'high',
+      body: [
+        "On the island of Yap in Micronesia, money was a stone wheel — sometimes the size of a man, sometimes larger than a house. The wheels never moved. When ownership changed, everyone simply remembered. Hardness was solved by something stranger than scarcity: the money was so impractical to make, and so public to own, that nature and community together made fraud nearly impossible.",
+      ],
+      links: [
+        { label: 'Shelling Out', target: 'essays' },
+      ],
+    },
+    {
+      n: '02',
+      year: '600 BCE',
+      title: 'The Coin',
+      epigraph: 'Hardness made portable',
+      hardness: 'high',
+      body: [
+        "Lydian smiths struck small ovals of electrum, each stamped to certify weight and purity. Money you could carry, divide, and verify by hand. For the next two thousand five hundred years, civilization ran on metal — and on the unspoken assumption that the people who minted it were not lying.",
+      ],
+      links: [
+        { label: 'The Bitcoin Standard', target: 'books' },
+      ],
+    },
+    {
+      n: '03',
+      year: '215 CE',
+      title: 'Debasement',
+      epigraph: 'The first lie',
+      hardness: 'low',
+      body: [
+        "The Roman denarius, once 4.5 grams of pure silver, was quietly diluted with copper across two centuries until it was almost none. The mint was unchanged. The inscription was unchanged. Only the substance had been removed.",
+        "Hardness, it turned out, was not in the symbol. It was in the thing itself.",
+      ],
+      links: [
+        { label: 'The Bitcoin Standard', target: 'books' },
+      ],
+    },
+    {
+      n: '04',
+      year: '1933 CE',
+      title: 'Confiscation',
+      epigraph: 'The owner is the rule',
+      hardness: 'low',
+      body: [
+        "By executive order, every American was required to surrender their gold to the United States government within thirty days, in exchange for paper dollars at $20.67 an ounce. Weeks later, the government revalued gold to $35. A 41% transfer of wealth, executed without a vote, by a stroke of a pen.",
+        "The lesson of Rome had been about substance. The lesson of 1933 was simpler: whoever holds the money makes the rules.",
+      ],
+      links: [
+        { label: 'Check Your Financial Privilege', target: 'books' },
+      ],
+    },
+    {
+      n: '05',
+      year: '1971 CE',
+      title: 'Nixon',
+      epigraph: 'The last anchor cut',
+      hardness: 'low',
+      body: [
+        "On August 15, the United States severed the dollar's tether to gold — the last formal link between any major currency and a finite substance. The architects of what followed were not villains. The system they built financed Apollo, Medicare, and the longest run of peace among great powers in modern history.",
+        "But it required something monetary history had never required before: the question of how much money exists became a decision, made by a small group of people, behind closed doors.",
+      ],
+      links: [
+        { label: 'The Bitcoin Standard', target: 'books' },
+        { label: 'Check Your Financial Privilege', target: 'books' },
+      ],
+    },
+    {
+      n: '06',
+      year: '2008 CE',
+      title: 'The White Paper',
+      epigraph: 'Hardness without trust',
+      hardness: 'half',
+      body: [
+        "Nine pages, posted to a cryptography mailing list, by an author no one had heard of and would never meet. The proposal: enforce hardness not by metal, not by law, not by the trustworthiness of any institution — but by code, math, and a network of computers each watching every other.",
+      ],
+      links: [
+        { label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', target: 'essays' },
+      ],
+    },
+    {
+      n: '07',
+      year: '2009 CE',
+      title: 'Genesis',
+      epigraph: 'A money no one runs',
+      hardness: 'absolute',
+      body: [
+        "January 3, 18:15 UTC. The first block. Embedded in its data: a quote from that morning's Times — \u201CChancellor on brink of second bailout for banks.\u201D",
+        "The supply schedule was set in the same instant: twenty-one million, ever, distributed by halvings, ending in 2140. No treaty enforced it. No promise underwrote it. Only the network — and any node, anywhere, refusing to run code that broke it.",
+      ],
+      coda: 'Hardness, finally, made independent of every party that ever broke it before.',
+      links: [
+        { label: 'The Bullish Case for Bitcoin', target: 'essays' },
+        { label: 'Gradually, Then Suddenly', target: 'essays' },
+      ],
+    },
+  ],
+};
+
+function FramesPage({ setPage }) {
+  const frame = FRAME_ONE;
+  const [activeNode, setActiveNode] = useState(0);
+  const nodeRefs = useRef([]);
+
+  // Track which node is currently in view using IntersectionObserver
+  useEffect(() => {
+    const observers = [];
+    nodeRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setActiveNode(i);
+          });
+        },
+        { rootMargin: '-30% 0px -55% 0px', threshold: 0 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
+  const scrollToNode = useCallback((i) => {
+    const el = nodeRefs.current[i];
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.scrollY - 100;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }, []);
+
+  return (
+    <div className="page frames">
+      <div className="c">
+
+        <header className="frames-hd">
+          <div className="frames-eye">
+            <span>Frames</span>
+            <span className="frames-eye-sep">·</span>
+            <span>{frame.number}</span>
+          </div>
+          <h1 className="frames-title">
+            A History of <em>Hardness</em>
+          </h1>
+          <p className="frames-sub">{frame.subtitle}</p>
+          <p className="frames-q">{frame.question}</p>
+          <div className="frames-rule" />
+        </header>
+
+        <div className="frames-layout">
+
+          <main className="frames-body">
+            {frame.nodes.map((node, i) => (
+              <article
+                key={node.n}
+                ref={(el) => (nodeRefs.current[i] = el)}
+                className={`fnode fnode--${node.hardness}`}
+              >
+                <div className="fnode-meta">
+                  <span className={`fnode-dot fnode-dot--${node.hardness}`} aria-hidden="true" />
+                  <span className="fnode-n">{node.n}</span>
+                  <span className="fnode-sep">·</span>
+                  <span className="fnode-yr">{node.year}</span>
+                </div>
+                <h2 className="fnode-title">{node.title}</h2>
+                <p className="fnode-epi">{node.epigraph}</p>
+                {node.body.map((p, j) => (
+                  <p className="fnode-p" key={j}>{p}</p>
+                ))}
+                {node.coda && (
+                  <p className="fnode-coda">{node.coda}</p>
+                )}
+                {node.links && node.links.length > 0 && (
+                  <div className="fnode-links">
+                    {node.links.map((lk, k) => (
+                      <span
+                        key={k}
+                        className="fnode-link"
+                        onClick={() => setPage(lk.target)}
+                      >
+                        → {lk.label}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </article>
+            ))}
+
+            <div className="frames-end">
+              <div className="frames-end-rule" />
+              <p className="frames-end-note">
+                End of Frames {frame.number}. More frames in time.
+              </p>
+            </div>
+          </main>
+
+          <aside className="frames-idx" aria-label="Timeline index">
+            <div className="frames-idx-lbl">Index</div>
+            <div className="frames-idx-rule" />
+            <ul className="frames-idx-list">
+              {frame.nodes.map((node, i) => (
+                <li
+                  key={node.n}
+                  className={`fidx ${activeNode === i ? 'fidx--on' : ''}`}
+                  onClick={() => scrollToNode(i)}
+                >
+                  <span className={`fidx-dot fidx-dot--${node.hardness}`} aria-hidden="true" />
+                  <div className="fidx-text">
+                    <div className="fidx-yr">{node.n} &middot; {node.year}</div>
+                    <div className="fidx-epi">{node.epigraph}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </aside>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 // ═══ MOBILE MENU ══════════════════════════════════════════════════════
 
 function MobileMenu({ open, onClose, navItems, page, navigate }) {
@@ -891,7 +1123,7 @@ function MobileMenu({ open, onClose, navItems, page, navigate }) {
 // ═══ APP ══════════════════════════════════════════════════════════════
 
 function App() {
-  const PAGES = ['home', 'start', 'books', 'essays', 'tools', 'about', 'notes'];
+  const PAGES = ['home', 'start', 'books', 'essays', 'tools', 'frames', 'about', 'notes'];
   const [page, setPage] = useState(() => {
     const h = window.location.hash.replace('#', '');
     return PAGES.includes(h) ? h : 'home';
@@ -922,6 +1154,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     { id: 'books',  label: 'Books' },
     { id: 'essays', label: 'Essays' },
     { id: 'tools',  label: 'Tools' },
+    { id: 'frames', label: 'Frames' },
     { id: 'about',  label: 'About' },
     { id: 'notes',  label: 'Notes' },
   ];
@@ -962,6 +1195,7 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
       {page === 'books'  && <BooksPage  />}
       {page === 'essays' && <EssaysPage />}
       {page === 'tools'  && <ToolsPage  />}
+      {page === 'frames' && <FramesPage setPage={navigate} />}
       {page === 'about'  && <AboutPage  setPage={navigate} />}
       {page === 'notes'  && <NotesPage  />}
     </>

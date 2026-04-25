@@ -998,3 +998,393 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
     transform: none !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   FRAMES — № 1: A History of Hardness
+   ═══════════════════════════════════════════════════════════════════ */
+
+.frames {
+  padding: var(--sp-22) 0 var(--sp-26);
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.frames-hd {
+  margin-bottom: var(--sp-24);
+}
+
+.frames-eye {
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs1);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-9);
+  color: var(--tx-3);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-15);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.frames-eye-sep {
+  color: var(--bdr);
+}
+
+.frames-title {
+  font-family: var(--font-serif);
+  font-size: var(--fz-ph);
+  font-weight: var(--fw-black);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-tighter);
+  color: var(--tx);
+  margin-bottom: var(--sp-13);
+}
+.frames-title em {
+  font-style: italic;
+  color: var(--gold-hi);
+}
+
+.frames-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fz-quote);
+  line-height: var(--lh-relaxed);
+  color: var(--tx-2);
+  max-width: 640px;
+  margin-bottom: var(--sp-3);
+}
+
+.frames-q {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fz-quote);
+  line-height: var(--lh-relaxed);
+  color: var(--gold-hi);
+  max-width: 640px;
+  margin-bottom: var(--sp-17);
+}
+
+.frames-rule {
+  height: 1px;
+  background: var(--bdr);
+}
+
+/* ── Layout: body + index ───────────────────────────────── */
+.frames-layout {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: var(--sp-24);
+  align-items: start;
+}
+
+.frames-body {
+  min-width: 0; /* allow grid item to shrink */
+  max-width: 720px;
+}
+
+/* ── Node ───────────────────────────────────────────────── */
+.fnode {
+  padding: var(--sp-22) 0;
+  border-bottom: 1px solid var(--bdr);
+}
+.fnode:first-child {
+  padding-top: var(--sp-15);
+}
+.fnode:last-of-type {
+  border-bottom: none;
+}
+
+.fnode-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-9);
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs1);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-9);
+  color: var(--tx-3);
+  text-transform: uppercase;
+}
+.fnode-sep {
+  color: var(--bdr);
+}
+
+/* The hardness symbol — four states */
+.fnode-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+  margin-right: var(--sp-3);
+}
+.fnode-dot--high {
+  background: var(--gold-hi);
+}
+.fnode-dot--low {
+  background: transparent;
+  border: 1.5px solid var(--tx-3);
+}
+.fnode-dot--half {
+  background: linear-gradient(90deg, var(--gold-hi) 50%, transparent 50%);
+  border: 1.5px solid var(--gold-hi);
+}
+.fnode-dot--absolute {
+  background: var(--gold-hi);
+  box-shadow: 0 0 0 4px var(--gold-glow);
+}
+
+.fnode-title {
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-title);
+  letter-spacing: var(--ls-tighter);
+  color: var(--tx);
+  margin-bottom: var(--sp-3);
+}
+
+.fnode-epi {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fz-step);
+  line-height: var(--lh-snug);
+  color: var(--gold-hi);
+  margin-bottom: var(--sp-13);
+  letter-spacing: var(--ls-snug);
+}
+
+.fnode-p {
+  font-family: var(--font-body);
+  font-size: var(--fz-md1);
+  line-height: var(--lh-loose);
+  color: var(--tx);
+  margin-bottom: var(--sp-9);
+  max-width: 640px;
+}
+.fnode-p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* The italic punchline some nodes carry */
+.fnode-coda {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fz-md1);
+  line-height: var(--lh-relaxed);
+  color: var(--gold-hi);
+  margin-top: var(--sp-13);
+  margin-bottom: 0;
+  max-width: 640px;
+  padding-left: var(--sp-13);
+  border-left: 1px solid var(--bdr-2);
+}
+
+/* Cross-links to Books / Essays / etc. */
+.fnode-links {
+  margin-top: var(--sp-15);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.fnode-link {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs2);
+  letter-spacing: var(--ls-7);
+  color: var(--gold);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--ease-fast), transform var(--ease-fast);
+  align-self: flex-start;
+}
+.fnode-link:hover {
+  color: var(--gold-hi);
+  transform: translateX(3px);
+}
+
+/* ── End-of-Frame footer ─────────────────────────────────── */
+.frames-end {
+  margin-top: var(--sp-24);
+  padding-top: var(--sp-15);
+}
+.frames-end-rule {
+  height: 1px;
+  background: var(--bdr);
+  margin-bottom: var(--sp-13);
+}
+.frames-end-note {
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs2);
+  letter-spacing: var(--ls-7);
+  color: var(--tx-3);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ── Right-side index column ────────────────────────────── */
+.frames-idx {
+  position: sticky;
+  top: var(--sp-22);
+  font-family: var(--font-mono);
+}
+
+.frames-idx-lbl {
+  font-size: var(--fz-2xs);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-9);
+  color: var(--tx-3);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-3);
+}
+
+.frames-idx-rule {
+  height: 1px;
+  background: var(--bdr);
+  margin-bottom: var(--sp-9);
+}
+
+.frames-idx-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.fidx {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-3);
+  margin: 0 calc(-1 * var(--sp-3));
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background var(--ease-fast), color var(--ease-fast);
+}
+.fidx:hover {
+  background: var(--surf);
+}
+.fidx--on {
+  background: var(--surf);
+}
+.fidx--on .fidx-yr {
+  color: var(--tx);
+}
+.fidx--on .fidx-epi {
+  color: var(--gold-hi);
+}
+
+.fidx-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+.fidx-dot--high {
+  background: var(--gold-hi);
+}
+.fidx-dot--low {
+  background: transparent;
+  border: 1px solid var(--tx-3);
+}
+.fidx-dot--half {
+  background: linear-gradient(90deg, var(--gold-hi) 50%, transparent 50%);
+  border: 1px solid var(--gold-hi);
+}
+.fidx-dot--absolute {
+  background: var(--gold-hi);
+  box-shadow: 0 0 0 2px var(--gold-glow);
+}
+
+.fidx-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fidx-yr {
+  font-size: var(--fz-2xs);
+  letter-spacing: var(--ls-7);
+  color: var(--tx-3);
+  text-transform: uppercase;
+  transition: color var(--ease-fast);
+}
+
+.fidx-epi {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fz-sm);
+  letter-spacing: var(--ls-normal);
+  color: var(--tx-2);
+  line-height: 1.3;
+  text-transform: none;
+  transition: color var(--ease-fast);
+}
+
+/* ── Mobile: index becomes a horizontal strip on top ────── */
+@media (max-width: 900px) {
+  .frames-layout {
+    grid-template-columns: 1fr;
+    gap: var(--sp-15);
+  }
+
+  .frames-idx {
+    position: static;
+    order: -1; /* index above body on mobile */
+    margin-bottom: var(--sp-13);
+    padding-bottom: var(--sp-13);
+    border-bottom: 1px solid var(--bdr);
+  }
+
+  .frames-idx-list {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: var(--sp-9);
+    padding-bottom: var(--sp-3);
+    /* hide scrollbar on webkit */
+    scrollbar-width: thin;
+  }
+  .frames-idx-list::-webkit-scrollbar {
+    height: 3px;
+  }
+  .frames-idx-list::-webkit-scrollbar-thumb {
+    background: var(--bdr);
+  }
+
+  .fidx {
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+    min-width: 130px;
+    padding: var(--sp-3) var(--sp-6);
+    margin: 0;
+  }
+  .fidx-dot {
+    margin-top: 0;
+    margin-bottom: var(--sp-2);
+  }
+}
+
+@media (max-width: 640px) {
+  .frames {
+    padding: var(--sp-17) 0 var(--sp-22);
+  }
+  .frames-hd {
+    margin-bottom: var(--sp-17);
+  }
+  .frames-title {
+    font-size: clamp(48px, 13vw, 80px);
+  }
+  .fnode {
+    padding: var(--sp-17) 0;
+  }
+  .fnode-title {
+    font-size: clamp(30px, 9vw, 44px);
+  }
+  .fnode-coda {
+    padding-left: var(--sp-9);
+  }
+}
