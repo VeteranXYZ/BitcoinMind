@@ -1258,16 +1258,21 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   align-items: flex-start;
   gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-3);
+  padding-left: calc(var(--sp-3) + 2px);
   margin: 0 calc(-1 * var(--sp-3));
   cursor: pointer;
-  border-radius: var(--radius-sm);
-  transition: background var(--ease-fast), color var(--ease-fast);
+  border-left: 2px solid transparent;
+  transition: border-color var(--ease-fast), color var(--ease-fast);
 }
-.fidx:hover {
-  background: var(--surf);
+.fidx:hover .fidx-yr {
+  color: var(--tx-2);
+}
+.fidx:hover .fidx-epi {
+  color: var(--tx);
 }
 .fidx--on {
-  background: var(--surf);
+  border-left-color: var(--gold-hi);
+  background: transparent;
 }
 .fidx--on .fidx-yr {
   color: var(--tx);
@@ -1360,7 +1365,14 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
     flex-shrink: 0;
     min-width: 130px;
     padding: var(--sp-3) var(--sp-6);
+    padding-top: calc(var(--sp-3) + 2px);
     margin: 0;
+    border-left: none;
+    border-top: 2px solid transparent;
+  }
+  .fidx--on {
+    border-left-color: transparent;
+    border-top-color: var(--gold-hi);
   }
   .fidx-dot {
     margin-top: 0;
