@@ -680,17 +680,20 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   .grid-auto { grid-template-columns: 1fr; }
 }
 
+
 /* ═══════════════════════════════════════════════════════════════════
-   THE PULSE — v3 styles
-   REPLACES the previous .pulse* block at the end of styles.css.
-   Plus a one-line tweak to .hero-title at the very end.
+   THE PULSE — v3.1 patch
+   ───────────────────────────────────────────────────────────────────
+   This file REPLACES the v3 .pulse* block in styles.css.
+   Two changes from v3:
+   1. .pulse-num — now italic serif, matching the surrounding sentence
+   2. .pulse — bottom spacing collapsed to fix the gap before Library
    ═══════════════════════════════════════════════════════════════════ */
 
 .pulse {
-  margin: var(--sp-17) 0;
-  padding: var(--sp-15) 0 var(--sp-17);
+  margin: var(--sp-17) 0 0;       /* was: var(--sp-17) 0 — bottom margin removed */
+  padding: var(--sp-15) 0 var(--sp-3);  /* was: ...0 var(--sp-17) — bottom padding reduced */
   border-bottom: 1px solid var(--bdr);
-  /* border-top intentionally removed — Pulse belongs visually to Hero */
 }
 
 .pulse-hd {
@@ -756,17 +759,17 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   max-width: 880px;
 }
 
-/* The block-height number — mono font, normal style, gold color.
-   It deliberately breaks from the surrounding italic serif to read
-   as "machine fact" inside the human sentence. */
+/* CHANGED: number now matches the surrounding sentence — italic serif,
+   distinguished only by color. Same font, same style, same size as the
+   line. The gold color is the only visual mark. */
 .pulse-num {
-  font-family: var(--font-mono);
-  font-style: normal;
-  font-weight: var(--fw-medium);
-  font-size: 0.86em; /* mono fonts run visually larger — pull back slightly */
+  font-family: inherit;
+  font-style: italic;
+  font-weight: inherit;
+  font-size: inherit;
   color: var(--gold-hi);
-  letter-spacing: var(--ls-snug);
-  white-space: nowrap; /* never break "946,539" across lines */
+  letter-spacing: inherit;
+  white-space: nowrap;
   transition: opacity var(--ease-slow);
 }
 
@@ -818,12 +821,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 
 @media (max-width: 640px) {
   .pulse {
-    margin: var(--sp-15) 0;
-    padding: var(--sp-13) 0 var(--sp-15);
+    margin: var(--sp-15) 0 0;
+    padding: var(--sp-13) 0 var(--sp-3);
   }
-  .pulse-line {
-    margin-bottom: var(--sp-11);
-  }
+  .pulse-line { margin-bottom: var(--sp-11); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -839,7 +840,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   HERO TITLE — smaller, tighter
+   HERO TITLE — keep the v3 size
    ═══════════════════════════════════════════════════════════════════ */
 .hero-title {
   font-size: clamp(72px, 11vw, 132px);
