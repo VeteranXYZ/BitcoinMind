@@ -683,6 +683,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
    THE PULSE — Append to the END of styles.css
    Uses only existing design-system tokens. No new variables introduced.
    ═══════════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════
+   THE PULSE — Append to the END of styles.css
+   Uses only existing design-system tokens. No new variables introduced.
+   ═══════════════════════════════════════════════════════════════════ */
 
 .pulse {
   margin: var(--sp-22) 0 var(--sp-22);
