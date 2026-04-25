@@ -679,27 +679,25 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 @media (max-width: 640px) {
   .grid-auto { grid-template-columns: 1fr; }
 }
+
 /* ═══════════════════════════════════════════════════════════════════
-   THE PULSE — Append to the END of styles.css
-   Uses only existing design-system tokens. No new variables introduced.
-   ═══════════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════════
-   THE PULSE — Append to the END of styles.css
-   Uses only existing design-system tokens. No new variables introduced.
+   THE PULSE — v3 styles
+   REPLACES the previous .pulse* block at the end of styles.css.
+   Plus a one-line tweak to .hero-title at the very end.
    ═══════════════════════════════════════════════════════════════════ */
 
 .pulse {
-  margin: var(--sp-22) 0 var(--sp-22);
-  padding: var(--sp-22) 0;
-  border-top: 1px solid var(--bdr);
+  margin: var(--sp-17) 0;
+  padding: var(--sp-15) 0 var(--sp-17);
   border-bottom: 1px solid var(--bdr);
+  /* border-top intentionally removed — Pulse belongs visually to Hero */
 }
 
 .pulse-hd {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--sp-15);
+  margin-bottom: var(--sp-13);
 }
 
 .pulse-lbl {
@@ -733,9 +731,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   display: inline-block;
 }
 
-.pulse-live--flash {
-  animation: pulse-live-flash 0.7s ease-out;
-}
+.pulse-live--flash { animation: pulse-live-flash 0.7s ease-out; }
 
 @keyframes pulse-breath {
   0%, 100% { opacity: 0.5; }
@@ -750,25 +746,31 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 
 .pulse-line {
   font-family: var(--font-serif);
-  font-size: var(--fz-sec);
+  font-size: clamp(22px, 3vw, 32px);
   font-weight: var(--fw-normal);
   font-style: italic;
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-tighter);
   color: var(--tx);
-  margin: 0 0 var(--sp-15);
-  max-width: 980px;
+  margin: 0 0 var(--sp-13);
+  max-width: 880px;
 }
 
+/* The block-height number — mono font, normal style, gold color.
+   It deliberately breaks from the surrounding italic serif to read
+   as "machine fact" inside the human sentence. */
 .pulse-num {
-  font-style: italic;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-weight: var(--fw-medium);
+  font-size: 0.86em; /* mono fonts run visually larger — pull back slightly */
   color: var(--gold-hi);
+  letter-spacing: var(--ls-snug);
+  white-space: nowrap; /* never break "946,539" across lines */
   transition: opacity var(--ease-slow);
 }
 
-.pulse-num--flash {
-  animation: pulse-num-flash 0.7s ease-out;
-}
+.pulse-num--flash { animation: pulse-num-flash 0.7s ease-out; }
 
 @keyframes pulse-num-flash {
   0%   { opacity: 0.4; }
@@ -780,7 +782,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   position: relative;
   height: 1px;
   background: var(--bdr);
-  margin: var(--sp-13) 0 var(--sp-3);
+  margin: var(--sp-11) 0 var(--sp-3);
   overflow: visible;
 }
 
@@ -796,9 +798,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   transition: left 0.4s ease-out;
 }
 
-.pulse-mark--step {
-  animation: pulse-mark-step 0.7s ease-out;
-}
+.pulse-mark--step { animation: pulse-mark-step 0.7s ease-out; }
 
 @keyframes pulse-mark-step {
   0%   { box-shadow: 0 0 0 3px var(--gold-dim); }
@@ -816,24 +816,16 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   text-transform: uppercase;
 }
 
-/* ── Mobile adjustments ─────────────────────────────────── */
 @media (max-width: 640px) {
   .pulse {
-    margin: var(--sp-17) 0;
-    padding: var(--sp-17) 0;
+    margin: var(--sp-15) 0;
+    padding: var(--sp-13) 0 var(--sp-15);
   }
   .pulse-line {
-    margin-bottom: var(--sp-13);
-  }
-  .pulse-track {
-    margin: var(--sp-11) 0 var(--sp-3);
-  }
-  .pulse-ends {
-    font-size: var(--fz-2xs);
+    margin-bottom: var(--sp-11);
   }
 }
 
-/* ── Reduced motion: respect the user ───────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .pulse-live,
   .pulse-live--flash,
@@ -844,4 +836,11 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
     transition: none !important;
   }
   .pulse-live { opacity: 0.8; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   HERO TITLE — smaller, tighter
+   ═══════════════════════════════════════════════════════════════════ */
+.hero-title {
+  font-size: clamp(72px, 11vw, 132px);
 }
