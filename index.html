@@ -38,8 +38,8 @@
 </script>
 
 <script type="text/babel">
-const { useState, useEffect, useMemo, useCallback } = React;
-
+const { useState, useEffect, useCallback, useRef } = React;
+  
 // ═══ DATA ═════════════════════════════════════════════════════════════
 
 const BOOKS = [
@@ -823,6 +823,142 @@ function NotesPage() {
 
 // ═══ APP ══════════════════════════════════════════════════════════════
 
+// ═══════════════════════════════════════════════════════════════════
+// MOBILE MENU — JSX changes to index.html
+// ───────────────────────────────────────────────────────────────────
+// THREE small edits to index.html:
+//   1. Add the MobileMenu component (paste before `function App()`)
+//   2. Add one useState in App
+//   3. Add the MENU button in <nav> and the <MobileMenu /> after </nav>
+// ═══════════════════════════════════════════════════════════════════
+
+
+// ─── EDIT 1 ────────────────────────────────────────────────────────
+// Paste this entire component RIGHT BEFORE `function App()`
+// (which is on line 671 of your current index.html)
+
+function MobileMenu({ open, onClose, navItems, page, navigate }) {
+  const closeBtnRef = useRef(null);
+
+  // Lock body scroll while open; restore on close.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
+
+  // Esc key closes; auto-focus close button on open.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    // Move focus to CLOSE so keyboard users can dismiss immediately
+    setTimeout(() => closeBtnRef.current && closeBtnRef.current.focus(), 0);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  const handleSelect = (id) => {
+    onClose();
+    // Tiny delay so the close transition finishes before the page swaps
+    setTimeout(() => navigate(id), 120);
+  };
+
+  return (
+    <div className="mm" role="dialog" aria-modal="true" aria-label="Site menu">
+      <div className="mm-bar">
+        <button
+          ref={closeBtnRef}
+          className="mm-close"
+          onClick={onClose}
+          aria-label="Close menu"
+        >
+          Close
+        </button>
+      </div>
+
+      <nav className="mm-list" aria-label="Primary">
+        {navItems.map((n, i) => (
+          <button
+            key={n.id}
+            className={`mm-item ${page === n.id ? 'mm-item--on' : ''}`}
+            onClick={() => handleSelect(n.id)}
+            style={{ animationDelay: `${0.04 + i * 0.025}s` }}
+          >
+            {n.label}
+          </button>
+        ))}
+      </nav>
+
+      <div className="mm-foot">
+        <div className="mm-foot-rule" />
+        <div className="mm-foot-l1">bitcoinmind.com &middot; est. 2024</div>
+        <div className="mm-foot-l2">A public record by Haitian Zhang</div>
+      </div>
+    </div>
+  );
+}
+
+
+// ─── EDIT 2 ────────────────────────────────────────────────────────
+// Inside `function App()`, add this useState right after the
+// existing `const [page, setPage] = useState(...)` block:
+
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+// You also need to add `useRef` to the React import line at the top
+// of the script. Find this line near the top:
+//
+//     const { useState, useEffect, useCallback } = React;
+//
+// And change it to:
+//
+//     const { useState, useEffect, useCallback, useRef } = React;
+
+
+// ─── EDIT 3 ────────────────────────────────────────────────────────
+// Replace the existing <nav>...</nav> block in App's return statement
+// (currently lines 706–717) with this:
+
+<nav>
+  <div className="nav-in">
+    <span className="nav-logo" onClick={() => navigate('home')}>Bitcoin<b>Mind</b></span>
+    <div className="nav-links">
+      {navItems.map(n => (
+        <span key={n.id} className={`nl ${page === n.id ? 'on' : ''}`} onClick={() => navigate(n.id)}>
+          {n.label}
+        </span>
+      ))}
+    </div>
+    <button
+      className="nav-menu-btn"
+      onClick={() => setMobileMenuOpen(true)}
+      aria-label="Open menu"
+    >
+      Menu
+    </button>
+  </div>
+</nav>
+
+<MobileMenu
+  open={mobileMenuOpen}
+  onClose={() => setMobileMenuOpen(false)}
+  navItems={navItems}
+  page={page}
+  navigate={navigate}
+/>
+
+
+// ═══════════════════════════════════════════════════════════════════
+// That's it. The MENU button is hidden on desktop via CSS;
+// the .nav-links are hidden on mobile via CSS.
+// No other JS changes needed.
+// ═══════════════════════════════════════════════════════════════════
+
+
+  
 function App() {
   const PAGES = ['home', 'start', 'books', 'essays', 'tools', 'about', 'notes'];
   const [page, setPage] = useState(() => {
@@ -836,6 +972,10 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 
+  
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  
   useEffect(() => {
     const onHash = () => {
       const h = window.location.hash.replace('#', '');
