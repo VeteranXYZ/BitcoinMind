@@ -998,6 +998,8 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <>
       <ReadingProgress />
+
+<ReadingProgress />
       <nav>
         <div className="nav-in">
           <span className="nav-logo" onClick={() => navigate('home')}>Bitcoin<b>Mind</b></span>
@@ -1008,8 +1010,27 @@ const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
               </span>
             ))}
           </div>
+          <button
+            className="nav-menu-btn"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            Menu
+          </button>
         </div>
       </nav>
+
+      <MobileMenu
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        navItems={navItems}
+        page={page}
+        navigate={navigate}
+      />
+
+      {page === 'home'   && <HomePage   setPage={navigate} />}
+
+      
 
       {page === 'home'   && <HomePage   setPage={navigate} />}
       {page === 'start'  && <StartHerePage setPage={navigate} />}
