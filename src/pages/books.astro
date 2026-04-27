@@ -1,0 +1,40 @@
+---
+import Base from '@/layouts/Base.astro';
+import BookFilter from '@/components/BookFilter';
+import { BOOKS } from '@/data/books';
+import { SITE } from '@/lib/seo';
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'BitcoinMind Library',
+  itemListElement: BOOKS.map((b, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Book',
+      name: b.title,
+      author: { '@type': 'Person', name: b.author },
+      description: b.desc,
+      url: b.link,
+    },
+  })),
+};
+---
+<Base
+  title="The Library"
+  description="Eight books arranged by learning path — the foundational reading for understanding Bitcoin, money, and sovereignty."
+  path="/books"
+  jsonLd={itemList}
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Reading List</div>
+        <h1 class="ph-title">The <em>Library</em></h1>
+        <p class="ph-desc">Eight books, arranged by learning path. Not a complete bibliography — a curated progression. Each was chosen because it changed how I think about money, Bitcoin, or sovereignty.</p>
+      </div>
+      <BookFilter client:visible />
+    </div>
+  </div>
+</Base>

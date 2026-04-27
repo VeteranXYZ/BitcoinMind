@@ -1,0 +1,110 @@
+---
+import Base from '@/layouts/Base.astro';
+import { SITE } from '@/lib/seo';
+
+const stats: [string, string][] = [
+  ['Books indexed', '8'], ['Essays indexed', '8'], ['Tools indexed', '8'],
+  ['First contact', 'April 2011'], ['Last updated', 'Apr 2026'],
+];
+const principles = [
+  'Time-tested only', 'First principles only', 'No price predictions',
+  'No altcoin content', 'Personally vetted',
+];
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.author,
+  description: 'First wrote about Bitcoin in April 2011 when the price was $1.',
+  url: `${SITE.url}/about`,
+  email: 'hello@bitcoinmind.com',
+};
+---
+<Base
+  title="About"
+  description="BitcoinMind is a public record by Hiei — first wrote about Bitcoin in April 2011 when the price was $1, stayed on the sidelines, came back to think it through in public."
+  path="/about"
+  jsonLd={personLd}
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">About</div>
+        <h1 class="ph-title"><em>Hiei</em></h1>
+        <p class="ph-desc">First wrote about Bitcoin in April 2011. The price was $1. I stayed on the sidelines.</p>
+      </div>
+
+      <div class="about-wrap">
+        <div class="about-main">
+          <div class="a-sec">
+            <div class="a-eye">Origin</div>
+            <h2 class="a-h">I was right about the risk. I was wrong to stay on the sidelines.</h2>
+            <div class="a-body">
+              <p>In April 2011, I wrote a blog post about Bitcoin. The price was around $1. I called it devil-like — something that could be either temptation or the mouth of hell, depending on the person who touched it. I questioned whether its cryptographic guarantees were real, whether its creators might secretly inflate the supply, whether value produced without labor could ever earn genuine exchange value from the public. I ended the post with a single sentence: <em>I will stay on the sidelines for now.</em></p>
+              <p>That post is still the most honest thing I've ever written about Bitcoin — not because the conclusions were correct, but because the questions were real. Thirteen years later, I've stopped asking whether Bitcoin is reliable. The question that occupies me now is different: what does it mean to hold a monetary asset that no government issued, no institution backs, and no single person controls? What does that do to how you think about time, sovereignty, and value?</p>
+              <p>BitcoinMind is my attempt to think that question through in public.</p>
+            </div>
+          </div>
+
+          <div class="a-sec">
+            <div class="a-eye">What This Is</div>
+            <h2 class="a-h">Not a price site. A thinking site.</h2>
+            <div class="a-body">
+              <p>This is not a price site. I don't track charts here. What I track is understanding — my own, and the best thinking I've found from others. Every book, essay, and tool on this site is something I've read, used, or returned to more than once. Nothing is here because it's popular. Everything is here because it changed how I think.</p>
+              <p>My conviction is simple: Bitcoin is the only decentralized monetary asset in existence, and its trajectory — measured not in months but in decades — points in one direction. I'm not interested in converting anyone. I'm interested in finding the people who are already asking the same questions I am.</p>
+              <p>If that's you, you're in the right place.</p>
+            </div>
+          </div>
+
+          <div class="a-sec">
+            <div class="a-eye">Curation Standards</div>
+            <h2 class="a-h">What gets in, and what doesn't</h2>
+            <div class="a-body">
+              <p>The standard: would I recommend this to someone I respect who is thinking seriously about Bitcoin for the first time? That filters out a lot.</p>
+              <p>Included: resources that have held up over time, argue from first principles, and don't depend on Bitcoin's price being higher to make their point. Excluded: price predictions, technical analysis, altcoin comparisons, anything I haven't read myself and thought carefully about.</p>
+              <p>The list is intentionally short. Curation means saying no.</p>
+            </div>
+          </div>
+
+          <div class="a-sec">
+            <div class="a-eye">Contact</div>
+            <h2 class="a-h">Find me here</h2>
+            <div class="a-body">
+              <p>If you think something belongs here — a book I missed, an essay that changed your mind, a tool you use and trust — tell me.</p>
+            </div>
+            <div class="contacts">
+              <a class="contact-row" href="mailto:hello@bitcoinmind.com">
+                <span class="contact-lbl">Email</span>
+                <span>hello@bitcoinmind.com</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-aside">
+          <div class="aside-card">
+            <div class="aside-card-title">Site Stats</div>
+            {stats.map(([k, v]) => (
+              <div class="aside-item">
+                <span>{k}</span><span class="aside-item-val">{v}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-title">Curation Principles</div>
+            {principles.map((p) => (
+              <div class="aside-curate-item">✓ {p}</div>
+            ))}
+          </div>
+
+          <a class="aside-card aside-card--link" href="/notes">
+            <div class="aside-card-title">From the Notes</div>
+            <p class="aside-notes-quote">"I will stay on the sidelines for now."</p>
+            <p class="aside-notes-link">What I wrote about Bitcoin in April 2011, when it was $1 →</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

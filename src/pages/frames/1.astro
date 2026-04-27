@@ -1,0 +1,92 @@
+---
+import Base from '@/layouts/Base.astro';
+import { FRAME_ONE, type FrameLinkTarget } from '@/data/frame-one';
+
+const targetHref: Record<FrameLinkTarget, string> = {
+  books: '/books',
+  essays: '/essays',
+  tools: '/tools',
+};
+
+const frame = FRAME_ONE;
+---
+<Base
+  title="A History of Hardness"
+  description="Five thousand years of money, told through the question every era had to answer: what stops you from making more?"
+  path="/frames/1"
+  ogType="article"
+>
+  <div class="page frames">
+    <div class="c">
+      <header class="frames-hd">
+        <div class="frames-eye">
+          <a href="/frames">Frames</a>
+          <span class="frames-eye-sep">·</span>
+          <span>{frame.number}</span>
+        </div>
+        <h1 class="frames-title">
+          A History of <em>Hardness</em>
+        </h1>
+        <p class="frames-sub">{frame.subtitle}</p>
+        <p class="frames-q">{frame.question}</p>
+        <div class="frames-rule"></div>
+      </header>
+
+      <div class="frames-layout">
+        <main class="frames-body">
+          {frame.nodes.map((node) => (
+            <article
+              data-frame-node
+              class={`fnode fnode--${node.hardness}`}
+            >
+              <div class="fnode-meta">
+                <span class={`fnode-dot fnode-dot--${node.hardness}`} aria-hidden="true"></span>
+                <span class="fnode-n">{node.n}</span>
+                <span class="fnode-sep">·</span>
+                <span class="fnode-yr">{node.year}</span>
+              </div>
+              <h2 class="fnode-title">{node.title}</h2>
+              <p class="fnode-epi">{node.epigraph}</p>
+              {node.body.map((p) => <p class="fnode-p">{p}</p>)}
+              {node.coda && <p class="fnode-coda">{node.coda}</p>}
+              {node.links && node.links.length > 0 && (
+                <div class="fnode-links">
+                  {node.links.map((lk) => (
+                    <a class="fnode-link" href={targetHref[lk.target]}>→ {lk.label}</a>
+                  ))}
+                </div>
+              )}
+            </article>
+          ))}
+
+          <div class="frames-end">
+            <div class="frames-end-rule"></div>
+            <p class="frames-end-note">
+              End of Frames {frame.number}. More frames in time.
+            </p>
+          </div>
+        </main>
+
+        <aside class="frames-idx" aria-label="Timeline index">
+          <div class="frames-idx-lbl">Index</div>
+          <div class="frames-idx-rule"></div>
+          <ul class="frames-idx-list">
+            {frame.nodes.map((node) => (
+              <li data-frame-idx class="fidx">
+                <span class={`fidx-dot fidx-dot--${node.hardness}`} aria-hidden="true"></span>
+                <div class="fidx-text">
+                  <div class="fidx-yr">{node.n} &middot; {node.year}</div>
+                  <div class="fidx-epi">{node.epigraph}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import '@/scripts/frame-one-spy';
+  </script>
+</Base>

@@ -1,0 +1,40 @@
+---
+import Base from '@/layouts/Base.astro';
+import EssayFilter from '@/components/EssayFilter';
+import { ESSAYS } from '@/data/essays';
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'BitcoinMind Essays & Papers',
+  itemListElement: ESSAYS.map((e, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Article',
+      headline: e.title,
+      author: { '@type': 'Person', name: e.author },
+      datePublished: String(e.year),
+      description: e.desc,
+      url: e.link,
+    },
+  })),
+};
+---
+<Base
+  title="Essays & Papers"
+  description="Eight essays and papers ordered by importance — the whitepaper first, then the thinkers who built the intellectual scaffolding around Bitcoin."
+  path="/essays"
+  jsonLd={itemList}
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Reading List</div>
+        <h1 class="ph-title">Essays & <em>Papers</em></h1>
+        <p class="ph-desc">Eight texts, ordered by importance. The whitepaper first, then the thinkers who built the intellectual scaffolding around it. Every link tested. No filler.</p>
+      </div>
+      <EssayFilter client:visible />
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,60 @@
+---
+import Base from '@/layouts/Base.astro';
+import { SITE, canonical } from '@/lib/seo';
+
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'What I wrote about Bitcoin in April 2011, when it was $1',
+  author: { '@type': 'Person', name: SITE.author },
+  datePublished: '2011-04-01',
+  dateModified: '2024-01-01',
+  mainEntityOfPage: canonical('/notes'),
+};
+---
+<Base
+  title="Notes"
+  description="Original writing by Hiei. Note No. 1: what I wrote about Bitcoin in April 2011, when it was $1."
+  path="/notes"
+  ogType="article"
+  jsonLd={articleLd}
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Notes</div>
+        <h1 class="ph-title"><em>Notes</em></h1>
+        <p class="ph-desc">Original writing. Not curated resources — my own thinking, published when it's ready.</p>
+      </div>
+
+      <div class="note-wrap">
+        <div class="note-hd">
+          <div class="note-num">Note No. 1 · April 2011, republished 2024</div>
+          <h2 class="note-title">What I wrote about Bitcoin<br />in April 2011, when it was $1</h2>
+          <div class="note-subtitle">Originally published April 2011 · Translated from Chinese · Nothing has been changed</div>
+        </div>
+
+        <div class="note-body">
+          <p>I've discovered something I can't quite describe: Bitcoin. It feels devil-like — for anyone who comes into contact with it, this thing could be either a temptation or a plunge into the depths of hell. This new form of virtual currency appears similar to others on the surface, but after careful analysis, everyone walks away with a look of astonishment, acknowledging that it is something fundamentally different.</p>
+          <p>A form of virtual currency outside government control, with no organizational backing (whether this is truly the case remains to be verified), issued by and for citizens of the internet — what concerns me is not some distant question about whether it can shake the existing monetary order. I'm approaching this as a realist, questioning its reliability. Can that so-called "complex algorithm" truly never be broken? Could the founders secretly mass-produce supply for their own profit? And can value produced without labor ever earn genuine exchange value from ordinary public life?</p>
+          <p>Because it is unmeasurable, and because the temptation of limitless appreciation is so great, I classify it as something devil-like. But I cannot deny that it has already formed a trading ecosystem of real scale globally — providing new channels for underground transactions across countries, generating a visible class of platform traders who make a living flipping it. Everything visible feels real, and yet that very realness makes the suspicious mind trust it even less.</p>
+          <p>At present, very few people in China know about this. It is mostly a foreign phenomenon, though a small number of people here have already started buying graphics cards in bulk, playing the role of gold miners. More people are still watching from the sidelines. Many are calling it empty, calling it doomed.</p>
+          <p>From conversations with a Taobao seller, I learned that Bitcoin only became a global hot topic in the past month or two, doubling in price. Google Trends confirms it. Which makes you wonder — something that appeared so suddenly, could it not also disappear just as suddenly, in some equally unforeseeable way?</p>
+          <p>But 200% returns are enough to make people risk their lives. And for those infected with ambitions that reach toward infinity, even more so. Some have charged in on the principle of early entry, early profit. Whether enough people will come after them to sustain it — I think that depends entirely on the next few single-digit price movements.</p>
+          <p>I'm suddenly reminded of China's A-share market in 2007, and today's Chinese property market. Can foreign investors complete this kind of sky-high relay race? Or is this something that simply cannot be measured by any existing model?</p>
+          <p>But I believe this much remains constant, as it always has: <em>All men rush toward profit; all men flee from loss.</em> Human nature does not change.</p>
+          <p class="note-closing-line">For now, I will stay on the sidelines.</p>
+        </div>
+
+        <div class="note-sig-block">
+          <div class="note-sig">— Hiei, April 2011</div>
+        </div>
+
+        <div class="note-kicker">
+          <div class="note-kicker-lbl">Note, 2024</div>
+          <p class="note-kicker-body">The price when I wrote this was approximately $1. I stayed on the sidelines longer than I should have. The questions I asked were the right ones. The conclusion I reached was not.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,44 @@
+---
+import Base from '@/layouts/Base.astro';
+import { FRAMES_LIST } from '@/data/frame-one';
+
+const idToHref: Record<string, string> = {
+  'frames-1': '/frames/1',
+  'frames-2': '/frames/2',
+};
+---
+<Base
+  title="Frames"
+  description="A series of frames — each a way of looking at money through history, purchasing power, or the accidents of decades."
+  path="/frames"
+>
+  <div class="page frames-ix">
+    <div class="c">
+      <header class="frames-ix-hd">
+        <div class="frames-ix-eye">Frames</div>
+        <h1 class="frames-ix-title">A series of <em>frames</em></h1>
+        <p class="frames-ix-sub">
+          Each frame is a way of looking at money — through history, through purchasing power, through the accidents of decades. They are meant to be read in any order.
+        </p>
+        <div class="frames-ix-rule"></div>
+      </header>
+
+      <div class="frames-ix-list">
+        {FRAMES_LIST.map((f) => (
+          <a class="frames-ix-card" href={idToHref[f.id]}>
+            <div class="frames-ix-card-meta">
+              <span>Frames</span>
+              <span class="frames-ix-card-sep">·</span>
+              <span>{f.number}</span>
+              <span class="frames-ix-card-sep">·</span>
+              <span>{f.kind}</span>
+            </div>
+            <h2 class="frames-ix-card-title">{f.title}</h2>
+            <p class="frames-ix-card-sub">{f.subtitle}</p>
+            <div class="frames-ix-card-go">Open →</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>

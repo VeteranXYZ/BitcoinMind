@@ -1,0 +1,80 @@
+---
+import Base from '@/layouts/Base.astro';
+
+interface Step {
+  n: string;
+  head: string;
+  body: string;
+  label: string;
+  author: string | null;
+  href: string;
+  external: boolean;
+}
+
+const steps: Step[] = [
+  { n: '1', head: 'Read the document that started everything.',
+    body: "Nine pages. Written by a person no one has ever identified. Read it not to understand the cryptography — read it to feel the problem it's solving. Two people. No bank in between. That's the whole idea.",
+    label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto',
+    href: 'https://bitcoin.org/bitcoin.pdf', external: true },
+  { n: '2', head: 'Learn what money actually is.',
+    body: "You cannot understand what Bitcoin is replacing without understanding what money is. Most people never ask. The Bitcoin Standard is where I'd start — not the whole book, just Part One. The history of money is the only context that makes Bitcoin legible.",
+    label: 'The Bitcoin Standard', author: 'Saifedean Ammous',
+    href: 'https://saifedean.com/tbs/', external: true },
+  { n: '3', head: 'Understand why this one.',
+    body: "Someone will tell you about other cryptocurrencies. This is where most people get lost. Parker Lewis doesn't argue from loyalty — he argues from structure. Read Gradually, Then Suddenly before you make up your mind.",
+    label: 'Gradually, Then Suddenly', author: 'Parker Lewis',
+    href: 'https://unchained.com/gradually-then-suddenly/', external: true },
+  { n: '4', head: 'Follow the idea to its conclusion.',
+    body: "If the first three steps landed, you'll feel it — something shifts in how you think about savings, governments, time, sovereignty. The Sovereign Individual was written in 1997. It has no business being this accurate about the present. Read it slowly.",
+    label: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg',
+    href: 'https://www.amazon.com/Sovereign-Individual-Mastering-Transition-Information/dp/0684832720', external: true },
+  { n: '5', head: 'Read what I actually think.',
+    body: "The Notes section is where I write without a net. Start with the first entry — April 2011, Bitcoin at $1. I called it devil-like. I wasn't wrong about the nature of it. I was wrong about what to do.",
+    label: 'Notes', author: null, href: '/notes', external: false },
+];
+---
+<Base
+  title="Start Here"
+  description="Where to begin with Bitcoin — five carefully ordered resources for people approaching it seriously for the first time."
+  path="/start"
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Start Here</div>
+        <h1 class="ph-title">Where to <em>begin.</em></h1>
+        <p class="ph-desc">Most people find Bitcoin through price. That's fine. But price is the last thing worth understanding, not the first.</p>
+      </div>
+
+      <div class="steps-wrap">
+        {steps.map((s) => (
+          <div class="step">
+            <div class="step-num-row">
+              <span class="step-num-badge">{s.n}</span>
+              <span class="step-num-line"></span>
+            </div>
+            <h2 class="step-heading">{s.head}</h2>
+            <p class="step-body">{s.body}</p>
+            <a
+              class="step-cta"
+              href={s.href}
+              {...(s.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            >
+              <span class="step-arrow">→</span>
+              <span>
+                <span class="step-book">{s.label}</span>
+                {s.author && <span class="step-auth">{s.author}</span>}
+              </span>
+            </a>
+          </div>
+        ))}
+
+        <div class="steps-closing">
+          <p class="steps-closing-p">That's enough.</p>
+          <p class="steps-closing-p steps-closing-p--gap">The full library is here when you want it. But these five are the ones I'd give to someone I was trying to convince — not that Bitcoin is a good investment, but that it's a serious idea worth your serious attention.</p>
+          <div class="steps-signature">— Hiei</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>

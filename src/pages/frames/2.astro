@@ -1,0 +1,26 @@
+---
+import Base from '@/layouts/Base.astro';
+import FrameTwoChart from '@/components/FrameTwoChart';
+---
+<Base
+  title="After the Anchor"
+  description="What happens to money when the anchor is cut. An interactive view of fifty-five years of dollar drift, beside sixteen years of bitcoin."
+  path="/frames/2"
+  ogType="article"
+>
+  <div class="page f2">
+    <div class="c">
+      <header class="f2-hd">
+        <div class="f2-eye">
+          <a href="/frames">Frames</a>
+          <span class="f2-eye-sep">·</span><span>№2</span>
+        </div>
+        <h1 class="f2-title">After the <em>Anchor</em></h1>
+        <p class="f2-sub">What happens to money when the anchor is cut.</p>
+        <div class="f2-rule"></div>
+      </header>
+
+      <FrameTwoChart client:load />
+    </div>
+  </div>
+</Base>

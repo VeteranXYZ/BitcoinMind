@@ -1,0 +1,39 @@
+---
+import Base from '@/layouts/Base.astro';
+import ToolFilter from '@/components/ToolFilter';
+import { TOOLS } from '@/data/tools';
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'BitcoinMind Toolkit',
+  itemListElement: TOOLS.map((t, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'SoftwareApplication',
+      name: t.name,
+      applicationCategory: t.cat,
+      description: t.desc,
+      url: t.link,
+    },
+  })),
+};
+---
+<Base
+  title="Selected Tools"
+  description="Sovereignty tools to hold Bitcoin without trusting anyone, and intelligence tools to read the chain without guessing."
+  path="/tools"
+  jsonLd={itemList}
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Toolkit</div>
+        <h1 class="ph-title">Selected <em>Tools</em></h1>
+        <p class="ph-desc">Two categories. Sovereignty tools help you hold Bitcoin without trusting anyone. Intelligence tools help you read the chain without guessing.</p>
+      </div>
+      <ToolFilter client:visible />
+    </div>
+  </div>
+</Base>
