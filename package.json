@@ -1,0 +1,22 @@
+{
+  "name": "bitcoinmind",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prebuild": "node scripts-build/fetch-block-height.mjs && node scripts-build/generate-grain.mjs",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "preact": "^10.24.0",
+    "@astrojs/preact": "^4.0.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "@fontsource/playfair-display": "^5.1.0",
+    "@fontsource/lora": "^5.1.0",
+    "@fontsource/dm-mono": "^5.1.0"
+  }
+}

@@ -1,0 +1,17 @@
+# Long-cache fingerprinted assets (JS, CSS, fonts, images Astro emits with hash)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Static assets in public/ — long cache, but allow revalidation
+/grain.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon.ico
+  Cache-Control: public, max-age=2592000
+
+# HTML pages — short cache, must revalidate so SEO meta updates propagate
+/*
+  Cache-Control: public, max-age=300, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: interest-cohort=()

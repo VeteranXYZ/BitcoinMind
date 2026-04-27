@@ -1,0 +1,21 @@
+---
+import Tag from './Tag.astro';
+import type { Tool } from '@/data/types';
+interface Props {
+  tool: Tool;
+}
+const { tool } = Astro.props;
+---
+<a class="card" href={tool.link} target="_blank" rel="noopener noreferrer">
+  <div class="card-layer">{tool.cat}</div>
+  <div class="card-title">{tool.name}</div>
+  <div class="card-desc card-desc--top">{tool.desc}</div>
+  <div class="card-tags">
+    {tool.tags.map((t) => <Tag label={t} />)}
+    <Tag label={tool.cost} />
+  </div>
+  <div class="card-ft">
+    <span class="card-meta">{tool.cost}</span>
+    <span class="card-cta">Visit →</span>
+  </div>
+</a>

@@ -1,0 +1,120 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import { SITE, fullTitle, canonical } from '@/lib/seo';
+
+import '@fontsource/playfair-display/400.css';
+import '@fontsource/playfair-display/600.css';
+import '@fontsource/playfair-display/700.css';
+import '@fontsource/playfair-display/900.css';
+import '@fontsource/playfair-display/400-italic.css';
+import '@fontsource/playfair-display/600-italic.css';
+import '@fontsource/playfair-display/700-italic.css';
+import '@fontsource/playfair-display/900-italic.css';
+import '@fontsource/lora/400.css';
+import '@fontsource/lora/500.css';
+import '@fontsource/lora/400-italic.css';
+import '@fontsource/lora/500-italic.css';
+import '@fontsource/dm-mono/300.css';
+import '@fontsource/dm-mono/400.css';
+import '@fontsource/dm-mono/500.css';
+
+import '@/styles/design-system.css';
+import '@/styles/styles.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
+  ogType?: 'website' | 'article';
+  showFooter?: boolean;
+}
+
+const {
+  title,
+  description,
+  path,
+  jsonLd,
+  ogType = 'website',
+  showFooter = true,
+} = Astro.props;
+
+const pageTitle = fullTitle(title);
+const url = canonical(path);
+const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={description} />
+  <meta name="author" content={SITE.author} />
+  <link rel="canonical" href={url} />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+  <meta property="og:type" content={ogType} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={url} />
+  <meta property="og:site_name" content={SITE.name} />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+
+  <ClientRouter />
+
+  <script is:inline>
+    // Hash redirect — must run before render so legacy SPA links land on the right page.
+    (function () {
+      var map = {
+        '#home': '/', '#start': '/start', '#books': '/books', '#essays': '/essays',
+        '#tools': '/tools', '#frames': '/frames', '#frames-1': '/frames/1',
+        '#frames-2': '/frames/2', '#about': '/about', '#notes': '/notes'
+      };
+      var t = map[location.hash];
+      if (t && location.pathname === '/') {
+        location.replace(t + location.search);
+      }
+    })();
+  </script>
+
+  {ldArray.map((ld) => (
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  ))}
+</head>
+<body>
+  <div id="pb"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <Nav />
+
+  <main>
+    <slot />
+  </main>
+
+  {showFooter && <Footer />}
+
+  <script>
+    import '@/scripts/reading-progress';
+    import '@/scripts/mobile-menu';
+  </script>
+</body>
+</html>
+
+<style is:global>
+  .grain {
+    position: fixed;
+    inset: 0;
+    background-image: url('/grain.png');
+    background-size: 256px;
+    z-index: 9998;
+    pointer-events: none;
+    opacity: 0.028;
+    mix-blend-mode: overlay;
+  }
+</style>

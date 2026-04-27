@@ -1,0 +1,8 @@
+---
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+const cls = label.toLowerCase().replace(/\s+/g, '-');
+---
+<span class={`tag tag--${cls}`}>{label}</span>

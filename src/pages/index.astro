@@ -1,0 +1,80 @@
+---
+import Base from '@/layouts/Base.astro';
+import BookCard from '@/components/BookCard.astro';
+import EssayCard from '@/components/EssayCard.astro';
+import ToolCard from '@/components/ToolCard.astro';
+import TodaysPick from '@/components/TodaysPick';
+import Pulse from '@/components/Pulse';
+import { BOOKS } from '@/data/books';
+import { ESSAYS } from '@/data/essays';
+import { TOOLS } from '@/data/tools';
+import { SITE } from '@/lib/seo';
+
+const layer1Books = BOOKS.filter((b) => b.layer === 1);
+const previewEssays = ESSAYS.slice(0, 3);
+const previewTools = TOOLS.slice(0, 3);
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.tagline,
+  author: { '@type': 'Person', name: SITE.author },
+};
+---
+<Base
+  title={SITE.name}
+  description={SITE.tagline}
+  path="/"
+  jsonLd={websiteLd}
+>
+  <div class="page">
+    <div class="hero">
+      <div class="c">
+        <div class="hero-eye">bitcoinmind.com · est. 2024</div>
+        <h1 class="hero-title">
+          <span class="hero-t1">Bitcoin</span>
+          <span class="hero-t2">Mind</span>
+        </h1>
+        <div class="hero-rule"><div class="hero-rule-dot"></div></div>
+        <p class="hero-quote">"Curated resources for people who want to understand Bitcoin, not just own it."</p>
+        <p class="hero-by">A public record by Hiei · Updated April 2026</p>
+        <TodaysPick client:load />
+        <Pulse client:idle />
+      </div>
+    </div>
+
+    <div class="c">
+      <div class="section">
+        <div class="sec-hd">
+          <h2 class="sec-title">The <em>Library</em> — Start Here</h2>
+          <a class="va" href="/books">View all 8 books →</a>
+        </div>
+        <div class="grid3">
+          {layer1Books.map((b) => <BookCard book={b} preview />)}
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sec-hd">
+          <h2 class="sec-title">Essential <em>Essays</em></h2>
+          <a class="va" href="/essays">View all 8 essays →</a>
+        </div>
+        <div class="grid3">
+          {previewEssays.map((e) => <EssayCard essay={e} preview />)}
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sec-hd">
+          <h2 class="sec-title">Recommended <em>Tools</em></h2>
+          <a class="va" href="/tools">View all 8 tools →</a>
+        </div>
+        <div class="grid3">
+          {previewTools.map((t) => <ToolCard tool={t} />)}
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
