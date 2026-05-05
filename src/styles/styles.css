@@ -937,6 +937,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 @media (max-width: 720px) {
   .nav-links { display: none; }
   .nav-menu-btn { display: inline-block; }
+  /* Explicit right-anchor in case any future flex item disturbs the
+     margin-left:auto trick on .nav-menu-btn. */
+  .nav-in { justify-content: space-between; }
 }
 
 .mm {
@@ -1070,9 +1073,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
    FRAMES — № 1: A History of Hardness
    ═══════════════════════════════════════════════════════════════════ */
 
-.frames {
-  padding: var(--sp-22) 0 var(--sp-26);
-}
+/* .frames page wrapper inherits .page rhythm — header padding is now
+   provided by the shared .ph rule, so no extra wrapper padding here. */
 
 /* ── Header ─────────────────────────────────────────────── */
 /* .frames-hd container rules are shared from .ph (see top of file). */
@@ -1429,9 +1431,6 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 @media (max-width: 640px) {
   /* .frames-hd container + .frames-title font are normalised by the shared
      header rules and the unified .ph-title block — no override needed. */
-  .frames {
-    padding: var(--sp-17) 0 var(--sp-22);
-  }
   .fnode {
     padding: var(--sp-17) 0;
   }
@@ -1446,10 +1445,6 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 /* ═══════════════════════════════════════════════════════════════════
    FRAMES — Index page
    ═══════════════════════════════════════════════════════════════════ */
-
-.frames-ix {
-  padding: var(--sp-22) 0 var(--sp-26);
-}
 
 /* .frames-ix-hd container rules are shared from .ph (see top of file). */
 
@@ -1544,10 +1539,6 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 /* ═══════════════════════════════════════════════════════════════════
    FRAMES №2 — After the Anchor
    ═══════════════════════════════════════════════════════════════════ */
-
-.f2 {
-  padding: var(--sp-22) 0 var(--sp-26);
-}
 
 /* .f2-hd container rules are shared from .ph (see top of file). */
 
