@@ -382,8 +382,20 @@ nav {
 .tag--intermediate { background: var(--tag-intermediate-bg); color: var(--tag-intermediate-fg); }
 .tag--advanced     { background: var(--tag-advanced-bg);     color: var(--tag-advanced-fg); }
 
-/* ── Page Header ────────────────────────────────────── */
-.ph { padding: var(--sp-21) 0 var(--sp-19); border-bottom: 1px solid var(--bdr); margin-bottom: var(--sp-19); }
+/* ── Page Header ────────────────────────────────────────
+   Shared vertical rhythm across every non-hero page header.
+   .ph (.frames-hd, .frames-ix-hd, .f2-hd are aliased to it via the
+   shared selector below) — single source of truth for top padding,
+   bottom padding, separator rule, and gap to first body content.
+   ──────────────────────────────────────────────────────── */
+.ph,
+.frames-hd,
+.frames-ix-hd,
+.f2-hd {
+  padding: var(--sp-21) 0 var(--sp-19);
+  border-bottom: 1px solid var(--bdr);
+  margin-bottom: var(--sp-19);
+}
 .ph-eye {
   font-family: var(--font-mono);
   font-size: var(--fz-xs1);
@@ -396,15 +408,45 @@ nav {
   gap: var(--sp-6);
 }
 .ph-eye::before { content: ''; width: 28px; height: 1px; background: var(--gold); flex-shrink: 0; }
-.ph-title {
+
+/* Shared title typography across every page header (hero is bigger but
+   uses these same proportions). */
+.ph-title,
+.frames-title,
+.frames-ix-title,
+.f2-title {
   font-family: var(--font-serif);
   font-size: var(--fz-ph);
   font-weight: var(--fw-black);
-  letter-spacing: var(--ls-tightest);
-  line-height: 0.9;
+  letter-spacing: var(--ls-tighter);
+  line-height: 0.95;
+  color: var(--tx);
 }
-.ph-title em { font-style: italic; color: var(--gold-hi); }
-.ph-desc { font-size: var(--fz-md); color: var(--tx-2); max-width: 540px; margin-top: var(--sp-9); line-height: var(--lh-loose); }
+.ph-title em,
+.frames-title em,
+.frames-ix-title em,
+.f2-title em { font-style: italic; color: var(--gold-hi); }
+
+/* Page description: italic-serif epigraph for narrative pages,
+   sans body copy for index/listing pages. Both share max-width and color. */
+.ph-desc {
+  font-size: var(--fz-md);
+  color: var(--tx-2);
+  max-width: 540px;
+  margin-top: var(--sp-9);
+  line-height: var(--lh-loose);
+}
+.frames-sub,
+.frames-ix-sub,
+.f2-sub {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fz-quote);
+  line-height: var(--lh-relaxed);
+  color: var(--tx-2);
+  max-width: 640px;
+  margin-top: var(--sp-9);
+}
 
 /* ── Filter Bar ─────────────────────────────────────── */
 .fb       { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-15); align-items: center; }
@@ -681,6 +723,28 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 }
 @media (max-width: 640px) {
   .grid-auto { grid-template-columns: 1fr; }
+
+  /* Compact page headers on small screens — keep rhythm but reclaim ~30px. */
+  .hero { padding: var(--sp-19) 0 var(--sp-17); }
+  .ph,
+  .frames-hd,
+  .frames-ix-hd,
+  .f2-hd { padding: var(--sp-17) 0 var(--sp-15); margin-bottom: var(--sp-15); }
+
+  /* Search input fills the row instead of fixed 240px (which overflows
+     on 320–360px viewports once chips wrap below). */
+  .srch { width: 100%; min-width: 0; }
+  .fb { gap: var(--sp-3); }
+
+  /* Filter chips meet 44px tap target — was ~24px (5px padding). */
+  .fb-btn {
+    padding: 9px var(--sp-5);
+    font-size: var(--fz-xs1);
+  }
+  .fb-lbl { width: 100%; margin-bottom: var(--sp-1); margin-right: 0; }
+
+  /* Chart page jump buttons — same tap-target uplift. */
+  .f2-jump { padding: 8px var(--sp-5); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1011,9 +1075,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 }
 
 /* ── Header ─────────────────────────────────────────────── */
-.frames-hd {
-  margin-bottom: var(--sp-24);
-}
+/* .frames-hd container rules are shared from .ph (see top of file). */
 
 .frames-eye {
   font-family: var(--font-mono);
@@ -1038,29 +1100,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   opacity: 0.5;
 }
 
-.frames-title {
-  font-family: var(--font-serif);
-  font-size: var(--fz-ph);
-  font-weight: var(--fw-black);
-  line-height: var(--lh-title);
-  letter-spacing: var(--ls-tighter);
-  color: var(--tx);
-  margin-bottom: var(--sp-13);
-}
-.frames-title em {
-  font-style: italic;
-  color: var(--gold-hi);
-}
-
-.frames-sub {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: var(--fz-quote);
-  line-height: var(--lh-relaxed);
-  color: var(--tx-2);
-  max-width: 640px;
-  margin-bottom: var(--sp-3);
-}
+/* .frames-title and .frames-sub typography is shared from .ph-title /
+   .frames-sub block at top of file. */
 
 .frames-q {
   font-family: var(--font-serif);
@@ -1069,12 +1110,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   line-height: var(--lh-relaxed);
   color: var(--gold-hi);
   max-width: 640px;
-  margin-bottom: var(--sp-17);
-}
-
-.frames-rule {
-  height: 1px;
-  background: var(--bdr);
+  margin-top: var(--sp-3);
 }
 
 /* ── Layout: body + index ───────────────────────────────── */
@@ -1391,14 +1427,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 }
 
 @media (max-width: 640px) {
+  /* .frames-hd container + .frames-title font are normalised by the shared
+     header rules and the unified .ph-title block — no override needed. */
   .frames {
     padding: var(--sp-17) 0 var(--sp-22);
-  }
-  .frames-hd {
-    margin-bottom: var(--sp-17);
-  }
-  .frames-title {
-    font-size: clamp(48px, 13vw, 80px);
   }
   .fnode {
     padding: var(--sp-17) 0;
@@ -1419,9 +1451,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   padding: var(--sp-22) 0 var(--sp-26);
 }
 
-.frames-ix-hd {
-  margin-bottom: var(--sp-24);
-}
+/* .frames-ix-hd container rules are shared from .ph (see top of file). */
 
 .frames-ix-eye {
   font-family: var(--font-mono);
@@ -1442,34 +1472,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   flex-shrink: 0;
 }
 
-.frames-ix-title {
-  font-family: var(--font-serif);
-  font-size: var(--fz-ph);
-  font-weight: var(--fw-black);
-  line-height: var(--lh-title);
-  letter-spacing: var(--ls-tighter);
-  color: var(--tx);
-  margin-bottom: var(--sp-13);
-}
-.frames-ix-title em {
-  font-style: italic;
-  color: var(--gold-hi);
-}
-
-.frames-ix-sub {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: var(--fz-quote);
-  line-height: var(--lh-relaxed);
-  color: var(--tx-2);
-  max-width: 680px;
-  margin-bottom: var(--sp-17);
-}
-
-.frames-ix-rule {
-  height: 1px;
-  background: var(--bdr);
-}
+/* .frames-ix-title and .frames-ix-sub typography are shared from
+   .ph-title / .frames-sub blocks at top of file. */
 
 .frames-ix-list {
   display: grid;
@@ -1545,9 +1549,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   padding: var(--sp-22) 0 var(--sp-26);
 }
 
-.f2-hd {
-  margin-bottom: var(--sp-17);
-}
+/* .f2-hd container rules are shared from .ph (see top of file). */
 
 .f2-eye {
   font-family: var(--font-mono);
@@ -1569,34 +1571,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 }
 .f2-eye-sep { color: var(--gold); opacity: 0.5; }
 
-.f2-title {
-  font-family: var(--font-serif);
-  font-size: var(--fz-ph);
-  font-weight: var(--fw-black);
-  line-height: var(--lh-title);
-  letter-spacing: var(--ls-tighter);
-  color: var(--tx);
-  margin-bottom: var(--sp-13);
-}
-.f2-title em {
-  font-style: italic;
-  color: var(--gold-hi);
-}
-
-.f2-sub {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: var(--fz-quote);
-  line-height: var(--lh-relaxed);
-  color: var(--tx-2);
-  max-width: 640px;
-  margin-bottom: var(--sp-17);
-}
-
-.f2-rule {
-  height: 1px;
-  background: var(--bdr);
-}
+/* .f2-title and .f2-sub typography are shared from .ph-title / .frames-sub
+   blocks at top of file. */
 
 /* Tabs */
 .f2-tabs {
