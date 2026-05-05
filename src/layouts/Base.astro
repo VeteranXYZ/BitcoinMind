@@ -4,21 +4,23 @@ import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
 
-import '@fontsource/playfair-display/400.css';
-import '@fontsource/playfair-display/600.css';
-import '@fontsource/playfair-display/700.css';
-import '@fontsource/playfair-display/900.css';
-import '@fontsource/playfair-display/400-italic.css';
-import '@fontsource/playfair-display/600-italic.css';
-import '@fontsource/playfair-display/700-italic.css';
-import '@fontsource/playfair-display/900-italic.css';
-import '@fontsource/lora/400.css';
-import '@fontsource/lora/500.css';
-import '@fontsource/lora/400-italic.css';
-import '@fontsource/lora/500-italic.css';
-import '@fontsource/dm-mono/300.css';
-import '@fontsource/dm-mono/400.css';
-import '@fontsource/dm-mono/500.css';
+// Latin subset only — site is English. Skips cyrillic / vietnamese / latin-ext
+// font files that the browser would never use, cutting dist font count ~50%.
+import '@fontsource/playfair-display/latin-400.css';
+import '@fontsource/playfair-display/latin-600.css';
+import '@fontsource/playfair-display/latin-700.css';
+import '@fontsource/playfair-display/latin-900.css';
+import '@fontsource/playfair-display/latin-400-italic.css';
+import '@fontsource/playfair-display/latin-600-italic.css';
+import '@fontsource/playfair-display/latin-700-italic.css';
+import '@fontsource/playfair-display/latin-900-italic.css';
+import '@fontsource/lora/latin-400.css';
+import '@fontsource/lora/latin-500.css';
+import '@fontsource/lora/latin-400-italic.css';
+import '@fontsource/lora/latin-500-italic.css';
+import '@fontsource/dm-mono/latin-300.css';
+import '@fontsource/dm-mono/latin-400.css';
+import '@fontsource/dm-mono/latin-500.css';
 
 import '@/styles/design-system.css';
 import '@/styles/styles.css';

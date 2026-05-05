@@ -4,11 +4,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "prebuild": "node scripts-build/fetch-block-height.mjs && node scripts-build/generate-grain.mjs",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "refresh-data": "node scripts-build/fetch-block-height.mjs && node scripts-build/generate-grain.mjs"
   },
   "dependencies": {
     "astro": "^5.0.0",

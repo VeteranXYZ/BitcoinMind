@@ -23,17 +23,30 @@ function open(): void {
   requestAnimationFrame(() => closeBtn.focus());
 }
 
+// Guard against double-binding when the same DOM node persists across swaps
+// (e.g. with transition:persist on an element). Without this, ClientRouter would
+// stack listeners on every navigation.
+const BOUND = Symbol.for('bm.menu.bound');
+
 function bindButtons(): void {
   const root = getRoot();
   if (!root) return;
-  const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]');
-  const closeBtn = root.querySelector<HTMLButtonElement>('[data-menu-close]');
-  const items = root.querySelectorAll<HTMLAnchorElement>('[data-menu-item]');
+  const openBtn = document.querySelector<HTMLButtonElement & { [BOUND]?: boolean }>('[data-menu-open]');
+  const closeBtn = root.querySelector<HTMLButtonElement & { [BOUND]?: boolean }>('[data-menu-close]');
+  const items = root.querySelectorAll<HTMLAnchorElement & { [BOUND]?: boolean }>('[data-menu-item]');
 
-  openBtn?.addEventListener('click', open);
-  closeBtn?.addEventListener('click', close);
+  if (openBtn && !openBtn[BOUND]) {
+    openBtn.addEventListener('click', open);
+    openBtn[BOUND] = true;
+  }
+  if (closeBtn && !closeBtn[BOUND]) {
+    closeBtn.addEventListener('click', close);
+    closeBtn[BOUND] = true;
+  }
   items.forEach((a) => {
+    if (a[BOUND]) return;
     a.addEventListener('click', () => setTimeout(close, 120));
+    a[BOUND] = true;
   });
 }
 
