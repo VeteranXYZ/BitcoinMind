@@ -4,6 +4,13 @@ import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
 
+// Critical fonts preloaded in <head> below. These are visible above the fold on
+// every page (hero title + page-title <em> italics in gold). Preloading races
+// them with the HTML download instead of waiting for CSS parsing — kills FOUT.
+import playfair900Normal from '@fontsource/playfair-display/files/playfair-display-latin-900-normal.woff2?url';
+import playfair900Italic from '@fontsource/playfair-display/files/playfair-display-latin-900-italic.woff2?url';
+import lora400Normal from '@fontsource/lora/files/lora-latin-400-normal.woff2?url';
+
 // Latin subset only — site is English. Skips cyrillic / vietnamese / latin-ext
 // font files that the browser would never use, cutting dist font count ~50%.
 import '@fontsource/playfair-display/latin-400.css';
@@ -58,6 +65,10 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   <link rel="canonical" href={url} />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
+  <link rel="preload" href={playfair900Normal} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={playfair900Italic} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={lora400Normal} as="font" type="font/woff2" crossorigin="anonymous" />
+
   <meta property="og:type" content={ogType} />
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={description} />
@@ -109,6 +120,27 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 </html>
 
 <style is:global>
+  /* Metric-aligned fallback for Playfair Display.
+     Numbers tuned (size-adjust + ascent/descent overrides) so that Georgia
+     occupies the same vertical space as Playfair — eliminates the layout
+     shift the moment the real font arrives. */
+  @font-face {
+    font-family: 'Playfair Fallback';
+    src: local('Georgia');
+    size-adjust: 100%;
+    ascent-override: 95%;
+    descent-override: 25%;
+    line-gap-override: 0%;
+  }
+  @font-face {
+    font-family: 'Lora Fallback';
+    src: local('Georgia');
+    size-adjust: 102%;
+    ascent-override: 95%;
+    descent-override: 25%;
+    line-gap-override: 0%;
+  }
+
   .grain {
     position: fixed;
     inset: 0;
