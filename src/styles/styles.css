@@ -975,7 +975,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   letter-spacing: var(--ls-9);
   color: var(--gold-hi);
   text-transform: uppercase;
-  padding: var(--sp-3) var(--sp-2);
+  /* Match .mm-item right padding so close, items, and footer all align. */
+  padding: var(--sp-3) var(--sp-9);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -1007,9 +1008,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-tighter);
   color: var(--tx);
-  /* sp-2 horizontal mirrors the Menu trigger button's inner padding so the
-     overlay items hang at the same right vertical line as the trigger. */
-  padding: var(--sp-6) var(--sp-2);
+  /* Right padding gives clearly visible breathing room — the .mm container
+     already has --pad (24px+), and these add another sp-9 (22px) so item
+     text sits ~46px from the viewport edge. */
+  padding: var(--sp-6) var(--sp-9) var(--sp-6) var(--sp-3);
   cursor: pointer;
   transition: color var(--ease-fast), transform var(--ease-fast);
   opacity: 0;
@@ -1038,7 +1040,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 
 .mm-foot {
   flex-shrink: 0;
-  padding: var(--sp-9) 0 var(--sp-15);
+  padding: var(--sp-9) var(--sp-9) var(--sp-15);
   font-family: var(--font-mono);
   text-align: right;
 }
