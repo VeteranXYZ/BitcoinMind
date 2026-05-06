@@ -100,11 +100,6 @@ nav {
   min-height: 100vh;
   position: relative;
   z-index: 1;
-  animation: fi 0.4s ease both;
-}
-@keyframes fi {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
 }
 .c {
   max-width: var(--max-w);
@@ -395,12 +390,10 @@ nav {
   padding: var(--sp-21) 0 var(--sp-19);
   border-bottom: 1px solid var(--bdr);
   margin-bottom: var(--sp-19);
-  /* Anchor the bottom of the header at a consistent vertical position so
-     pages with single-line vs multi-line descriptions still feel paired. */
+  /* Anchor the bottom border at a consistent vertical position so pages
+     with single-line vs multi-line descriptions still feel paired. Plain
+     block layout — no flex — to keep child margin behaviour predictable. */
   min-height: clamp(280px, 32vw, 360px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
 }
 .ph-eye {
   font-family: var(--font-mono);
@@ -1014,7 +1007,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-tighter);
   color: var(--tx);
-  padding: var(--sp-6) 0;
+  /* sp-2 horizontal mirrors the Menu trigger button's inner padding so the
+     overlay items hang at the same right vertical line as the trigger. */
+  padding: var(--sp-6) var(--sp-2);
   cursor: pointer;
   transition: color var(--ease-fast), transform var(--ease-fast);
   opacity: 0;

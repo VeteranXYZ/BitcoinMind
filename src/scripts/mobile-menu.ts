@@ -79,8 +79,13 @@ function bindButtons(): void {
   items.forEach((a) => {
     if (a[BOUND]) return;
     a.addEventListener('click', () => {
-      // ClientRouter handles the link click. We just dismiss the overlay.
-      setTimeout(close, 120);
+      // ClientRouter handles the link click and pushes the new URL.
+      // Critical: clear `pushed` BEFORE close() runs, otherwise close() would
+      // call history.back() and immediately undo ClientRouter's navigation,
+      // making the click feel like "page didn't switch".
+      pushed = false;
+      menuOpen = false;
+      hideVisual();
     });
     a[BOUND] = true;
   });
