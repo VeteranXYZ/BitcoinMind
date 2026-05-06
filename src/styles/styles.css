@@ -395,6 +395,12 @@ nav {
   padding: var(--sp-21) 0 var(--sp-19);
   border-bottom: 1px solid var(--bdr);
   margin-bottom: var(--sp-19);
+  /* Anchor the bottom of the header at a consistent vertical position so
+     pages with single-line vs multi-line descriptions still feel paired. */
+  min-height: clamp(280px, 32vw, 360px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 .ph-eye {
   font-family: var(--font-mono);
@@ -993,6 +999,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-end;
   padding: var(--sp-13) 0;
   gap: var(--sp-3);
 }
@@ -1000,7 +1007,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 .mm-item {
   background: none;
   border: none;
-  text-align: left;
+  text-align: right;
   font-family: var(--font-serif);
   font-size: clamp(28px, 7vw, 40px);
   font-weight: var(--fw-normal);
@@ -1038,6 +1045,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   flex-shrink: 0;
   padding: var(--sp-9) 0 var(--sp-15);
   font-family: var(--font-mono);
+  text-align: right;
 }
 
 .mm-foot-rule {
@@ -1112,7 +1120,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   line-height: var(--lh-relaxed);
   color: var(--gold-hi);
   max-width: 640px;
-  margin-top: var(--sp-3);
+  margin: 0 0 var(--sp-19);
 }
 
 /* ── Layout: body + index ───────────────────────────────── */

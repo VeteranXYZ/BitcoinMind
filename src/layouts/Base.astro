@@ -120,24 +120,53 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 </html>
 
 <style is:global>
-  /* Metric-aligned fallback for Playfair Display.
-     Numbers tuned (size-adjust + ascent/descent overrides) so that Georgia
-     occupies the same vertical space as Playfair — eliminates the layout
-     shift the moment the real font arrives. */
+  /* Disable view-transition cross-fade — feels like a shake on top of font
+     swap. ClientRouter still does SPA navigation (no full reload) but the
+     swap is now instant, matching the original hand-rolled SPA behavior. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+    mix-blend-mode: normal !important;
+  }
+
+  /* Metric-aligned fallbacks. Numbers tuned to match each web font so that
+     Georgia (and its italic variant, accessed via font-style) occupies the
+     same vertical space — eliminates the layout shift the moment the real
+     font arrives. */
   @font-face {
     font-family: 'Playfair Fallback';
+    font-style: normal;
     src: local('Georgia');
-    size-adjust: 100%;
-    ascent-override: 95%;
-    descent-override: 25%;
+    size-adjust: 116%;
+    ascent-override: 86%;
+    descent-override: 21%;
+    line-gap-override: 0%;
+  }
+  @font-face {
+    font-family: 'Playfair Fallback';
+    font-style: italic;
+    src: local('Georgia');
+    size-adjust: 116%;
+    ascent-override: 86%;
+    descent-override: 21%;
     line-gap-override: 0%;
   }
   @font-face {
     font-family: 'Lora Fallback';
+    font-style: normal;
     src: local('Georgia');
-    size-adjust: 102%;
-    ascent-override: 95%;
-    descent-override: 25%;
+    size-adjust: 105%;
+    ascent-override: 91%;
+    descent-override: 23%;
+    line-gap-override: 0%;
+  }
+  @font-face {
+    font-family: 'Lora Fallback';
+    font-style: italic;
+    src: local('Georgia');
+    size-adjust: 105%;
+    ascent-override: 91%;
+    descent-override: 23%;
     line-gap-override: 0%;
   }
 
