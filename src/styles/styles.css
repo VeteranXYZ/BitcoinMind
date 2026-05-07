@@ -676,8 +676,17 @@ nav {
 
 /* ── Aside Cards ────────────────────────────────────── */
 .aside-card { background: var(--surf); border: 1px solid var(--bdr); border-radius: var(--radius); padding: var(--sp-6); margin-bottom: var(--sp-3); }
-.aside-card--link { cursor: pointer; transition: border-color var(--ease-fast); }
-.aside-card--link:hover { border-color: var(--gold); }
+/* Link variant: brighter border + subtle gold left-rule so the card reads as
+   clearly clickable. The previous --bdr was so dim against --bg that on
+   sparse-content cards (e.g. From-the-Notes) only the rounded-corner
+   antialiasing caught light — appeared as fragmented brackets. */
+.aside-card--link {
+  cursor: pointer;
+  border-color: var(--bdr-2);
+  border-left: 3px solid var(--gold-dim);
+  transition: border-color var(--ease-fast), background var(--ease-fast);
+}
+.aside-card--link:hover { border-color: var(--gold); background: var(--surf-2); }
 .aside-card-title { font-family: var(--font-serif); font-size: var(--fz-md); font-weight: var(--fw-semi); margin-bottom: var(--sp-3); letter-spacing: var(--ls-normal); }
 .aside-item {
   font-family: var(--font-mono);
@@ -1105,14 +1114,13 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* When the 14 items + group labels + dividers exceed viewport height
-     (typical on phones <700px), content fills from the top and scrolls.
-     justify-content:center mis-positions the initial scroll offset on
-     some browsers — flex-start keeps the first item visible. */
+  /* v2 grew menu to 14 items + 3 group labels + 2 dividers. Densified
+     below so the full menu fits within iPhone-class viewports without
+     scrolling. overflow-y:auto remains as a fallback for tiny screens. */
   justify-content: flex-start;
   align-items: flex-end;
-  padding: var(--sp-7) 0;
-  gap: var(--sp-2);
+  padding: var(--sp-4) 0 var(--sp-3);
+  gap: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -1135,7 +1143,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   width: 40%;
   height: 1px;
   background: var(--bdr);
-  margin: var(--sp-3) 0;
+  margin: var(--sp-2) 0;
   align-self: flex-end;
   margin-right: var(--sp-5);
   flex-shrink: 0; /* preserve 1px height under flex pressure */
@@ -1149,15 +1157,15 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   border: none;
   text-align: right;
   font-family: var(--font-serif);
-  font-size: clamp(26px, 6vw, 36px);
+  font-size: clamp(20px, 5vw, 26px);
   font-weight: var(--fw-normal);
-  line-height: var(--lh-snug);
+  line-height: 1.1;
   letter-spacing: var(--ls-tighter);
   color: var(--tx);
-  /* Right padding gives clearly visible breathing room — the .mm container
-     already has --pad (24px+), and these add another sp-9 (22px) so item
-     text sits ~46px from the viewport edge. */
-  padding: var(--sp-4) var(--sp-5) var(--sp-4) var(--sp-2);
+  /* Tight vertical padding (sp-2 = 8px) keeps each item ~36-44px tall so all
+     14 items + group labels fit in ~520-580px on iPhone-class viewports.
+     Tap target ≈ 36-44px which clears Material's 36px minimum. */
+  padding: var(--sp-2) var(--sp-5) var(--sp-2) var(--sp-2);
   cursor: pointer;
   transition: color var(--ease-fast), transform var(--ease-fast);
   opacity: 0;
@@ -1186,7 +1194,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
 
 .mm-foot {
   flex-shrink: 0;
-  padding: var(--sp-5) var(--sp-5) var(--sp-8);
+  padding: var(--sp-3) var(--sp-5) var(--sp-5);
   font-family: var(--font-mono);
   text-align: right;
 }
@@ -1194,7 +1202,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
 .mm-foot-rule {
   height: 1px;
   background: var(--bdr);
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--sp-3);
 }
 
 .mm-foot-l1 {
