@@ -28,3 +28,8 @@ pnpm-debug.log*
 
 # Cloudflare
 .wrangler/
+
+# User-local archives / scratch
+*.zip
+*.tar
+*.tar.gz

@@ -1,0 +1,217 @@
+---
+import Base from '@/layouts/Base.astro';
+import { QUESTIONS } from '@/data/questions';
+---
+<Base
+  title="Questions"
+  description="The best questions are better than my best answers. Curated reader questions, answered by Hiei."
+  path="/questions"
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Questions</div>
+        <h1 class="ph-title">Ask. <em>Think.</em></h1>
+        <p class="ph-desc">The best questions are better than my best answers. Selected reader questions, answered when I have something worth saying.</p>
+      </div>
+
+      <div class="qa-list">
+        {QUESTIONS.map((q, i) => (
+          <div class="qa-item" id={q.id}>
+            <div class="qa-q-row">
+              <span class="qa-num">Q{String(i + 1).padStart(2, '0')}</span>
+              <h2 class="qa-question">{q.question}</h2>
+            </div>
+            <div class="qa-answer-wrap">
+              <div class="qa-meta">
+                <span class="qa-date">{q.date}</span>
+                <span class="qa-by">Hiei</span>
+              </div>
+              <div class="qa-answer">
+                <p>{q.answer}</p>
+              </div>
+              {q.links && (
+                <div class="qa-links">
+                  {q.links.map((l) => (
+                    <a class="qa-link" href={l.href}>{l.label} →</a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="qa-submit">
+        <div class="qa-submit-hd">
+          <div class="a-eye">Submit</div>
+          <h2 class="qa-submit-title">Have a question?</h2>
+        </div>
+        <p class="qa-submit-body">If you have a question about Bitcoin that you think deserves a thoughtful answer — not a price prediction, not "when moon" — send it. I read everything. I answer what I can.</p>
+        <a class="qa-submit-cta" href="mailto:hello@bitcoinmind.com?subject=Question for BitcoinMind">
+          <span class="qa-submit-arrow">→</span>
+          <span>hello@bitcoinmind.com</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .qa-list {
+    max-width: 720px;
+    padding-bottom: var(--sp-13);
+  }
+
+  .qa-item {
+    margin-bottom: var(--sp-21);
+    padding-bottom: var(--sp-21);
+    border-bottom: 1px solid var(--bdr);
+  }
+  .qa-item:last-child {
+    border-bottom: none;
+  }
+
+  .qa-q-row {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-6);
+    margin-bottom: var(--sp-9);
+  }
+
+  .qa-num {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-6);
+    border: 1px solid var(--gold);
+    padding: 3px var(--sp-2);
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+    /* Optical alignment with first line of question text */
+    margin-top: var(--sp-1);
+  }
+
+  .qa-question {
+    font-family: var(--font-serif);
+    font-size: var(--fz-xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-snug);
+    line-height: var(--lh-snug);
+    color: var(--tx);
+  }
+
+  .qa-answer-wrap {
+    /* Align with question text: qa-num width + gap */
+    padding-left: var(--sp-16);
+  }
+
+  .qa-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-5);
+  }
+
+  .qa-date {
+    font-family: var(--font-mono);
+    font-size: var(--fz-2xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+  }
+
+  .qa-by {
+    font-family: var(--font-mono);
+    font-size: var(--fz-2xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+  }
+
+  .qa-answer {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    line-height: var(--lh-full);
+    color: var(--tx-2);
+  }
+
+  .qa-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-6);
+    margin-top: var(--sp-5);
+  }
+
+  .qa-link {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs1);
+    color: var(--gold);
+    letter-spacing: var(--ls-4);
+    transition: color var(--ease-fast);
+  }
+  .qa-link:hover {
+    color: var(--gold-hi);
+  }
+
+  /* Submit section */
+  .qa-submit {
+    max-width: 720px;
+    padding: var(--sp-14) var(--sp-14);
+    background: var(--surf);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    margin-bottom: var(--sp-24);
+  }
+
+  .qa-submit-hd {
+    margin-bottom: var(--sp-5);
+  }
+
+  .qa-submit-title {
+    font-family: var(--font-serif);
+    font-size: var(--fz-2xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-card);
+  }
+
+  .qa-submit-body {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    line-height: var(--lh-relaxed);
+    color: var(--tx-2);
+    margin-bottom: var(--sp-9);
+  }
+
+  .qa-submit-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-5);
+    font-family: var(--font-mono);
+    font-size: var(--fz-sm1);
+    color: var(--tx);
+    padding: var(--sp-4) var(--sp-7);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    transition: border-color var(--ease-fast), background var(--ease-fast);
+  }
+  .qa-submit-cta:hover {
+    border-color: var(--gold);
+    background: var(--surf-2);
+  }
+
+  .qa-submit-arrow {
+    color: var(--gold);
+    font-size: var(--fz-xs1);
+  }
+
+  @media (max-width: 640px) {
+    .qa-answer-wrap {
+      padding-left: 0;
+      margin-top: var(--sp-3);
+    }
+    .qa-submit {
+      padding: var(--sp-9) var(--sp-7);
+    }
+  }
+</style>

@@ -184,7 +184,7 @@ export default function FrameTwoChart() {
     <>
       <div class="f2-tabs">
         <span class="f2-tab-lbl">Measured in</span>
-        <button class="f2-tab f2-tab--on">Big Macs</button>
+        <button type="button" class="f2-tab f2-tab--on">Big Macs</button>
       </div>
 
       <div class="f2-chart-wrap">
@@ -193,8 +193,16 @@ export default function FrameTwoChart() {
           class="f2-chart"
           viewBox={`0 0 ${W} ${H}`}
           preserveAspectRatio="none"
+          role="img"
+          aria-labelledby="f2-chart-title f2-chart-desc"
           onPointerDown={onPointerDown}
         >
+          <title id="f2-chart-title">USD purchasing power vs. Bitcoin since 1971</title>
+          <desc id="f2-chart-desc">
+            A logarithmic chart comparing the steady decline of one US dollar's
+            purchasing power since 1971 against the appreciation of bitcoin held
+            since 2010. Measured in Big Macs. Drag to inspect any month.
+          </desc>
           {[1, 10, 100, 1000, 10000, 100000, 1000000].map((v, i) => {
             const y = yScale(v);
             if (y < PAD.T || y > H - PAD.B) return null;
@@ -241,10 +249,15 @@ export default function FrameTwoChart() {
         </svg>
       </div>
 
-      <div class="f2-jumps">
+      <div class="f2-jumps" role="group" aria-label="Jump to event">
         <span class="f2-jump-lbl">Jump to</span>
         {F2_EVENTS.map((ev) => (
-          <button key={ev.short} class="f2-jump" onClick={() => setCursor({ y: ev.y, m: ev.m })}>
+          <button
+            key={ev.short}
+            type="button"
+            class="f2-jump"
+            onClick={() => setCursor({ y: ev.y, m: ev.m })}
+          >
             {ev.short}
           </button>
         ))}

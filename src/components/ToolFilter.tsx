@@ -45,10 +45,16 @@ export default function ToolFilter() {
 
   return (
     <>
-      <div class="fb">
+      <div class="fb" role="group" aria-label="Filter tools">
         <span class="fb-lbl">Filter:</span>
         {FILTERS.map((f) => (
-          <button key={f} class={`fb-btn ${filter === f ? 'on' : ''}`} onClick={() => setFilter(f)}>{f}</button>
+          <button
+            key={f}
+            type="button"
+            class={`fb-btn ${filter === f ? 'on' : ''}`}
+            aria-pressed={filter === f}
+            onClick={() => setFilter(f)}
+          >{f}</button>
         ))}
       </div>
       {sov.length > 0 && (

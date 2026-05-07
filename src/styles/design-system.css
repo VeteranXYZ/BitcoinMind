@@ -47,8 +47,10 @@
   --tag-advanced-fg:         oklch(0.78 0.09 32);
 
   /* ── Typography ─────────────────────────────────────── */
-  --font-serif: 'Playfair Display', Georgia, serif;
-  --font-body:  'Lora', Georgia, serif;
+  /* 'Playfair Fallback' / 'Lora Fallback' are metric-aligned local fonts
+     declared in Base.astro — they prevent layout shift while the web font loads. */
+  --font-serif: 'Playfair Display', 'Playfair Fallback', Georgia, serif;
+  --font-body:  'Lora', 'Lora Fallback', Georgia, serif;
   --font-mono:  'DM Mono', 'Courier New', monospace;
 
   /* Fluid / responsive sizes */

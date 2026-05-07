@@ -1,0 +1,202 @@
+---
+import Base from '@/layouts/Base.astro';
+import Tag from '@/components/Tag.astro';
+import { TIMELINE } from '@/data/timeline';
+---
+<Base
+  title="Timeline"
+  description="Seventeen years of signal, not noise. A curated chronology of the ideas and events that shaped Bitcoin."
+  path="/timeline"
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Timeline</div>
+        <h1 class="ph-title">A history of <em>signal.</em></h1>
+        <p class="ph-desc">Not a price chart. A record of the ideas and events that shaped Bitcoin — from the whitepaper to the present block.</p>
+      </div>
+
+      <div class="tl-wrap">
+        {TIMELINE.map((ev, i) => (
+          <div class="tl-node" id={ev.id}>
+            <div class="tl-rail">
+              <div class="tl-dot" />
+              {i < TIMELINE.length - 1 && <div class="tl-line" />}
+            </div>
+            <div class="tl-content">
+              <div class="tl-meta">
+                <span class="tl-year">{ev.year}</span>
+                {ev.month && <span class="tl-month">{ev.month}</span>}
+              </div>
+              <h2 class="tl-title">{ev.title}</h2>
+              <p class="tl-body">{ev.body}</p>
+              {ev.hiei && (
+                <div class="tl-hiei">
+                  <span class="tl-hiei-lbl">Hiei</span>
+                  <p>{ev.hiei}</p>
+                </div>
+              )}
+              {ev.tags && (
+                <div class="tl-tags">
+                  {ev.tags.map((t) => <Tag label={t} />)}
+                </div>
+              )}
+              {ev.links && (
+                <div class="tl-links">
+                  {ev.links.map((l) => (
+                    <a class="tl-link" href={l.href}>{l.label} →</a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .tl-wrap {
+    max-width: 720px;
+    padding-bottom: var(--sp-24);
+  }
+
+  .tl-node {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: var(--sp-8);
+    min-height: 0;
+  }
+
+  .tl-rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Optical alignment with the first line of .tl-title */
+    padding-top: 6px;
+  }
+
+  .tl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-dim);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .tl-line {
+    width: 1px;
+    flex: 1;
+    background: var(--bdr);
+    margin-top: var(--sp-1);
+  }
+
+  .tl-content {
+    padding-bottom: var(--sp-17);
+  }
+
+  .tl-meta {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-3);
+  }
+
+  .tl-year {
+    font-family: var(--font-mono);
+    font-size: var(--fz-sm);
+    font-weight: var(--fw-medium);
+    color: var(--gold);
+    letter-spacing: var(--ls-7);
+  }
+
+  .tl-month {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-5);
+    text-transform: uppercase;
+  }
+
+  .tl-title {
+    font-family: var(--font-serif);
+    font-size: var(--fz-xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-snug);
+    line-height: var(--lh-snug);
+    margin-bottom: var(--sp-4);
+    color: var(--tx);
+  }
+
+  .tl-body {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    line-height: var(--lh-full);
+    color: var(--tx-2);
+    margin-bottom: var(--sp-5);
+  }
+
+  .tl-hiei {
+    background: var(--surf);
+    border-left: 3px solid var(--gold);
+    padding: var(--sp-5) var(--sp-7);
+    margin: var(--sp-5) 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .tl-hiei-lbl {
+    font-family: var(--font-mono);
+    font-size: var(--fz-2xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-9);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: var(--sp-2);
+  }
+
+  .tl-hiei p {
+    font-family: var(--font-serif);
+    font-size: var(--fz-md);
+    font-style: italic;
+    line-height: var(--lh-relaxed);
+    color: var(--tx-2);
+  }
+
+  .tl-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: var(--sp-4);
+  }
+
+  .tl-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-6);
+    margin-top: var(--sp-5);
+  }
+
+  .tl-link {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs1);
+    color: var(--gold);
+    letter-spacing: var(--ls-4);
+    transition: color var(--ease-fast);
+  }
+  .tl-link:hover {
+    color: var(--gold-hi);
+  }
+
+  @media (max-width: 640px) {
+    .tl-node {
+      grid-template-columns: 24px 1fr;
+      gap: var(--sp-5);
+    }
+    .tl-content {
+      padding-bottom: var(--sp-14);
+    }
+  }
+</style>

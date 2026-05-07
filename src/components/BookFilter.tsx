@@ -54,16 +54,24 @@ export default function BookFilter() {
 
   return (
     <>
-      <div class="fb">
+      <div class="fb" role="group" aria-label="Filter books">
         <span class="fb-lbl">Filter:</span>
         <input
           class="srch"
+          type="search"
+          aria-label="Search books"
           placeholder="Search..."
           value={q}
           onInput={(e) => setQ((e.target as HTMLInputElement).value)}
         />
         {TAGS.map((t) => (
-          <button key={t} class={`fb-btn ${filter === t ? 'on' : ''}`} onClick={() => setFilter(t)}>{t}</button>
+          <button
+            key={t}
+            type="button"
+            class={`fb-btn ${filter === t ? 'on' : ''}`}
+            aria-pressed={filter === t}
+            onClick={() => setFilter(t)}
+          >{t}</button>
         ))}
       </div>
       {showLayers ? (
