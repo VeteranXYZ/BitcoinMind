@@ -1003,8 +1003,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
 }
 
 @media (max-width: 640px) {
+  /* 2×2 grid on mobile — keeps PulsePlus compact instead of 4 stacked rows. */
   .pp-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -1104,7 +1105,11 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* When the 14 items + group labels + dividers exceed viewport height
+     (typical on phones <700px), content fills from the top and scrolls.
+     justify-content:center mis-positions the initial scroll offset on
+     some browsers — flex-start keeps the first item visible. */
+  justify-content: flex-start;
   align-items: flex-end;
   padding: var(--sp-13) 0;
   gap: var(--sp-2);
@@ -1120,6 +1125,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   text-transform: uppercase;
   text-align: right;
   padding: var(--sp-1) var(--sp-9) var(--sp-1) var(--sp-3);
+  flex-shrink: 0; /* don't compress in scrollable column */
   opacity: 0;
   animation: mm-item-in 0.32s ease-out forwards;
   animation-delay: inherit;
@@ -1132,6 +1138,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-15) 0; margin-top: 
   margin: var(--sp-4) 0;
   align-self: flex-end;
   margin-right: var(--sp-9);
+  flex-shrink: 0; /* preserve 1px height under flex pressure */
   opacity: 0;
   animation: mm-item-in 0.32s ease-out forwards;
   animation-delay: inherit;

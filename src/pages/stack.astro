@@ -164,6 +164,11 @@ import Base from '@/layouts/Base.astro';
   @media (max-width: 960px) {
     .stk-wrap {
       grid-template-columns: 1fr;
+      gap: var(--sp-15);
     }
+  }
+  @media (max-width: 640px) {
+    .stk-wrap { padding-bottom: var(--sp-19); }
+    .stk-disclaimer { padding: var(--sp-8) var(--sp-9); }
   }
 </style>

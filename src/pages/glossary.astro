@@ -148,4 +148,13 @@ const categories = [
   .gl-link:hover {
     color: var(--gold-hi);
   }
+
+  @media (max-width: 640px) {
+    .gl-section { margin-bottom: var(--sp-18); }
+    .gl-entry { padding: var(--sp-10) 0; }
+    .gl-cat-label { font-size: var(--fz-2xl); }
+    .gl-cat-hd { margin-bottom: var(--sp-11); }
+    /* term + zh: stack vertically so neither wraps awkwardly */
+    .gl-term-row { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }
+  }
 </style>
