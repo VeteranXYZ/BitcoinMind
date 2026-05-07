@@ -676,17 +676,22 @@ nav {
 
 /* ── Aside Cards ────────────────────────────────────── */
 .aside-card { background: var(--surf); border: 1px solid var(--bdr); border-radius: var(--radius); padding: var(--sp-6); margin-bottom: var(--sp-3); }
-/* Link variant: brighter border + subtle gold left-rule so the card reads as
-   clearly clickable. The previous --bdr was so dim against --bg that on
-   sparse-content cards (e.g. From-the-Notes) only the rounded-corner
-   antialiasing caught light — appeared as fragmented brackets. */
+/* Link variant — must be display:block. By default <a> is inline; when an
+   inline element contains block children (the title div + the two <p>),
+   the browser draws the border around each line fragment separately,
+   producing two disconnected rectangles. display:block makes the anchor
+   render as one continuous box like its sibling .aside-card divs. */
 .aside-card--link {
+  display: block;
   cursor: pointer;
-  border-color: var(--bdr-2);
   border-left: 3px solid var(--gold-dim);
   transition: border-color var(--ease-fast), background var(--ease-fast);
 }
-.aside-card--link:hover { border-color: var(--gold); background: var(--surf-2); }
+.aside-card--link:hover {
+  border-color: var(--gold);
+  border-left-color: var(--gold);
+  background: var(--surf-2);
+}
 .aside-card-title { font-family: var(--font-serif); font-size: var(--fz-md); font-weight: var(--fw-semi); margin-bottom: var(--sp-3); letter-spacing: var(--ls-normal); }
 .aside-item {
   font-family: var(--font-mono);
