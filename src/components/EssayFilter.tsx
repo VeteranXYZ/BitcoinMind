@@ -1,13 +1,9 @@
 import { useMemo, useState } from 'preact/hooks';
 import { ESSAYS } from '@/data/essays';
+import Tag from './Tag';
 import type { Essay } from '@/data/types';
 
 const TAGS = ['All', 'Philosophy', 'Economics', 'Technical', 'History', 'Essential'];
-
-function Tag({ label }: { label: string }) {
-  const cls = label.toLowerCase().replace(/\s+/g, '-');
-  return <span class={`tag tag--${cls}`}>{label}</span>;
-}
 
 function EssayCard({ essay }: { essay: Essay }) {
   return (

@@ -58,14 +58,14 @@ import { TIMELINE } from '@/data/timeline';
 
 <style>
   .tl-wrap {
-    max-width: 720px;
-    padding-bottom: var(--sp-24);
+    max-width: 768px;
+    padding-bottom: var(--sp-12);
   }
 
   .tl-node {
     display: grid;
     grid-template-columns: 40px 1fr;
-    gap: var(--sp-8);
+    gap: var(--sp-5);
     min-height: 0;
   }
 
@@ -95,14 +95,14 @@ import { TIMELINE } from '@/data/timeline';
   }
 
   .tl-content {
-    padding-bottom: var(--sp-17);
+    padding-bottom: var(--sp-9);
   }
 
   .tl-meta {
     display: flex;
     align-items: baseline;
-    gap: var(--sp-3);
-    margin-bottom: var(--sp-3);
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-2);
   }
 
   .tl-year {
@@ -115,7 +115,7 @@ import { TIMELINE } from '@/data/timeline';
 
   .tl-month {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-5);
     text-transform: uppercase;
@@ -127,29 +127,29 @@ import { TIMELINE } from '@/data/timeline';
     font-weight: var(--fw-bold);
     letter-spacing: var(--ls-snug);
     line-height: var(--lh-snug);
-    margin-bottom: var(--sp-4);
+    margin-bottom: var(--sp-3);
     color: var(--tx);
   }
 
   .tl-body {
     font-family: var(--font-body);
     font-size: var(--fz-md);
-    line-height: var(--lh-full);
+    line-height: var(--lh-loose);
     color: var(--tx-2);
-    margin-bottom: var(--sp-5);
+    margin-bottom: var(--sp-3);
   }
 
   .tl-hiei {
     background: var(--surf);
     border-left: 3px solid var(--gold);
-    padding: var(--sp-5) var(--sp-7);
-    margin: var(--sp-5) 0;
+    padding: var(--sp-3) var(--sp-4);
+    margin: var(--sp-3) 0;
     border-radius: 0 var(--radius) var(--radius) 0;
   }
 
   .tl-hiei-lbl {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--gold);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
@@ -169,21 +169,21 @@ import { TIMELINE } from '@/data/timeline';
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
-    margin-top: var(--sp-4);
+    margin-top: var(--sp-3);
   }
 
   .tl-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sp-6);
-    margin-top: var(--sp-5);
+    gap: var(--sp-4);
+    margin-top: var(--sp-3);
   }
 
   .tl-link {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs1);
+    font-size: var(--fz-xs);
     color: var(--gold);
-    letter-spacing: var(--ls-4);
+    letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
   .tl-link:hover {
@@ -193,10 +193,10 @@ import { TIMELINE } from '@/data/timeline';
   @media (max-width: 640px) {
     .tl-node {
       grid-template-columns: 24px 1fr;
-      gap: var(--sp-5);
+      gap: var(--sp-3);
     }
     .tl-content {
-      padding-bottom: var(--sp-14);
+      padding-bottom: var(--sp-7);
     }
   }
 </style>

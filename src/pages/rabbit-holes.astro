@@ -68,14 +68,14 @@ const typeIcon: Record<string, string> = {
   .rh-list {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-17);
-    padding-bottom: var(--sp-24);
+    gap: var(--sp-9);
+    padding-bottom: var(--sp-12);
   }
 
   .rh-card {
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
-    padding: var(--sp-14) var(--sp-14);
+    padding: var(--sp-7) var(--sp-7);
     background: var(--surf);
     transition: border-color var(--ease-card);
   }
@@ -86,8 +86,8 @@ const typeIcon: Record<string, string> = {
   .rh-header {
     display: flex;
     align-items: flex-start;
-    gap: var(--sp-8);
-    margin-bottom: var(--sp-8);
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-5);
   }
 
   .rh-emoji {
@@ -103,7 +103,7 @@ const typeIcon: Record<string, string> = {
 
   .rh-path-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
@@ -114,7 +114,7 @@ const typeIcon: Record<string, string> = {
     font-family: var(--font-serif);
     font-size: var(--fz-2xl);
     font-weight: var(--fw-bold);
-    letter-spacing: var(--ls-card);
+    letter-spacing: var(--ls-snug);
     line-height: var(--lh-snug);
     margin-bottom: var(--sp-1);
   }
@@ -130,13 +130,13 @@ const typeIcon: Record<string, string> = {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: var(--sp-3);
+    gap: var(--sp-2);
     flex-shrink: 0;
   }
 
   .rh-time {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-3);
   }
@@ -146,8 +146,8 @@ const typeIcon: Record<string, string> = {
     font-size: var(--fz-md);
     line-height: var(--lh-relaxed);
     color: var(--tx-2);
-    max-width: 700px;
-    margin-bottom: var(--sp-11);
+    max-width: 768px;
+    margin-bottom: var(--sp-6);
   }
 
   .rh-steps {
@@ -160,8 +160,8 @@ const typeIcon: Record<string, string> = {
   .rh-step {
     display: flex;
     align-items: center;
-    gap: var(--sp-6);
-    padding: var(--sp-5) var(--sp-3);
+    gap: var(--sp-4);
+    padding: var(--sp-3) var(--sp-2);
     border-bottom: 1px solid var(--bdr);
     transition: background var(--ease-fast);
     cursor: pointer;
@@ -174,10 +174,10 @@ const typeIcon: Record<string, string> = {
 
   .rh-step-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--gold);
     letter-spacing: var(--ls-5);
-    width: var(--sp-9);
+    width: var(--sp-5);
     text-align: center;
     flex-shrink: 0;
   }
@@ -186,7 +186,7 @@ const typeIcon: Record<string, string> = {
     flex: 1;
     display: flex;
     align-items: baseline;
-    gap: var(--sp-4);
+    gap: var(--sp-3);
     flex-wrap: wrap;
   }
 
@@ -200,36 +200,36 @@ const typeIcon: Record<string, string> = {
 
   .rh-step-author {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
-    letter-spacing: var(--ls-2);
+    letter-spacing: var(--ls-3);
   }
 
   .rh-step-right {
     display: flex;
     align-items: center;
-    gap: var(--sp-5);
+    gap: var(--sp-3);
     flex-shrink: 0;
   }
 
   .rh-step-type {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
-    letter-spacing: var(--ls-6);
+    letter-spacing: var(--ls-5);
     text-transform: uppercase;
   }
 
   .rh-step-time {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-3);
-    min-width: var(--sp-17);
+    min-width: var(--sp-9);
     text-align: right;
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 1024px) {
     .rh-header {
       flex-wrap: wrap;
     }
@@ -237,20 +237,20 @@ const typeIcon: Record<string, string> = {
       flex-direction: row;
       align-items: center;
       width: 100%;
-      padding-left: var(--sp-14);
+      padding-left: var(--sp-7);
     }
   }
 
   @media (max-width: 640px) {
     .rh-card {
-      padding: var(--sp-10) var(--sp-7);
+      padding: var(--sp-6) var(--sp-4);
     }
     .rh-step {
       flex-wrap: wrap;
-      gap: var(--sp-3);
+      gap: var(--sp-2);
     }
     .rh-step-right {
-      padding-left: var(--sp-12);
+      padding-left: var(--sp-7);
     }
   }
 </style>

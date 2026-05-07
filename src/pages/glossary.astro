@@ -57,29 +57,29 @@ const categories = [
 
 <style>
   .gl-section {
-    margin-bottom: var(--sp-22);
+    margin-bottom: var(--sp-11);
   }
 
   .gl-cat-hd {
     display: flex;
     align-items: center;
-    gap: var(--sp-5);
-    padding-bottom: var(--sp-5);
+    gap: var(--sp-3);
+    padding-bottom: var(--sp-3);
     border-bottom: 1px solid var(--bdr);
-    margin-bottom: var(--sp-13);
+    margin-bottom: var(--sp-7);
   }
 
   .gl-cat-label {
     font-family: var(--font-serif);
     font-size: var(--fz-3xl);
     font-weight: var(--fw-bold);
-    letter-spacing: var(--ls-card);
+    letter-spacing: var(--ls-snug);
     color: var(--tx);
   }
 
   .gl-cat-count {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-5);
     border: 1px solid var(--bdr);
@@ -93,9 +93,9 @@ const categories = [
   }
 
   .gl-entry {
-    padding: var(--sp-12) 0;
+    padding: var(--sp-7) 0;
     border-bottom: 1px solid var(--bdr);
-    max-width: 720px;
+    max-width: 768px;
   }
 
   .gl-entry:last-child {
@@ -105,8 +105,8 @@ const categories = [
   .gl-term-row {
     display: flex;
     align-items: baseline;
-    gap: var(--sp-5);
-    margin-bottom: var(--sp-4);
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-3);
   }
 
   .gl-term {
@@ -119,30 +119,30 @@ const categories = [
 
   .gl-zh {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs1);
+    font-size: var(--fz-xs);
     color: var(--tx-3);
-    letter-spacing: var(--ls-2);
+    letter-spacing: var(--ls-3);
   }
 
   .gl-body {
     font-family: var(--font-body);
     font-size: var(--fz-md);
-    line-height: var(--lh-full);
+    line-height: var(--lh-loose);
     color: var(--tx-2);
   }
 
   .gl-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sp-6);
-    margin-top: var(--sp-5);
+    gap: var(--sp-4);
+    margin-top: var(--sp-3);
   }
 
   .gl-link {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs1);
+    font-size: var(--fz-xs);
     color: var(--gold);
-    letter-spacing: var(--ls-4);
+    letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
   .gl-link:hover {
@@ -150,10 +150,10 @@ const categories = [
   }
 
   @media (max-width: 640px) {
-    .gl-section { margin-bottom: var(--sp-18); }
-    .gl-entry { padding: var(--sp-10) 0; }
+    .gl-section { margin-bottom: var(--sp-9); }
+    .gl-entry { padding: var(--sp-6) 0; }
     .gl-cat-label { font-size: var(--fz-2xl); }
-    .gl-cat-hd { margin-bottom: var(--sp-11); }
+    .gl-cat-hd { margin-bottom: var(--sp-6); }
     /* term + zh: stack vertically so neither wraps awkwardly */
     .gl-term-row { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }
   }

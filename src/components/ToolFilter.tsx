@@ -1,13 +1,9 @@
 import { useMemo, useState } from 'preact/hooks';
 import { TOOLS } from '@/data/tools';
+import Tag from './Tag';
 import type { Tool } from '@/data/types';
 
 const FILTERS = ['All', 'Sovereignty', 'Intelligence', 'Free', 'Beginner', 'Advanced'];
-
-function Tag({ label }: { label: string }) {
-  const cls = label.toLowerCase().replace(/\s+/g, '-');
-  return <span class={`tag tag--${cls}`}>{label}</span>;
-}
 
 function ToolCard({ tool }: { tool: Tool }) {
   return (

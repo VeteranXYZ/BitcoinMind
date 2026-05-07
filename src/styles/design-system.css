@@ -6,7 +6,7 @@
 
 :root {
 
-  /* ── Colors ─────────────────────────────────────────── */
+  /* ── Base colors ────────────────────────────────────── */
   --bg:        oklch(0.09 0.022 62);
   --bg-deep:   oklch(0.065 0.016 58);
   --surf:      oklch(0.135 0.028 65);
@@ -22,63 +22,84 @@
   --gold-hi:   oklch(0.80 0.13 82);
   --nav-glass: oklch(0.09 0.022 62 / 0.88);
 
-  /* Tag palette — bg / foreground pairs */
-  --tag-essential-bg:        oklch(0.68 0.12 74  / 0.16);
-  --tag-essential-fg:        oklch(0.80 0.12 80);
-  --tag-philosophy-bg:       oklch(0.68 0.12 280 / 0.16);
-  --tag-philosophy-fg:       oklch(0.78 0.10 288);
-  --tag-economics-bg:        oklch(0.68 0.12 232 / 0.16);
-  --tag-economics-fg:        oklch(0.78 0.10 238);
-  --tag-technical-bg:        oklch(0.68 0.12 162 / 0.16);
-  --tag-technical-fg:        oklch(0.78 0.10 168);
-  --tag-history-bg:          oklch(0.72 0.11 95  / 0.16);
-  --tag-history-fg:          oklch(0.80 0.10 98);
-  --tag-free-bg:             oklch(0.68 0.12 148 / 0.16);
-  --tag-free-fg:             oklch(0.78 0.10 152);
-  --tag-freemium-bg:         oklch(0.68 0.12 74  / 0.16);
-  --tag-freemium-fg:         oklch(0.80 0.12 80);
-  --tag-paid-bg:             oklch(0.68 0.11 28  / 0.16);
-  --tag-paid-fg:             oklch(0.78 0.09 32);
-  --tag-beginner-bg:         oklch(0.68 0.12 148 / 0.16);
-  --tag-beginner-fg:         oklch(0.78 0.10 152);
-  --tag-intermediate-bg:     oklch(0.72 0.11 95  / 0.16);
-  --tag-intermediate-fg:     oklch(0.80 0.10 98);
-  --tag-advanced-bg:         oklch(0.68 0.11 28  / 0.16);
-  --tag-advanced-fg:         oklch(0.78 0.09 32);
+  /* ── Decorative atmospherics ────────────────────────── */
+  /* Inlined oklch literals from styles.css are now tokenised so a future
+     palette tweak only touches design-system.css. */
+  --bg-glow-warm:  oklch(0.22 0.04 70 / 0.18);   /* page radial glow top */
+  --bg-glow-deep:  oklch(0.06 0.02 58 / 0.5);    /* page radial glow bottom */
+  --hero-grid-v:   oklch(0.30 0.035 68 / 0.22);  /* hero vertical grid */
+  --hero-grid-h:   oklch(0.30 0.035 68 / 0.15);  /* hero horizontal grid */
+  --pb-start:      oklch(0.60 0.10 72);          /* reading-progress bar gradient */
+
+  /* ── Tag base palette ──────────────────────────────────
+     7 unique color families. Tag classes alias these — eliminates
+     the duplication where two tags pointed at identical hex pairs. */
+  --c-tag-gold-bg:   oklch(0.68 0.12 74  / 0.16);
+  --c-tag-gold-fg:   oklch(0.80 0.12 80);
+  --c-tag-purple-bg: oklch(0.68 0.12 280 / 0.16);
+  --c-tag-purple-fg: oklch(0.78 0.10 288);
+  --c-tag-blue-bg:   oklch(0.68 0.12 232 / 0.16);
+  --c-tag-blue-fg:   oklch(0.78 0.10 238);
+  --c-tag-teal-bg:   oklch(0.68 0.12 162 / 0.16);
+  --c-tag-teal-fg:   oklch(0.78 0.10 168);
+  --c-tag-yellow-bg: oklch(0.72 0.11 95  / 0.16);
+  --c-tag-yellow-fg: oklch(0.80 0.10 98);
+  --c-tag-green-bg:  oklch(0.68 0.12 148 / 0.16);
+  --c-tag-green-fg:  oklch(0.78 0.10 152);
+  --c-tag-red-bg:    oklch(0.68 0.11 28  / 0.16);
+  --c-tag-red-fg:    oklch(0.78 0.09 32);
+
+  /* Semantic mapping — change a tag's color via the alias only. */
+  --tag-essential-bg:    var(--c-tag-gold-bg);
+  --tag-essential-fg:    var(--c-tag-gold-fg);
+  --tag-philosophy-bg:   var(--c-tag-purple-bg);
+  --tag-philosophy-fg:   var(--c-tag-purple-fg);
+  --tag-economics-bg:    var(--c-tag-blue-bg);
+  --tag-economics-fg:    var(--c-tag-blue-fg);
+  --tag-technical-bg:    var(--c-tag-teal-bg);
+  --tag-technical-fg:    var(--c-tag-teal-fg);
+  --tag-history-bg:      var(--c-tag-yellow-bg);
+  --tag-history-fg:      var(--c-tag-yellow-fg);
+  --tag-free-bg:         var(--c-tag-green-bg);
+  --tag-free-fg:         var(--c-tag-green-fg);
+  --tag-freemium-bg:     var(--c-tag-gold-bg);
+  --tag-freemium-fg:     var(--c-tag-gold-fg);
+  --tag-paid-bg:         var(--c-tag-red-bg);
+  --tag-paid-fg:         var(--c-tag-red-fg);
+  --tag-beginner-bg:     var(--c-tag-green-bg);
+  --tag-beginner-fg:     var(--c-tag-green-fg);
+  --tag-intermediate-bg: var(--c-tag-yellow-bg);
+  --tag-intermediate-fg: var(--c-tag-yellow-fg);
+  --tag-advanced-bg:     var(--c-tag-red-bg);
+  --tag-advanced-fg:     var(--c-tag-red-fg);
 
   /* ── Typography ─────────────────────────────────────── */
-  /* 'Playfair Fallback' / 'Lora Fallback' are metric-aligned local fonts
-     declared in Base.astro — they prevent layout shift while the web font loads. */
+  /* Playfair Fallback / Lora Fallback are metric-aligned local fonts
+     declared in Base.astro — they prevent layout shift while the web
+     font loads. */
   --font-serif: 'Playfair Display', 'Playfair Fallback', Georgia, serif;
   --font-body:  'Lora', 'Lora Fallback', Georgia, serif;
   --font-mono:  'DM Mono', 'Courier New', monospace;
 
-  /* Fluid / responsive sizes */
-  --fz-hero:  clamp(84px, 13vw, 168px);
-  --fz-ph:    clamp(48px, 8vw,  96px);
-  --fz-sec:   clamp(28px, 4vw,  44px);
-  --fz-step:  clamp(21px, 2.8vw,28px);
-  --fz-note:  clamp(24px, 4vw,  38px);
-  --fz-quote: clamp(16px, 2vw,  20px);
+  /* Display sizes — fluid clamps for hero / section / step / quote. */
+  --fz-hero:    clamp(72px, 11vw, 132px);
+  --fz-page:    clamp(48px, 8vw,  96px);
+  --fz-section: clamp(28px, 4vw,  44px);
+  --fz-step:    clamp(21px, 2.8vw,28px);
+  --fz-note:    clamp(24px, 4vw,  38px);
+  --fz-quote:   clamp(16px, 2vw,  20px);
 
-  /* Fixed sizes */
-  --fz-2xs:  8.5px;
-  --fz-xs:   9px;
-  --fz-xs1:  10px;
-  --fz-xs2:  10.5px;
-  --fz-sm:   11px;
-  --fz-sm1:  12px;
-  --fz-sm2:  12.5px;
-  --fz-base: 13.5px;
-  --fz-md:   15px;
-  --fz-md1:  15.5px;
-  --fz-lg:   16px;
-  --fz-lg1:  17px;
-  --fz-lg2:  18px;
-  --fz-xl:   21px;
-  --fz-2xl:  24px;
-  --fz-3xl:  26px;
-  --fz-4xl:  28px;
+  /* Fixed sizes — t-shirt scale, was 18 near-duplicates with 0.5px steps,
+     now 9 distinct anchors. */
+  --fz-3xs:  9px;     /* tiny mono captions */
+  --fz-xs:   10px;    /* mono labels, eyebrow */
+  --fz-sm:   12px;    /* small UI text, search box */
+  --fz-base: 13.5px;  /* baseline body small */
+  --fz-md:   15px;    /* default body */
+  --fz-lg:   17px;    /* card titles */
+  --fz-xl:   21px;    /* prominent body / pulled-quote */
+  --fz-2xl:  24px;    /* sub-title */
+  --fz-3xl:  28px;    /* compact title */
 
   /* Font weights */
   --fw-normal: 400;
@@ -87,7 +108,7 @@
   --fw-bold:   700;
   --fw-black:  900;
 
-  /* Line heights */
+  /* Line heights — was 10 (with 1.8/1.9/1.92 visually identical), now 8. */
   --lh-hero:    0.88;
   --lh-title:   1.05;
   --lh-snug:    1.18;
@@ -95,63 +116,46 @@
   --lh-normal:  1.6;
   --lh-relaxed: 1.68;
   --lh-base:    1.78;
-  --lh-loose:   1.8;
-  --lh-looser:  1.9;
-  --lh-full:    1.92;
+  --lh-loose:   1.85;
 
-  /* Letter spacing */
-  --ls-tightest: -0.04em;
-  --ls-tighter:  -0.03em;
-  --ls-tight:    -0.025em;
-  --ls-snug:     -0.02em;
-  --ls-card:     -0.015em;
-  --ls-normal:   -0.01em;
-  --ls-0:        0em;
-  --ls-1:        0.03em;
-  --ls-2:        0.04em;
-  --ls-3:        0.05em;
-  --ls-4:        0.06em;
-  --ls-5:        0.08em;
-  --ls-6:        0.10em;
-  --ls-7:        0.12em;
-  --ls-8:        0.14em;
-  --ls-9:        0.20em;
-  --ls-10:       0.22em;
-  --ls-11:       0.24em;
+  /* Letter spacing — semantic for tight, anchored decimals for wide.
+     Was 18 tokens (mixed semantic + numeric), now 8. */
+  --ls-tighter: -0.03em;  /* huge display titles */
+  --ls-snug:    -0.02em;  /* large body titles */
+  --ls-normal:  -0.01em;  /* card titles */
+  --ls-3:        0.05em;  /* small mono UI text */
+  --ls-5:        0.10em;  /* mono captions */
+  --ls-7:        0.14em;  /* spaced uppercase mono */
+  --ls-9:        0.20em;  /* labels / kicker */
+  --ls-11:       0.24em;  /* eyebrow / dense uppercase */
 
   /* ── Spacing scale ──────────────────────────────────── */
+  /* T-shirt scale — was 26 tokens (sp-1..sp-26 with 2px steps) folded
+     into 13 monotonic anchors. */
   --sp-1:  4px;
   --sp-2:  8px;
-  --sp-3:  10px;
-  --sp-4:  12px;
-  --sp-5:  14px;
-  --sp-6:  16px;
-  --sp-7:  18px;
-  --sp-8:  20px;
-  --sp-9:  22px;
-  --sp-10: 24px;
-  --sp-11: 26px;
-  --sp-12: 28px;
-  --sp-13: 32px;
-  --sp-14: 36px;
-  --sp-15: 40px;
-  --sp-16: 44px;
-  --sp-17: 48px;
-  --sp-18: 52px;
-  --sp-19: 56px;
-  --sp-20: 60px;
-  --sp-21: 64px;
-  --sp-22: 68px;
-  --sp-23: 72px;
-  --sp-24: 80px;
-  --sp-25: 88px;
-  --sp-26: 96px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-7:  32px;
+  --sp-8:  40px;
+  --sp-9:  48px;
+  --sp-10: 56px;
+  --sp-11: 64px;
+  --sp-12: 80px;
+  --sp-13: 96px;
 
   /* ── Layout ─────────────────────────────────────────── */
-  --max-w:    1200px;
-  --pad:      clamp(24px, 5.5vw, 88px);
-  --radius:   3px;
+  --max-w:     1200px;
+  --pad:       clamp(24px, 5.5vw, 88px);
+  --radius:    3px;
   --radius-sm: 2px;
+
+  /* Standard breakpoints — all @media queries should reference one of these. */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
 
   /* ── Transitions ────────────────────────────────────── */
   --ease-card: 0.22s ease;

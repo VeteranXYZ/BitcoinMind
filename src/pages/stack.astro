@@ -108,17 +108,17 @@ import Base from '@/layouts/Base.astro';
   .stk-wrap {
     display: grid;
     grid-template-columns: 1fr 320px;
-    gap: var(--sp-24);
-    padding-bottom: var(--sp-24);
+    gap: var(--sp-12);
+    padding-bottom: var(--sp-12);
   }
 
   .stk-main {
-    max-width: 720px;
+    max-width: 768px;
   }
 
   .stk-disclaimer {
-    margin-top: var(--sp-13);
-    padding: var(--sp-10) var(--sp-11);
+    margin-top: var(--sp-7);
+    padding: var(--sp-6) var(--sp-6);
     background: var(--surf);
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
@@ -126,29 +126,29 @@ import Base from '@/layouts/Base.astro';
 
   .stk-disclaimer-lbl {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
-    margin-bottom: var(--sp-4);
+    margin-bottom: var(--sp-3);
   }
 
   .stk-disclaimer p {
     font-family: var(--font-body);
-    font-size: var(--fz-sm2);
+    font-size: var(--fz-sm);
     line-height: var(--lh-relaxed);
     color: var(--tx-3);
   }
 
   .stk-tool {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs1);
+    font-size: var(--fz-xs);
     color: var(--tx-2);
     padding: var(--sp-2) 0;
     border-bottom: 1px solid var(--bdr);
     display: flex;
     justify-content: space-between;
-    letter-spacing: var(--ls-1);
+    letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
   .stk-tool:last-child { border-bottom: none; }
@@ -156,19 +156,19 @@ import Base from '@/layouts/Base.astro';
 
   .stk-tool-role {
     color: var(--tx-3);
-    font-size: var(--fz-2xs);
-    letter-spacing: var(--ls-6);
+    font-size: var(--fz-3xs);
+    letter-spacing: var(--ls-5);
     text-transform: uppercase;
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 1024px) {
     .stk-wrap {
       grid-template-columns: 1fr;
-      gap: var(--sp-15);
+      gap: var(--sp-8);
     }
   }
   @media (max-width: 640px) {
-    .stk-wrap { padding-bottom: var(--sp-19); }
-    .stk-disclaimer { padding: var(--sp-8) var(--sp-9); }
+    .stk-wrap { padding-bottom: var(--sp-10); }
+    .stk-disclaimer { padding: var(--sp-5) var(--sp-5); }
   }
 </style>

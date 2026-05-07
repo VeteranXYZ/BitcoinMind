@@ -52,25 +52,25 @@ import { DEBATES } from '@/data/debates';
 
 <style>
   .db-list {
-    padding-bottom: var(--sp-24);
+    padding-bottom: var(--sp-12);
   }
 
   .db-item {
-    margin-bottom: var(--sp-22);
+    margin-bottom: var(--sp-11);
   }
 
   .db-num-row {
     display: flex;
     align-items: center;
-    gap: var(--sp-5);
-    margin-bottom: var(--sp-10);
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-6);
   }
 
   .db-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--gold);
-    letter-spacing: var(--ls-8);
+    letter-spacing: var(--ls-7);
     border: 1px solid var(--gold);
     padding: 3px var(--sp-2);
     border-radius: var(--radius-sm);
@@ -87,18 +87,18 @@ import { DEBATES } from '@/data/debates';
     font-family: var(--font-serif);
     font-size: var(--fz-2xl);
     font-weight: var(--fw-bold);
-    letter-spacing: var(--ls-card);
+    letter-spacing: var(--ls-snug);
     flex-shrink: 0;
   }
 
   .db-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--sp-6);
+    gap: var(--sp-4);
   }
 
   .db-col {
-    padding: var(--sp-12);
+    padding: var(--sp-7);
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
   }
@@ -114,10 +114,10 @@ import { DEBATES } from '@/data/debates';
 
   .db-col-lbl {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
-    margin-bottom: var(--sp-7);
+    margin-bottom: var(--sp-4);
   }
 
   .db-col--obj .db-col-lbl {
@@ -131,21 +131,21 @@ import { DEBATES } from '@/data/debates';
   .db-col-body {
     font-family: var(--font-body);
     font-size: var(--fz-md);
-    line-height: var(--lh-full);
+    line-height: var(--lh-loose);
     color: var(--tx-2);
   }
 
   .db-further {
     display: flex;
     align-items: center;
-    gap: var(--sp-6);
-    margin-top: var(--sp-6);
-    padding-top: var(--sp-5);
+    gap: var(--sp-4);
+    margin-top: var(--sp-4);
+    padding-top: var(--sp-3);
   }
 
   .db-further-lbl {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-7);
     text-transform: uppercase;
@@ -153,16 +153,16 @@ import { DEBATES } from '@/data/debates';
 
   .db-further-link {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs1);
+    font-size: var(--fz-xs);
     color: var(--gold);
-    letter-spacing: var(--ls-4);
+    letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
   .db-further-link:hover {
     color: var(--gold-hi);
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 1024px) {
     .db-grid {
       grid-template-columns: 1fr;
     }
@@ -170,11 +170,11 @@ import { DEBATES } from '@/data/debates';
 
   @media (max-width: 640px) {
     .db-col {
-      padding: var(--sp-8) var(--sp-7);
+      padding: var(--sp-5) var(--sp-4);
     }
     .db-further {
       flex-wrap: wrap;
-      gap: var(--sp-3);
+      gap: var(--sp-2);
     }
   }
 </style>

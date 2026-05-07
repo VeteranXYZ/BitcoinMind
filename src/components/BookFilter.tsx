@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'preact/hooks';
 import { BOOKS } from '@/data/books';
+import Tag from './Tag';
 import type { Book } from '@/data/types';
 
 const TAGS = ['All', 'Philosophy', 'Economics', 'Technical', 'History', 'Essential', 'Beginner', 'Intermediate', 'Advanced'];
@@ -9,11 +10,6 @@ const LAYER_DESC: Record<number, string> = {
   2: 'For readers who have finished Layer 1 and want depth — technical, economic, or historical.',
   3: 'For those who think about Bitcoin as a civilizational technology, not just a financial one.',
 };
-
-function Tag({ label }: { label: string }) {
-  const cls = label.toLowerCase().replace(/\s+/g, '-');
-  return <span class={`tag tag--${cls}`}>{label}</span>;
-}
 
 function BookCard({ book }: { book: Book }) {
   return (

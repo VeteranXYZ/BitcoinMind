@@ -59,13 +59,13 @@ import { QUESTIONS } from '@/data/questions';
 
 <style>
   .qa-list {
-    max-width: 720px;
-    padding-bottom: var(--sp-13);
+    max-width: 768px;
+    padding-bottom: var(--sp-7);
   }
 
   .qa-item {
-    margin-bottom: var(--sp-21);
-    padding-bottom: var(--sp-21);
+    margin-bottom: var(--sp-11);
+    padding-bottom: var(--sp-11);
     border-bottom: 1px solid var(--bdr);
   }
   .qa-item:last-child {
@@ -75,15 +75,15 @@ import { QUESTIONS } from '@/data/questions';
   .qa-q-row {
     display: flex;
     align-items: flex-start;
-    gap: var(--sp-6);
-    margin-bottom: var(--sp-9);
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-5);
   }
 
   .qa-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--gold);
-    letter-spacing: var(--ls-6);
+    letter-spacing: var(--ls-5);
     border: 1px solid var(--gold);
     padding: 3px var(--sp-2);
     border-radius: var(--radius-sm);
@@ -103,19 +103,19 @@ import { QUESTIONS } from '@/data/questions';
 
   .qa-answer-wrap {
     /* Align with question text: qa-num width + gap */
-    padding-left: var(--sp-16);
+    padding-left: var(--sp-8);
   }
 
   .qa-meta {
     display: flex;
     align-items: center;
-    gap: var(--sp-5);
-    margin-bottom: var(--sp-5);
+    gap: var(--sp-3);
+    margin-bottom: var(--sp-3);
   }
 
   .qa-date {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-7);
     text-transform: uppercase;
@@ -123,7 +123,7 @@ import { QUESTIONS } from '@/data/questions';
 
   .qa-by {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--gold);
     letter-spacing: var(--ls-7);
     text-transform: uppercase;
@@ -132,22 +132,22 @@ import { QUESTIONS } from '@/data/questions';
   .qa-answer {
     font-family: var(--font-body);
     font-size: var(--fz-md);
-    line-height: var(--lh-full);
+    line-height: var(--lh-loose);
     color: var(--tx-2);
   }
 
   .qa-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sp-6);
-    margin-top: var(--sp-5);
+    gap: var(--sp-4);
+    margin-top: var(--sp-3);
   }
 
   .qa-link {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs1);
+    font-size: var(--fz-xs);
     color: var(--gold);
-    letter-spacing: var(--ls-4);
+    letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
   .qa-link:hover {
@@ -156,23 +156,23 @@ import { QUESTIONS } from '@/data/questions';
 
   /* Submit section */
   .qa-submit {
-    max-width: 720px;
-    padding: var(--sp-14) var(--sp-14);
+    max-width: 768px;
+    padding: var(--sp-7) var(--sp-7);
     background: var(--surf);
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
-    margin-bottom: var(--sp-24);
+    margin-bottom: var(--sp-12);
   }
 
   .qa-submit-hd {
-    margin-bottom: var(--sp-5);
+    margin-bottom: var(--sp-3);
   }
 
   .qa-submit-title {
     font-family: var(--font-serif);
     font-size: var(--fz-2xl);
     font-weight: var(--fw-bold);
-    letter-spacing: var(--ls-card);
+    letter-spacing: var(--ls-snug);
   }
 
   .qa-submit-body {
@@ -180,17 +180,17 @@ import { QUESTIONS } from '@/data/questions';
     font-size: var(--fz-md);
     line-height: var(--lh-relaxed);
     color: var(--tx-2);
-    margin-bottom: var(--sp-9);
+    margin-bottom: var(--sp-5);
   }
 
   .qa-submit-cta {
     display: inline-flex;
     align-items: center;
-    gap: var(--sp-5);
+    gap: var(--sp-3);
     font-family: var(--font-mono);
-    font-size: var(--fz-sm1);
+    font-size: var(--fz-sm);
     color: var(--tx);
-    padding: var(--sp-4) var(--sp-7);
+    padding: var(--sp-3) var(--sp-4);
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
     transition: border-color var(--ease-fast), background var(--ease-fast);
@@ -202,16 +202,16 @@ import { QUESTIONS } from '@/data/questions';
 
   .qa-submit-arrow {
     color: var(--gold);
-    font-size: var(--fz-xs1);
+    font-size: var(--fz-xs);
   }
 
   @media (max-width: 640px) {
     .qa-answer-wrap {
       padding-left: 0;
-      margin-top: var(--sp-3);
+      margin-top: var(--sp-2);
     }
     .qa-submit {
-      padding: var(--sp-9) var(--sp-7);
+      padding: var(--sp-5) var(--sp-4);
     }
   }
 </style>
