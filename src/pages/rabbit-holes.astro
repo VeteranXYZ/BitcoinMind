@@ -1,0 +1,256 @@
+---
+import Base from '@/layouts/Base.astro';
+import Tag from '@/components/Tag.astro';
+import { RABBIT_HOLES } from '@/data/rabbit-holes';
+
+const typeIcon: Record<string, string> = {
+  book: 'Book',
+  essay: 'Essay',
+  tool: 'Tool',
+  frame: 'Frame',
+  external: 'External',
+};
+---
+<Base
+  title="Rabbit Holes"
+  description="Five curated learning paths through Bitcoin — from monetary history to self-custody. Start Here was the door. These are the corridors."
+  path="/rabbit-holes"
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Rabbit Holes</div>
+        <h1 class="ph-title">Go <em>deeper.</em></h1>
+        <p class="ph-desc">Start Here was the door. These are the corridors. Five curated paths, each one a sequence of the best resources on a single theme.</p>
+      </div>
+
+      <div class="rh-list">
+        {RABBIT_HOLES.map((rh, idx) => (
+          <div class="rh-card" id={rh.id}>
+            <div class="rh-header">
+              <div class="rh-emoji">{rh.emoji}</div>
+              <div class="rh-header-text">
+                <div class="rh-path-num">Path {idx + 1} of {RABBIT_HOLES.length}</div>
+                <h2 class="rh-title">{rh.title}</h2>
+                <p class="rh-subtitle">{rh.subtitle}</p>
+              </div>
+              <div class="rh-meta-col">
+                <Tag label={rh.difficulty} />
+                <span class="rh-time">{rh.totalTime}</span>
+              </div>
+            </div>
+
+            <p class="rh-desc">{rh.desc}</p>
+
+            <div class="rh-steps">
+              {rh.steps.map((step, si) => (
+                <a class="rh-step" href={step.href}>
+                  <span class="rh-step-num">{si + 1}</span>
+                  <div class="rh-step-body">
+                    <span class="rh-step-title">{step.title}</span>
+                    {step.author && <span class="rh-step-author">{step.author}</span>}
+                  </div>
+                  <div class="rh-step-right">
+                    <span class="rh-step-type">{typeIcon[step.type]}</span>
+                    {step.time && <span class="rh-step-time">{step.time}</span>}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .rh-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-17);
+    padding-bottom: var(--sp-24);
+  }
+
+  .rh-card {
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    padding: var(--sp-14) var(--sp-14);
+    background: var(--surf);
+    transition: border-color var(--ease-card);
+  }
+  .rh-card:hover {
+    border-color: var(--bdr-2);
+  }
+
+  .rh-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-8);
+    margin-bottom: var(--sp-8);
+  }
+
+  .rh-emoji {
+    font-size: 28px;
+    flex-shrink: 0;
+    /* Optical alignment with title baseline */
+    margin-top: 1px;
+  }
+
+  .rh-header-text {
+    flex: 1;
+  }
+
+  .rh-path-num {
+    font-family: var(--font-mono);
+    font-size: var(--fz-2xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-9);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-2);
+  }
+
+  .rh-title {
+    font-family: var(--font-serif);
+    font-size: var(--fz-2xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-card);
+    line-height: var(--lh-snug);
+    margin-bottom: var(--sp-1);
+  }
+
+  .rh-subtitle {
+    font-family: var(--font-serif);
+    font-size: var(--fz-md);
+    font-style: italic;
+    color: var(--tx-2);
+  }
+
+  .rh-meta-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--sp-3);
+    flex-shrink: 0;
+  }
+
+  .rh-time {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-3);
+  }
+
+  .rh-desc {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    line-height: var(--lh-relaxed);
+    color: var(--tx-2);
+    max-width: 700px;
+    margin-bottom: var(--sp-11);
+  }
+
+  .rh-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--bdr);
+  }
+
+  .rh-step {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-6);
+    padding: var(--sp-5) var(--sp-3);
+    border-bottom: 1px solid var(--bdr);
+    transition: background var(--ease-fast);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+  .rh-step:hover {
+    background: var(--surf-2);
+  }
+
+  .rh-step-num {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-5);
+    width: var(--sp-9);
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .rh-step-body {
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+  }
+
+  .rh-step-title {
+    font-family: var(--font-serif);
+    font-size: var(--fz-md);
+    font-weight: var(--fw-semi);
+    letter-spacing: var(--ls-normal);
+    color: var(--tx);
+  }
+
+  .rh-step-author {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-2);
+  }
+
+  .rh-step-right {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+    flex-shrink: 0;
+  }
+
+  .rh-step-type {
+    font-family: var(--font-mono);
+    font-size: var(--fz-2xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-6);
+    text-transform: uppercase;
+  }
+
+  .rh-step-time {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-3);
+    min-width: var(--sp-17);
+    text-align: right;
+  }
+
+  @media (max-width: 960px) {
+    .rh-header {
+      flex-wrap: wrap;
+    }
+    .rh-meta-col {
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      padding-left: var(--sp-14);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .rh-card {
+      padding: var(--sp-10) var(--sp-7);
+    }
+    .rh-step {
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+    }
+    .rh-step-right {
+      padding-left: var(--sp-12);
+    }
+  }
+</style>

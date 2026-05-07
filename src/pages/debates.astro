@@ -1,0 +1,180 @@
+---
+import Base from '@/layouts/Base.astro';
+import { DEBATES } from '@/data/debates';
+---
+<Base
+  title="Debates"
+  description="The strongest objections to Bitcoin, steel-manned — then answered. Honest arguments deserve honest responses."
+  path="/debates"
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Debates</div>
+        <h1 class="ph-title">Honest <em>objections.</em></h1>
+        <p class="ph-desc">The strongest arguments against Bitcoin, presented without softening — then the strongest responses. Steel-man both sides. Let the reader decide.</p>
+      </div>
+
+      <div class="db-list">
+        {DEBATES.map((d, i) => (
+          <div class="db-item" id={d.id}>
+            <div class="db-num-row">
+              <span class="db-num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="db-num-line" />
+              <h2 class="db-title">{d.title}</h2>
+            </div>
+
+            <div class="db-grid">
+              <div class="db-col db-col--obj">
+                <div class="db-col-lbl">The Objection</div>
+                <p class="db-col-body">{d.objection}</p>
+              </div>
+              <div class="db-col db-col--res">
+                <div class="db-col-lbl">The Response</div>
+                <p class="db-col-body">{d.response}</p>
+              </div>
+            </div>
+
+            {d.further && (
+              <div class="db-further">
+                <span class="db-further-lbl">Further reading</span>
+                {d.further.map((l) => (
+                  <a class="db-further-link" href={l.href}>{l.label} →</a>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .db-list {
+    padding-bottom: var(--sp-24);
+  }
+
+  .db-item {
+    margin-bottom: var(--sp-22);
+  }
+
+  .db-num-row {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-10);
+  }
+
+  .db-num {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-8);
+    border: 1px solid var(--gold);
+    padding: 3px var(--sp-2);
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .db-num-line {
+    height: 1px;
+    flex: 1;
+    background: var(--bdr);
+  }
+
+  .db-title {
+    font-family: var(--font-serif);
+    font-size: var(--fz-2xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-card);
+    flex-shrink: 0;
+  }
+
+  .db-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-6);
+  }
+
+  .db-col {
+    padding: var(--sp-12);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+  }
+
+  .db-col--obj {
+    background: var(--bg-deep);
+  }
+
+  .db-col--res {
+    background: var(--surf);
+    border-left: 3px solid var(--gold);
+  }
+
+  .db-col-lbl {
+    font-family: var(--font-mono);
+    font-size: var(--fz-2xs);
+    letter-spacing: var(--ls-9);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-7);
+  }
+
+  .db-col--obj .db-col-lbl {
+    color: var(--tx-3);
+  }
+
+  .db-col--res .db-col-lbl {
+    color: var(--gold);
+  }
+
+  .db-col-body {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    line-height: var(--lh-full);
+    color: var(--tx-2);
+  }
+
+  .db-further {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-6);
+    margin-top: var(--sp-6);
+    padding-top: var(--sp-5);
+  }
+
+  .db-further-lbl {
+    font-family: var(--font-mono);
+    font-size: var(--fz-2xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+  }
+
+  .db-further-link {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs1);
+    color: var(--gold);
+    letter-spacing: var(--ls-4);
+    transition: color var(--ease-fast);
+  }
+  .db-further-link:hover {
+    color: var(--gold-hi);
+  }
+
+  @media (max-width: 960px) {
+    .db-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .db-col {
+      padding: var(--sp-8) var(--sp-7);
+    }
+    .db-further {
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+    }
+  }
+</style>

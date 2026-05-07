@@ -1,0 +1,169 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+<Base
+  title="Stack"
+  description="Not how much. How — and more importantly, why. Hiei's approach to holding Bitcoin."
+  path="/stack"
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Stack</div>
+        <h1 class="ph-title">How I <em>hold.</em></h1>
+        <p class="ph-desc">Not how much. How — and more importantly, why. No amounts. No financial advice. Just the thinking behind the practice.</p>
+      </div>
+
+      <div class="stk-wrap">
+        <div class="stk-main">
+          <div class="a-sec">
+            <div class="a-eye">Approach</div>
+            <h2 class="a-h">DCA. Don't time. Don't trade.</h2>
+            <div class="a-body">
+              <p>I buy a fixed amount of Bitcoin at regular intervals. This is called dollar-cost averaging — DCA. I don't try to predict the price. I don't wait for dips. I don't sell into strength. The thesis is simple: if Bitcoin is what I think it is, the price I pay today will be irrelevant in a decade. If it isn't what I think it is, no amount of timing will save me.</p>
+              <p>DCA removes emotion from the process. It turns conviction into a recurring action. It is the investment strategy equivalent of showing up every day.</p>
+            </div>
+          </div>
+
+          <div class="a-sec">
+            <div class="a-eye">Storage</div>
+            <h2 class="a-h">Cold. Air-gapped. Geographically distributed.</h2>
+            <div class="a-body">
+              <p>My Bitcoin is held in cold storage — a hardware wallet that never connects to the internet. The signing device is air-gapped: transactions are constructed on a watch-only wallet, transferred via SD card, signed offline, and broadcast. No USB. No Bluetooth. No wireless attack surface.</p>
+              <p>The seeds are backed up on metal, stored in multiple physical locations. No single point of failure. If one location is compromised — fire, theft, natural disaster — the others remain intact. This is not paranoia. This is engineering against catastrophe.</p>
+            </div>
+          </div>
+
+          <div class="a-sec">
+            <div class="a-eye">Security</div>
+            <h2 class="a-h">What I practice.</h2>
+            <div class="a-body">
+              <p><em>Seed phrases are never digital.</em> Not in a photo, not in a note, not in the cloud. The moment a seed touches a network-connected device, it is compromised in principle even if not yet in practice.</p>
+              <p><em>Passphrase as a second factor.</em> The hardware wallet is protected by a passphrase that exists only in my head and in a sealed backup. Without both the seed and the passphrase, the wallet cannot be accessed.</p>
+              <p><em>Verify, don't trust.</em> I run my own node. Every transaction I make is validated against my own copy of the blockchain. I don't rely on someone else's truth.</p>
+            </div>
+          </div>
+
+          <div class="a-sec">
+            <div class="a-eye">Psychology</div>
+            <h2 class="a-h">How I think about drawdowns.</h2>
+            <div class="a-body">
+              <p>Bitcoin has dropped 80% or more — four times. I expect it to do so again. The question is not whether drawdowns happen, but whether you've built a conviction strong enough to sit through them. If your thesis depends on the price going up next quarter, you don't have a thesis. You have a trade.</p>
+              <p>My framework: if the network is still producing blocks, the supply schedule hasn't changed, and the hash rate is growing — the thesis is intact. The price is noise. The protocol is signal.</p>
+            </div>
+          </div>
+
+          <div class="a-sec">
+            <div class="a-eye">Inheritance</div>
+            <h2 class="a-h">Planning for the permanent absence.</h2>
+            <div class="a-body">
+              <p>Self-custody means you are your own bank. It also means you are a single point of failure for your family. If you die without a plan, your Bitcoin dies with you. I've built an inheritance protocol: a set of instructions, stored securely, that allows a designated person to recover the funds. The details are private. The principle is not: if you hold Bitcoin for the long term, you owe it to someone else to make it recoverable.</p>
+            </div>
+          </div>
+
+          <div class="stk-disclaimer">
+            <div class="stk-disclaimer-lbl">Disclaimer</div>
+            <p>This is how I think about holding Bitcoin. It is not financial advice. I am not a financial advisor. Your situation is different from mine. Do your own research. Make your own decisions. The only advice I'll give: don't invest more than you can afford to lose, and don't custody more than you can secure.</p>
+          </div>
+        </div>
+
+        <div class="about-aside">
+          <div class="aside-card">
+            <div class="aside-card-title">Tools I Use</div>
+            <a class="stk-tool" href="/tools">
+              <span>Coldcard MK4</span>
+              <span class="stk-tool-role">Signing</span>
+            </a>
+            <a class="stk-tool" href="/tools">
+              <span>Sparrow Wallet</span>
+              <span class="stk-tool-role">Watch-only</span>
+            </a>
+            <a class="stk-tool" href="/tools">
+              <span>Bitcoin Core</span>
+              <span class="stk-tool-role">Verification</span>
+            </a>
+          </div>
+
+          <div class="aside-card">
+            <div class="aside-card-title">Principles</div>
+            <div class="aside-curate-item">✓ DCA, never time</div>
+            <div class="aside-curate-item">✓ Cold storage only</div>
+            <div class="aside-curate-item">✓ Own node, own truth</div>
+            <div class="aside-curate-item">✓ No leverage, no lending</div>
+            <div class="aside-curate-item">✓ Plan for inheritance</div>
+          </div>
+
+          <a class="aside-card aside-card--link" href="/rabbit-holes">
+            <div class="aside-card-title">Learn Self-Custody</div>
+            <p class="aside-notes-quote">The Sovereignty Path — from exchange to air-gapped in five steps.</p>
+            <p class="aside-notes-link">Open the path →</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .stk-wrap {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--sp-24);
+    padding-bottom: var(--sp-24);
+  }
+
+  .stk-main {
+    max-width: 720px;
+  }
+
+  .stk-disclaimer {
+    margin-top: var(--sp-13);
+    padding: var(--sp-10) var(--sp-11);
+    background: var(--surf);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+  }
+
+  .stk-disclaimer-lbl {
+    font-family: var(--font-mono);
+    font-size: var(--fz-2xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-9);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-4);
+  }
+
+  .stk-disclaimer p {
+    font-family: var(--font-body);
+    font-size: var(--fz-sm2);
+    line-height: var(--lh-relaxed);
+    color: var(--tx-3);
+  }
+
+  .stk-tool {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs1);
+    color: var(--tx-2);
+    padding: var(--sp-2) 0;
+    border-bottom: 1px solid var(--bdr);
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: var(--ls-1);
+    transition: color var(--ease-fast);
+  }
+  .stk-tool:last-child { border-bottom: none; }
+  .stk-tool:hover { color: var(--gold); }
+
+  .stk-tool-role {
+    color: var(--tx-3);
+    font-size: var(--fz-2xs);
+    letter-spacing: var(--ls-6);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 960px) {
+    .stk-wrap {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -87,7 +87,9 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
       var map = {
         '#home': '/', '#start': '/start', '#books': '/books', '#essays': '/essays',
         '#tools': '/tools', '#frames': '/frames', '#frames-1': '/frames/1',
-        '#frames-2': '/frames/2', '#about': '/about', '#notes': '/notes'
+        '#frames-2': '/frames/2', '#about': '/about', '#notes': '/notes',
+        '#timeline': '/timeline', '#glossary': '/glossary', '#debates': '/debates',
+        '#rabbit-holes': '/rabbit-holes', '#stack': '/stack', '#questions': '/questions'
       };
       var t = map[location.hash];
       if (t && location.pathname === '/') {

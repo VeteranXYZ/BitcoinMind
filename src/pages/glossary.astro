@@ -1,0 +1,151 @@
+---
+import Base from '@/layouts/Base.astro';
+import { GLOSSARY } from '@/data/glossary';
+
+const categories = [
+  { key: 'monetary', label: 'Monetary' },
+  { key: 'technical', label: 'Technical' },
+  { key: 'philosophical', label: 'Philosophical' },
+] as const;
+---
+<Base
+  title="Glossary"
+  description="Not definitions — conceptual anchors. The core ideas behind Bitcoin, each one a micro-essay."
+  path="/glossary"
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Glossary</div>
+        <h1 class="ph-title">Terms as <em>thinking.</em></h1>
+        <p class="ph-desc">Not definitions. Conceptual anchors. Each entry is a micro-essay — a way into the idea, not a summary of it.</p>
+      </div>
+
+      {categories.map((cat) => {
+        const entries = GLOSSARY.filter((g) => g.category === cat.key);
+        return (
+          <div class="gl-section">
+            <div class="gl-cat-hd">
+              <span class="gl-cat-label">{cat.label}</span>
+              <span class="gl-cat-count">{entries.length}</span>
+            </div>
+
+            <div class="gl-list">
+              {entries.map((entry) => (
+                <div class="gl-entry" id={entry.id}>
+                  <div class="gl-term-row">
+                    <h2 class="gl-term">{entry.term}</h2>
+                    {entry.zh && <span class="gl-zh">{entry.zh}</span>}
+                  </div>
+                  <p class="gl-body">{entry.body}</p>
+                  {entry.links && (
+                    <div class="gl-links">
+                      {entry.links.map((l) => (
+                        <a class="gl-link" href={l.href}>{l.label} →</a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .gl-section {
+    margin-bottom: var(--sp-22);
+  }
+
+  .gl-cat-hd {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+    padding-bottom: var(--sp-5);
+    border-bottom: 1px solid var(--bdr);
+    margin-bottom: var(--sp-13);
+  }
+
+  .gl-cat-label {
+    font-family: var(--font-serif);
+    font-size: var(--fz-3xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-card);
+    color: var(--tx);
+  }
+
+  .gl-cat-count {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-5);
+    border: 1px solid var(--bdr);
+    padding: 3px var(--sp-2);
+    border-radius: var(--radius-sm);
+  }
+
+  .gl-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gl-entry {
+    padding: var(--sp-12) 0;
+    border-bottom: 1px solid var(--bdr);
+    max-width: 720px;
+  }
+
+  .gl-entry:last-child {
+    border-bottom: none;
+  }
+
+  .gl-term-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-4);
+  }
+
+  .gl-term {
+    font-family: var(--font-serif);
+    font-size: var(--fz-xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-snug);
+    color: var(--tx);
+  }
+
+  .gl-zh {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs1);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-2);
+  }
+
+  .gl-body {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    line-height: var(--lh-full);
+    color: var(--tx-2);
+  }
+
+  .gl-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-6);
+    margin-top: var(--sp-5);
+  }
+
+  .gl-link {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs1);
+    color: var(--gold);
+    letter-spacing: var(--ls-4);
+    transition: color var(--ease-fast);
+  }
+  .gl-link:hover {
+    color: var(--gold-hi);
+  }
+</style>

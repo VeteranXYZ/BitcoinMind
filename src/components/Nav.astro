@@ -1,5 +1,6 @@
 ---
-const items = [
+/* ── Desktop nav: original 8 items ── */
+const navItems = [
   { href: '/',        label: 'Home',       match: ['/'] },
   { href: '/start',   label: 'Start Here', match: ['/start'] },
   { href: '/books',   label: 'Books',      match: ['/books'] },
@@ -10,14 +11,50 @@ const items = [
   { href: '/notes',   label: 'Notes',      match: ['/notes'] },
 ];
 
+/* ── Mobile menu: grouped sections ── */
+const mmGroups = [
+  {
+    label: 'Curated Resources',
+    items: [
+      { href: '/',        label: 'Home',       match: ['/'] },
+      { href: '/start',   label: 'Start Here', match: ['/start'] },
+      { href: '/books',   label: 'Books',      match: ['/books'] },
+      { href: '/essays',  label: 'Essays',     match: ['/essays'] },
+      { href: '/tools',   label: 'Tools',      match: ['/tools'] },
+      { href: '/frames',  label: 'Frames',     match: ['/frames', '/frames/1', '/frames/2'] },
+    ],
+  },
+  {
+    label: 'Go Deeper',
+    items: [
+      { href: '/timeline',     label: 'Timeline',     match: ['/timeline'] },
+      { href: '/glossary',     label: 'Glossary',     match: ['/glossary'] },
+      { href: '/debates',      label: 'Debates',      match: ['/debates'] },
+      { href: '/rabbit-holes', label: 'Rabbit Holes', match: ['/rabbit-holes'] },
+    ],
+  },
+  {
+    label: 'Personal',
+    items: [
+      { href: '/stack',     label: 'Stack',     match: ['/stack'] },
+      { href: '/questions', label: 'Questions', match: ['/questions'] },
+      { href: '/about',     label: 'About',     match: ['/about'] },
+      { href: '/notes',     label: 'Notes',     match: ['/notes'] },
+    ],
+  },
+];
+
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (m: string[]) => m.includes(path);
+
+/* flat counter for staggered animation delay */
+let mmIdx = 0;
 ---
 <nav>
   <div class="nav-in">
     <a class="nav-logo" href="/">Bitcoin<b>Mind</b></a>
     <div class="nav-links">
-      {items.map((n) => (
+      {navItems.map((n) => (
         <a class={`nl ${isActive(n.match) ? 'on' : ''}`} href={n.href}>{n.label}</a>
       ))}
     </div>
@@ -30,15 +67,24 @@ const isActive = (m: string[]) => m.includes(path);
     <button class="mm-close" data-menu-close aria-label="Close menu">Close</button>
   </div>
   <nav class="mm-list" aria-label="Primary">
-    {items.map((n, i) => (
-      <a
-        class={`mm-item ${isActive(n.match) ? 'mm-item--on' : ''}`}
-        href={n.href}
-        data-menu-item
-        style={`animation-delay: ${0.04 + i * 0.025}s`}
-      >
-        {n.label}
-      </a>
+    {mmGroups.map((group, gi) => (
+      <>
+        {gi > 0 && <div class="mm-divider" />}
+        <div class="mm-group-label">{group.label}</div>
+        {group.items.map((n) => {
+          const delay = 0.04 + (mmIdx++) * 0.022;
+          return (
+            <a
+              class={`mm-item ${isActive(n.match) ? 'mm-item--on' : ''}`}
+              href={n.href}
+              data-menu-item
+              style={`animation-delay: ${delay}s`}
+            >
+              {n.label}
+            </a>
+          );
+        })}
+      </>
     ))}
   </nav>
   <div class="mm-foot">

@@ -4,7 +4,7 @@ import BookCard from '@/components/BookCard.astro';
 import EssayCard from '@/components/EssayCard.astro';
 import ToolCard from '@/components/ToolCard.astro';
 import TodaysPick from '@/components/TodaysPick';
-import Pulse from '@/components/Pulse';
+import PulsePlus from '@/components/PulsePlus';
 import { BOOKS } from '@/data/books';
 import { ESSAYS } from '@/data/essays';
 import { TOOLS } from '@/data/tools';
@@ -41,7 +41,7 @@ const websiteLd = {
         <p class="hero-quote">"Curated resources for people who want to understand Bitcoin, not just own it."</p>
         <p class="hero-by">A public record by Hiei · Updated May 2026</p>
         <TodaysPick client:load />
-        <Pulse client:idle />
+        <PulsePlus client:idle />
       </div>
     </div>
 
@@ -75,6 +75,116 @@ const websiteLd = {
           {previewTools.map((t) => <ToolCard tool={t} />)}
         </div>
       </div>
+
+      <div class="section">
+        <div class="sec-hd">
+          <h2 class="sec-title">Go <em>Deeper</em></h2>
+          <a class="va" href="/rabbit-holes">View all paths →</a>
+        </div>
+        <div class="grid3">
+          <a class="card" href="/timeline">
+            <div class="card-layer">Chronology</div>
+            <div class="card-title">Timeline</div>
+            <div class="card-desc card-desc--top">Seventeen years of signal. The ideas and events that shaped Bitcoin, from the whitepaper to the present block.</div>
+            <div class="card-ft">
+              <span class="card-meta">16 events</span>
+              <span class="card-cta">EXPLORE →</span>
+            </div>
+          </a>
+          <a class="card" href="/glossary">
+            <div class="card-layer">Concepts</div>
+            <div class="card-title">Glossary</div>
+            <div class="card-desc card-desc--top">Not definitions — conceptual anchors. Each entry is a micro-essay on a core Bitcoin idea.</div>
+            <div class="card-ft">
+              <span class="card-meta">15 terms</span>
+              <span class="card-cta">READ →</span>
+            </div>
+          </a>
+          <a class="card" href="/debates">
+            <div class="card-layer">Critical Thinking</div>
+            <div class="card-title">Debates</div>
+            <div class="card-desc card-desc--top">The strongest objections to Bitcoin, steel-manned — then answered. Both sides, honestly.</div>
+            <div class="card-ft">
+              <span class="card-meta">6 debates</span>
+              <span class="card-cta">READ →</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="sec-hd">
+          <h2 class="sec-title">From <em>Hiei</em></h2>
+        </div>
+        <div class="hiei-links">
+          <a class="hiei-link" href="/stack">
+            <span class="hiei-link-title">Stack</span>
+            <span class="hiei-link-desc">How I hold Bitcoin — not how much, but how and why.</span>
+            <span class="hiei-link-cta">Read →</span>
+          </a>
+          <a class="hiei-link" href="/questions">
+            <span class="hiei-link-title">Questions</span>
+            <span class="hiei-link-desc">Reader questions, answered when I have something worth saying.</span>
+            <span class="hiei-link-cta">Read →</span>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </Base>
+
+<style>
+  .hiei-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-6);
+  }
+
+  .hiei-link {
+    display: flex;
+    flex-direction: column;
+    padding: var(--sp-10) var(--sp-11);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    transition: border-color var(--ease-card), background var(--ease-card);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .hiei-link:hover {
+    border-color: var(--gold);
+    background: var(--surf);
+  }
+
+  .hiei-link-title {
+    font-family: var(--font-serif);
+    font-size: var(--fz-lg2);
+    font-weight: var(--fw-semi);
+    letter-spacing: var(--ls-normal);
+    margin-bottom: var(--sp-3);
+  }
+
+  .hiei-link-desc {
+    font-family: var(--font-body);
+    font-size: var(--fz-base);
+    color: var(--tx-2);
+    line-height: var(--lh-relaxed);
+    flex: 1;
+    margin-bottom: var(--sp-5);
+  }
+
+  .hiei-link-cta {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-5);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 640px) {
+    .hiei-links {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
