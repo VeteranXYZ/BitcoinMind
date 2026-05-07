@@ -685,12 +685,14 @@ nav {
   display: block;
   cursor: pointer;
   border-left: 3px solid var(--gold-dim);
-  transition: border-color var(--ease-fast), background var(--ease-fast);
+  transition: border-color var(--ease-fast), box-shadow var(--ease-fast);
 }
+/* Hover: match the .pick convention — no background lift (the card already
+   sits on --surf), border + left rule turn full gold, plus subtle shadow. */
 .aside-card--link:hover {
   border-color: var(--gold);
   border-left-color: var(--gold);
-  background: var(--surf-2);
+  box-shadow: 0 4px 24px var(--gold-dim);
 }
 .aside-card-title { font-family: var(--font-serif); font-size: var(--fz-md); font-weight: var(--fw-semi); margin-bottom: var(--sp-3); letter-spacing: var(--ls-normal); }
 .aside-item {
