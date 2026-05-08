@@ -17,13 +17,13 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'g-halving', term: 'Halving',
     category: 'monetary',
     body: 'Every 210,000 blocks — roughly four years — the block reward is cut in half. The first reward was 50 BTC. Today it is 3.125. This is not a policy decision that can be reversed. It is code that executes. The halving is a forced reset of time preference: it makes Bitcoin scarcer on a schedule that no entity can alter. Central banks adjust interest rates. Bitcoin adjusts supply. The difference is that one requires trust and the other does not.',
-    links: [{ label: 'The Bitcoin Standard', href: '/books' }],
+    links: [{ label: 'The Bitcoin Standard', href: '/library' }],
   },
   {
     id: 'g-sound-money', term: 'Sound Money',
     category: 'monetary',
     body: 'Money whose supply cannot be easily manipulated by any single entity — government, bank, or individual. The term comes from the metallic ring of a genuine gold coin versus a counterfeit. Sound money holds its value over time because producing more of it is costly. Bitcoin is the digital incarnation of this principle: the supply cap is absolute, the rules are transparent, and no one can print more.',
-    links: [{ label: 'The Bitcoin Standard', href: '/books' }],
+    links: [{ label: 'The Bitcoin Standard', href: '/library' }],
   },
   {
     id: 'g-stock-to-flow', term: 'Stock-to-Flow',
@@ -34,19 +34,19 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'g-utxo', term: 'UTXO',
     category: 'technical',
     body: 'Unspent Transaction Output. Bitcoin has no "account balance" — only a set of unspent coins from previous transactions. When you "spend" Bitcoin, you consume one or more UTXOs and create new ones. This design is fundamental: it enables parallel validation, prevents double-spending without a central ledger, and gives users granular control over their coins. Understanding UTXOs is understanding how Bitcoin actually works beneath the surface.',
-    links: [{ label: 'Mastering Bitcoin', href: '/books' }],
+    links: [{ label: 'Mastering Bitcoin', href: '/library' }],
   },
   {
     id: 'g-node', term: 'Full Node',
     category: 'technical',
     body: 'A computer running Bitcoin Core (or compatible software) that independently validates every transaction and every block against the consensus rules. Running a node means you verify your own truth — you don\'t trust anyone else\'s version of the ledger. Every full node is a vote for the rules. The more nodes, the harder it is for anyone to change Bitcoin. This is decentralization in practice, not theory.',
-    links: [{ label: 'Bitcoin Core', href: '/tools' }],
+    links: [{ label: 'Bitcoin Core', href: '/toolkit' }],
   },
   {
     id: 'g-mempool', term: 'Mempool',
     category: 'technical',
     body: 'The waiting room. When you broadcast a Bitcoin transaction, it enters the mempool — a holding area of unconfirmed transactions that miners choose from when assembling the next block. Higher-fee transactions get picked first. The mempool is a real-time market for block space: you are bidding for inclusion in the next page of an immutable ledger.',
-    links: [{ label: 'Mempool.space', href: '/tools' }],
+    links: [{ label: 'Mempool.space', href: '/toolkit' }],
   },
   {
     id: 'g-hash-rate', term: 'Hash Rate',
@@ -63,21 +63,21 @@ export const GLOSSARY: GlossaryEntry[] = [
     category: 'philosophical',
     body: 'The capacity to act without requiring permission from an intermediary. In the context of Bitcoin: the ability to hold, send, and receive value without any third party\'s approval. Self-custody is sovereignty in practice — your keys, your coins, your rules. The Sovereign Individual predicted that cryptography would transfer power from states to individuals. Bitcoin is that transfer in motion.',
     links: [
-      { label: 'The Sovereign Individual', href: '/books' },
-      { label: 'Coldcard MK4', href: '/tools' },
+      { label: 'The Sovereign Individual', href: '/library' },
+      { label: 'Coldcard MK4', href: '/toolkit' },
     ],
   },
   {
     id: 'g-time-pref', term: 'Time Preference',
     category: 'philosophical',
     body: 'The degree to which an individual values present consumption over future consumption. Low time preference means you are willing to delay gratification — to save, to invest, to build. Sound money encourages low time preference because your savings hold value over time. Inflationary money punishes savers and rewards borrowers, driving time preference higher. Bitcoin is designed to push time preference lower, one halving at a time.',
-    links: [{ label: 'The Bitcoin Standard', href: '/books' }],
+    links: [{ label: 'The Bitcoin Standard', href: '/library' }],
   },
   {
     id: 'g-timechain', term: 'Timechain',
     category: 'philosophical',
     body: 'Satoshi\'s original name for what the world now calls "blockchain." The word matters. A blockchain is a technical structure — blocks linked by hashes. A timechain is a philosophical one — an unforgeable record of the order in which events occurred. Bitcoin doesn\'t just store transactions. It orders them in time. And because no one controls the clock, no one can rewrite history.',
-    links: [{ label: 'Bitcoin is Time by Gigi', href: '/essays' }],
+    links: [{ label: 'Bitcoin is Time by Gigi', href: '/texts' }],
   },
   {
     id: 'g-proof-of-work', term: 'Proof of Work',
@@ -88,7 +88,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'g-trustless', term: 'Trustless',
     category: 'philosophical',
     body: 'A system that does not require participants to trust each other or any third party. In Bitcoin, "trustless" does not mean "no trust exists." It means trust is replaced by verification. You don\'t trust the miner — you verify the block. You don\'t trust the sender — you verify the signature. You don\'t trust the network — you run a node. Trust is a vulnerability. Verification is a guarantee.',
-    links: [{ label: 'The whitepaper', href: '/essays' }],
+    links: [{ label: 'The whitepaper', href: '/texts' }],
   },
   {
     id: 'g-21m', term: 'Twenty-One Million',

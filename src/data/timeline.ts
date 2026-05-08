@@ -17,7 +17,7 @@ export const TIMELINE: TimelineEvent[] = [
     title: 'The Whitepaper',
     body: 'Satoshi Nakamoto publishes "Bitcoin: A Peer-to-Peer Electronic Cash System" to the cryptography mailing list. Nine pages. No venture capital. No company. Just an idea and a proof.',
     links: [
-      { label: 'Read the whitepaper', href: '/essays' },
+      { label: 'Read the whitepaper', href: '/texts' },
     ],
     tags: ['Technical', 'Essential'],
   },
@@ -88,7 +88,7 @@ export const TIMELINE: TimelineEvent[] = [
     body: 'Bitcoin splits. Bitcoin Cash forks away, claiming to be "the real Bitcoin." The market and the network decide otherwise. The war establishes that Bitcoin\'s rules are set by nodes, not miners or corporations.',
     hiei: 'This was the moment I understood that Bitcoin\'s governance is its most underappreciated feature.',
     links: [
-      { label: 'Why this one', href: '/start' },
+      { label: 'Why this one', href: '/primer' },
     ],
     tags: ['Technical', 'Philosophy'],
   },

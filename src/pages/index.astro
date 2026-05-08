@@ -50,7 +50,7 @@ const websiteLd = {
       <div class="section">
         <div class="sec-hd">
           <h2 class="sec-title">Begin with the <em>Primer</em></h2>
-          <a class="va" href="/books">Open the Library →</a>
+          <a class="va" href="/library">Open the Library →</a>
         </div>
         <div class="grid3">
           {layer1Books.map((b) => <BookCard book={b} preview />)}
@@ -60,7 +60,7 @@ const websiteLd = {
       <div class="section">
         <div class="sec-hd">
           <h2 class="sec-title">Read the <em>Texts</em></h2>
-          <a class="va" href="/essays">View all {essayCount} texts →</a>
+          <a class="va" href="/texts">View all {essayCount} texts →</a>
         </div>
         <div class="grid3">
           {previewEssays.map((e) => <EssayCard essay={e} preview />)}
@@ -70,7 +70,7 @@ const websiteLd = {
       <div class="section">
         <div class="sec-hd">
           <h2 class="sec-title">Use the <em>Toolkit</em></h2>
-          <a class="va" href="/tools">Open the Toolkit →</a>
+          <a class="va" href="/toolkit">Open the Toolkit →</a>
         </div>
         <div class="grid3">
           {previewTools.map((t) => <ToolCard tool={t} />)}

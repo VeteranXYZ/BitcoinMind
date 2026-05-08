@@ -82,11 +82,11 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   <ClientRouter />
 
   <script is:inline>
-    // Hash redirect — must run before render so legacy SPA links land on the right page.
+    // Hash redirect — must run before render so old SPA hash links land on the right page.
     (function () {
       var map = {
-        '#home': '/', '#start': '/start', '#books': '/books', '#essays': '/essays',
-        '#tools': '/tools', '#frames': '/frames', '#frames-1': '/frames/1',
+        '#home': '/', '#primer': '/primer', '#library': '/library', '#texts': '/texts',
+        '#toolkit': '/toolkit', '#frames': '/frames', '#frames-1': '/frames/1',
         '#frames-2': '/frames/2', '#about': '/about', '#notes': '/notes',
         '#timeline': '/timeline', '#glossary': '/glossary', '#debates': '/debates',
         '#rabbit-holes': '/rabbit-holes', '#stack': '/stack', '#questions': '/questions'

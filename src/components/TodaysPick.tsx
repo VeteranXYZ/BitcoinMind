@@ -8,7 +8,7 @@ export default function TodaysPick() {
     return {
       pick: p,
       dateStr: formatLongDate(now),
-      href: p.type === 'book' ? '/books' : '/essays',
+      href: p.type === 'book' ? '/library' : '/texts',
       labelType: p.type === 'book' ? 'Book' : 'Text',
       labelDest: p.type === 'book' ? 'Library' : 'Texts',
     };
