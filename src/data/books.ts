@@ -1,7 +1,7 @@
 import type { Book } from './types';
 
 export const BOOKS: Book[] = [
-  { id: 'b1', title: 'The Bitcoin Standard', author: 'Saifedean Ammous', layer: 1, ll: 'Start Here',
+  { id: 'b1', title: 'The Bitcoin Standard', author: 'Saifedean Ammous', layer: 1, ll: 'Primer',
     tags: ['Economics', 'Essential'], diff: 'Beginner',
     desc: 'The definitive case for Bitcoin as sound money. Reframes what money is, where it comes from, and why its properties matter.',
     review: [
@@ -10,7 +10,7 @@ export const BOOKS: Book[] = [
       'If you only read one book here, make it this one.',
     ],
     link: 'https://saifedean.com/tbs/' },
-  { id: 'b2', title: 'The Internet of Money', author: 'Andreas M. Antonopoulos', layer: 1, ll: 'Start Here',
+  { id: 'b2', title: 'The Internet of Money', author: 'Andreas M. Antonopoulos', layer: 1, ll: 'Primer',
     tags: ['Philosophy', 'Essential'], diff: 'Beginner',
     desc: 'Why Bitcoin matters, not just how it works. Collected talks by the most articulate Bitcoin communicator alive.',
     review: [

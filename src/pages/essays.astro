@@ -6,7 +6,7 @@ import { ESSAYS } from '@/data/essays';
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'BitcoinMind Essays & Papers',
+  name: 'BitcoinMind Primary Texts',
   itemListElement: ESSAYS.map((e, i) => ({
     '@type': 'ListItem',
     position: i + 1,
@@ -22,17 +22,17 @@ const itemList = {
 };
 ---
 <Base
-  title="Essays & Papers"
-  description={`${ESSAYS.length} essays and papers ordered by importance — the whitepaper first, then the thinkers who built the intellectual scaffolding around Bitcoin.`}
+  title="Texts"
+  description="The papers and essays that carry the idea, not the commentary around it."
   path="/essays"
   jsonLd={itemList}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">Reading List</div>
-        <h1 class="ph-title">Essays & <em>Papers</em></h1>
-        <p class="ph-desc">Eight texts, ordered by importance. The whitepaper first, then the thinkers who built the intellectual scaffolding around it. Every link tested. No filler.</p>
+        <div class="ph-eye">Primary Texts</div>
+        <h1 class="ph-title">Primary <em>Texts</em></h1>
+        <p class="ph-desc">The whitepaper first, then the thinkers around it. No summaries standing in for the source.</p>
       </div>
       <EssayFilter client:visible />
     </div>

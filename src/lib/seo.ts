@@ -9,6 +9,7 @@ export const SITE = {
   url: 'https://bitcoinmind.com',
   tagline: 'Curated resources for people who want to understand Bitcoin, not just own it.',
   author: 'Hiei',
+  contactEmail: 'hiei1988@gmail.com',
   foundedYear: 2017,
   currentYear: 2026,
   lastUpdated: 'May 2026',

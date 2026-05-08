@@ -13,7 +13,7 @@ export const QUESTIONS: Question[] = [
     date: 'May 2026',
     answer: 'This is the right question asked slightly wrong. If Bitcoin succeeds, energy production becomes more decentralized, not more centralized. Bitcoin miners are energy buyers of last resort — they seek the cheapest energy, which is almost always stranded, curtailed, or otherwise wasted. A methane flare in Texas. A hydroelectric dam in Paraguay producing more than the grid can absorb. Geothermal in Iceland. Bitcoin doesn\'t concentrate energy — it monetizes energy that would otherwise be lost. The power grid doesn\'t become the power structure. Bitcoin makes more of the power grid economically viable.',
     links: [
-      { label: 'Debates: Energy Consumption', href: '/debates' },
+      { label: 'Objections: Energy Consumption', href: '/debates' },
     ],
   },
   {
@@ -22,7 +22,7 @@ export const QUESTIONS: Question[] = [
     date: 'May 2026',
     answer: 'This question contains an assumption: that Bitcoin is an investment you "get in" on. That framing is wrong. Bitcoin is a savings technology. You don\'t "get in" — you start saving in a harder currency. And the answer to "is it too late to start saving in hard money?" is always no. $500 in Bitcoin is not about the price going up next month. It is about opting out of a system that debases your purchasing power by design. The best time to start was 2009. The second best time is whenever you understand why.',
     links: [
-      { label: 'Start Here', href: '/start' },
+      { label: 'Primer', href: '/start' },
     ],
   },
   {
@@ -32,7 +32,7 @@ export const QUESTIONS: Question[] = [
     answer: 'Don\'t start with technology. Start with money. Ask them: "When you were young, how much did a house cost? How much does it cost now?" That gap is not because houses got better. It is because the money got worse. The dollar buys less every year because the government prints more of it. Bitcoin is money that no one can print more of. There will only ever be 21 million. That\'s it. That\'s the whole pitch. If they want more, give them The Internet of Money by Andreas Antonopoulos — it was written for exactly this conversation.',
     links: [
       { label: 'The Internet of Money', href: '/books' },
-      { label: 'Start Here', href: '/start' },
+      { label: 'Primer', href: '/start' },
     ],
   },
   {

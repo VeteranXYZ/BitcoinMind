@@ -3,7 +3,7 @@ import Base from '@/layouts/Base.astro';
 import { SITE } from '@/lib/seo';
 
 const stats: [string, string][] = [
-  ['Books indexed', '8'], ['Essays indexed', '8'], ['Tools indexed', '8'],
+  ['Library items', '8'], ['Primary texts', '8'], ['Toolkit items', '8'],
   ['First contact', 'April 2011'], ['Last updated', 'May 2026'],
 ];
 const principles = [
@@ -17,7 +17,7 @@ const personLd = {
   name: SITE.author,
   description: 'First wrote about Bitcoin in April 2011 when the price was $1.',
   url: `${SITE.url}/about`,
-  email: 'hello@bitcoinmind.com',
+  email: SITE.contactEmail,
 };
 ---
 <Base
@@ -50,7 +50,7 @@ const personLd = {
             <div class="a-eye">What This Is</div>
             <h2 class="a-h">Not a price site. A thinking site.</h2>
             <div class="a-body">
-              <p>This is not a price site. I don't track charts here. What I track is understanding — my own, and the best thinking I've found from others. Every book, essay, and tool on this site is something I've read, used, or returned to more than once. Nothing is here because it's popular. Everything is here because it changed how I think.</p>
+              <p>This is not a price site. I don't track charts here. What I track is understanding — my own, and the best thinking I've found from others. Every library item, primary text, and toolkit entry on this site is something I've read, used, or returned to more than once. Nothing is here because it's popular. Everything is here because it changed how I think.</p>
               <p>My conviction is simple: Bitcoin is the only decentralized monetary asset in existence, and its trajectory — measured not in months but in decades — points in one direction. I'm not interested in converting anyone. I'm interested in finding the people who are already asking the same questions I am.</p>
               <p>If that's you, you're in the right place.</p>
             </div>
@@ -70,12 +70,12 @@ const personLd = {
             <div class="a-eye">Contact</div>
             <h2 class="a-h">Find me here</h2>
             <div class="a-body">
-              <p>If you think something belongs here — a book I missed, an essay that changed your mind, a tool you use and trust — tell me.</p>
+              <p>If you think something belongs here — a book I missed, a text that changed your mind, a tool you use and trust — tell me.</p>
             </div>
             <div class="contacts">
-              <a class="contact-row" href="mailto:hello@bitcoinmind.com">
+              <a class="contact-row" href={`mailto:${SITE.contactEmail}`} target="_blank" rel="noopener noreferrer">
                 <span class="contact-lbl">Email</span>
-                <span>hello@bitcoinmind.com</span>
+                <span>{SITE.contactEmail}</span>
               </a>
             </div>
           </div>

@@ -1,18 +1,19 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { QUESTIONS } from '@/data/questions';
+import { SITE } from '@/lib/seo';
 ---
 <Base
   title="Questions"
-  description="The best questions are better than my best answers. Curated reader questions, answered by Hiei."
+  description="Selected reader questions, answered when there is something worth saying."
   path="/questions"
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Questions</div>
-        <h1 class="ph-title">Ask. <em>Think.</em></h1>
-        <p class="ph-desc">The best questions are better than my best answers. Selected reader questions, answered when I have something worth saying.</p>
+        <h1 class="ph-title">Open <em>Questions</em></h1>
+        <p class="ph-desc">Selected reader questions, answered when there is something worth saying.</p>
       </div>
 
       <div class="qa-list">
@@ -48,9 +49,9 @@ import { QUESTIONS } from '@/data/questions';
           <h2 class="qa-submit-title">Have a question?</h2>
         </div>
         <p class="qa-submit-body">If you have a question about Bitcoin that you think deserves a thoughtful answer — not a price prediction, not "when moon" — send it. I read everything. I answer what I can.</p>
-        <a class="qa-submit-cta" href="mailto:hello@bitcoinmind.com?subject=Question for BitcoinMind">
+        <a class="qa-submit-cta" href={`mailto:${SITE.contactEmail}?subject=Question for BitcoinMind`} target="_blank" rel="noopener noreferrer">
           <span class="qa-submit-arrow">→</span>
-          <span>hello@bitcoinmind.com</span>
+          <span>{SITE.contactEmail}</span>
         </a>
       </div>
     </div>

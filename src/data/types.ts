@@ -1,5 +1,5 @@
 export type Difficulty = 'Beginner' | 'Intermediate' | 'Advanced';
-export type LayerLabel = 'Start Here' | 'Go Deeper' | 'For Thinkers';
+export type LayerLabel = 'Primer' | 'Go Deeper' | 'For Thinkers';
 
 export interface Book {
   id: string;

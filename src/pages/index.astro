@@ -13,9 +13,7 @@ import { SITE } from '@/lib/seo';
 const layer1Books = BOOKS.filter((b) => b.layer === 1);
 const previewEssays = ESSAYS.slice(0, 3);
 const previewTools = TOOLS.slice(0, 3);
-const bookCount = BOOKS.length;
 const essayCount = ESSAYS.length;
-const toolCount = TOOLS.length;
 
 const websiteLd = {
   '@context': 'https://schema.org',
@@ -51,8 +49,8 @@ const websiteLd = {
     <div class="c">
       <div class="section">
         <div class="sec-hd">
-          <h2 class="sec-title">The <em>Library</em> — Start Here</h2>
-          <a class="va" href="/books">View all {bookCount} books →</a>
+          <h2 class="sec-title">Begin with the <em>Primer</em></h2>
+          <a class="va" href="/books">Open the Library →</a>
         </div>
         <div class="grid3">
           {layer1Books.map((b) => <BookCard book={b} preview />)}
@@ -61,8 +59,8 @@ const websiteLd = {
 
       <div class="section">
         <div class="sec-hd">
-          <h2 class="sec-title">Essential <em>Essays</em></h2>
-          <a class="va" href="/essays">View all {essayCount} essays →</a>
+          <h2 class="sec-title">Read the <em>Texts</em></h2>
+          <a class="va" href="/essays">View all {essayCount} texts →</a>
         </div>
         <div class="grid3">
           {previewEssays.map((e) => <EssayCard essay={e} preview />)}
@@ -71,8 +69,8 @@ const websiteLd = {
 
       <div class="section">
         <div class="sec-hd">
-          <h2 class="sec-title">Recommended <em>Tools</em></h2>
-          <a class="va" href="/tools">View all {toolCount} tools →</a>
+          <h2 class="sec-title">Use the <em>Toolkit</em></h2>
+          <a class="va" href="/tools">Open the Toolkit →</a>
         </div>
         <div class="grid3">
           {previewTools.map((t) => <ToolCard tool={t} />)}
@@ -104,11 +102,11 @@ const websiteLd = {
             </div>
           </a>
           <a class="card" href="/debates">
-            <div class="card-layer">Critical Thinking</div>
-            <div class="card-title">Debates</div>
-            <div class="card-desc card-desc--top">The strongest objections to Bitcoin, steel-manned — then answered. Both sides, honestly.</div>
+            <div class="card-layer">Objections</div>
+            <div class="card-title">Objections</div>
+            <div class="card-desc card-desc--top">The strongest arguments against Bitcoin, answered without pretending they are weak.</div>
             <div class="card-ft">
-              <span class="card-meta">6 debates</span>
+              <span class="card-meta">6 objections</span>
               <span class="card-cta">READ →</span>
             </div>
           </a>

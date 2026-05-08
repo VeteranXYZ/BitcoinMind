@@ -1,14 +1,7 @@
 // Mobile menu controller.
 //
-// Browser-back integration: opening the menu pushes a same-URL history entry
-// so the back gesture closes the menu instead of navigating. The popstate
-// handler is intentionally state-agnostic — if the menu is open, any back
-// navigation closes it. We don't inspect history.state because Astro's
-// ClientRouter may have replaced our state marker with its own routing info.
-
 let prevOverflow = '';
 let menuOpen = false;
-let pushed = false;
 let menuOpener: HTMLElement | null = null;
 
 function getRoot(): HTMLElement | null {
@@ -56,23 +49,15 @@ function open(): void {
   setBackgroundInert(true);
   setExpanded(true);
   root.removeAttribute('hidden');
-  history.pushState({ bmMenu: true }, '');
-  pushed = true;
   requestAnimationFrame(() => closeBtn.focus());
 }
 
-function close(popHistory = true, restoreFocus = true): void {
+function close(restoreFocus = true): void {
   if (!menuOpen) return;
   menuOpen = false;
   hideVisual();
   if (restoreFocus) menuOpener?.focus();
   menuOpener = null;
-  if (popHistory && pushed) {
-    pushed = false;
-    // Pop the marker entry so the history stack stays clean.
-    // popstate will fire, but its handler is a no-op when menuOpen is false.
-    history.back();
-  }
 }
 
 window.addEventListener('keydown', (e) => {
@@ -102,14 +87,8 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
-// State-agnostic close — any back navigation closes the menu when it's open.
 window.addEventListener('popstate', () => {
-  if (!menuOpen) return;
-  menuOpen = false;
-  pushed = false; // browser already popped the marker for us
-  hideVisual();
-  menuOpener?.focus();
-  menuOpener = null;
+  if (menuOpen) close(false);
 });
 
 const BOUND = Symbol.for('bm.menu.bound');
@@ -132,11 +111,6 @@ function bindButtons(): void {
   items.forEach((a) => {
     if (a[BOUND]) return;
     a.addEventListener('click', () => {
-      // ClientRouter handles the link click and pushes the new URL.
-      // Critical: clear `pushed` BEFORE close() runs, otherwise close() would
-      // call history.back() and immediately undo ClientRouter's navigation,
-      // making the click feel like "page didn't switch".
-      pushed = false;
       menuOpen = false;
       hideVisual();
       menuOpener = null;

@@ -4,7 +4,7 @@ import Tag from './Tag';
 import type { Book } from '@/data/types';
 
 const TAGS = ['All', 'Philosophy', 'Economics', 'Technical', 'History', 'Essential', 'Beginner', 'Intermediate', 'Advanced'];
-const LAYER_NAMES: Record<number, string> = { 1: 'Start Here', 2: 'Go Deeper', 3: 'For Thinkers' };
+const LAYER_NAMES: Record<number, string> = { 1: 'Primer', 2: 'Go Deeper', 3: 'For Thinkers' };
 const LAYER_DESC: Record<number, string> = {
   1: 'Begin here regardless of background. These books establish the core conceptual framework.',
   2: 'For readers who have finished Layer 1 and want depth — technical, economic, or historical.',

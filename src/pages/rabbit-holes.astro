@@ -12,23 +12,23 @@ const typeIcon: Record<string, string> = {
 };
 ---
 <Base
-  title="Rabbit Holes"
-  description="Five curated learning paths through Bitcoin — from monetary history to self-custody. Start Here was the door. These are the corridors."
+  title="Paths"
+  description="Five routes past the primer, each with a different question at the center."
   path="/rabbit-holes"
 >
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">Rabbit Holes</div>
-        <h1 class="ph-title">Go <em>deeper.</em></h1>
-        <p class="ph-desc">Start Here was the door. These are the corridors. Five curated paths, each one a sequence of the best resources on a single theme.</p>
+        <div class="ph-eye">Paths</div>
+        <h1 class="ph-title">Learning <em>Paths</em></h1>
+        <p class="ph-desc">Five routes past the primer. Each begins with a different question and follows it until the map changes.</p>
       </div>
 
       <div class="rh-list">
         {RABBIT_HOLES.map((rh, idx) => (
           <div class="rh-card" id={rh.id}>
             <div class="rh-header">
-              <div class="rh-emoji">{rh.emoji}</div>
+              <div class="rh-index" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</div>
               <div class="rh-header-text">
                 <div class="rh-path-num">Path {idx + 1} of {RABBIT_HOLES.length}</div>
                 <h2 class="rh-title">{rh.title}</h2>
@@ -75,7 +75,7 @@ const typeIcon: Record<string, string> = {
   .rh-card {
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
-    padding: var(--sp-7) var(--sp-7);
+    padding: var(--sp-7);
     background: var(--surf);
     transition: border-color var(--ease-card);
   }
@@ -84,21 +84,29 @@ const typeIcon: Record<string, string> = {
   }
 
   .rh-header {
-    display: flex;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    align-items: start;
     gap: var(--sp-5);
     margin-bottom: var(--sp-5);
   }
 
-  .rh-emoji {
-    font-size: 28px;
-    flex-shrink: 0;
-    /* Optical alignment with title baseline */
-    margin-top: 1px;
+  .rh-index {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: var(--fz-sm);
+    color: var(--gold-hi);
+    letter-spacing: var(--ls-5);
+    background: var(--bg-deep);
   }
 
   .rh-header-text {
-    flex: 1;
+    min-width: 0;
   }
 
   .rh-path-num {
@@ -158,7 +166,8 @@ const typeIcon: Record<string, string> = {
   }
 
   .rh-step {
-    display: flex;
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) 132px;
     align-items: center;
     gap: var(--sp-4);
     padding: var(--sp-3) var(--sp-2);
@@ -177,17 +186,16 @@ const typeIcon: Record<string, string> = {
     font-size: var(--fz-3xs);
     color: var(--gold);
     letter-spacing: var(--ls-5);
-    width: var(--sp-5);
+    width: 32px;
     text-align: center;
-    flex-shrink: 0;
   }
 
   .rh-step-body {
-    flex: 1;
     display: flex;
     align-items: baseline;
     gap: var(--sp-3);
     flex-wrap: wrap;
+    min-width: 0;
   }
 
   .rh-step-title {
@@ -208,8 +216,8 @@ const typeIcon: Record<string, string> = {
   .rh-step-right {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: var(--sp-3);
-    flex-shrink: 0;
   }
 
   .rh-step-type {
@@ -231,13 +239,14 @@ const typeIcon: Record<string, string> = {
 
   @media (max-width: 1024px) {
     .rh-header {
-      flex-wrap: wrap;
+      grid-template-columns: 48px minmax(0, 1fr);
     }
+    .rh-index { width: 48px; height: 48px; }
     .rh-meta-col {
       flex-direction: row;
       align-items: center;
-      width: 100%;
-      padding-left: var(--sp-7);
+      justify-content: flex-start;
+      grid-column: 2;
     }
   }
 
@@ -245,12 +254,27 @@ const typeIcon: Record<string, string> = {
     .rh-card {
       padding: var(--sp-6) var(--sp-4);
     }
+    .rh-header {
+      grid-template-columns: 1fr;
+      gap: var(--sp-3);
+    }
+    .rh-index {
+      width: auto;
+      height: auto;
+      place-items: start;
+      border: 0;
+      background: transparent;
+    }
+    .rh-meta-col {
+      grid-column: 1;
+    }
     .rh-step {
-      flex-wrap: wrap;
+      grid-template-columns: 28px minmax(0, 1fr);
       gap: var(--sp-2);
     }
     .rh-step-right {
-      padding-left: var(--sp-7);
+      grid-column: 2;
+      justify-content: flex-start;
     }
   }
 </style>

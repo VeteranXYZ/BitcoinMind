@@ -10,15 +10,15 @@ const categories = [
 ---
 <Base
   title="Glossary"
-  description="Not definitions — conceptual anchors. The core ideas behind Bitcoin, each one a micro-essay."
+  description="Concepts as anchors, not dictionary entries."
   path="/glossary"
 >
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">Glossary</div>
-        <h1 class="ph-title">Terms as <em>thinking.</em></h1>
-        <p class="ph-desc">Not definitions. Conceptual anchors. Each entry is a micro-essay — a way into the idea, not a summary of it.</p>
+        <div class="ph-eye">Concepts</div>
+        <h1 class="ph-title">The <em>Glossary</em></h1>
+        <p class="ph-desc">Concepts as anchors, not dictionary entries. Each term is a way into the idea.</p>
       </div>
 
       {categories.map((cat) => {
@@ -35,7 +35,6 @@ const categories = [
                 <div class="gl-entry" id={entry.id}>
                   <div class="gl-term-row">
                     <h2 class="gl-term">{entry.term}</h2>
-                    {entry.zh && <span class="gl-zh">{entry.zh}</span>}
                   </div>
                   <p class="gl-body">{entry.body}</p>
                   {entry.links && (
@@ -117,13 +116,6 @@ const categories = [
     color: var(--tx);
   }
 
-  .gl-zh {
-    font-family: var(--font-mono);
-    font-size: var(--fz-xs);
-    color: var(--tx-3);
-    letter-spacing: var(--ls-3);
-  }
-
   .gl-body {
     font-family: var(--font-body);
     font-size: var(--fz-md);
@@ -154,7 +146,6 @@ const categories = [
     .gl-entry { padding: var(--sp-6) 0; }
     .gl-cat-label { font-size: var(--fz-2xl); }
     .gl-cat-hd { margin-bottom: var(--sp-6); }
-    /* term + zh: stack vertically so neither wraps awkwardly */
     .gl-term-row { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }
   }
 </style>
