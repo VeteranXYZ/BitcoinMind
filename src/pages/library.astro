@@ -1,28 +1,28 @@
 ---
 import Base from '@/layouts/Base.astro';
-import BookFilter from '@/components/BookFilter';
-import { BOOKS } from '@/data/books';
+import LibraryFilter from '@/components/LibraryFilter';
+import { LIBRARY } from '@/data/library';
 
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'BitcoinMind Library',
-  itemListElement: BOOKS.map((b, i) => ({
+  itemListElement: LIBRARY.map((item, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     item: {
-      '@type': 'Book',
-      name: b.title,
-      author: { '@type': 'Person', name: b.author },
-      description: b.desc,
-      url: b.link,
+      '@type': 'CreativeWork',
+      name: item.title,
+      author: { '@type': 'Person', name: item.author },
+      description: item.shortDescription,
+      url: item.link,
     },
   })),
 };
 ---
 <Base
-  title="The Library"
-  description="A short shelf, not a complete bibliography. Read in order: money, Bitcoin, sovereignty."
+  title="Bitcoin Library"
+  description="A curated Bitcoin library arranged by learning path: monetary foundations, Bitcoin history, technical literacy, fiat systems, and sovereignty."
   path="/library"
   jsonLd={itemList}
 >
@@ -31,9 +31,9 @@ const itemList = {
       <div class="ph">
         <div class="ph-eye">Canon</div>
         <h1 class="ph-title">The <em>Library</em></h1>
-        <p class="ph-desc">A short shelf, not a complete bibliography. Read in order: money first, Bitcoin second, sovereignty last.</p>
+        <p class="ph-desc">Library — works for building the mental model. Money first, Bitcoin second, sovereignty last.</p>
       </div>
-      <BookFilter client:visible />
+      <LibraryFilter client:visible />
     </div>
   </div>
 </Base>

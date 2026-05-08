@@ -1,19 +1,19 @@
 ---
 import Base from '@/layouts/Base.astro';
-import BookCard from '@/components/BookCard.astro';
-import EssayCard from '@/components/EssayCard.astro';
-import ToolCard from '@/components/ToolCard.astro';
+import LibraryCard from '@/components/LibraryCard.astro';
+import TextCard from '@/components/TextCard.astro';
+import ToolkitCard from '@/components/ToolkitCard.astro';
 import TodaysPick from '@/components/TodaysPick';
 import PulsePlus from '@/components/PulsePlus';
-import { BOOKS } from '@/data/books';
-import { ESSAYS } from '@/data/essays';
-import { TOOLS } from '@/data/tools';
+import { LIBRARY } from '@/data/library';
+import { TEXTS } from '@/data/texts';
+import { TOOLKIT } from '@/data/toolkit';
 import { SITE } from '@/lib/seo';
 
-const layer1Books = BOOKS.filter((b) => b.layer === 1);
-const previewEssays = ESSAYS.slice(0, 3);
-const previewTools = TOOLS.slice(0, 3);
-const essayCount = ESSAYS.length;
+const foundationItems = LIBRARY.filter((item) => item.layer === 1);
+const previewTexts = TEXTS.slice(0, 3);
+const previewToolkit = TOOLKIT.slice(0, 3);
+const textCount = TEXTS.length;
 
 const websiteLd = {
   '@context': 'https://schema.org',
@@ -39,7 +39,7 @@ const websiteLd = {
           <span class="hero-t2">Mind</span>
         </h1>
         <div class="hero-rule"><div class="hero-rule-dot"></div></div>
-        <p class="hero-quote">"Curated resources for people who want to understand Bitcoin, not just own it."</p>
+        <p class="hero-quote">"BitcoinMind is a personal map for studying Bitcoin as money, protocol, and sovereignty."</p>
         <p class="hero-by">A public record by {SITE.author} · Updated {SITE.lastUpdated}</p>
         <TodaysPick client:only="preact" />
         <PulsePlus client:idle />
@@ -53,17 +53,17 @@ const websiteLd = {
           <a class="va" href="/library">Open the Library →</a>
         </div>
         <div class="grid3">
-          {layer1Books.map((b) => <BookCard book={b} preview />)}
+          {foundationItems.map((item) => <LibraryCard item={item} preview />)}
         </div>
       </div>
 
       <div class="section">
         <div class="sec-hd">
           <h2 class="sec-title">Read the <em>Texts</em></h2>
-          <a class="va" href="/texts">View all {essayCount} texts →</a>
+          <a class="va" href="/texts">View all {textCount} texts →</a>
         </div>
         <div class="grid3">
-          {previewEssays.map((e) => <EssayCard essay={e} preview />)}
+          {previewTexts.map((item) => <TextCard item={item} preview />)}
         </div>
       </div>
 
@@ -73,7 +73,7 @@ const websiteLd = {
           <a class="va" href="/toolkit">Open the Toolkit →</a>
         </div>
         <div class="grid3">
-          {previewTools.map((t) => <ToolCard tool={t} />)}
+          {previewToolkit.map((item) => <ToolkitCard item={item} preview />)}
         </div>
       </div>
 
@@ -95,7 +95,7 @@ const websiteLd = {
           <a class="card" href="/glossary">
             <div class="card-layer">Concepts</div>
             <div class="card-title">Glossary</div>
-            <div class="card-desc card-desc--top">Not definitions — conceptual anchors. Each entry is a micro-essay on a core Bitcoin idea.</div>
+            <div class="card-desc card-desc--top">Not definitions — conceptual anchors. Each entry is a compact note on a core Bitcoin idea.</div>
             <div class="card-ft">
               <span class="card-meta">15 terms</span>
               <span class="card-cta">READ →</span>

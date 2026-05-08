@@ -1,7 +1,7 @@
 export interface RabbitHoleStep {
   title: string;
   author?: string;
-  type: 'book' | 'essay' | 'tool' | 'frame' | 'external';
+  type: 'library' | 'text' | 'toolkit' | 'frame' | 'external';
   href: string;
   time?: string;
 }
@@ -23,15 +23,15 @@ export const RABBIT_HOLES: RabbitHole[] = [
     emoji: '🏛',
     title: 'The Monetary Path',
     subtitle: 'Five thousand years of money in five steps',
-    desc: 'Understand what money is, where it comes from, and why Bitcoin is the logical conclusion of monetary history. Start here if you want to understand the "why" before the "how."',
+    desc: 'Understand what money is, where it comes from, and why Bitcoin belongs in a longer history of monetary competition. Begin here if you want to understand the "why" before the "how."',
     difficulty: 'Beginner',
     totalTime: '~12 hours',
     steps: [
       { title: 'A History of Hardness', type: 'frame', href: '/frames/1', time: '15 min' },
-      { title: 'The Bitcoin Standard (Part 1)', author: 'Saifedean Ammous', type: 'book', href: '/library', time: '3 hrs' },
-      { title: 'Shelling Out: The Origins of Money', author: 'Nick Szabo', type: 'essay', href: '/texts', time: '40 min' },
-      { title: 'The Bullish Case for Bitcoin', author: 'Vijay Boyapati', type: 'essay', href: '/texts', time: '45 min' },
-      { title: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg', type: 'book', href: '/library', time: '8 hrs' },
+      { title: 'The Bitcoin Standard (Part 1)', author: 'Saifedean Ammous', type: 'library', href: '/library', time: '3 hrs' },
+      { title: 'Shelling Out: The Origins of Money', author: 'Nick Szabo', type: 'text', href: '/texts', time: '40 min' },
+      { title: 'The Bullish Case for Bitcoin', author: 'Vijay Boyapati', type: 'text', href: '/texts', time: '45 min' },
+      { title: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg', type: 'library', href: '/library', time: '8 hrs' },
     ],
   },
   {
@@ -43,11 +43,11 @@ export const RABBIT_HOLES: RabbitHole[] = [
     difficulty: 'Advanced',
     totalTime: '~20 hours',
     steps: [
-      { title: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto', type: 'essay', href: '/texts', time: '20 min' },
-      { title: 'Mastering Bitcoin (Ch. 1–6)', author: 'Andreas Antonopoulos', type: 'book', href: '/library', time: '6 hrs' },
-      { title: 'Bitcoin is Time', author: 'Gigi', type: 'essay', href: '/texts', time: '35 min' },
-      { title: 'Install and run Bitcoin Core', type: 'tool', href: '/toolkit', time: '2 hrs' },
-      { title: 'Explore your node with Mempool.space', type: 'tool', href: '/toolkit', time: '1 hr' },
+      { title: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto', type: 'text', href: '/texts', time: '20 min' },
+      { title: 'Mastering Bitcoin (Ch. 1-6)', author: 'Andreas Antonopoulos', type: 'library', href: '/library', time: '6 hrs' },
+      { title: 'Bitcoin is Time', author: 'Gigi', type: 'text', href: '/texts', time: '35 min' },
+      { title: 'Install and run Bitcoin Core', type: 'toolkit', href: '/toolkit', time: '2 hrs' },
+      { title: 'Explore your node with Mempool.space', type: 'toolkit', href: '/toolkit', time: '1 hr' },
     ],
   },
   {
@@ -60,9 +60,9 @@ export const RABBIT_HOLES: RabbitHole[] = [
     totalTime: '~6 hours',
     steps: [
       { title: 'Why self-custody matters', type: 'external', href: 'https://unchained.com/blog/bitcoin-self-custody/', time: '15 min' },
-      { title: 'Trezor Safe 3 — First hardware wallet', type: 'tool', href: '/toolkit', time: '1 hr' },
-      { title: 'Sparrow Wallet — Full UTXO control', type: 'tool', href: '/toolkit', time: '2 hrs' },
-      { title: 'Coldcard MK4 — Air-gapped signing', type: 'tool', href: '/toolkit', time: '2 hrs' },
+      { title: 'Trezor Safe 3 — First hardware wallet', type: 'toolkit', href: '/toolkit', time: '1 hr' },
+      { title: 'Sparrow Wallet — Full UTXO control', type: 'toolkit', href: '/toolkit', time: '2 hrs' },
+      { title: 'Coldcard MK4 — Air-gapped signing', type: 'toolkit', href: '/toolkit', time: '2 hrs' },
       { title: 'Multi-sig with Sparrow + Coldcard', type: 'external', href: 'https://sparrowwallet.com/docs/best-practices.html', time: '1 hr' },
     ],
   },
@@ -75,11 +75,11 @@ export const RABBIT_HOLES: RabbitHole[] = [
     difficulty: 'Intermediate',
     totalTime: '~15 hours',
     steps: [
-      { title: 'The Internet of Money', author: 'Andreas Antonopoulos', type: 'book', href: '/library', time: '4 hrs' },
-      { title: 'Masters and Slaves of Money', author: 'Robert Breedlove', type: 'essay', href: '/texts', time: '50 min' },
-      { title: 'Bitcoin is Time', author: 'Gigi', type: 'essay', href: '/texts', time: '35 min' },
-      { title: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg', type: 'book', href: '/library', time: '8 hrs' },
-      { title: 'Check Your Financial Privilege', author: 'Alex Gladstein', type: 'book', href: '/library', time: '3 hrs' },
+      { title: 'The Internet of Money', author: 'Andreas Antonopoulos', type: 'library', href: '/library', time: '4 hrs' },
+      { title: 'Masters and Slaves of Money', author: 'Robert Breedlove', type: 'text', href: '/texts', time: '50 min' },
+      { title: 'Bitcoin is Time', author: 'Gigi', type: 'text', href: '/texts', time: '35 min' },
+      { title: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg', type: 'library', href: '/library', time: '8 hrs' },
+      { title: 'Check Your Financial Privilege', author: 'Alex Gladstein', type: 'library', href: '/library', time: '3 hrs' },
     ],
   },
   {
@@ -87,15 +87,15 @@ export const RABBIT_HOLES: RabbitHole[] = [
     emoji: '📊',
     title: 'The Economics Path',
     subtitle: 'The case for Bitcoin as a monetary asset',
-    desc: 'The most rigorous arguments for Bitcoin as superior money. Start with the strongest single essay, work through the most systematic framework, and end with the data that supports the thesis.',
+    desc: 'The strongest arguments for Bitcoin as superior money. Begin with the clearest single text, work through the most systematic framework, and end with the data that supports the thesis.',
     difficulty: 'Intermediate',
     totalTime: '~10 hours',
     steps: [
-      { title: 'The Bullish Case for Bitcoin', author: 'Vijay Boyapati', type: 'essay', href: '/texts', time: '45 min' },
-      { title: 'Gradually, Then Suddenly', author: 'Parker Lewis', type: 'essay', href: '/texts', time: '4 hrs' },
+      { title: 'The Bullish Case for Bitcoin', author: 'Vijay Boyapati', type: 'text', href: '/texts', time: '45 min' },
+      { title: 'Gradually, Then Suddenly', author: 'Parker Lewis', type: 'text', href: '/texts', time: '4 hrs' },
       { title: 'After the Anchor', type: 'frame', href: '/frames/2', time: '20 min' },
-      { title: 'Speculative Attack', author: 'Pierre Rochard', type: 'essay', href: '/texts', time: '25 min' },
-      { title: 'LookIntoBitcoin — Cycle analysis', type: 'tool', href: '/toolkit', time: '1 hr' },
+      { title: 'Speculative Attack', author: 'Pierre Rochard', type: 'text', href: '/texts', time: '25 min' },
+      { title: 'LookIntoBitcoin — Cycle analysis', type: 'toolkit', href: '/toolkit', time: '1 hr' },
     ],
   },
 ];

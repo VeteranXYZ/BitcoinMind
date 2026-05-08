@@ -29,7 +29,7 @@
   --bg-glow-deep:  oklch(0.06 0.02 58 / 0.5);    /* page radial glow bottom */
   --hero-grid-v:   oklch(0.30 0.035 68 / 0.22);  /* hero vertical grid */
   --hero-grid-h:   oklch(0.30 0.035 68 / 0.15);  /* hero horizontal grid */
-  --pb-start:      oklch(0.60 0.10 72);          /* reading-progress bar gradient */
+  --pb-beg:        oklch(0.60 0.10 72);          /* reading-progress bar gradient */
 
   /* ── Tag base palette ──────────────────────────────────
      7 unique color families. Tag classes alias these — eliminates

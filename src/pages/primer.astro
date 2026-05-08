@@ -12,12 +12,12 @@ interface Step {
 }
 
 const steps: Step[] = [
-  { n: '1', head: 'Read the document that started everything.',
+  { n: '1', head: 'Read the document that began everything.',
     body: "Nine pages. Written by a person no one has ever identified. Read it not to understand the cryptography — read it to feel the problem it's solving. Two people. No bank in between. That's the whole idea.",
     label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto',
     href: 'https://bitcoin.org/bitcoin.pdf', external: true },
   { n: '2', head: 'Learn what money actually is.',
-    body: "You cannot understand what Bitcoin is replacing without understanding what money is. Most people never ask. The Bitcoin Standard is where I'd start — not the whole book, just Part One. The history of money is the only context that makes Bitcoin legible.",
+    body: "You cannot understand what Bitcoin is replacing without understanding what money is. Most people never ask. The Bitcoin Standard is where I'd begin — not the whole work, just Part One. The history of money is the only context that makes Bitcoin legible.",
     label: 'The Bitcoin Standard', author: 'Saifedean Ammous',
     href: 'https://saifedean.com/tbs/', external: true },
   { n: '3', head: 'Understand why this one.',
@@ -29,21 +29,21 @@ const steps: Step[] = [
     label: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg',
     href: 'https://www.amazon.com/Sovereign-Individual-Mastering-Transition-Information/dp/0684832720', external: true },
   { n: '5', head: 'Read what I actually think.',
-    body: "The Notes section is where I write without a net. Start with the first entry — April 2011, Bitcoin at $1. I called it devil-like. I wasn't wrong about the nature of it. I was wrong about what to do.",
+    body: "The Notes section is where I write without a net. Begin with the first entry — April 2011, Bitcoin at $1. I called it devil-like. I wasn't wrong about the nature of it. I was wrong about what to do.",
     label: 'Notes', author: null, href: '/notes', external: false },
 ];
 ---
 <Base
-  title="Primer"
-  description="Five resources in the order I would give them to someone approaching Bitcoin seriously."
+  title="Bitcoin Primer"
+  description="A five-step Bitcoin learning path for readers who want to understand the whitepaper, money, Bitcoin's monetary case, sovereignty, and self-custody."
   path="/primer"
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Primer</div>
-        <h1 class="ph-title">Where to <em>Begin.</em></h1>
-        <p class="ph-desc">Five resources, in order. Start with the problem, then the history, then the consequences.</p>
+        <h1 class="ph-title">The BitcoinMind <em>Primer</em></h1>
+        <p class="ph-desc">Five steps for approaching Bitcoin seriously: the document, the problem of money, the monetary case, sovereignty, and my own record.</p>
       </div>
 
       <div class="steps-wrap">
@@ -62,7 +62,7 @@ const steps: Step[] = [
             >
               <span class="step-arrow">→</span>
               <span>
-                <span class="step-book">{s.label}</span>
+                <span class="step-resource">{s.label}</span>
                 {s.author && <span class="step-auth">{s.author}</span>}
               </span>
             </a>

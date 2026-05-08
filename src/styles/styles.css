@@ -37,7 +37,7 @@ body::before {
   position: fixed;
   top: 0; left: 0;
   height: 2px;
-  background: linear-gradient(to right, var(--pb-start), var(--gold-hi));
+  background: linear-gradient(to right, var(--pb-beg), var(--gold-hi));
   z-index: 999;
   width: 0%;
   transition: width 80ms linear;
@@ -319,6 +319,14 @@ nav {
   margin-bottom: var(--sp-3);
 }
 .card-layer--row { display: flex; justify-content: space-between; }
+.card-role {
+  font-family: var(--font-mono);
+  font-size: var(--fz-3xs);
+  color: var(--gold);
+  letter-spacing: var(--ls-5);
+  text-transform: uppercase;
+  margin-bottom: var(--sp-2);
+}
 .card-title  {
   font-family: var(--font-serif);
   font-size: var(--fz-lg);
@@ -361,6 +369,15 @@ nav {
   margin-bottom: var(--sp-2);
   padding-left: var(--sp-3);
   border-left: 2px solid var(--bdr-2);
+}
+.card-ri strong {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fz-3xs);
+  color: var(--tx);
+  letter-spacing: var(--ls-5);
+  text-transform: uppercase;
+  margin-bottom: 3px;
 }
 
 /* ── Tags ───────────────────────────────────────────── */
@@ -488,7 +505,7 @@ nav {
 .srch:focus       { border-color: var(--gold); }
 .srch::placeholder { color: var(--tx-3); }
 
-/* ── Layer (Books) ──────────────────────────────────── */
+/* ── Library Layers ─────────────────────────────────── */
 .layer      { margin-bottom: var(--sp-11); }
 .layer-hd   { display: flex; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-2); }
 .layer-n    {
@@ -511,8 +528,8 @@ nav {
   line-height: var(--lh-normal);
 }
 
-/* ── Tools ──────────────────────────────────────────── */
-.tool-sec-hd {
+/* ── Toolkit ────────────────────────────────────────── */
+.toolkit-sec-hd {
   font-family: var(--font-serif);
   font-size: var(--fz-3xl);
   font-weight: var(--fw-bold);
@@ -522,8 +539,8 @@ nav {
   padding-bottom: var(--sp-4);
   border-bottom: 1px solid var(--bdr);
 }
-.tool-sec-hd--lower { margin-top: var(--sp-10); }
-.tool-sec-desc {
+.toolkit-sec-hd--lower { margin-top: var(--sp-10); }
+.toolkit-sec-desc {
   font-family: var(--font-mono);
   font-size: var(--fz-sm);
   color: var(--tx-3);
@@ -532,7 +549,7 @@ nav {
   line-height: var(--lh-normal);
 }
 
-/* ── Start Here (Steps) ─────────────────────────────── */
+/* ── Primer Steps ───────────────────────────────────── */
 .steps-wrap { max-width: 768px; }
 .step {
   padding-bottom: var(--sp-9);
@@ -586,7 +603,7 @@ nav {
 }
 .step-cta:hover { border-color: var(--gold); box-shadow: 0 6px 28px var(--gold-dim); }
 .step-arrow { font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--gold); letter-spacing: var(--ls-5); }
-.step-book  { font-family: var(--font-serif); font-size: var(--fz-lg); font-weight: var(--fw-bold); color: var(--tx); letter-spacing: var(--ls-normal); }
+.step-resource  { font-family: var(--font-serif); font-size: var(--fz-lg); font-weight: var(--fw-bold); color: var(--tx); letter-spacing: var(--ls-normal); }
 .step-auth  { font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--tx-3); margin-left: var(--sp-2); letter-spacing: var(--ls-3); }
 
 .steps-closing     { padding-top: var(--sp-2); }
@@ -1405,7 +1422,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   border-left: 1px solid var(--bdr-2);
 }
 
-/* Cross-links to Books / Essays / etc. */
+/* Cross-links */
 .fnode-links {
   margin-top: var(--sp-8);
   display: flex;

@@ -159,16 +159,16 @@ export default function PulsePlus() {
   const monthsWord = `${spellNumber(months)} month${months === 1 ? '' : 's'}`;
 
   return (
-    <section class="pulse" aria-label="Bitcoin network status">
+    <section class="pulse" aria-label="Bitcoin network clock">
       <div class="pulse-hd">
-        <span class="pulse-lbl">The Pulse</span>
+        <span class="pulse-lbl">Network Clock</span>
         <span class={`pulse-live ${pulsed ? 'pulse-live--flash' : ''}`} aria-hidden="true">
           <span class="pulse-live-dot" /> live
         </span>
       </div>
 
       <p class="pulse-line" aria-live="polite">
-        At block <span class={pulsed ? 'pulse-num pulse-num--flash' : 'pulse-num'}>{height.toLocaleString('en-US')}</span> &mdash; {yearsWord} and {monthsWord} since genesis.
+        Bitcoin is measured in blocks before it is measured in headlines. Block <span class={pulsed ? 'pulse-num pulse-num--flash' : 'pulse-num'}>{height.toLocaleString('en-US')}</span> &mdash; {yearsWord} and {monthsWord} since genesis.
       </p>
 
       <div class="pulse-track">
@@ -188,7 +188,7 @@ export default function PulsePlus() {
         <div class="pp-stat">
           <span class="pp-stat-lbl">Next Halving</span>
           <span class="pp-stat-val">{remaining.toLocaleString('en-US')} blocks</span>
-          <span class="pp-stat-note">The supply cut no one can stop</span>
+          <span class="pp-stat-note">A predictable supply event built into the protocol</span>
         </div>
 
         {hashRate != null && (

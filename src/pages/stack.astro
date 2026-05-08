@@ -69,18 +69,18 @@ import Base from '@/layouts/Base.astro';
 
         <div class="about-aside">
           <div class="aside-card">
-            <div class="aside-card-title">Tools I Use</div>
-            <a class="stk-tool" href="/toolkit">
+            <div class="aside-card-title">Toolkit I Use</div>
+            <a class="stk-kit" href="/toolkit">
               <span>Coldcard MK4</span>
-              <span class="stk-tool-role">Signing</span>
+              <span class="stk-kit-role">Signing</span>
             </a>
-            <a class="stk-tool" href="/toolkit">
+            <a class="stk-kit" href="/toolkit">
               <span>Sparrow Wallet</span>
-              <span class="stk-tool-role">Watch-only</span>
+              <span class="stk-kit-role">Watch-only</span>
             </a>
-            <a class="stk-tool" href="/toolkit">
+            <a class="stk-kit" href="/toolkit">
               <span>Bitcoin Core</span>
-              <span class="stk-tool-role">Verification</span>
+              <span class="stk-kit-role">Verification</span>
             </a>
           </div>
 
@@ -140,7 +140,7 @@ import Base from '@/layouts/Base.astro';
     color: var(--tx-3);
   }
 
-  .stk-tool {
+  .stk-kit {
     font-family: var(--font-mono);
     font-size: var(--fz-xs);
     color: var(--tx-2);
@@ -151,10 +151,10 @@ import Base from '@/layouts/Base.astro';
     letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
-  .stk-tool:last-child { border-bottom: none; }
-  .stk-tool:hover { color: var(--gold); }
+  .stk-kit:last-child { border-bottom: none; }
+  .stk-kit:hover { color: var(--gold); }
 
-  .stk-tool-role {
+  .stk-kit-role {
     color: var(--tx-3);
     font-size: var(--fz-3xs);
     letter-spacing: var(--ls-5);

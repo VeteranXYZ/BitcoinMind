@@ -7,7 +7,7 @@ export interface PageSeo {
 export const SITE = {
   name: 'BitcoinMind',
   url: 'https://bitcoinmind.com',
-  tagline: 'Curated resources for people who want to understand Bitcoin, not just own it.',
+  tagline: 'BitcoinMind is a personal knowledge map for studying Bitcoin through the Library, primary texts, custody instruments, monetary history, verification, and sovereignty.',
   author: 'Hiei',
   contactEmail: 'hiei1988@gmail.com',
   foundedYear: 2017,
@@ -16,7 +16,9 @@ export const SITE = {
 };
 
 export function fullTitle(title: string): string {
-  return title === SITE.name ? `${SITE.name} — ${SITE.author}` : `${title} — ${SITE.name}`;
+  return title === SITE.name
+    ? `${SITE.name} — A Bitcoin Learning Path for Money, Custody, and Sovereignty`
+    : `${title} — ${SITE.name}`;
 }
 
 export function canonical(path: string): string {

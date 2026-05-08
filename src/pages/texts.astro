@@ -1,29 +1,29 @@
 ---
 import Base from '@/layouts/Base.astro';
-import EssayFilter from '@/components/EssayFilter';
-import { ESSAYS } from '@/data/essays';
+import TextFilter from '@/components/TextFilter';
+import { TEXTS } from '@/data/texts';
 
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'BitcoinMind Primary Texts',
-  itemListElement: ESSAYS.map((e, i) => ({
+  itemListElement: TEXTS.map((item, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     item: {
       '@type': 'Article',
-      headline: e.title,
-      author: { '@type': 'Person', name: e.author },
-      datePublished: String(e.year),
-      description: e.desc,
-      url: e.link,
+      headline: item.title,
+      author: { '@type': 'Person', name: item.author },
+      datePublished: String(item.year),
+      description: item.shortDescription,
+      url: item.link,
     },
   })),
 };
 ---
 <Base
-  title="Texts"
-  description="The papers and essays that carry the idea, not the commentary around it."
+  title="Bitcoin Primary Texts"
+  description="Essential Bitcoin texts including the whitepaper, monetary writings, adoption frameworks, objections, and philosophical work on time and sovereignty."
   path="/texts"
   jsonLd={itemList}
 >
@@ -32,9 +32,9 @@ const itemList = {
       <div class="ph">
         <div class="ph-eye">Primary Texts</div>
         <h1 class="ph-title">Primary <em>Texts</em></h1>
-        <p class="ph-desc">The whitepaper first, then the thinkers around it. No summaries standing in for the source.</p>
+        <p class="ph-desc">Texts — primary writings that shaped Bitcoin thinking. The whitepaper first, then the arguments around it.</p>
       </div>
-      <EssayFilter client:visible />
+      <TextFilter client:visible />
     </div>
   </div>
 </Base>
