@@ -71,6 +71,28 @@ export const LIBRARY: LibraryItem[] = [
     link: "https://www.harpercollins.com/products/digital-gold-nathaniel-popper"
   },
   {
+    id: "inventing-bitcoin",
+    title: "Inventing Bitcoin",
+    author: "Yan Pritzker",
+    group: "Core Library",
+    pathStage: "Protocol",
+    resourceType: "work",
+    layer: 2,
+    layerLabel: "Layer 2 - Systems",
+    learningRole: "Short technical primer",
+    shortDescription: "A short explanation of how Bitcoin works, written for readers who want a fast but serious technical introduction.",
+    whyItBelongs: "It belongs here because not every reader is ready for a full technical work. This is a useful bridge between curiosity and protocol literacy.",
+    bestFor: "Beginners who want a concise explanation of mining, keys, transactions, and consensus.",
+    learningPathPosition: "Read before Grokking Bitcoin if you want a shorter first technical pass.",
+    difficulty: "Beginner",
+    tags: [
+      "Technical Primer",
+      "Consensus",
+      "Mining"
+    ],
+    link: "https://inventingbitcoin.com/"
+  },
+  {
     id: "grokking-bitcoin",
     title: "Grokking Bitcoin",
     author: "Kalle Rosenbaum",
@@ -252,28 +274,6 @@ export const LIBRARY: LibraryItem[] = [
       "Bitcoin Culture"
     ],
     link: "https://21lessons.com/"
-  },
-  {
-    id: "inventing-bitcoin",
-    title: "Inventing Bitcoin",
-    author: "Yan Pritzker",
-    group: "Core Library",
-    pathStage: "Protocol",
-    resourceType: "work",
-    layer: 2,
-    layerLabel: "Layer 2 - Systems",
-    learningRole: "Short technical primer",
-    shortDescription: "A short explanation of how Bitcoin works, written for readers who want a fast but serious technical introduction.",
-    whyItBelongs: "It belongs here because not every reader is ready for a full technical work. This is a useful bridge between curiosity and protocol literacy.",
-    bestFor: "Beginners who want a concise explanation of mining, keys, transactions, and consensus.",
-    learningPathPosition: "Read before Grokking Bitcoin if you want a shorter first technical pass.",
-    difficulty: "Beginner",
-    tags: [
-      "Technical Primer",
-      "Consensus",
-      "Mining"
-    ],
-    link: "https://inventingbitcoin.com/"
   },
   {
     id: "the-price-of-tomorrow",

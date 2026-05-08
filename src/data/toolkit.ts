@@ -48,7 +48,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "sparrow-wallet",
     title: "Sparrow Wallet",
-    group: "Custody Instruments",
+    group: "Core Toolkit",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -70,7 +70,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "bluewallet",
     title: "BlueWallet",
-    group: "Custody Instruments",
+    group: "Core Toolkit",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
