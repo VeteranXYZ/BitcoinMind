@@ -3,8 +3,8 @@ import { TOOLKIT } from '@/data/toolkit';
 import Tag from './Tag';
 import type { ToolkitItem } from '@/data/types';
 
-const FILTERS = ['All', 'Observe', 'Verify', 'Control', 'Custody', 'Research', 'Free', 'Beginner', 'Intermediate', 'Advanced'];
-const EARLY_LAYERS = ['Observe', 'Verify', 'Control', 'Beginner Custody', 'Advanced Custody'];
+const FILTERS = ['All', 'Observation', 'Verification', 'Custody', 'Protocol', 'Research', 'Free', 'Beginner', 'Intermediate', 'Advanced'];
+const PRACTICE_GROUPS = ['Core Toolkit', 'Custody Alternatives'];
 
 function ToolkitCard({ item }: { item: ToolkitItem }) {
   return (
@@ -37,16 +37,16 @@ export default function ToolkitFilter() {
   const filtered = useMemo(
     () => TOOLKIT.filter((item) => {
       if (filter === 'All') return true;
-      if (filter === 'Custody') return item.layer.includes('Custody');
-      if (filter === 'Research') return item.layer.includes('Research') || item.layer.includes('Analytics') || item.layer === 'Market Context';
+      if (filter === 'Custody') return item.pathStage === 'Custody';
+      if (filter === 'Research') return item.group === 'Research & Reference';
       if (filter === 'Free') return item.cost === 'Free';
-      return item.layer === filter || item.difficulty === filter || item.tags.includes(filter);
+      return item.pathStage === filter || item.difficulty === filter || item.tags.includes(filter);
     }),
     [filter]
   );
 
-  const practiceItems = filtered.filter((item) => EARLY_LAYERS.includes(item.layer));
-  const researchItems = filtered.filter((item) => !EARLY_LAYERS.includes(item.layer));
+  const practiceItems = filtered.filter((item) => PRACTICE_GROUPS.includes(item.group));
+  const researchItems = filtered.filter((item) => !PRACTICE_GROUPS.includes(item.group));
 
   return (
     <>

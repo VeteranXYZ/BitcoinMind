@@ -1,9 +1,12 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { SITE } from '@/lib/seo';
+import { LIBRARY } from '@/data/library';
+import { TEXTS } from '@/data/texts';
+import { TOOLKIT } from '@/data/toolkit';
 
 const stats: [string, string][] = [
-  ['Library items', '8'], ['Primary texts', '8'], ['Toolkit items', '8'],
+  ['Library items', String(LIBRARY.length)], ['Primary texts', String(TEXTS.length)], ['Toolkit items', String(TOOLKIT.length)],
   ['First contact', 'April 2011'], ['Last updated', 'May 2026'],
 ];
 const principles = [

@@ -5,6 +5,9 @@ export interface LibraryItem {
   id: string;
   title: string;
   author: string;
+  group: string;
+  pathStage: string;
+  resourceType: string;
   layer: 1 | 2 | 3;
   layerLabel: string;
   learningRole: string;
@@ -22,6 +25,9 @@ export interface TextItem {
   title: string;
   author: string;
   year: number;
+  group: string;
+  pathStage: string;
+  resourceType: string;
   layer: string;
   learningRole: string;
   shortDescription: string;
@@ -34,20 +40,13 @@ export interface TextItem {
   link: string;
 }
 
-export type ToolkitLayer =
-  | 'Observe'
-  | 'Verify'
-  | 'Control'
-  | 'Beginner Custody'
-  | 'Advanced Custody'
-  | 'Market Context'
-  | 'Network Research'
-  | 'Advanced Analytics';
-
 export interface ToolkitItem {
   id: string;
   title: string;
-  layer: ToolkitLayer;
+  group: string;
+  pathStage: string;
+  resourceType: string;
+  layer: string;
   learningRole: string;
   shortDescription: string;
   whyItBelongs: string;

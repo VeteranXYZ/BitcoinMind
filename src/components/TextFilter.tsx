@@ -10,7 +10,7 @@ function TextCard({ item }: { item: TextItem }) {
     <a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
       <div class="card-layer card-layer--row">
         <span>{item.layer}</span>
-        <span>{item.year}</span>
+        {item.year > 0 && <span>{item.year}</span>}
       </div>
       <div class="card-role">{item.learningRole}</div>
       <div class="card-title">{item.title}</div>
