@@ -1,7 +1,50 @@
 ---
 import Base from '@/layouts/Base.astro';
-import ToolkitFilter from '@/components/ToolkitFilter';
+import ToolkitCard from '@/components/ToolkitCard.astro';
 import { TOOLKIT } from '@/data/toolkit';
+
+const FILTERS = ['All', 'Observation', 'Verification', 'Custody', 'Protocol', 'Research', 'Free', 'Beginner', 'Intermediate', 'Advanced'];
+const GROUPS = [
+  {
+    name: 'Core Toolkit',
+    title: 'Core Toolkit',
+    desc: 'Observe the network, verify it directly, and understand the software layer around Bitcoin.',
+  },
+  {
+    name: 'Custody Instruments',
+    title: 'Custody Instruments',
+    desc: 'Wallets and signing devices for learning self-custody with increasing care.',
+  },
+  {
+    name: 'Research and Context',
+    title: 'Research and Context',
+    desc: 'Use long-term data and reference archives as context for study, not as a substitute for judgment.',
+  },
+];
+const toolkitAliases = (item: typeof TOOLKIT[number]) => {
+  const aliases: string[] = [];
+  if (item.group === 'Research and Context') aliases.push('Research');
+  if (item.cost === 'Free') aliases.push('Free');
+  return aliases;
+};
+const filterValues = (values: string[]) => values.map((value) => value.toLowerCase()).join('|');
+const toolkitValues = (item: typeof TOOLKIT[number]) => filterValues([
+  ...item.tags,
+  ...toolkitAliases(item),
+  item.difficulty,
+  item.cost,
+  item.group,
+  item.pathStage,
+  item.layer,
+]);
+const toolkitSearch = (item: typeof TOOLKIT[number]) => [
+  item.title,
+  item.learningRole,
+  item.shortDescription,
+  item.group,
+  item.layer,
+  ...item.tags,
+].join(' ').toLowerCase();
 
 const itemList = {
   '@context': 'https://schema.org',
@@ -33,7 +76,48 @@ const itemList = {
         <h1 class="ph-title">The <em>Toolkit</em></h1>
         <p class="ph-desc">Toolkit — practical instruments for observation, verification, custody, and research. Observe first, verify second, hold deliberately.</p>
       </div>
-      <ToolkitFilter client:visible />
+      <div data-filter-scope data-active-filter="all">
+        <div class="fb" role="group" aria-label="Filter toolkit">
+          <span class="fb-lbl">Filter:</span>
+          <input
+            class="srch"
+            type="search"
+            aria-label="Search toolkit"
+            placeholder="Search..."
+            data-filter-search
+            oninput="window.BitcoinMindFilterInput && window.BitcoinMindFilterInput(this)"
+          />
+          {FILTERS.map((f) => (
+            <button
+              type="button"
+              class={`fb-btn ${f === 'All' ? 'on' : ''}`}
+              aria-pressed={f === 'All' ? 'true' : 'false'}
+              data-filter-button
+              data-filter={f.toLowerCase()}
+              onclick="window.BitcoinMindFilterClick && window.BitcoinMindFilterClick(this)"
+            >{f}</button>
+          ))}
+        </div>
+
+        {GROUPS.map((group, index) => {
+          const groupItems = TOOLKIT.filter((item) => item.group === group.name);
+          return (
+            <div data-filter-group>
+              <div class={`toolkit-sec-hd ${index > 0 ? 'toolkit-sec-hd--lower' : ''}`}>{group.title}</div>
+              <p class="toolkit-sec-desc">{group.desc}</p>
+              <div class="grid-auto">
+                {groupItems.map((item) => (
+                  <div data-filter-card data-filter-values={toolkitValues(item)} data-filter-search={toolkitSearch(item)}>
+                    <ToolkitCard item={item} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+
+        <p class="no-res" data-filter-empty hidden>No toolkit items match this filter.</p>
+      </div>
     </div>
   </div>
 </Base>

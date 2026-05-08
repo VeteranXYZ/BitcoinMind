@@ -118,6 +118,77 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
     import '@/scripts/reading-progress';
     import '@/scripts/mobile-menu';
   </script>
+  <script is:inline data-cfasync="false">
+    (function () {
+      function tokens(value) {
+        return (value || '').split('|').map(function (v) { return v.trim().toLowerCase(); }).filter(Boolean);
+      }
+
+      function update(scope) {
+        var active = (scope.getAttribute('data-active-filter') || 'all').toLowerCase();
+        var input = scope.querySelector('[data-filter-search]');
+        var query = input ? input.value.trim().toLowerCase() : '';
+        var visibleCount = 0;
+
+        scope.querySelectorAll('[data-filter-button]').forEach(function (button) {
+          var isActive = (button.getAttribute('data-filter') || '').toLowerCase() === active;
+          button.classList.toggle('on', isActive);
+          button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        scope.querySelectorAll('[data-filter-card]').forEach(function (card) {
+          var values = tokens(card.getAttribute('data-filter-values'));
+          var search = (card.getAttribute('data-filter-search') || '').toLowerCase();
+          var matchesFilter = active === 'all' || values.indexOf(active) !== -1;
+          var matchesSearch = !query || search.indexOf(query) !== -1;
+          var show = matchesFilter && matchesSearch;
+          card.hidden = !show;
+          if (show) visibleCount += 1;
+        });
+
+        scope.querySelectorAll('[data-filter-group]').forEach(function (group) {
+          group.hidden = group.querySelectorAll('[data-filter-card]:not([hidden])').length === 0;
+        });
+
+        var empty = scope.querySelector('[data-filter-empty]');
+        if (empty) empty.hidden = visibleCount !== 0;
+      }
+
+      function init(root) {
+        (root || document).querySelectorAll('[data-filter-scope]').forEach(update);
+      }
+
+      window.BitcoinMindFilterClick = function (button) {
+        var scope = button && button.closest('[data-filter-scope]');
+        if (!scope) return;
+        scope.setAttribute('data-active-filter', button.getAttribute('data-filter') || 'all');
+        update(scope);
+      };
+
+      window.BitcoinMindFilterInput = function (input) {
+        var scope = input && input.closest('[data-filter-scope]');
+        if (scope) update(scope);
+      };
+
+      document.addEventListener('click', function (event) {
+        var button = event.target.closest && event.target.closest('[data-filter-button]');
+        if (!button) return;
+        window.BitcoinMindFilterClick(button);
+      });
+
+      document.addEventListener('input', function (event) {
+        if (!event.target.matches || !event.target.matches('[data-filter-search]')) return;
+        window.BitcoinMindFilterInput(event.target);
+      });
+
+      document.addEventListener('astro:page-load', function () { init(document); });
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () { init(document); });
+      } else {
+        init(document);
+      }
+    })();
+  </script>
 </body>
 </html>
 

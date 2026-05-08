@@ -1,7 +1,42 @@
 ---
 import Base from '@/layouts/Base.astro';
-import TextFilter from '@/components/TextFilter';
+import TextCard from '@/components/TextCard.astro';
 import { TEXTS } from '@/data/texts';
+
+const TAGS = ['All', 'Primary', 'Security', 'Verification', 'Adoption', 'Sovereignty', 'Reference', 'Beginner', 'Intermediate', 'Advanced'];
+const getTypeLabel = (item: typeof TEXTS[number]) => {
+  const title = item.title.toLowerCase();
+  if (title.includes('whitepaper')) return 'Paper';
+  if (title.includes('documentation') || title.includes('running a full node')) return 'Documentation';
+  if (title.includes('gradually, then suddenly')) return 'Series';
+  if (title.includes('questions') || title.includes('faq')) return 'Q&A';
+  if (item.tags.includes('Reference')) return 'Reference';
+  return 'Essay';
+};
+const textFilterAliases = (item: typeof TEXTS[number]) => {
+  const aliases: string[] = [];
+  if (item.group === 'Primary Texts' || item.tags.includes('Whitepaper')) aliases.push('Primary');
+  if (item.tags.some((tag) => ['Node', 'Verification', 'Technical'].includes(tag))) aliases.push('Verification');
+  if (item.tags.some((tag) => ['Adoption', 'Institutional', 'History'].includes(tag))) aliases.push('Adoption');
+  return aliases;
+};
+const filterValues = (values: string[]) => values.map((value) => value.toLowerCase()).join('|');
+const textValues = (item: typeof TEXTS[number]) => filterValues([
+  ...item.tags,
+  ...textFilterAliases(item),
+  item.difficulty,
+  item.group,
+  item.pathStage,
+  getTypeLabel(item),
+]);
+const textSearch = (item: typeof TEXTS[number]) => [
+  item.title,
+  item.author,
+  item.learningRole,
+  item.shortDescription,
+  item.layer,
+  ...item.tags,
+].join(' ').toLowerCase();
 
 const itemList = {
   '@context': 'https://schema.org',
@@ -34,7 +69,37 @@ const itemList = {
         <h1 class="ph-title">Primary <em>Texts</em></h1>
         <p class="ph-desc">Texts — primary writings that shaped Bitcoin thinking. The whitepaper first, then the arguments around it.</p>
       </div>
-      <TextFilter client:visible />
+      <div data-filter-scope data-active-filter="all">
+        <div class="fb" role="group" aria-label="Filter texts">
+          <span class="fb-lbl">Filter:</span>
+          <input
+            class="srch"
+            type="search"
+            aria-label="Search texts"
+            placeholder="Search..."
+            data-filter-search
+            oninput="window.BitcoinMindFilterInput && window.BitcoinMindFilterInput(this)"
+          />
+          {TAGS.map((t) => (
+            <button
+              type="button"
+              class={`fb-btn ${t === 'All' ? 'on' : ''}`}
+              aria-pressed={t === 'All' ? 'true' : 'false'}
+              data-filter-button
+              data-filter={t.toLowerCase()}
+              onclick="window.BitcoinMindFilterClick && window.BitcoinMindFilterClick(this)"
+            >{t}</button>
+          ))}
+        </div>
+        <p class="no-res" data-filter-empty hidden>No texts match this filter.</p>
+        <div class="grid-auto">
+          {TEXTS.map((item) => (
+            <div data-filter-card data-filter-values={textValues(item)} data-filter-search={textSearch(item)}>
+              <TextCard item={item} />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 </Base>

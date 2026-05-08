@@ -283,6 +283,8 @@ nav {
 /* ── Cards ──────────────────────────────────────────── */
 .grid3     { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
 .grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--sp-4); max-width: 1200px; }
+[data-filter-card] { display: flex; min-width: 0; }
+[data-filter-card] > .card { width: 100%; }
 
 .card {
   background: var(--surf);
