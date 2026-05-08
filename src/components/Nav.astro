@@ -58,11 +58,17 @@ let mmIdx = 0;
         <a class={`nl ${isActive(n.match) ? 'on' : ''}`} href={n.href}>{n.label}</a>
       ))}
     </div>
-    <button class="nav-menu-btn" data-menu-open aria-label="Open menu">Menu</button>
+    <button
+      class="nav-menu-btn"
+      data-menu-open
+      aria-label="Open menu"
+      aria-controls="site-menu"
+      aria-expanded="false"
+    >Menu</button>
   </div>
 </nav>
 
-<div class="mm" role="dialog" aria-modal="true" aria-label="Site menu" data-mobile-menu hidden>
+<div id="site-menu" class="mm" role="dialog" aria-modal="true" aria-label="Site menu" data-mobile-menu hidden>
   <div class="mm-bar">
     <button class="mm-close" data-menu-close aria-label="Close menu">Close</button>
   </div>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import {
-  F2_CPI, F2_BTC_ANCHORS, F2_BIGMAC, F2_EVENTS, F2_RANGE,
+  F2_CPI, F2_BTC_ANCHORS, F2_BIGMAC, F2_EVENTS, F2_RANGE, F2_DATA_AS_OF,
 } from '@/data/frame-two';
 
 const { Y_START, M_START, Y_END, M_END } = F2_RANGE;
@@ -37,7 +37,7 @@ function f2_btcAt(y: number, m: number): number | null {
 
 function f2_cpiAt(y: number, m: number): number { return f2_annualLerp(F2_CPI, y, m); }
 function f2_bigmacAt(y: number): number {
-  return F2_BIGMAC[y] !== undefined ? F2_BIGMAC[y]! : F2_BIGMAC[2026]!;
+  return F2_BIGMAC[y] !== undefined ? F2_BIGMAC[y]! : F2_BIGMAC[Y_END]!;
 }
 
 const f2_monthName = (m: number): string =>
@@ -47,7 +47,8 @@ const f2_dateLabel = (y: number, m: number): string => `${f2_monthName(m)} ${y}`
 export default function FrameTwoChart() {
   const [cursor, setCursor] = useState({ y: 1971, m: 8 });
   const [dragging, setDragging] = useState(false);
-  const [livePrice, setLivePrice] = useState<number>(F2_BTC_ANCHORS[F2_BTC_ANCHORS.length - 1]![2]);
+  const latestAnchorPrice = F2_BTC_ANCHORS[F2_BTC_ANCHORS.length - 1]![2];
+  const [livePrice, setLivePrice] = useState<number>(latestAnchorPrice);
   const [priceSource, setPriceSource] = useState<'live' | 'cached'>('cached');
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -84,16 +85,13 @@ export default function FrameTwoChart() {
     const usd: { yf: number; v: number }[] = [];
     const btc: { yf: number; v: number }[] = [];
     const cpiBase = f2_cpiAt(Y_START, M_START);
-    for (let yr = Y_START; yr <= Y_END; yr++) {
+    for (let yr: number = Y_START; yr <= Y_END; yr++) {
       const mEnd = (yr === Y_END) ? M_END : 12;
       for (let mo = (yr === Y_START ? M_START : 1); mo <= mEnd; mo++) {
         const yf = f2_toYf(yr, mo);
         const power = cpiBase / f2_cpiAt(yr, mo);
         usd.push({ yf, v: power });
-        let btcVal = f2_btcAt(yr, mo);
-        if (yr === Y_END && mo === M_END && btcVal !== null) {
-          btcVal = livePrice;
-        }
+        const btcVal = f2_btcAt(yr, mo);
         if (btcVal !== null) {
           const btcPerDollar = 1 / 0.08;
           const todaysDollars = btcPerDollar * btcVal;
@@ -103,7 +101,7 @@ export default function FrameTwoChart() {
       }
     }
     return { usd, btc };
-  }, [livePrice]);
+  }, []);
 
   const W = 1100, H = 480;
   const PAD = { L: 50, R: 30, T: 30, B: 60 };
@@ -127,7 +125,7 @@ export default function FrameTwoChart() {
   const cursorX = xScale(cursorYf);
   const cpiBase = f2_cpiAt(Y_START, M_START);
   const usdPower = cpiBase / f2_cpiAt(cursor.y, cursor.m);
-  const btcVal = (cursor.y === Y_END && cursor.m === M_END) ? livePrice : f2_btcAt(cursor.y, cursor.m);
+  const btcVal = f2_btcAt(cursor.y, cursor.m);
   const btcInDollars = btcVal !== null ? (1 / 0.08) * btcVal * (cpiBase / f2_cpiAt(cursor.y, cursor.m)) : null;
   const usdY = yScale(usdPower);
   const btcY = btcInDollars !== null ? yScale(btcInDollars) : null;
@@ -164,13 +162,14 @@ export default function FrameTwoChart() {
   }, [dragging, onPointerMove, onPointerUp]);
 
   const bm_then = f2_bigmacAt(cursor.y);
-  const bm_now = f2_bigmacAt(2026);
+  const bm_now = f2_bigmacAt(Y_END);
   const cashMacsToday = bm_then / bm_now;
   const cashLost = 1 - cashMacsToday;
   const btcThenRaw = f2_btcAt(cursor.y, cursor.m);
-  const btcThen = (cursor.y === Y_END && cursor.m === M_END) ? livePrice : btcThenRaw;
-  const btcMacsToday = btcThen !== null ? (bm_then / btcThen) * livePrice / bm_now : null;
+  const btcThen = btcThenRaw;
+  const btcMacsToday = btcThen !== null ? (bm_then / btcThen) * latestAnchorPrice / bm_now : null;
   const btcLost = btcMacsToday !== null && btcMacsToday < 1 ? 1 - btcMacsToday : null;
+  const axisYears = [1971, 1980, 1990, 2000, 2010, 2020, Y_END];
 
   const formatMacs = (n: number): string => {
     if (n >= 1000) return Math.round(n).toLocaleString('en-US');
@@ -201,7 +200,8 @@ export default function FrameTwoChart() {
           <desc id="f2-chart-desc">
             A logarithmic chart comparing the steady decline of one US dollar's
             purchasing power since 1971 against the appreciation of bitcoin held
-            since 2010. Measured in Big Macs. Drag to inspect any month.
+            since 2010. Measured in Big Macs with source data through {F2_DATA_AS_OF}.
+            Drag to inspect any month.
           </desc>
           {[1, 10, 100, 1000, 10000, 100000, 1000000].map((v, i) => {
             const y = yScale(v);
@@ -215,7 +215,7 @@ export default function FrameTwoChart() {
               </g>
             );
           })}
-          {[1971, 1980, 1990, 2000, 2010, 2020, 2026].map((yr) => {
+          {axisYears.map((yr) => {
             const x = xScale(f2_toYf(yr, 1));
             return (
               <g key={yr}>
@@ -300,7 +300,7 @@ export default function FrameTwoChart() {
 
       <div class="f2-live">
         {priceSource === 'live' ? '● ' : '○ '}
-        BTC ${Math.round(livePrice).toLocaleString('en-US')} {priceSource === 'live' ? 'live' : 'cached'}
+        BTC ${Math.round(livePrice).toLocaleString('en-US')} {priceSource === 'live' ? 'live quote' : 'cached quote'} · chart data through {F2_DATA_AS_OF}
       </div>
     </>
   );

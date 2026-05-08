@@ -13,6 +13,9 @@ import { SITE } from '@/lib/seo';
 const layer1Books = BOOKS.filter((b) => b.layer === 1);
 const previewEssays = ESSAYS.slice(0, 3);
 const previewTools = TOOLS.slice(0, 3);
+const bookCount = BOOKS.length;
+const essayCount = ESSAYS.length;
+const toolCount = TOOLS.length;
 
 const websiteLd = {
   '@context': 'https://schema.org',
@@ -39,8 +42,8 @@ const websiteLd = {
         </h1>
         <div class="hero-rule"><div class="hero-rule-dot"></div></div>
         <p class="hero-quote">"Curated resources for people who want to understand Bitcoin, not just own it."</p>
-        <p class="hero-by">A public record by Hiei · Updated May 2026</p>
-        <TodaysPick client:load />
+        <p class="hero-by">A public record by {SITE.author} · Updated {SITE.lastUpdated}</p>
+        <TodaysPick client:only="preact" />
         <PulsePlus client:idle />
       </div>
     </div>
@@ -49,7 +52,7 @@ const websiteLd = {
       <div class="section">
         <div class="sec-hd">
           <h2 class="sec-title">The <em>Library</em> — Start Here</h2>
-          <a class="va" href="/books">View all 8 books →</a>
+          <a class="va" href="/books">View all {bookCount} books →</a>
         </div>
         <div class="grid3">
           {layer1Books.map((b) => <BookCard book={b} preview />)}
@@ -59,7 +62,7 @@ const websiteLd = {
       <div class="section">
         <div class="sec-hd">
           <h2 class="sec-title">Essential <em>Essays</em></h2>
-          <a class="va" href="/essays">View all 8 essays →</a>
+          <a class="va" href="/essays">View all {essayCount} essays →</a>
         </div>
         <div class="grid3">
           {previewEssays.map((e) => <EssayCard essay={e} preview />)}
@@ -69,7 +72,7 @@ const websiteLd = {
       <div class="section">
         <div class="sec-hd">
           <h2 class="sec-title">Recommended <em>Tools</em></h2>
-          <a class="va" href="/tools">View all 8 tools →</a>
+          <a class="va" href="/tools">View all {toolCount} tools →</a>
         </div>
         <div class="grid3">
           {previewTools.map((t) => <ToolCard tool={t} />)}

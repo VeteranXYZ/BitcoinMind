@@ -78,3 +78,5 @@ export const F2_RANGE = {
   Y_END: 2026,
   M_END: 4,
 } as const;
+
+export const F2_DATA_AS_OF = 'April 2026';

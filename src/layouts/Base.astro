@@ -99,7 +99,7 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   </script>
 
   {ldArray.map((ld) => (
-    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(ld)} />
   ))}
 </head>
 <body>
