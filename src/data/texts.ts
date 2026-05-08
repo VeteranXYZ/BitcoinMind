@@ -299,7 +299,7 @@ export const TEXTS: TextItem[] = [
     resourceType: "text",
     layer: "Sovereignty & Adoption",
     learningRole: "Category boundary",
-    shortDescription: "An text clarifying why Bitcoin should not be reduced to generic blockchain technology.",
+    shortDescription: "A text clarifying why Bitcoin should not be reduced to generic blockchain technology.",
     whyItBelongs: "It belongs here because BitcoinMind is not a crypto directory. This text helps define the boundary between Bitcoin as money and blockchain as a generalized technology slogan.",
     bestFor: "Readers who first encountered Bitcoin through the broader crypto market or enterprise blockchain narratives.",
     learningPathPosition: "Read after the basic monetary thesis, especially when comparing Bitcoin with other crypto projects.",
@@ -347,7 +347,7 @@ export const TEXTS: TextItem[] = [
     resourceType: "text",
     layer: "Sovereignty & Adoption",
     learningRole: "Political economy",
-    shortDescription: "An text on Bitcoin as a peaceful monetary and political transformation rather than a conventional institutional revolt.",
+    shortDescription: "A text on Bitcoin as a peaceful monetary and political transformation rather than a conventional institutional revolt.",
     whyItBelongs: "It belongs here because Bitcoin's sovereignty implications are easy to overstate or dramatize. This text offers a political frame without requiring a call to violence or institutional collapse.",
     bestFor: "Readers interested in Bitcoin's relationship to power, institutions, and peaceful exit.",
     learningPathPosition: "Read after the protocol and monetary arguments are familiar. It belongs near the sovereignty layer.",
@@ -383,6 +383,6 @@ export const TEXTS: TextItem[] = [
       "Adoption",
       "Money"
     ],
-    link: "https://www.microstrategy.com/content/dam/website-assets/collateral/bitcoin-downloads/stone-ridge-2020-shareholder-letter.pdf"
+    link: "https://www.stoneridgeam.com/insights/stone-ridge-2020-investor-letter"
   }
 ];

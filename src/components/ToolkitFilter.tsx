@@ -4,7 +4,23 @@ import Tag from './Tag';
 import type { ToolkitItem } from '@/data/types';
 
 const FILTERS = ['All', 'Observation', 'Verification', 'Custody', 'Protocol', 'Research', 'Free', 'Beginner', 'Intermediate', 'Advanced'];
-const PRACTICE_GROUPS = ['Core Toolkit', 'Custody Alternatives'];
+const GROUPS = [
+  {
+    name: 'Core Toolkit',
+    title: 'Core Toolkit',
+    desc: 'Observe the network, verify it directly, and understand the software layer around Bitcoin.',
+  },
+  {
+    name: 'Custody Instruments',
+    title: 'Custody Instruments',
+    desc: 'Wallets and signing devices for learning self-custody with increasing care.',
+  },
+  {
+    name: 'Research and Context',
+    title: 'Research and Context',
+    desc: 'Use long-term data and reference archives as context for study, not as a substitute for judgment.',
+  },
+];
 
 function ToolkitCard({ item }: { item: ToolkitItem }) {
   return (
@@ -38,15 +54,12 @@ export default function ToolkitFilter() {
     () => TOOLKIT.filter((item) => {
       if (filter === 'All') return true;
       if (filter === 'Custody') return item.pathStage === 'Custody';
-      if (filter === 'Research') return item.group === 'Research & Reference';
+      if (filter === 'Research') return item.group === 'Research and Context';
       if (filter === 'Free') return item.cost === 'Free';
       return item.pathStage === filter || item.difficulty === filter || item.tags.includes(filter);
     }),
     [filter]
   );
-
-  const practiceItems = filtered.filter((item) => PRACTICE_GROUPS.includes(item.group));
-  const researchItems = filtered.filter((item) => !PRACTICE_GROUPS.includes(item.group));
 
   return (
     <>
@@ -62,20 +75,17 @@ export default function ToolkitFilter() {
           >{f}</button>
         ))}
       </div>
-      {practiceItems.length > 0 && (
-        <>
-          <div class="toolkit-sec-hd">Verification and Custody</div>
-          <p class="toolkit-sec-desc">Observe the network, verify it directly, then learn deliberate custody.</p>
-          <div class="grid-auto">{practiceItems.map((item) => <ToolkitCard key={item.id} item={item} />)}</div>
-        </>
-      )}
-      {researchItems.length > 0 && (
-        <>
-          <div class="toolkit-sec-hd toolkit-sec-hd--lower">Research and Context</div>
-          <p class="toolkit-sec-desc">Use long-term data as context for study, not as a substitute for judgment.</p>
-          <div class="grid-auto">{researchItems.map((item) => <ToolkitCard key={item.id} item={item} />)}</div>
-        </>
-      )}
+      {GROUPS.map((group, index) => {
+        const groupItems = filtered.filter((item) => item.group === group.name);
+        if (groupItems.length === 0) return null;
+        return (
+          <>
+            <div class={`toolkit-sec-hd ${index > 0 ? 'toolkit-sec-hd--lower' : ''}`}>{group.title}</div>
+            <p class="toolkit-sec-desc">{group.desc}</p>
+            <div class="grid-auto">{groupItems.map((item) => <ToolkitCard key={item.id} item={item} />)}</div>
+          </>
+        );
+      })}
       {filtered.length === 0 && <p class="no-res">No toolkit items match this filter.</p>}
     </>
   );

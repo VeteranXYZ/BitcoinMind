@@ -41,9 +41,11 @@ export const RABBIT_HOLES: RabbitHole[] = [
     subtitle: 'How Bitcoin actually works',
     desc: 'Go beyond the surface. Understand UTXOs, proof of work, the consensus mechanism, and the code that runs the network. Not for programmers only — for anyone who refuses to take someone else\'s word for it.',
     difficulty: 'Advanced',
-    totalTime: '~20 hours',
+    totalTime: '~18 hours',
     steps: [
       { title: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto', type: 'text', href: '/texts', time: '20 min' },
+      { title: 'Inventing Bitcoin', author: 'Yan Pritzker', type: 'library', href: '/library', time: '2 hrs' },
+      { title: 'Grokking Bitcoin', author: 'Kalle Rosenbaum', type: 'library', href: '/library', time: '5 hrs' },
       { title: 'Mastering Bitcoin (Ch. 1-6)', author: 'Andreas Antonopoulos', type: 'library', href: '/library', time: '6 hrs' },
       { title: 'Bitcoin is Time', author: 'Gigi', type: 'text', href: '/texts', time: '35 min' },
       { title: 'Install and run Bitcoin Core', type: 'toolkit', href: '/toolkit', time: '2 hrs' },
@@ -57,13 +59,14 @@ export const RABBIT_HOLES: RabbitHole[] = [
     subtitle: 'Your keys, your coins',
     desc: 'Learn self-custody from first principles. Move from exchange-held coins to a hardware wallet, then to multi-sig. Each step increases your sovereignty and reduces your trust surface.',
     difficulty: 'Intermediate',
-    totalTime: '~6 hours',
+    totalTime: '~8 hours',
     steps: [
       { title: 'Why self-custody matters', type: 'external', href: 'https://unchained.com/blog/bitcoin-self-custody/', time: '15 min' },
+      { title: 'BlueWallet — Mobile wallet basics', type: 'toolkit', href: '/toolkit', time: '45 min' },
       { title: 'Trezor Safe 3 — First hardware wallet', type: 'toolkit', href: '/toolkit', time: '1 hr' },
       { title: 'Sparrow Wallet — Full UTXO control', type: 'toolkit', href: '/toolkit', time: '2 hrs' },
       { title: 'Coldcard MK4 — Air-gapped signing', type: 'toolkit', href: '/toolkit', time: '2 hrs' },
-      { title: 'Multi-sig with Sparrow + Coldcard', type: 'external', href: 'https://sparrowwallet.com/docs/best-practices.html', time: '1 hr' },
+      { title: 'Nunchuk — Multisig and inheritance', type: 'toolkit', href: '/toolkit', time: '2 hrs' },
     ],
   },
   {
@@ -76,7 +79,7 @@ export const RABBIT_HOLES: RabbitHole[] = [
     totalTime: '~15 hours',
     steps: [
       { title: 'The Internet of Money', author: 'Andreas Antonopoulos', type: 'library', href: '/library', time: '4 hrs' },
-      { title: 'Masters and Slaves of Money', author: 'Robert Breedlove', type: 'text', href: '/texts', time: '50 min' },
+      { title: '21 Lessons', author: 'Gigi', type: 'library', href: '/library', time: '3 hrs' },
       { title: 'Bitcoin is Time', author: 'Gigi', type: 'text', href: '/texts', time: '35 min' },
       { title: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg', type: 'library', href: '/library', time: '8 hrs' },
       { title: 'Check Your Financial Privilege', author: 'Alex Gladstein', type: 'library', href: '/library', time: '3 hrs' },

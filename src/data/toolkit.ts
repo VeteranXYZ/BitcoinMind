@@ -48,7 +48,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "sparrow-wallet",
     title: "Sparrow Wallet",
-    group: "Core Toolkit",
+    group: "Custody Instruments",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -70,7 +70,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "bluewallet",
     title: "BlueWallet",
-    group: "Core Toolkit",
+    group: "Custody Instruments",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -91,7 +91,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "trezor-safe-3",
     title: "Trezor Safe 3",
-    group: "Core Toolkit",
+    group: "Custody Instruments",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -112,7 +112,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "coldcard",
     title: "Coldcard MK4 / Coldcard Q",
-    group: "Core Toolkit",
+    group: "Custody Instruments",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -134,7 +134,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "nunchuk",
     title: "Nunchuk",
-    group: "Core Toolkit",
+    group: "Custody Instruments",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -200,7 +200,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "seedsigner",
     title: "SeedSigner",
-    group: "Custody Alternatives",
+    group: "Custody Instruments",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -222,7 +222,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "blockstream-jade",
     title: "Blockstream Jade",
-    group: "Custody Alternatives",
+    group: "Custody Instruments",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -244,7 +244,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "bitbox02-bitcoin-only",
     title: "BitBox02 Bitcoin-only",
-    group: "Custody Alternatives",
+    group: "Custody Instruments",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -266,7 +266,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "electrum",
     title: "Electrum",
-    group: "Custody Alternatives",
+    group: "Custody Instruments",
     pathStage: "Custody",
     resourceType: "instrument",
     layer: "Custody",
@@ -287,7 +287,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "lookintobitcoin",
     title: "LookIntoBitcoin",
-    group: "Research & Reference",
+    group: "Research and Context",
     pathStage: "Research",
     resourceType: "instrument",
     layer: "Research",
@@ -309,7 +309,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "coinmetrics",
     title: "CoinMetrics",
-    group: "Research & Reference",
+    group: "Research and Context",
     pathStage: "Research",
     resourceType: "instrument",
     layer: "Research",
@@ -331,7 +331,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "clark-moody-dashboard",
     title: "Clark Moody Dashboard",
-    group: "Research & Reference",
+    group: "Research and Context",
     pathStage: "Observation",
     resourceType: "instrument",
     layer: "Observation",
@@ -353,7 +353,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "bitcoin-visuals",
     title: "Bitcoin Visuals",
-    group: "Research & Reference",
+    group: "Research and Context",
     pathStage: "Observation",
     resourceType: "instrument",
     layer: "Observation",
@@ -375,7 +375,7 @@ export const TOOLKIT: ToolkitItem[] = [
   {
     id: "lopp-bitcoin-resources",
     title: "Lopp.net Bitcoin Resources",
-    group: "Research & Reference",
+    group: "Research and Context",
     pathStage: "Reference",
     resourceType: "reference",
     layer: "Reference",

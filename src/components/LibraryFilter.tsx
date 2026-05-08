@@ -3,7 +3,7 @@ import { LIBRARY } from '@/data/library';
 import Tag from './Tag';
 import type { LibraryItem } from '@/data/types';
 
-const TAGS = ['All', 'Money', 'Economics', 'Foundations', 'Technical', 'Protocol', 'History', 'Sovereignty', 'Beginner', 'Intermediate', 'Advanced'];
+const TAGS = ['All', 'Money', 'Economics', 'Foundations', 'Technical', 'Protocol', 'History', 'Macro Companion', 'Sovereignty', 'Beginner', 'Intermediate', 'Advanced'];
 const LAYER_DESC: Record<number, string> = {
   1: 'Money, Bitcoin, and the first mental model.',
   2: 'Technical, historical, and monetary structure.',
