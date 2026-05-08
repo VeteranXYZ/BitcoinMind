@@ -111,7 +111,7 @@ nav {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: var(--sp-13) 0 var(--sp-12);
+  padding: var(--sp-11) 0 var(--sp-10);
 }
 .hero::after {
   content: '';
@@ -126,28 +126,36 @@ nav {
 }
 .hero .c { position: relative; z-index: 1; }
 
-.hero-eye {
+.hero-eye,
+.ph-eye,
+.frames-ix-eye,
+.f2-eye {
   font-family: var(--font-mono);
   font-size: var(--fz-xs);
   color: var(--gold);
   letter-spacing: var(--ls-11);
   text-transform: uppercase;
-  margin-bottom: var(--sp-7);
+  margin-bottom: var(--sp-4);
   display: flex;
   align-items: center;
   gap: var(--sp-4);
+  line-height: 1;
 }
-.hero-eye::before {
+.hero-eye::before,
+.ph-eye::before,
+.frames-ix-eye::before,
+.f2-eye::before {
   content: '';
   width: 28px;
   height: 1px;
   background: var(--gold);
+  flex-shrink: 0;
 }
 .hero-title {
   font-family: var(--font-serif);
-  font-size: var(--fz-hero);
+  font-size: var(--fz-page);
   font-weight: var(--fw-black);
-  line-height: var(--lh-hero);
+  line-height: 0.95;
   letter-spacing: var(--ls-tighter);
 }
 .hero-t1 { display: block; color: var(--tx); }
@@ -727,6 +735,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   flex-wrap: wrap;
 }
 .ft-copy { font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--tx-3); letter-spacing: var(--ls-3); }
+.ft-built::before { content: ' · '; }
 .ft-upd  { font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--tx-3); }
 
 /* ── Responsive ─────────────────────────────────────── */
@@ -739,7 +748,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   .grid-auto { grid-template-columns: 1fr; }
 
   /* Compact page headers on small screens — keep rhythm but reclaim ~30px. */
-  .hero { padding: var(--sp-10) 0 var(--sp-9); }
+  .hero { padding: var(--sp-9) 0 var(--sp-8); }
   .ph,
   .frames-hd,
   .frames-ix-hd,
@@ -759,6 +768,18 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
 
   /* Chart page jump buttons — same tap-target uplift. */
   .f2-jump { padding: 8px var(--sp-3); }
+
+  .ft-in {
+    align-items: flex-start;
+    gap: var(--sp-2);
+  }
+  .ft-copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    line-height: var(--lh-normal);
+  }
+  .ft-built::before { content: ''; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1022,14 +1043,6 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   .pp-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   HERO TITLE — smaller on all viewports
-   ═══════════════════════════════════════════════════════════════════ */
-
-.hero-title {
-  font-size: clamp(72px, 11vw, 132px);
 }
 
 /* ═══════════════════════════════════════════════════════════════════

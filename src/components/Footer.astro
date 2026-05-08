@@ -3,7 +3,10 @@ import { SITE } from '@/lib/seo';
 ---
 <footer>
   <div class="ft-in">
-    <span class="ft-copy">© {SITE.foundedYear}–{SITE.currentYear} {SITE.name} · Built with Claude & ChatGPT</span>
+    <span class="ft-copy">
+      <span>© {SITE.foundedYear}–{SITE.currentYear} {SITE.name}</span>
+      <span class="ft-built">Built with Claude & ChatGPT</span>
+    </span>
     <span class="ft-upd">Last updated: {SITE.lastUpdated}</span>
   </div>
 </footer>
