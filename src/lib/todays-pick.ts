@@ -1,14 +1,14 @@
-import { BOOKS } from '@/data/books';
-import { ESSAYS } from '@/data/essays';
-import type { Book, Essay } from '@/data/types';
+import { LIBRARY } from '@/data/library';
+import { TEXTS } from '@/data/texts';
+import type { LibraryItem, TextItem } from '@/data/types';
 
 export type Pick =
-  | (Book & { type: 'book' })
-  | (Essay & { type: 'essay' });
+  | (LibraryItem & { type: 'library' })
+  | (TextItem & { type: 'text' });
 
 const ALL: Pick[] = [
-  ...BOOKS.map((b) => ({ ...b, type: 'book' as const })),
-  ...ESSAYS.map((e) => ({ ...e, type: 'essay' as const })),
+  ...LIBRARY.map((item) => ({ ...item, type: 'library' as const })),
+  ...TEXTS.map((item) => ({ ...item, type: 'text' as const })),
 ];
 
 export function getTodaysPick(now: Date = new Date()): Pick {

@@ -1,5 +1,5 @@
 export type Hardness = 'high' | 'low' | 'half' | 'absolute';
-export type FrameLinkTarget = 'books' | 'essays' | 'tools';
+export type FrameLinkTarget = 'library' | 'texts' | 'toolkit';
 
 export interface FrameNode {
   n: string;
@@ -31,14 +31,14 @@ export const FRAME_ONE: Frame = {
       body: [
         'On the island of Yap in Micronesia, money was a stone wheel — sometimes the size of a man, sometimes larger than a house. The wheels never moved. When ownership changed, everyone simply remembered. Hardness was solved by something stranger than scarcity: the money was so impractical to make, and so public to own, that nature and community together made fraud nearly impossible.',
       ],
-      links: [{ label: 'Shelling Out', target: 'essays' }],
+      links: [{ label: 'Shelling Out', target: 'texts' }],
     },
     {
       n: '02', year: '600 BCE', title: 'The Coin', epigraph: 'Hardness made portable', hardness: 'high',
       body: [
         'Lydian smiths struck small ovals of electrum, each stamped to certify weight and purity. Money you could carry, divide, and verify by hand. For the next two thousand five hundred years, civilization ran on metal — and on the unspoken assumption that the people who minted it were not lying.',
       ],
-      links: [{ label: 'The Bitcoin Standard', target: 'books' }],
+      links: [{ label: 'The Bitcoin Standard', target: 'library' }],
     },
     {
       n: '03', year: '215 CE', title: 'Debasement', epigraph: 'The first lie', hardness: 'low',
@@ -46,7 +46,7 @@ export const FRAME_ONE: Frame = {
         'The Roman denarius, once 4.5 grams of pure silver, was quietly diluted with copper across two centuries until it was almost none. The mint was unchanged. The inscription was unchanged. Only the substance had been removed.',
         'Hardness, it turned out, was not in the symbol. It was in the thing itself.',
       ],
-      links: [{ label: 'The Bitcoin Standard', target: 'books' }],
+      links: [{ label: 'The Bitcoin Standard', target: 'library' }],
     },
     {
       n: '04', year: '1933 CE', title: 'Confiscation', epigraph: 'The owner is the rule', hardness: 'low',
@@ -54,7 +54,7 @@ export const FRAME_ONE: Frame = {
         'By executive order, every American was required to surrender their gold to the United States government within thirty days, in exchange for paper dollars at $20.67 an ounce. Weeks later, the government revalued gold to $35. A 41% transfer of wealth, executed without a vote, by a stroke of a pen.',
         'The lesson of Rome had been about substance. The lesson of 1933 was simpler: whoever holds the money makes the rules.',
       ],
-      links: [{ label: 'Check Your Financial Privilege', target: 'books' }],
+      links: [{ label: 'Check Your Financial Privilege', target: 'library' }],
     },
     {
       n: '05', year: '1971 CE', title: 'Nixon', epigraph: 'The last anchor cut', hardness: 'low',
@@ -63,8 +63,8 @@ export const FRAME_ONE: Frame = {
         'But it required something monetary history had never required before: the question of how much money exists became a decision, made by a small group of people, behind closed doors.',
       ],
       links: [
-        { label: 'The Bitcoin Standard', target: 'books' },
-        { label: 'Check Your Financial Privilege', target: 'books' },
+        { label: 'The Bitcoin Standard', target: 'library' },
+        { label: 'Check Your Financial Privilege', target: 'library' },
       ],
     },
     {
@@ -72,7 +72,7 @@ export const FRAME_ONE: Frame = {
       body: [
         'Nine pages, posted to a cryptography mailing list, by an author no one had heard of and would never meet. The proposal: enforce hardness not by metal, not by law, not by the trustworthiness of any institution — but by code, math, and a network of computers each watching every other.',
       ],
-      links: [{ label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', target: 'essays' }],
+      links: [{ label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', target: 'texts' }],
     },
     {
       n: '07', year: '2009 CE', title: 'Genesis', epigraph: 'A money no one runs', hardness: 'absolute',
@@ -82,8 +82,8 @@ export const FRAME_ONE: Frame = {
       ],
       coda: 'Hardness, finally, made independent of every party that ever broke it before.',
       links: [
-        { label: 'The Bullish Case for Bitcoin', target: 'essays' },
-        { label: 'Gradually, Then Suddenly', target: 'essays' },
+        { label: 'The Bullish Case for Bitcoin', target: 'texts' },
+        { label: 'Gradually, Then Suddenly', target: 'texts' },
       ],
     },
   ],

@@ -9,8 +9,8 @@ import Base from '@/layouts/Base.astro';
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">Stack</div>
-        <h1 class="ph-title">How I <em>hold.</em></h1>
+        <div class="ph-eye">Practice</div>
+        <h1 class="ph-title">The <em>Stack</em></h1>
         <p class="ph-desc">Not how much. How — and more importantly, why. No amounts. No financial advice. Just the thinking behind the practice.</p>
       </div>
 
@@ -69,18 +69,18 @@ import Base from '@/layouts/Base.astro';
 
         <div class="about-aside">
           <div class="aside-card">
-            <div class="aside-card-title">Tools I Use</div>
-            <a class="stk-tool" href="/tools">
+            <div class="aside-card-title">Toolkit I Use</div>
+            <a class="stk-kit" href="/toolkit">
               <span>Coldcard MK4</span>
-              <span class="stk-tool-role">Signing</span>
+              <span class="stk-kit-role">Signing</span>
             </a>
-            <a class="stk-tool" href="/tools">
+            <a class="stk-kit" href="/toolkit">
               <span>Sparrow Wallet</span>
-              <span class="stk-tool-role">Watch-only</span>
+              <span class="stk-kit-role">Watch-only</span>
             </a>
-            <a class="stk-tool" href="/tools">
+            <a class="stk-kit" href="/toolkit">
               <span>Bitcoin Core</span>
-              <span class="stk-tool-role">Verification</span>
+              <span class="stk-kit-role">Verification</span>
             </a>
           </div>
 
@@ -108,17 +108,17 @@ import Base from '@/layouts/Base.astro';
   .stk-wrap {
     display: grid;
     grid-template-columns: 1fr 320px;
-    gap: var(--sp-24);
-    padding-bottom: var(--sp-24);
+    gap: var(--sp-12);
+    padding-bottom: var(--sp-12);
   }
 
   .stk-main {
-    max-width: 720px;
+    max-width: 768px;
   }
 
   .stk-disclaimer {
-    margin-top: var(--sp-13);
-    padding: var(--sp-10) var(--sp-11);
+    margin-top: var(--sp-7);
+    padding: var(--sp-6) var(--sp-6);
     background: var(--surf);
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
@@ -126,44 +126,49 @@ import Base from '@/layouts/Base.astro';
 
   .stk-disclaimer-lbl {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
-    margin-bottom: var(--sp-4);
+    margin-bottom: var(--sp-3);
   }
 
   .stk-disclaimer p {
     font-family: var(--font-body);
-    font-size: var(--fz-sm2);
+    font-size: var(--fz-sm);
     line-height: var(--lh-relaxed);
     color: var(--tx-3);
   }
 
-  .stk-tool {
+  .stk-kit {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs1);
+    font-size: var(--fz-xs);
     color: var(--tx-2);
     padding: var(--sp-2) 0;
     border-bottom: 1px solid var(--bdr);
     display: flex;
     justify-content: space-between;
-    letter-spacing: var(--ls-1);
+    letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
-  .stk-tool:last-child { border-bottom: none; }
-  .stk-tool:hover { color: var(--gold); }
+  .stk-kit:last-child { border-bottom: none; }
+  .stk-kit:hover { color: var(--gold); }
 
-  .stk-tool-role {
+  .stk-kit-role {
     color: var(--tx-3);
-    font-size: var(--fz-2xs);
-    letter-spacing: var(--ls-6);
+    font-size: var(--fz-3xs);
+    letter-spacing: var(--ls-5);
     text-transform: uppercase;
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 1024px) {
     .stk-wrap {
       grid-template-columns: 1fr;
+      gap: var(--sp-8);
     }
+  }
+  @media (max-width: 640px) {
+    .stk-wrap { padding-bottom: var(--sp-10); }
+    .stk-disclaimer { padding: var(--sp-5) var(--sp-5); }
   }
 </style>

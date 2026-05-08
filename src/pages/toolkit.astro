@@ -1,0 +1,39 @@
+---
+import Base from '@/layouts/Base.astro';
+import ToolkitFilter from '@/components/ToolkitFilter';
+import { TOOLKIT } from '@/data/toolkit';
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'BitcoinMind Toolkit',
+  itemListElement: TOOLKIT.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'SoftwareApplication',
+      name: item.title,
+      applicationCategory: item.layer,
+      description: item.shortDescription,
+      url: item.link,
+    },
+  })),
+};
+---
+<Base
+  title="Bitcoin Toolkit"
+  description="A practical Bitcoin toolkit for observing the network, running a node, managing self-custody, and studying long-term Bitcoin data."
+  path="/toolkit"
+  jsonLd={itemList}
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Toolkit</div>
+        <h1 class="ph-title">The <em>Toolkit</em></h1>
+        <p class="ph-desc">Toolkit — practical instruments for verification, custody, and research. Observe first, verify second, hold deliberately.</p>
+      </div>
+      <ToolkitFilter client:visible />
+    </div>
+  </div>
+</Base>

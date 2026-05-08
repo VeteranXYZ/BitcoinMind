@@ -9,6 +9,9 @@
 /favicon.ico
   Cache-Control: public, max-age=2592000
 
+/pulse.json
+  Cache-Control: public, max-age=300, must-revalidate
+
 # HTML pages — short cache, must revalidate so SEO meta updates propagate
 /*
   Cache-Control: public, max-age=300, must-revalidate

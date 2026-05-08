@@ -6,17 +6,25 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "check": "astro check",
     "preview": "astro preview",
     "astro": "astro",
-    "refresh-data": "node scripts-build/fetch-block-height.mjs && node scripts-build/generate-grain.mjs"
+    "refresh-data": "node scripts-build/fetch-block-height.mjs && node scripts-build/fetch-pulse.mjs && node scripts-build/generate-grain.mjs"
   },
   "dependencies": {
-    "astro": "^5.0.0",
-    "preact": "^10.24.0",
-    "@astrojs/preact": "^4.0.0",
-    "@astrojs/sitemap": "^3.2.0",
-    "@fontsource/playfair-display": "^5.1.0",
+    "@astrojs/preact": "^5.1.2",
+    "@astrojs/sitemap": "^3.7.2",
+    "@fontsource/dm-mono": "^5.1.0",
     "@fontsource/lora": "^5.1.0",
-    "@fontsource/dm-mono": "^5.1.0"
+    "@fontsource/playfair-display": "^5.1.0",
+    "astro": "^6.3.1",
+    "preact": "^10.24.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "yaml-language-server": "1.23.0"
   }
 }

@@ -8,9 +8,9 @@ export default function TodaysPick() {
     return {
       pick: p,
       dateStr: formatLongDate(now),
-      href: p.type === 'book' ? '/books' : '/essays',
-      labelType: p.type === 'book' ? 'Book' : 'Essay',
-      labelDest: p.type === 'book' ? 'Books' : 'Essays',
+      href: p.type === 'library' ? '/library' : '/texts',
+      labelType: p.type === 'library' ? 'Library' : 'Text',
+      labelDest: p.type === 'library' ? 'Library' : 'Texts',
     };
   }, []);
 

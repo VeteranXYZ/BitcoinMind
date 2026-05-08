@@ -1,0 +1,39 @@
+---
+import Base from '@/layouts/Base.astro';
+import LibraryFilter from '@/components/LibraryFilter';
+import { LIBRARY } from '@/data/library';
+
+const itemList = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'BitcoinMind Library',
+  itemListElement: LIBRARY.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'CreativeWork',
+      name: item.title,
+      author: { '@type': 'Person', name: item.author },
+      description: item.shortDescription,
+      url: item.link,
+    },
+  })),
+};
+---
+<Base
+  title="Bitcoin Library"
+  description="A curated Bitcoin library arranged by learning path: monetary foundations, Bitcoin history, technical literacy, fiat systems, and sovereignty."
+  path="/library"
+  jsonLd={itemList}
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Canon</div>
+        <h1 class="ph-title">The <em>Library</em></h1>
+        <p class="ph-desc">Library — works for building the mental model. Money first, Bitcoin second, sovereignty last.</p>
+      </div>
+      <LibraryFilter client:visible />
+    </div>
+  </div>
+</Base>

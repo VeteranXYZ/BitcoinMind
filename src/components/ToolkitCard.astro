@@ -1,0 +1,31 @@
+---
+import Tag from './Tag.astro';
+import type { ToolkitItem } from '@/data/types';
+interface Props {
+  item: ToolkitItem;
+  preview?: boolean;
+}
+const { item, preview = false } = Astro.props;
+---
+<a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
+  <div class="card-layer">{item.layer}</div>
+  <div class="card-role">{item.learningRole}</div>
+  <div class="card-title">{item.title}</div>
+  <div class="card-desc card-desc--top">{item.shortDescription}</div>
+  <div class="card-tags">
+    {item.tags.map((t) => <Tag label={t} />)}
+    <Tag label={item.difficulty} />
+    <Tag label={item.cost} />
+  </div>
+  {!preview && (
+    <div class="card-review">
+      <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
+      <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
+      <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
+    </div>
+  )}
+  <div class="card-ft">
+    <span class="card-meta">{item.cost}</span>
+    <span class="card-cta">Visit →</span>
+  </div>
+</a>

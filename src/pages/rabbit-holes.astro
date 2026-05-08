@@ -4,31 +4,31 @@ import Tag from '@/components/Tag.astro';
 import { RABBIT_HOLES } from '@/data/rabbit-holes';
 
 const typeIcon: Record<string, string> = {
-  book: 'Book',
-  essay: 'Essay',
-  tool: 'Tool',
+  library: 'Library',
+  text: 'Text',
+  toolkit: 'Toolkit',
   frame: 'Frame',
   external: 'External',
 };
 ---
 <Base
-  title="Rabbit Holes"
-  description="Five curated learning paths through Bitcoin — from monetary history to self-custody. Start Here was the door. These are the corridors."
+  title="Paths"
+  description="Five routes past the primer, each with a different question at the center."
   path="/rabbit-holes"
 >
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">Rabbit Holes</div>
-        <h1 class="ph-title">Go <em>deeper.</em></h1>
-        <p class="ph-desc">Start Here was the door. These are the corridors. Five curated paths, each one a sequence of the best resources on a single theme.</p>
+        <div class="ph-eye">Paths</div>
+        <h1 class="ph-title">Learning <em>Paths</em></h1>
+        <p class="ph-desc">Five routes past the primer. Each begins with a different question and follows it until the map changes.</p>
       </div>
 
       <div class="rh-list">
         {RABBIT_HOLES.map((rh, idx) => (
           <div class="rh-card" id={rh.id}>
             <div class="rh-header">
-              <div class="rh-emoji">{rh.emoji}</div>
+              <div class="rh-index" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</div>
               <div class="rh-header-text">
                 <div class="rh-path-num">Path {idx + 1} of {RABBIT_HOLES.length}</div>
                 <h2 class="rh-title">{rh.title}</h2>
@@ -68,14 +68,14 @@ const typeIcon: Record<string, string> = {
   .rh-list {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-17);
-    padding-bottom: var(--sp-24);
+    gap: var(--sp-9);
+    padding-bottom: var(--sp-12);
   }
 
   .rh-card {
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
-    padding: var(--sp-14) var(--sp-14);
+    padding: var(--sp-7);
     background: var(--surf);
     transition: border-color var(--ease-card);
   }
@@ -84,26 +84,34 @@ const typeIcon: Record<string, string> = {
   }
 
   .rh-header {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--sp-8);
-    margin-bottom: var(--sp-8);
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-5);
   }
 
-  .rh-emoji {
-    font-size: 28px;
-    flex-shrink: 0;
-    /* Optical alignment with title baseline */
-    margin-top: 1px;
+  .rh-index {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: var(--fz-sm);
+    color: var(--gold-hi);
+    letter-spacing: var(--ls-5);
+    background: var(--bg-deep);
   }
 
   .rh-header-text {
-    flex: 1;
+    min-width: 0;
   }
 
   .rh-path-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
@@ -114,7 +122,7 @@ const typeIcon: Record<string, string> = {
     font-family: var(--font-serif);
     font-size: var(--fz-2xl);
     font-weight: var(--fw-bold);
-    letter-spacing: var(--ls-card);
+    letter-spacing: var(--ls-snug);
     line-height: var(--lh-snug);
     margin-bottom: var(--sp-1);
   }
@@ -130,13 +138,13 @@ const typeIcon: Record<string, string> = {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: var(--sp-3);
+    gap: var(--sp-2);
     flex-shrink: 0;
   }
 
   .rh-time {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-3);
   }
@@ -146,8 +154,8 @@ const typeIcon: Record<string, string> = {
     font-size: var(--fz-md);
     line-height: var(--lh-relaxed);
     color: var(--tx-2);
-    max-width: 700px;
-    margin-bottom: var(--sp-11);
+    max-width: 768px;
+    margin-bottom: var(--sp-6);
   }
 
   .rh-steps {
@@ -158,10 +166,11 @@ const typeIcon: Record<string, string> = {
   }
 
   .rh-step {
-    display: flex;
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) 132px;
     align-items: center;
-    gap: var(--sp-6);
-    padding: var(--sp-5) var(--sp-3);
+    gap: var(--sp-4);
+    padding: var(--sp-3) var(--sp-2);
     border-bottom: 1px solid var(--bdr);
     transition: background var(--ease-fast);
     cursor: pointer;
@@ -174,20 +183,19 @@ const typeIcon: Record<string, string> = {
 
   .rh-step-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--gold);
     letter-spacing: var(--ls-5);
-    width: var(--sp-9);
+    width: 32px;
     text-align: center;
-    flex-shrink: 0;
   }
 
   .rh-step-body {
-    flex: 1;
     display: flex;
     align-items: baseline;
-    gap: var(--sp-4);
+    gap: var(--sp-3);
     flex-wrap: wrap;
+    min-width: 0;
   }
 
   .rh-step-title {
@@ -200,57 +208,73 @@ const typeIcon: Record<string, string> = {
 
   .rh-step-author {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
-    letter-spacing: var(--ls-2);
+    letter-spacing: var(--ls-3);
   }
 
   .rh-step-right {
     display: flex;
     align-items: center;
-    gap: var(--sp-5);
-    flex-shrink: 0;
+    justify-content: flex-end;
+    gap: var(--sp-3);
   }
 
   .rh-step-type {
     font-family: var(--font-mono);
-    font-size: var(--fz-2xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
-    letter-spacing: var(--ls-6);
+    letter-spacing: var(--ls-5);
     text-transform: uppercase;
   }
 
   .rh-step-time {
     font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+    font-size: var(--fz-3xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-3);
-    min-width: var(--sp-17);
+    min-width: var(--sp-9);
     text-align: right;
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 1024px) {
     .rh-header {
-      flex-wrap: wrap;
+      grid-template-columns: 48px minmax(0, 1fr);
     }
+    .rh-index { width: 48px; height: 48px; }
     .rh-meta-col {
       flex-direction: row;
       align-items: center;
-      width: 100%;
-      padding-left: var(--sp-14);
+      justify-content: flex-start;
+      grid-column: 2;
     }
   }
 
   @media (max-width: 640px) {
     .rh-card {
-      padding: var(--sp-10) var(--sp-7);
+      padding: var(--sp-6) var(--sp-4);
     }
-    .rh-step {
-      flex-wrap: wrap;
+    .rh-header {
+      grid-template-columns: 1fr;
       gap: var(--sp-3);
     }
+    .rh-index {
+      width: auto;
+      height: auto;
+      place-items: start;
+      border: 0;
+      background: transparent;
+    }
+    .rh-meta-col {
+      grid-column: 1;
+    }
+    .rh-step {
+      grid-template-columns: 28px minmax(0, 1fr);
+      gap: var(--sp-2);
+    }
     .rh-step-right {
-      padding-left: var(--sp-12);
+      grid-column: 2;
+      justify-content: flex-start;
     }
   }
 </style>
