@@ -4,8 +4,10 @@ import {
 } from '@/data/frame-two';
 
 const { Y_START, M_START, Y_END, M_END } = F2_RANGE;
+const PRICE_REFRESH_MS = 5 * 60 * 1000;
 
 const f2_toYf = (y: number, m: number): number => y + (m - 1) / 12;
+const f2_isLatestPoint = (y: number, m: number): boolean => y === Y_END && m === M_END;
 
 function f2_annualLerp(table: Record<number, number>, y: number, m: number): number {
   const yf = f2_toYf(y, m);
@@ -43,6 +45,8 @@ function f2_bigmacAt(y: number): number {
 const f2_monthName = (m: number): string =>
   ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m - 1]!;
 const f2_dateLabel = (y: number, m: number): string => `${f2_monthName(m)} ${y}`;
+const f2_validPrice = (price: unknown): price is number =>
+  typeof price === 'number' && Number.isFinite(price) && price > 0;
 
 export default function FrameTwoChart() {
   const [cursor, setCursor] = useState({ y: 1971, m: 8 });
@@ -53,32 +57,52 @@ export default function FrameTwoChart() {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
-    async function fetchLivePrice() {
+    let stopped = false;
+    let inFlight: AbortController | null = null;
+
+    async function refreshLivePrice() {
+      if (inFlight) return;
+      const controller = new AbortController();
+      inFlight = controller;
       try {
-        const res = await fetch('https://mempool.space/api/v1/prices');
-        if (res.ok) {
-          const data = await res.json();
-          if (!cancelled && data && data.USD && data.USD > 0) {
-            setLivePrice(data.USD);
-            setPriceSource('live');
-            return;
+        try {
+          const res = await fetch('https://mempool.space/api/v1/prices', { signal: controller.signal });
+          if (res.ok) {
+            const data = await res.json();
+            if (!stopped && f2_validPrice(data?.USD)) {
+              setLivePrice(data.USD);
+              setPriceSource('live');
+              return;
+            }
           }
-        }
-      } catch { /* try next */ }
-      try {
-        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-        if (res.ok) {
-          const data = await res.json();
-          if (!cancelled && data && data.bitcoin && data.bitcoin.usd) {
-            setLivePrice(data.bitcoin.usd);
-            setPriceSource('live');
+        } catch { /* try next */ }
+
+        try {
+          const res = await fetch(
+            'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
+            { signal: controller.signal }
+          );
+          if (res.ok) {
+            const data = await res.json();
+            if (!stopped && f2_validPrice(data?.bitcoin?.usd)) {
+              setLivePrice(data.bitcoin.usd);
+              setPriceSource('live');
+            }
           }
-        }
-      } catch { /* fall through */ }
+        } catch { /* fall through */ }
+      } finally {
+        if (inFlight === controller) inFlight = null;
+      }
     }
-    fetchLivePrice();
-    return () => { cancelled = true; };
+
+    refreshLivePrice();
+    const intervalId = window.setInterval(refreshLivePrice, PRICE_REFRESH_MS);
+
+    return () => {
+      stopped = true;
+      window.clearInterval(intervalId);
+      inFlight?.abort();
+    };
   }, []);
 
   const lineData = useMemo(() => {
@@ -91,7 +115,10 @@ export default function FrameTwoChart() {
         const yf = f2_toYf(yr, mo);
         const power = cpiBase / f2_cpiAt(yr, mo);
         usd.push({ yf, v: power });
-        const btcVal = f2_btcAt(yr, mo);
+        let btcVal = f2_btcAt(yr, mo);
+        if (f2_isLatestPoint(yr, mo) && btcVal !== null) {
+          btcVal = livePrice;
+        }
         if (btcVal !== null) {
           const btcPerDollar = 1 / 0.08;
           const todaysDollars = btcPerDollar * btcVal;
@@ -101,7 +128,7 @@ export default function FrameTwoChart() {
       }
     }
     return { usd, btc };
-  }, []);
+  }, [livePrice]);
 
   const W = 1100, H = 480;
   const PAD = { L: 50, R: 30, T: 30, B: 60 };
@@ -125,7 +152,7 @@ export default function FrameTwoChart() {
   const cursorX = xScale(cursorYf);
   const cpiBase = f2_cpiAt(Y_START, M_START);
   const usdPower = cpiBase / f2_cpiAt(cursor.y, cursor.m);
-  const btcVal = f2_btcAt(cursor.y, cursor.m);
+  const btcVal = f2_isLatestPoint(cursor.y, cursor.m) ? livePrice : f2_btcAt(cursor.y, cursor.m);
   const btcInDollars = btcVal !== null ? (1 / 0.08) * btcVal * (cpiBase / f2_cpiAt(cursor.y, cursor.m)) : null;
   const usdY = yScale(usdPower);
   const btcY = btcInDollars !== null ? yScale(btcInDollars) : null;
@@ -166,8 +193,8 @@ export default function FrameTwoChart() {
   const cashMacsToday = bm_then / bm_now;
   const cashLost = 1 - cashMacsToday;
   const btcThenRaw = f2_btcAt(cursor.y, cursor.m);
-  const btcThen = btcThenRaw;
-  const btcMacsToday = btcThen !== null ? (bm_then / btcThen) * latestAnchorPrice / bm_now : null;
+  const btcThen = f2_isLatestPoint(cursor.y, cursor.m) ? livePrice : btcThenRaw;
+  const btcMacsToday = btcThen !== null ? (bm_then / btcThen) * livePrice / bm_now : null;
   const btcLost = btcMacsToday !== null && btcMacsToday < 1 ? 1 - btcMacsToday : null;
   const axisYears = [1971, 1980, 1990, 2000, 2010, 2020, Y_END];
 
