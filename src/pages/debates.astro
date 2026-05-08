@@ -29,9 +29,11 @@ import { DEBATES } from '@/data/debates';
                 <div class="db-col-lbl">The Objection</div>
                 <p class="db-col-body">{d.objection}</p>
               </div>
-              <div class="db-col db-col--res">
+              <div class="db-col db-col--right">
                 <div class="db-col-lbl">What this objection gets right</div>
                 <p class="db-col-body db-col-body--gets">{d.getsRight}</p>
+              </div>
+              <div class="db-col db-col--res">
                 <div class="db-col-lbl">The Response</div>
                 <p class="db-col-body">{d.response}</p>
               </div>
@@ -95,7 +97,7 @@ import { DEBATES } from '@/data/debates';
 
   .db-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--sp-4);
   }
 
@@ -114,6 +116,10 @@ import { DEBATES } from '@/data/debates';
     border-left: 3px solid var(--gold);
   }
 
+  .db-col--right {
+    background: var(--surf);
+  }
+
   .db-col-lbl {
     font-family: var(--font-mono);
     font-size: var(--fz-3xs);
@@ -126,7 +132,8 @@ import { DEBATES } from '@/data/debates';
     color: var(--tx-3);
   }
 
-  .db-col--res .db-col-lbl {
+  .db-col--res .db-col-lbl,
+  .db-col--right .db-col-lbl {
     color: var(--gold);
   }
 
@@ -138,7 +145,6 @@ import { DEBATES } from '@/data/debates';
   }
 
   .db-col-body--gets {
-    margin-bottom: var(--sp-5);
     color: var(--tx-3);
   }
 

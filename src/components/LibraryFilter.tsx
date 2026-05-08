@@ -11,6 +11,8 @@ const LAYER_DESC: Record<number, string> = {
 };
 
 function LibraryCard({ item }: { item: LibraryItem }) {
+  const visibleTags = item.tags.slice(0, 3);
+
   return (
     <a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
       <div class="card-layer">{item.layerLabel}</div>
@@ -19,7 +21,7 @@ function LibraryCard({ item }: { item: LibraryItem }) {
       <div class="card-author">{item.author}</div>
       <div class="card-desc">{item.shortDescription}</div>
       <div class="card-tags">
-        {item.tags.map((t) => <Tag key={t} label={t} />)}
+        {visibleTags.map((t) => <Tag key={t} label={t} />)}
         <Tag label={item.difficulty} />
       </div>
       <div class="card-review">

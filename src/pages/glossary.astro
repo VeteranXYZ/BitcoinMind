@@ -21,6 +21,22 @@ const categories = [
         <p class="ph-desc">Concepts as anchors, not dictionary entries. Each term is a way into the idea.</p>
       </div>
 
+      <div class="gl-index" aria-label="Term index">
+        {categories.map((cat) => {
+          const entries = GLOSSARY.filter((g) => g.category === cat.key);
+          return (
+            <div class="gl-index-group">
+              <div class="gl-index-title">{cat.label}</div>
+              <div class="gl-index-links">
+                {entries.map((entry) => (
+                  <a href={`#${entry.id}`}>{entry.term}</a>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
       {categories.map((cat) => {
         const entries = GLOSSARY.filter((g) => g.category === cat.key);
         return (
@@ -59,6 +75,54 @@ const categories = [
     margin-bottom: var(--sp-11);
   }
 
+  .gl-index {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-10);
+  }
+
+  .gl-index-group {
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
+    padding: var(--sp-5);
+  }
+
+  .gl-index-title {
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-3);
+  }
+
+  .gl-index-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+  }
+
+  .gl-index-links a,
+  .gl-link {
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius-sm);
+    padding: 3px var(--sp-2);
+    background: var(--bg-deep);
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    color: var(--tx-2);
+    letter-spacing: var(--ls-3);
+    transition: border-color var(--ease-fast), color var(--ease-fast);
+  }
+
+  .gl-index-links a:hover,
+  .gl-link:hover {
+    border-color: var(--gold);
+    color: var(--gold-hi);
+  }
+
   .gl-cat-hd {
     display: flex;
     align-items: center;
@@ -87,18 +151,16 @@ const categories = [
   }
 
   .gl-list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--sp-4);
   }
 
   .gl-entry {
-    padding: var(--sp-7) 0;
-    border-bottom: 1px solid var(--bdr);
-    max-width: 768px;
-  }
-
-  .gl-entry:last-child {
-    border-bottom: none;
+    padding: var(--sp-5);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
   }
 
   .gl-term-row {
@@ -130,20 +192,10 @@ const categories = [
     margin-top: var(--sp-3);
   }
 
-  .gl-link {
-    font-family: var(--font-mono);
-    font-size: var(--fz-xs);
-    color: var(--gold);
-    letter-spacing: var(--ls-3);
-    transition: color var(--ease-fast);
-  }
-  .gl-link:hover {
-    color: var(--gold-hi);
-  }
-
   @media (max-width: 640px) {
+    .gl-index { grid-template-columns: 1fr; }
     .gl-section { margin-bottom: var(--sp-9); }
-    .gl-entry { padding: var(--sp-6) 0; }
+    .gl-entry { padding: var(--sp-5); }
     .gl-cat-label { font-size: var(--fz-2xl); }
     .gl-cat-hd { margin-bottom: var(--sp-6); }
     .gl-term-row { flex-direction: column; align-items: flex-start; gap: var(--sp-1); }

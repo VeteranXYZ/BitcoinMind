@@ -3,9 +3,31 @@ import { TEXTS } from '@/data/texts';
 import Tag from './Tag';
 import type { TextItem } from '@/data/types';
 
-const TAGS = ['All', 'Whitepaper', 'Money', 'Economics', 'Technical', 'Framework', 'Objections', 'Sovereignty', 'Beginner', 'Intermediate', 'Advanced'];
+const TAGS = ['All', 'Primary', 'Security', 'Verification', 'Adoption', 'Sovereignty', 'Reference', 'Beginner', 'Intermediate', 'Advanced'];
+
+function getTypeLabel(item: TextItem) {
+  const title = item.title.toLowerCase();
+  if (title.includes('whitepaper')) return 'Paper';
+  if (title.includes('documentation') || title.includes('running a full node')) return 'Documentation';
+  if (title.includes('gradually, then suddenly')) return 'Series';
+  if (title.includes('questions') || title.includes('faq')) return 'Q&A';
+  if (item.tags.includes('Reference')) return 'Reference';
+  return 'Essay';
+}
+
+function matchesTextFilter(item: TextItem, filter: string) {
+  if (filter === 'All') return true;
+  if (filter === item.difficulty || item.tags.includes(filter) || getTypeLabel(item) === filter) return true;
+  if (filter === 'Primary') return item.group === 'Primary Texts' || item.tags.includes('Whitepaper');
+  if (filter === 'Verification') return item.tags.some((tag) => ['Node', 'Verification', 'Technical'].includes(tag));
+  if (filter === 'Adoption') return item.tags.some((tag) => ['Adoption', 'Institutional', 'History'].includes(tag));
+  return false;
+}
 
 function TextCard({ item }: { item: TextItem }) {
+  const visibleTags = item.tags.slice(0, 3);
+  const typeLabel = getTypeLabel(item);
+
   return (
     <a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
       <div class="card-layer card-layer--row">
@@ -17,7 +39,8 @@ function TextCard({ item }: { item: TextItem }) {
       <div class="card-author">{item.author}</div>
       <div class="card-desc card-desc--top">{item.shortDescription}</div>
       <div class="card-tags">
-        {item.tags.map((t) => <Tag key={t} label={t} />)}
+        <Tag label={typeLabel} />
+        {visibleTags.map((t) => <Tag key={t} label={t} />)}
         <Tag label={item.difficulty} />
       </div>
       <div class="card-review">
@@ -39,7 +62,7 @@ export default function TextFilter() {
 
   const filtered = useMemo(
     () => TEXTS.filter((item) => {
-      const matchesFilter = filter === 'All' || item.tags.includes(filter) || item.difficulty === filter;
+      const matchesFilter = matchesTextFilter(item, filter);
       const query = q.toLowerCase();
       const matchesSearch = !query || item.title.toLowerCase().includes(query) || item.author.toLowerCase().includes(query);
       return matchesFilter && matchesSearch;

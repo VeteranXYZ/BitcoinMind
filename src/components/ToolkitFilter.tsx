@@ -22,7 +22,32 @@ const GROUPS = [
   },
 ];
 
+function toolkitCategories(tool: ToolkitItem) {
+  const categories = new Set<string>();
+  const title = tool.title.toLowerCase();
+  const tags = tool.tags.join(' ').toLowerCase();
+
+  if (tool.pathStage === 'Observation') categories.add('Observe');
+  if (tool.pathStage === 'Verification') categories.add('Verify');
+  if (tool.pathStage === 'Payments') categories.add('Payments');
+  if (tool.group === 'Research and Context' || tool.pathStage === 'Research') categories.add('Research');
+  if (tags.includes('reference') || tool.layer === 'Reference') categories.add('Reference');
+  if (tags.includes('wallet') || ['sparrow', 'bluewallet', 'electrum'].some((name) => title.includes(name))) categories.add('Wallet');
+  if (tags.includes('multisig') || title.includes('nunchuk')) categories.add('Multisig');
+  if (
+    tags.includes('hardware') ||
+    tags.includes('signing') ||
+    tags.includes('cold storage') ||
+    tags.includes('air-gapped') ||
+    ['trezor', 'coldcard', 'seedsigner', 'jade', 'bitbox'].some((name) => title.includes(name))
+  ) categories.add('Hardware');
+
+  return Array.from(categories).slice(0, 4);
+}
+
 function ToolkitCard({ item }: { item: ToolkitItem }) {
+  const visibleCategories = toolkitCategories(item);
+
   return (
     <a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
       <div class="card-layer">{item.layer}</div>
@@ -30,9 +55,7 @@ function ToolkitCard({ item }: { item: ToolkitItem }) {
       <div class="card-title">{item.title}</div>
       <div class="card-desc card-desc--top">{item.shortDescription}</div>
       <div class="card-tags">
-        {item.tags.map((t) => <Tag key={t} label={t} />)}
-        <Tag label={item.difficulty} />
-        <Tag label={item.cost} />
+        {visibleCategories.map((t) => <Tag key={t} label={t} />)}
       </div>
       <div class="card-review">
         <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
@@ -40,7 +63,7 @@ function ToolkitCard({ item }: { item: ToolkitItem }) {
         <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
       </div>
       <div class="card-ft">
-        <span class="card-meta">{item.cost}</span>
+        <span class="card-meta">{item.difficulty} · {item.cost}</span>
         <span class="card-cta">Visit →</span>
       </div>
     </a>

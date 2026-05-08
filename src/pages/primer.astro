@@ -7,30 +7,31 @@ interface Step {
   body: string;
   label: string;
   author: string | null;
+  time: string;
   href: string;
   external: boolean;
 }
 
 const steps: Step[] = [
-  { n: '1', head: 'Read the document that began everything.',
+  { n: '01', head: 'Read the document that began everything.',
     body: "Nine pages. Written by a person no one has ever identified. Read it not to understand the cryptography — read it to feel the problem it's solving. Two people. No bank in between. That's the whole idea.",
-    label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto',
+    label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto', time: '45 min',
     href: 'https://bitcoin.org/bitcoin.pdf', external: true },
-  { n: '2', head: 'Learn what money actually is.',
+  { n: '02', head: 'Learn what money actually is.',
     body: "You cannot understand what Bitcoin is replacing without understanding what money is. Most people never ask. The Bitcoin Standard is where I'd begin — not the whole work, just Part One. The history of money is the only context that makes Bitcoin legible.",
-    label: 'The Bitcoin Standard', author: 'Saifedean Ammous',
+    label: 'The Bitcoin Standard', author: 'Saifedean Ammous', time: '3-4 hrs',
     href: 'https://saifedean.com/tbs/', external: true },
-  { n: '3', head: 'Understand the monetary case.',
+  { n: '03', head: 'Understand the monetary case.',
     body: "Many people first meet Bitcoin through the broader crypto market. This step separates Bitcoin's monetary structure from the noise around it. Parker Lewis frames it through monetary properties, credibility, and network effects. Read Gradually, Then Suddenly before you decide where Bitcoin belongs.",
-    label: 'Gradually, Then Suddenly', author: 'Parker Lewis',
+    label: 'Gradually, Then Suddenly', author: 'Parker Lewis', time: '2-3 hrs',
     href: 'https://unchained.com/gradually-then-suddenly/', external: true },
-  { n: '4', head: 'Consider the question of sovereignty.',
+  { n: '04', head: 'Consider the question of sovereignty.',
     body: "If the first three steps landed, you'll feel it — something shifts in how you think about savings, governments, time, sovereignty. The Sovereign Individual was written in 1997. It has no business being this accurate about the present. Read it slowly.",
-    label: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg',
+    label: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg', time: '6-8 hrs',
     href: 'https://www.amazon.com/Sovereign-Individual-Mastering-Transition-Information/dp/0684832720', external: true },
-  { n: '5', head: 'Read what I actually think.',
+  { n: '05', head: 'Read what I actually think.',
     body: "The Notes section is where I write without a net. Begin with the first entry — April 2011, Bitcoin at $1. I called it devil-like. I wasn't wrong about the nature of it. I was wrong about what to do.",
-    label: 'Notes', author: null, href: '/notes', external: false },
+    label: 'Notes', author: null, time: '10 min', href: '/notes', external: false },
 ];
 ---
 <Base
@@ -63,7 +64,7 @@ const steps: Step[] = [
               <span class="step-arrow">→</span>
               <span>
                 <span class="step-resource">{s.label}</span>
-                {s.author && <span class="step-auth">{s.author}</span>}
+                <span class="step-auth">{s.author ? `${s.author} · ${s.time}` : s.time}</span>
               </span>
             </a>
           </div>

@@ -6,6 +6,29 @@ interface Props {
   preview?: boolean;
 }
 const { item, preview = false } = Astro.props;
+const toolkitCategories = (tool: ToolkitItem) => {
+  const categories = new Set<string>();
+  const title = tool.title.toLowerCase();
+  const tags = tool.tags.join(' ').toLowerCase();
+
+  if (tool.pathStage === 'Observation') categories.add('Observe');
+  if (tool.pathStage === 'Verification') categories.add('Verify');
+  if (tool.pathStage === 'Payments') categories.add('Payments');
+  if (tool.group === 'Research and Context' || tool.pathStage === 'Research') categories.add('Research');
+  if (tags.includes('reference') || tool.layer === 'Reference') categories.add('Reference');
+  if (tags.includes('wallet') || ['sparrow', 'bluewallet', 'electrum'].some((name) => title.includes(name))) categories.add('Wallet');
+  if (tags.includes('multisig') || title.includes('nunchuk')) categories.add('Multisig');
+  if (
+    tags.includes('hardware') ||
+    tags.includes('signing') ||
+    tags.includes('cold storage') ||
+    tags.includes('air-gapped') ||
+    ['trezor', 'coldcard', 'seedsigner', 'jade', 'bitbox'].some((name) => title.includes(name))
+  ) categories.add('Hardware');
+
+  return Array.from(categories).slice(0, 4);
+};
+const visibleCategories = toolkitCategories(item);
 ---
 <a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
   <div class="card-layer">{item.layer}</div>
@@ -13,9 +36,7 @@ const { item, preview = false } = Astro.props;
   <div class="card-title">{item.title}</div>
   <div class="card-desc card-desc--top">{item.shortDescription}</div>
   <div class="card-tags">
-    {item.tags.map((t) => <Tag label={t} />)}
-    <Tag label={item.difficulty} />
-    <Tag label={item.cost} />
+    {visibleCategories.map((t) => <Tag label={t} />)}
   </div>
   {!preview && (
     <div class="card-review">
@@ -25,7 +46,7 @@ const { item, preview = false } = Astro.props;
     </div>
   )}
   <div class="card-ft">
-    <span class="card-meta">{item.cost}</span>
+    <span class="card-meta">{item.difficulty} · {item.cost}</span>
     <span class="card-cta">Visit →</span>
   </div>
 </a>

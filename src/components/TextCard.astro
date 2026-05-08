@@ -6,6 +6,17 @@ interface Props {
   preview?: boolean;
 }
 const { item, preview = false } = Astro.props;
+const visibleTags = item.tags.slice(0, 3);
+const getTypeLabel = (text: TextItem) => {
+  const title = text.title.toLowerCase();
+  if (title.includes('whitepaper')) return 'Paper';
+  if (title.includes('documentation') || title.includes('running a full node')) return 'Documentation';
+  if (title.includes('gradually, then suddenly')) return 'Series';
+  if (title.includes('questions') || title.includes('faq')) return 'Q&A';
+  if (text.tags.includes('Reference')) return 'Reference';
+  return 'Essay';
+};
+const typeLabel = getTypeLabel(item);
 ---
 <a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
   <div class="card-layer card-layer--row">
@@ -17,7 +28,8 @@ const { item, preview = false } = Astro.props;
   <div class="card-author">{item.author}</div>
   <div class="card-desc card-desc--top">{item.shortDescription}</div>
   <div class="card-tags">
-    {item.tags.map((t) => <Tag label={t} />)}
+    <Tag label={typeLabel} />
+    {visibleTags.map((t) => <Tag label={t} />)}
     <Tag label={item.difficulty} />
   </div>
   {!preview && (

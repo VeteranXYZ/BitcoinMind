@@ -16,7 +16,7 @@ import Base from '@/layouts/Base.astro';
 
       <div class="stk-wrap">
         <div class="stk-main">
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Approach</div>
             <h2 class="a-h">DCA. Don't time. Don't trade.</h2>
             <div class="a-body">
@@ -25,7 +25,7 @@ import Base from '@/layouts/Base.astro';
             </div>
           </div>
 
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Storage</div>
             <h2 class="a-h">Cold storage, with recovery planned.</h2>
             <div class="a-body">
@@ -34,7 +34,7 @@ import Base from '@/layouts/Base.astro';
             </div>
           </div>
 
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Security</div>
             <h2 class="a-h">What I practice.</h2>
             <div class="a-body">
@@ -44,7 +44,7 @@ import Base from '@/layouts/Base.astro';
             </div>
           </div>
 
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Psychology</div>
             <h2 class="a-h">How I think about drawdowns.</h2>
             <div class="a-body">
@@ -53,7 +53,7 @@ import Base from '@/layouts/Base.astro';
             </div>
           </div>
 
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Inheritance</div>
             <h2 class="a-h">Planning for the permanent absence.</h2>
             <div class="a-body">
@@ -67,7 +67,16 @@ import Base from '@/layouts/Base.astro';
           </div>
         </div>
 
-        <div class="about-aside">
+        <div class="about-aside stk-side">
+          <div class="aside-card">
+            <div class="aside-card-title">Principles</div>
+            <div class="aside-curate-item">✓ DCA, never time</div>
+            <div class="aside-curate-item">✓ Cold storage only</div>
+            <div class="aside-curate-item">✓ Own node, independent verification</div>
+            <div class="aside-curate-item">✓ No leverage, no lending</div>
+            <div class="aside-curate-item">✓ Plan for inheritance</div>
+          </div>
+
           <div class="aside-card">
             <div class="aside-card-title">Toolkit Categories</div>
             <a class="stk-kit" href="/toolkit">
@@ -82,15 +91,6 @@ import Base from '@/layouts/Base.astro';
               <span>Full node</span>
               <span class="stk-kit-role">Verification</span>
             </a>
-          </div>
-
-          <div class="aside-card">
-            <div class="aside-card-title">Principles</div>
-            <div class="aside-curate-item">✓ DCA, never time</div>
-            <div class="aside-curate-item">✓ Cold storage only</div>
-            <div class="aside-curate-item">✓ Own node, independent verification</div>
-            <div class="aside-curate-item">✓ No leverage, no lending</div>
-            <div class="aside-curate-item">✓ Plan for inheritance</div>
           </div>
 
           <a class="aside-card aside-card--link" href="/rabbit-holes">
@@ -114,6 +114,19 @@ import Base from '@/layouts/Base.astro';
 
   .stk-main {
     max-width: 768px;
+  }
+
+  .stk-side {
+    position: sticky;
+    top: calc(var(--nav-h) + var(--sp-6));
+    align-self: start;
+  }
+
+  .stk-principle-card {
+    padding: var(--sp-7);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
   }
 
   .stk-disclaimer {

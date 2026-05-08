@@ -186,7 +186,6 @@ nav {
   color: var(--tx-2);
   max-width: 640px;
   line-height: var(--lh-loose);
-  font-style: italic;
   margin-bottom: var(--sp-2);
 }
 .hero-by {
@@ -283,7 +282,7 @@ nav {
 
 /* ── Cards ──────────────────────────────────────────── */
 .grid3     { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-4); }
-.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--sp-4); }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--sp-4); max-width: 1200px; }
 
 .card {
   background: var(--surf);
@@ -361,7 +360,25 @@ nav {
 }
 .card-meta { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--tx-3); letter-spacing: var(--ls-3); }
 .card-cta  { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-5); text-transform: uppercase; }
-.card-review { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--bdr); }
+.card-review {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 1px solid transparent;
+  transform: translateY(-4px);
+  transition: max-height var(--ease-slow), opacity var(--ease-card), margin-top var(--ease-card), padding-top var(--ease-card), transform var(--ease-card), border-color var(--ease-card);
+}
+.card:hover .card-review,
+.card:focus-within .card-review {
+  max-height: 420px;
+  opacity: 1;
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top-color: var(--bdr);
+  transform: translateY(0);
+}
 .card-ri {
   font-size: var(--fz-sm);
   color: var(--tx-2);
@@ -401,6 +418,19 @@ nav {
 .tag--beginner     { background: var(--tag-beginner-bg);     color: var(--tag-beginner-fg); }
 .tag--intermediate { background: var(--tag-intermediate-bg); color: var(--tag-intermediate-fg); }
 .tag--advanced     { background: var(--tag-advanced-bg);     color: var(--tag-advanced-fg); }
+.tag--paper,
+.tag--essay,
+.tag--series,
+.tag--reference,
+.tag--documentation,
+.tag--q-a,
+.tag--observe,
+.tag--verify,
+.tag--wallet,
+.tag--hardware,
+.tag--multisig,
+.tag--payments,
+.tag--research { background: var(--surf-2); color: var(--tx-2); }
 
 /* ── Page Header ────────────────────────────────────────
    Shared vertical rhythm across every non-hero page header.
@@ -418,7 +448,7 @@ nav {
   /* Anchor the bottom border at a consistent vertical position so pages
      with single-line vs multi-line descriptions still feel paired. Plain
      block layout — no flex — to keep child margin behaviour predictable. */
-  min-height: clamp(280px, 32vw, 360px);
+  min-height: clamp(240px, 28vw, 320px);
 }
 .ph-eye {
   font-family: var(--font-mono);
@@ -550,11 +580,21 @@ nav {
 }
 
 /* ── Primer Steps ───────────────────────────────────── */
-.steps-wrap { max-width: 768px; }
+.steps-wrap { max-width: 760px; }
 .step {
-  padding-bottom: var(--sp-9);
+  position: relative;
+  padding: 0 0 var(--sp-9) var(--sp-9);
   margin-bottom: var(--sp-9);
   border-bottom: 1px solid var(--bdr);
+}
+.step::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: var(--sp-8);
+  bottom: 0;
+  width: 1px;
+  background: var(--bdr);
 }
 .step:last-of-type { border-bottom: none; }
 .step-num-row {
@@ -568,11 +608,15 @@ nav {
   gap: var(--sp-3);
 }
 .step-num-badge {
+  position: absolute;
+  left: 0;
+  top: 0;
   border: 1px solid var(--gold);
   padding: 3px var(--sp-2);
   border-radius: var(--radius-sm);
+  background: var(--bg);
 }
-.step-num-line  { height: 1px; flex: 1; background: var(--bdr); }
+.step-num-line  { display: none; }
 .step-heading   {
   font-family: var(--font-serif);
   font-size: var(--fz-step);
@@ -612,7 +656,17 @@ nav {
 .steps-signature   { font-family: var(--font-serif); font-size: var(--fz-md); color: var(--tx-3); font-style: italic; }
 
 /* ── Notes ──────────────────────────────────────────── */
-.note-wrap { max-width: 768px; }
+.note-wrap { max-width: 760px; }
+.note-doc {
+  padding: var(--sp-7);
+  border: 1px solid var(--bdr);
+  border-radius: var(--radius);
+  background: var(--surf);
+}
+.note-doc--archive {
+  background:
+    linear-gradient(to bottom, var(--surf), var(--bg-deep));
+}
 .note-hd   { border-bottom: 1px solid var(--bdr); padding-bottom: var(--sp-5); margin-bottom: var(--sp-8); }
 .note-num  {
   font-family: var(--font-mono);
@@ -777,6 +831,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
 }
 @media (max-width: 640px) {
   .grid-auto { grid-template-columns: 1fr; }
+  .card-review { display: none; }
 
   /* Compact page headers on small screens — keep rhythm but reclaim ~30px. */
   .hero { padding: var(--sp-9) 0 var(--sp-8); }
@@ -812,6 +867,22 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   .ft-built::before,
   .ft-powered::before { content: ''; }
   .ft-upd { width: 100%; }
+
+  .step {
+    padding-left: var(--sp-8);
+  }
+  .step-cta {
+    width: 100%;
+    align-items: flex-start;
+  }
+  .step-auth {
+    display: block;
+    margin-left: 0;
+    margin-top: 3px;
+  }
+  .note-doc {
+    padding: var(--sp-5);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -820,8 +891,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
 
 .pulse {
   margin: var(--sp-9) 0 0;
-  padding: var(--sp-8) 0 var(--sp-2);
+  padding: var(--sp-5) 0 var(--sp-2);
   border-bottom: 1px solid var(--bdr);
+  opacity: 0.78;
 }
 
 .pulse-hd {
@@ -877,14 +949,14 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
 
 .pulse-line {
   font-family: var(--font-serif);
-  font-size: clamp(22px, 3vw, 32px);
+  font-size: clamp(18px, 2.2vw, 26px);
   font-weight: var(--fw-normal);
   font-style: italic;
   line-height: var(--lh-snug);
   letter-spacing: var(--ls-tighter);
   color: var(--tx);
   margin: 0 0 var(--sp-7);
-  max-width: 1024px;
+  max-width: 860px;
 }
 
 .pulse-num {

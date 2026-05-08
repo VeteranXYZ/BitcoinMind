@@ -10,6 +10,14 @@ const typeIcon: Record<string, string> = {
   frame: 'Frame',
   external: 'External',
 };
+const routeQuestions: Record<string, string> = {
+  'rh-monetary': 'What is money, and why does scarcity matter?',
+  'rh-technical': 'How does Bitcoin actually work?',
+  'rh-custody': 'What changes when custody and verification become personal?',
+  'rh-philosophy': 'What kind of institution is Bitcoin replacing?',
+  'rh-economics': 'How should long-term Bitcoin data be read?',
+};
+const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/, '');
 ---
 <Base
   title="Paths"
@@ -22,6 +30,21 @@ const typeIcon: Record<string, string> = {
         <div class="ph-eye">Paths</div>
         <h1 class="ph-title">Learning <em>Paths</em></h1>
         <p class="ph-desc">Five routes past the primer. Each begins with a different question and follows it until the map changes.</p>
+      </div>
+
+      <div class="rh-route-grid" aria-label="Learning path routes">
+        {RABBIT_HOLES.map((rh) => (
+          <a class="rh-route-card" href={`#${rh.id}`}>
+            <div class="rh-route-kicker">{routeName(rh.title)}</div>
+            <h2 class="rh-route-question">{routeQuestions[rh.id]}</h2>
+            <div class="rh-route-meta">
+              <Tag label={rh.difficulty} />
+              <span>{rh.totalTime}</span>
+              <span>{rh.steps.length} steps</span>
+            </div>
+            <span class="rh-route-cta">Start →</span>
+          </a>
+        ))}
       </div>
 
       <div class="rh-list">
@@ -65,6 +88,68 @@ const typeIcon: Record<string, string> = {
 </Base>
 
 <style>
+  .rh-route-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--sp-4);
+    margin: calc(var(--sp-3) * -1) 0 var(--sp-9);
+  }
+
+  .rh-route-card {
+    display: flex;
+    min-height: 220px;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--ease-card), background var(--ease-card);
+  }
+
+  .rh-route-card:hover {
+    border-color: var(--gold);
+    background: var(--surf-2);
+  }
+
+  .rh-route-kicker {
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+  }
+
+  .rh-route-question {
+    font-family: var(--font-serif);
+    font-size: var(--fz-lg);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-normal);
+    font-weight: var(--fw-semi);
+    flex: 1;
+  }
+
+  .rh-route-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-3);
+  }
+
+  .rh-route-cta {
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    color: var(--gold-hi);
+    letter-spacing: var(--ls-5);
+    text-transform: uppercase;
+  }
+
   .rh-list {
     display: flex;
     flex-direction: column;
@@ -238,6 +323,9 @@ const typeIcon: Record<string, string> = {
   }
 
   @media (max-width: 1024px) {
+    .rh-route-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
     .rh-header {
       grid-template-columns: 48px minmax(0, 1fr);
     }

@@ -18,7 +18,7 @@ import { TIMELINE } from '@/data/timeline';
 
       <div class="tl-wrap">
         {TIMELINE.map((ev, i) => (
-          <div class="tl-node" id={ev.id}>
+          <div class:list={['tl-node', ev.hiei && 'tl-node--hiei']} id={ev.id}>
             <div class="tl-rail">
               <div class="tl-dot" />
               {i < TIMELINE.length - 1 && <div class="tl-line" />}
@@ -58,18 +58,20 @@ import { TIMELINE } from '@/data/timeline';
 
 <style>
   .tl-wrap {
-    max-width: 768px;
+    max-width: 1100px;
     padding-bottom: var(--sp-12);
   }
 
   .tl-node {
     display: grid;
-    grid-template-columns: 40px 1fr;
+    grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
     gap: var(--sp-5);
     min-height: 0;
   }
 
   .tl-rail {
+    grid-column: 2;
+    grid-row: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -95,7 +97,24 @@ import { TIMELINE } from '@/data/timeline';
   }
 
   .tl-content {
-    padding-bottom: var(--sp-9);
+    grid-column: 3;
+    padding: var(--sp-5);
+    margin-bottom: var(--sp-7);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
+  }
+
+  .tl-node:nth-child(even) .tl-content {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .tl-node--hiei .tl-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--gold-hi);
+    box-shadow: 0 0 0 4px var(--gold-dim);
   }
 
   .tl-meta {
@@ -195,8 +214,19 @@ import { TIMELINE } from '@/data/timeline';
       grid-template-columns: 24px 1fr;
       gap: var(--sp-3);
     }
+    .tl-wrap {
+      max-width: 760px;
+    }
+    .tl-rail {
+      grid-column: 1;
+    }
     .tl-content {
-      padding-bottom: var(--sp-7);
+      grid-column: 2;
+      padding: var(--sp-5);
+      margin-bottom: var(--sp-5);
+    }
+    .tl-node:nth-child(even) .tl-content {
+      grid-column: 2;
     }
   }
 </style>
