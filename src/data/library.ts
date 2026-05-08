@@ -279,7 +279,7 @@ export const LIBRARY: LibraryItem[] = [
     id: "the-price-of-tomorrow",
     title: "The Price of Tomorrow",
     author: "Jeff Booth",
-    group: "Macro Companion",
+    group: "Further Reading / Macro Companion",
     pathStage: "Macro",
     resourceType: "work",
     layer: 2,

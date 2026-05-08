@@ -10,13 +10,13 @@ export const GLOSSARY: GlossaryEntry[] = [
   {
     id: 'g-hardness', term: 'Hardness',
     category: 'monetary',
-    body: 'The difficulty of producing new units of a monetary good. Gold is hard because mining more of it is expensive and slow. Fiat is soft because a central bank can create it at zero marginal cost. Bitcoin is the hardest money ever created — the supply schedule is fixed by code and enforced by consensus. After all 21 million coins are mined, no more can ever exist. Hardness is not a feature. It is the feature.',
+    body: 'The difficulty of producing new units of a monetary good. Gold is hard because mining more of it is expensive and slow. Fiat is soft because a central bank can create it at very low marginal cost. Bitcoin has a fixed supply schedule enforced by consensus. After all 21 million coins are mined, no more can exist under the current rules.',
     links: [{ label: 'Frame: A History of Hardness', href: '/frames/1' }],
   },
   {
     id: 'g-halving', term: 'Halving',
     category: 'monetary',
-    body: 'Every 210,000 blocks — roughly four years — the block reward is cut in half. The first reward was 50 BTC. Today it is 3.125. This is not a policy decision that can be reversed. It is code that executes. The halving is a forced reset of time preference: it makes Bitcoin scarcer on a schedule that no entity can alter. Central banks adjust interest rates. Bitcoin adjusts supply. The difference is that one requires trust and the other does not.',
+    body: 'Every 210,000 blocks, roughly four years, the block reward is cut in half. The first reward was 50 BTC. Today it is 3.125. This is not a discretionary policy decision; it is part of the protocol rules. The halving reduces new issuance on a schedule that no single entity can alter.',
     links: [{ label: 'The Bitcoin Standard', href: '/library' }],
   },
   {
@@ -28,7 +28,7 @@ export const GLOSSARY: GlossaryEntry[] = [
   {
     id: 'g-stock-to-flow', term: 'Stock-to-Flow',
     category: 'monetary',
-    body: 'The ratio of existing supply (stock) to new annual production (flow). Gold has a stock-to-flow of roughly 60 — it would take 60 years of current mining to double the supply. After the 2024 halving, Bitcoin\'s stock-to-flow exceeds 100. A higher ratio means greater scarcity. Stock-to-flow is not a price model. It is a scarcity metric. The price follows scarcity over time, not the other way around.',
+    body: 'The ratio of existing supply (stock) to new annual production (flow). Gold has a stock-to-flow of roughly 60, meaning it would take about 60 years of current mining to double the supply. After the 2024 halving, Bitcoin\'s stock-to-flow exceeds 100. Stock-to-flow is a scarcity metric, not a reliable price model.',
   },
   {
     id: 'g-utxo', term: 'UTXO',
@@ -39,29 +39,29 @@ export const GLOSSARY: GlossaryEntry[] = [
   {
     id: 'g-node', term: 'Full Node',
     category: 'technical',
-    body: 'A computer running Bitcoin Core (or compatible software) that independently validates every transaction and every block against the consensus rules. Running a node means you verify your own truth — you don\'t trust anyone else\'s version of the ledger. Every full node is a vote for the rules. The more nodes, the harder it is for anyone to change Bitcoin. This is decentralization in practice, not theory.',
+    body: 'A computer running Bitcoin Core or compatible software that independently validates every transaction and every block against the consensus rules. Running a node lets you directly verify the ledger instead of relying on someone else\'s copy. Full nodes do not vote by wealth; they enforce the rules their operators choose to run.',
     links: [{ label: 'Bitcoin Core', href: '/toolkit' }],
   },
   {
     id: 'g-mempool', term: 'Mempool',
     category: 'technical',
-    body: 'The waiting room. When you broadcast a Bitcoin transaction, it enters the mempool — a holding area of unconfirmed transactions that miners choose from when assembling the next block. Higher-fee transactions get picked first. The mempool is a real-time market for block space: you are bidding for inclusion in the next page of an immutable ledger.',
+    body: 'The holding area for unconfirmed Bitcoin transactions. When you broadcast a transaction, it enters the mempool until a miner includes it in a block. Higher-fee transactions are usually prioritized. The mempool is a real-time market for limited block space.',
     links: [{ label: 'Mempool.space', href: '/toolkit' }],
   },
   {
     id: 'g-hash-rate', term: 'Hash Rate',
     category: 'technical',
-    body: 'The total computational power securing the Bitcoin network, measured in hashes per second. A higher hash rate means more energy is being spent to find the next block — and more energy means more security. The hash rate is a proxy for Bitcoin\'s thermodynamic shield: the cost of attacking the network grows with the energy protecting it. As of 2026, the Bitcoin network consumes more energy than some countries. That is not a bug.',
+    body: 'The total computational power securing the Bitcoin network, measured in hashes per second. A higher hash rate generally means more work is being performed to find blocks, which raises the cost of attacking the chain. Hash rate is one proxy for the economic cost of rewriting Bitcoin history.',
   },
   {
     id: 'g-difficulty', term: 'Difficulty Adjustment',
     category: 'technical',
-    body: 'Every 2,016 blocks (roughly two weeks), Bitcoin recalibrates the mining difficulty so that blocks continue to arrive approximately every ten minutes — regardless of how much hash power joins or leaves the network. This self-regulating mechanism is one of Satoshi\'s most elegant innovations. No committee. No meeting. No vote. The protocol adapts.',
+    body: 'Every 2,016 blocks, roughly two weeks, Bitcoin recalibrates the mining difficulty so that blocks continue to arrive approximately every ten minutes regardless of how much hash power joins or leaves the network. This mechanism keeps issuance predictable without a committee setting the schedule.',
   },
   {
     id: 'g-sovereignty', term: 'Sovereignty',
     category: 'philosophical',
-    body: 'The capacity to act without requiring permission from an intermediary. In the context of Bitcoin: the ability to hold, send, and receive value without any third party\'s approval. Self-custody is sovereignty in practice — your keys, your coins, your rules. The Sovereign Individual predicted that cryptography would transfer power from states to individuals. Bitcoin is that transfer in motion.',
+    body: 'The capacity to act without requiring permission from an intermediary. In the context of Bitcoin, it means the ability to hold, send, and receive value without a custodian approving each action. Self-custody can increase sovereignty, but it also increases personal responsibility.',
     links: [
       { label: 'The Sovereign Individual', href: '/library' },
       { label: 'Coldcard MK4', href: '/toolkit' },
@@ -70,29 +70,29 @@ export const GLOSSARY: GlossaryEntry[] = [
   {
     id: 'g-time-pref', term: 'Time Preference',
     category: 'philosophical',
-    body: 'The degree to which an individual values present consumption over future consumption. Low time preference means you are willing to delay gratification — to save, to invest, to build. Sound money encourages low time preference because your savings hold value over time. Inflationary money punishes savers and rewards borrowers, driving time preference higher. Bitcoin is designed to push time preference lower, one halving at a time.',
+    body: 'The degree to which an individual values present consumption over future consumption. Low time preference means greater willingness to delay gratification, save, and build. Many Bitcoin arguments claim that harder money can encourage lower time preference because savings are less easily diluted.',
     links: [{ label: 'The Bitcoin Standard', href: '/library' }],
   },
   {
     id: 'g-timechain', term: 'Timechain',
     category: 'philosophical',
-    body: 'Satoshi\'s original name for what the world now calls "blockchain." The word matters. A blockchain is a technical structure — blocks linked by hashes. A timechain is a philosophical one — an unforgeable record of the order in which events occurred. Bitcoin doesn\'t just store transactions. It orders them in time. And because no one controls the clock, no one can rewrite history.',
+    body: 'Satoshi\'s original name for what the world now calls "blockchain." A blockchain is a technical structure: blocks linked by hashes. Timechain emphasizes ordering: Bitcoin records transactions in a sequence that becomes increasingly expensive to reorganize as more proof of work accumulates.',
     links: [{ label: 'Bitcoin is Time by Gigi', href: '/texts' }],
   },
   {
     id: 'g-proof-of-work', term: 'Proof of Work',
     category: 'technical',
-    body: 'The mechanism by which miners expend real-world energy to earn the right to propose the next block. Proof of work is not wasteful — it is the conversion of energy into security. Without it, there is no objective way to determine which version of the ledger is correct. Proof of stake asks "who has the most coins?" Proof of work asks "who spent the most energy?" One is a plutocracy. The other is physics.',
+    body: 'The mechanism by which miners expend real-world energy to earn the right to propose the next block. Proof of work ties block production to an external cost, making attacks expensive in energy and hardware. Proof of stake relies on ownership of the native asset to choose validators. The two models have different security assumptions, tradeoffs, and failure modes.',
   },
   {
     id: 'g-trustless', term: 'Trustless',
     category: 'philosophical',
-    body: 'A system that does not require participants to trust each other or any third party. In Bitcoin, "trustless" does not mean "no trust exists." It means trust is replaced by verification. You don\'t trust the miner — you verify the block. You don\'t trust the sender — you verify the signature. You don\'t trust the network — you run a node. Trust is a vulnerability. Verification is a guarantee.',
+    body: 'A system that does not require participants to trust each other or a central third party for basic validity. In Bitcoin, "trustless" does not mean no trust exists anywhere. It means important claims can be checked: signatures, blocks, supply, and consensus rules can be independently verified.',
     links: [{ label: 'The whitepaper', href: '/texts' }],
   },
   {
     id: 'g-21m', term: 'Twenty-One Million',
     category: 'monetary',
-    body: 'The hard cap. There will never be more than 21,000,000 bitcoin. This number is not a suggestion, a target, or a policy. It is enforced by every node on the network. To change it would require convincing a majority of node operators to voluntarily debase their own holdings. This is the monetary policy that cannot be lobbied, bribed, or inflated away. It is, in the strictest sense, incorruptible.',
+    body: 'Bitcoin\'s supply cap. Under the current consensus rules, there will never be more than 21,000,000 bitcoin. The limit is enforced by validating nodes. Changing it would require broad voluntary adoption of different rules by users, node operators, miners, and economic actors.',
   },
 ];

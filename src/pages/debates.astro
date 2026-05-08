@@ -30,6 +30,8 @@ import { DEBATES } from '@/data/debates';
                 <p class="db-col-body">{d.objection}</p>
               </div>
               <div class="db-col db-col--res">
+                <div class="db-col-lbl">What This Objection Gets Right</div>
+                <p class="db-col-body db-col-body--gets">{d.getsRight}</p>
                 <div class="db-col-lbl">The Response</div>
                 <p class="db-col-body">{d.response}</p>
               </div>
@@ -133,6 +135,11 @@ import { DEBATES } from '@/data/debates';
     font-size: var(--fz-md);
     line-height: var(--lh-loose);
     color: var(--tx-2);
+  }
+
+  .db-col-body--gets {
+    margin-bottom: var(--sp-5);
+    color: var(--tx-3);
   }
 
   .db-further {

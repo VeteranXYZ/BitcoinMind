@@ -27,10 +27,10 @@ import Base from '@/layouts/Base.astro';
 
           <div class="a-sec">
             <div class="a-eye">Storage</div>
-            <h2 class="a-h">Cold. Air-gapped. Geographically distributed.</h2>
+            <h2 class="a-h">Cold storage, with recovery planned.</h2>
             <div class="a-body">
-              <p>My Bitcoin is held in cold storage — a hardware wallet that never connects to the internet. The signing device is air-gapped: transactions are constructed on a watch-only wallet, transferred via SD card, signed offline, and broadcast. No USB. No Bluetooth. No wireless attack surface.</p>
-              <p>The seeds are backed up on metal, stored in multiple physical locations. No single point of failure. If one location is compromised — fire, theft, natural disaster — the others remain intact. This is not paranoia. This is engineering against catastrophe.</p>
+              <p>My long-term Bitcoin is held in cold storage. The important principle is separation: the device that signs transactions is not the same environment that watches balances, builds transactions, or browses the internet.</p>
+              <p>Backups are physical, redundant, and private. The goal is not to describe an implementation for others to copy; it is to avoid single points of failure while keeping the setup understandable enough to maintain over time.</p>
             </div>
           </div>
 
@@ -39,8 +39,8 @@ import Base from '@/layouts/Base.astro';
             <h2 class="a-h">What I practice.</h2>
             <div class="a-body">
               <p><em>Seed phrases are never digital.</em> Not in a photo, not in a note, not in the cloud. The moment a seed touches a network-connected device, it is compromised in principle even if not yet in practice.</p>
-              <p><em>Passphrase as a second factor.</em> The hardware wallet is protected by a passphrase that exists only in my head and in a sealed backup. Without both the seed and the passphrase, the wallet cannot be accessed.</p>
-              <p><em>Verify, don't trust.</em> I run my own node. Every transaction I make is validated against my own copy of the blockchain. I don't rely on someone else's truth.</p>
+              <p><em>Keep recovery realistic.</em> A custody setup that cannot be recovered by the right person at the right time is not secure. It is fragile.</p>
+              <p><em>Verify, don't trust.</em> I run my own node where practical. The aim is independent verification, not dependence on a third-party view of the network.</p>
             </div>
           </div>
 
@@ -57,7 +57,7 @@ import Base from '@/layouts/Base.astro';
             <div class="a-eye">Inheritance</div>
             <h2 class="a-h">Planning for the permanent absence.</h2>
             <div class="a-body">
-              <p>Self-custody means you are your own bank. It also means you are a single point of failure for your family. If you die without a plan, your Bitcoin dies with you. I've built an inheritance protocol: a set of instructions, stored securely, that allows a designated person to recover the funds. The details are private. The principle is not: if you hold Bitcoin for the long term, you owe it to someone else to make it recoverable.</p>
+              <p>Self-custody can make you a single point of failure for your family. If long-term savings cannot be recovered by the people who should inherit them, the setup is incomplete. The details are private. The principle is not: if you hold Bitcoin for the long term, you owe it to someone else to make recovery possible.</p>
             </div>
           </div>
 
@@ -69,17 +69,17 @@ import Base from '@/layouts/Base.astro';
 
         <div class="about-aside">
           <div class="aside-card">
-            <div class="aside-card-title">Toolkit I Use</div>
+            <div class="aside-card-title">Toolkit Categories</div>
             <a class="stk-kit" href="/toolkit">
-              <span>Coldcard MK4</span>
-              <span class="stk-kit-role">Signing</span>
+              <span>Signing devices</span>
+              <span class="stk-kit-role">Custody</span>
             </a>
             <a class="stk-kit" href="/toolkit">
-              <span>Sparrow Wallet</span>
-              <span class="stk-kit-role">Watch-only</span>
+              <span>Wallet software</span>
+              <span class="stk-kit-role">Control</span>
             </a>
             <a class="stk-kit" href="/toolkit">
-              <span>Bitcoin Core</span>
+              <span>Full node</span>
               <span class="stk-kit-role">Verification</span>
             </a>
           </div>
@@ -88,14 +88,14 @@ import Base from '@/layouts/Base.astro';
             <div class="aside-card-title">Principles</div>
             <div class="aside-curate-item">✓ DCA, never time</div>
             <div class="aside-curate-item">✓ Cold storage only</div>
-            <div class="aside-curate-item">✓ Own node, own truth</div>
+            <div class="aside-curate-item">✓ Independent verification</div>
             <div class="aside-curate-item">✓ No leverage, no lending</div>
             <div class="aside-curate-item">✓ Plan for inheritance</div>
           </div>
 
           <a class="aside-card aside-card--link" href="/rabbit-holes">
             <div class="aside-card-title">Learn Self-Custody</div>
-            <p class="aside-notes-quote">The Sovereignty Path — from exchange to air-gapped in five steps.</p>
+            <p class="aside-notes-quote">The Sovereignty Path — from basic wallet practice to resilient custody.</p>
             <p class="aside-notes-link">Open the path →</p>
           </a>
         </div>

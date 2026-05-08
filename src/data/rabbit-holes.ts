@@ -98,7 +98,7 @@ export const RABBIT_HOLES: RabbitHole[] = [
       { title: 'Gradually, Then Suddenly', author: 'Parker Lewis', type: 'text', href: '/texts', time: '4 hrs' },
       { title: 'After the Anchor', type: 'frame', href: '/frames/2', time: '20 min' },
       { title: 'Speculative Attack', author: 'Pierre Rochard', type: 'text', href: '/texts', time: '25 min' },
-      { title: 'LookIntoBitcoin — Cycle analysis', type: 'toolkit', href: '/toolkit', time: '1 hr' },
+      { title: 'LookIntoBitcoin — Long-term data context', type: 'toolkit', href: '/toolkit', time: '1 hr' },
     ],
   },
 ];
