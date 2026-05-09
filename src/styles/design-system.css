@@ -7,71 +7,83 @@
 :root {
 
   /* ── Base colors ────────────────────────────────────── */
-  --bg:        oklch(0.09 0.022 62);
-  --bg-deep:   oklch(0.065 0.016 58);
-  --surf:      oklch(0.135 0.028 65);
-  --surf-2:    oklch(0.175 0.034 67);
-  --bdr:       oklch(0.235 0.032 67);
-  --bdr-2:     oklch(0.31 0.040 70);
-  --tx:        oklch(0.91 0.032 82);
-  --tx-2:      oklch(0.64 0.026 76);
-  --tx-3:      oklch(0.40 0.020 68);
-  --gold:      oklch(0.68 0.12 74);
-  --gold-dim:  oklch(0.68 0.12 74 / 0.13);
-  --gold-glow: oklch(0.68 0.12 74 / 0.25);
-  --gold-hi:   oklch(0.80 0.13 82);
-  --nav-glass: oklch(0.09 0.022 62 / 0.88);
+  --bg: #0d0b08;
+  --surface: #14110d;
+  --card: #19150f;
+  --card-hover: #1e1912;
+
+  --text-heading: #f2ede3;
+  --text-body: #d8d0c3;
+  --text-muted: #948879;
+  --text-faint: #6d6358;
+
+  --accent: #c8913a;
+  --accent-bright: #d8a24a;
+  --accent-muted: #8a642f;
+
+  --border: rgba(242, 237, 227, 0.10);
+  --border-strong: rgba(242, 237, 227, 0.16);
+  --border-accent: rgba(200, 145, 58, 0.35);
+
+  --hover: rgba(242, 237, 227, 0.04);
+  --accent-hover: rgba(200, 145, 58, 0.10);
+  --focus-ring: rgba(216, 162, 74, 0.45);
+
+  /* Legacy aliases used throughout the existing CSS. */
+  --bg-deep: var(--surface);
+  --surf: var(--card);
+  --surf-2: var(--card-hover);
+  --bdr: var(--border);
+  --bdr-2: var(--border-strong);
+  --tx: var(--text-heading);
+  --tx-2: var(--text-body);
+  --tx-3: var(--text-muted);
+  --gold: var(--accent);
+  --gold-dim: var(--accent-hover);
+  --gold-glow: rgba(200, 145, 58, 0.14);
+  --gold-hi: var(--accent-bright);
+  --nav-glass: rgba(13, 11, 8, 0.9);
 
   /* ── Decorative atmospherics ────────────────────────── */
   /* Inlined oklch literals from styles.css are now tokenised so a future
      palette tweak only touches design-system.css. */
-  --bg-glow-warm:  oklch(0.22 0.04 70 / 0.18);   /* page radial glow top */
-  --bg-glow-deep:  oklch(0.06 0.02 58 / 0.5);    /* page radial glow bottom */
-  --hero-grid-v:   oklch(0.30 0.035 68 / 0.22);  /* hero vertical grid */
-  --hero-grid-h:   oklch(0.30 0.035 68 / 0.15);  /* hero horizontal grid */
-  --pb-beg:        oklch(0.60 0.10 72);          /* reading-progress bar gradient */
+  --bg-glow-warm:  rgba(200, 145, 58, 0.08);      /* page radial warmth */
+  --bg-glow-deep:  rgba(20, 17, 13, 0.55);        /* page radial depth */
+  --hero-grid-v:   rgba(242, 237, 227, 0.08);     /* hero vertical grid */
+  --hero-grid-h:   rgba(242, 237, 227, 0.05);     /* hero horizontal grid */
+  --pb-beg:        var(--accent-muted);           /* reading-progress bar gradient */
 
   /* ── Tag base palette ──────────────────────────────────
      7 unique color families. Tag classes alias these — eliminates
      the duplication where two tags pointed at identical hex pairs. */
-  --c-tag-gold-bg:   oklch(0.68 0.12 74  / 0.16);
-  --c-tag-gold-fg:   oklch(0.80 0.12 80);
-  --c-tag-purple-bg: oklch(0.68 0.12 280 / 0.16);
-  --c-tag-purple-fg: oklch(0.78 0.10 288);
-  --c-tag-blue-bg:   oklch(0.68 0.12 232 / 0.16);
-  --c-tag-blue-fg:   oklch(0.78 0.10 238);
-  --c-tag-teal-bg:   oklch(0.68 0.12 162 / 0.16);
-  --c-tag-teal-fg:   oklch(0.78 0.10 168);
-  --c-tag-yellow-bg: oklch(0.72 0.11 95  / 0.16);
-  --c-tag-yellow-fg: oklch(0.80 0.10 98);
-  --c-tag-green-bg:  oklch(0.68 0.12 148 / 0.16);
-  --c-tag-green-fg:  oklch(0.78 0.10 152);
-  --c-tag-red-bg:    oklch(0.68 0.11 28  / 0.16);
-  --c-tag-red-fg:    oklch(0.78 0.09 32);
+  --c-tag-neutral-bg: rgba(242, 237, 227, 0.055);
+  --c-tag-neutral-fg: var(--text-muted);
+  --c-tag-warm-bg:    rgba(200, 145, 58, 0.095);
+  --c-tag-warm-fg:    #c9a46f;
 
   /* Semantic mapping — change a tag's color via the alias only. */
-  --tag-essential-bg:    var(--c-tag-gold-bg);
-  --tag-essential-fg:    var(--c-tag-gold-fg);
-  --tag-philosophy-bg:   var(--c-tag-purple-bg);
-  --tag-philosophy-fg:   var(--c-tag-purple-fg);
-  --tag-economics-bg:    var(--c-tag-blue-bg);
-  --tag-economics-fg:    var(--c-tag-blue-fg);
-  --tag-technical-bg:    var(--c-tag-teal-bg);
-  --tag-technical-fg:    var(--c-tag-teal-fg);
-  --tag-history-bg:      var(--c-tag-yellow-bg);
-  --tag-history-fg:      var(--c-tag-yellow-fg);
-  --tag-free-bg:         var(--c-tag-green-bg);
-  --tag-free-fg:         var(--c-tag-green-fg);
-  --tag-freemium-bg:     var(--c-tag-gold-bg);
-  --tag-freemium-fg:     var(--c-tag-gold-fg);
-  --tag-paid-bg:         var(--c-tag-red-bg);
-  --tag-paid-fg:         var(--c-tag-red-fg);
-  --tag-beginner-bg:     var(--c-tag-green-bg);
-  --tag-beginner-fg:     var(--c-tag-green-fg);
-  --tag-intermediate-bg: var(--c-tag-yellow-bg);
-  --tag-intermediate-fg: var(--c-tag-yellow-fg);
-  --tag-advanced-bg:     var(--c-tag-red-bg);
-  --tag-advanced-fg:     var(--c-tag-red-fg);
+  --tag-essential-bg:    var(--c-tag-warm-bg);
+  --tag-essential-fg:    var(--c-tag-warm-fg);
+  --tag-philosophy-bg:   var(--c-tag-neutral-bg);
+  --tag-philosophy-fg:   var(--c-tag-neutral-fg);
+  --tag-economics-bg:    var(--c-tag-neutral-bg);
+  --tag-economics-fg:    var(--c-tag-neutral-fg);
+  --tag-technical-bg:    var(--c-tag-neutral-bg);
+  --tag-technical-fg:    var(--c-tag-neutral-fg);
+  --tag-history-bg:      var(--c-tag-neutral-bg);
+  --tag-history-fg:      var(--c-tag-neutral-fg);
+  --tag-free-bg:         var(--c-tag-neutral-bg);
+  --tag-free-fg:         var(--c-tag-neutral-fg);
+  --tag-freemium-bg:     var(--c-tag-neutral-bg);
+  --tag-freemium-fg:     var(--c-tag-neutral-fg);
+  --tag-paid-bg:         var(--c-tag-neutral-bg);
+  --tag-paid-fg:         var(--c-tag-neutral-fg);
+  --tag-beginner-bg:     var(--c-tag-neutral-bg);
+  --tag-beginner-fg:     var(--c-tag-neutral-fg);
+  --tag-intermediate-bg: var(--c-tag-neutral-bg);
+  --tag-intermediate-fg: var(--c-tag-neutral-fg);
+  --tag-advanced-bg:     var(--c-tag-neutral-bg);
+  --tag-advanced-fg:     var(--c-tag-neutral-fg);
 
   /* ── Typography ─────────────────────────────────────── */
   --font-display: 'Literata', serif;
