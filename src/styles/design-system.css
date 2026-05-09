@@ -49,8 +49,6 @@
      palette tweak only touches design-system.css. */
   --bg-glow-warm:  rgba(200, 145, 58, 0.08);      /* page radial warmth */
   --bg-glow-deep:  rgba(20, 17, 13, 0.55);        /* page radial depth */
-  --hero-grid-v:   rgba(242, 237, 227, 0.08);     /* hero vertical grid */
-  --hero-grid-h:   rgba(242, 237, 227, 0.05);     /* hero horizontal grid */
   --pb-beg:        var(--accent-muted);           /* reading-progress bar gradient */
 
   /* ── Tag base palette ──────────────────────────────────

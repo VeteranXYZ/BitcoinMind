@@ -211,18 +211,7 @@ body > nav {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: var(--sp-11) 0 var(--sp-10);
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, var(--hero-grid-v) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--hero-grid-h) 1px, transparent 1px);
-  background-size: calc(100% / 12) var(--sp-12);
-  pointer-events: none;
-  z-index: 0;
+  padding: var(--sp-10) 0 var(--sp-9);
 }
 .hero .c { position: relative; z-index: 1; }
 
@@ -251,36 +240,25 @@ body > nav {
   background: var(--gold);
   flex-shrink: 0;
 }
+.hero-eye {
+  display: block;
+  color: var(--tx-3);
+  margin-bottom: var(--sp-5);
+}
+.hero-eye::before {
+  content: none;
+}
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 8vw, 5.5rem);
+  font-size: clamp(3rem, 7vw, 5rem);
   font-weight: var(--fw-bold);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  line-height: 1;
+  letter-spacing: -0.035em;
   white-space: normal;
+  margin-bottom: var(--sp-6);
 }
 .hero-title-bitcoin { color: var(--tx); }
 .hero-title-mind { color: var(--gold); }
-
-.hero-rule {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-5);
-  margin: var(--sp-8) 0;
-}
-.hero-rule::before, .hero-rule::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--bdr);
-}
-.hero-rule-dot {
-  width: 5px;
-  height: 5px;
-  background: var(--gold);
-  border-radius: 50%;
-  flex-shrink: 0;
-}
 .hero-quote {
   font-family: var(--font-body);
   font-size: var(--fz-quote);
