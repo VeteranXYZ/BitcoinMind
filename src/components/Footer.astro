@@ -1,13 +1,58 @@
 ---
 import { SITE } from '@/lib/seo';
+
+const footerGroups = [
+  {
+    label: 'Core',
+    items: [
+      { href: '/primer', label: 'Primer' },
+      { href: '/library', label: 'Library' },
+      { href: '/texts', label: 'Texts' },
+      { href: '/toolkit', label: 'Toolkit' },
+      { href: '/rabbit-holes', label: 'Paths' },
+    ],
+  },
+  {
+    label: 'Deep Dives',
+    items: [
+      { href: '/frames', label: 'Frames' },
+      { href: '/timeline', label: 'Timeline' },
+      { href: '/glossary', label: 'Glossary' },
+      { href: '/debates', label: 'Objections' },
+    ],
+  },
+  {
+    label: 'Hiei',
+    items: [
+      { href: '/notes', label: 'Notes' },
+      { href: '/questions', label: 'Questions' },
+      { href: '/stack', label: 'Stack' },
+      { href: '/about', label: 'About' },
+    ],
+  },
+];
 ---
 <footer>
   <div class="ft-in">
-    <span class="ft-copy">
-      <span class="ft-seg">© {SITE.foundedYear}–{SITE.currentYear} BitcoinMind.com</span>
-      <span class="ft-built">Built with Claude & ChatGPT</span>
-      <span class="ft-powered">Powered by Hiei</span>
-    </span>
-    <span class="ft-upd">Last updated: {SITE.lastUpdated}</span>
+    <div class="ft-map" aria-label="Footer sitemap">
+      {footerGroups.map((group) => (
+        <div class="ft-map-group">
+          <div class="ft-map-label">{group.label}</div>
+          <div class="ft-map-links">
+            {group.items.map((item) => (
+              <a href={item.href}>{item.label}</a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">
+        <span class="ft-seg">© {SITE.foundedYear}–{SITE.currentYear} BitcoinMind.com</span>
+        <span class="ft-built">Built with Claude & ChatGPT</span>
+        <span class="ft-powered">Powered by Hiei</span>
+      </span>
+      <span class="ft-upd">Last updated: {SITE.lastUpdated}</span>
+    </div>
   </div>
 </footer>

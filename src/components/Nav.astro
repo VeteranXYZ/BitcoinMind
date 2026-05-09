@@ -7,6 +7,27 @@ const navItems = [
   { href: '/rabbit-holes', label: 'Paths', match: ['/rabbit-holes'] },
 ];
 
+const exploreGroups = [
+  {
+    label: 'Deep Dives',
+    items: [
+      { href: '/frames', label: 'Frames', desc: 'Original lenses for understanding money.', match: ['/frames', '/frames/1', '/frames/2'] },
+      { href: '/timeline', label: 'Timeline', desc: 'Bitcoin history and personal milestones.', match: ['/timeline'] },
+      { href: '/glossary', label: 'Glossary', desc: 'Conceptual anchors, not dictionary entries.', match: ['/glossary'] },
+      { href: '/debates', label: 'Objections', desc: 'Strong arguments answered carefully.', match: ['/debates'] },
+    ],
+  },
+  {
+    label: 'Hiei',
+    items: [
+      { href: '/notes', label: 'Notes', desc: 'Personal writing and archive notes.', match: ['/notes'] },
+      { href: '/questions', label: 'Questions', desc: 'Reader questions and serious answers.', match: ['/questions'] },
+      { href: '/stack', label: 'Stack', desc: 'How I think about holding Bitcoin.', match: ['/stack'] },
+      { href: '/about', label: 'About', desc: 'The story and curation principles.', match: ['/about'] },
+    ],
+  },
+];
+
 /* ── Mobile menu: grouped sections ── */
 const mmGroups = [
   {
@@ -42,6 +63,7 @@ const mmGroups = [
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (m: string[]) => m.includes(path);
+const exploreActive = exploreGroups.some((group) => group.items.some((item) => isActive(item.match)));
 
 /* flat counter for staggered animation delay */
 let mmIdx = 0;
@@ -53,6 +75,33 @@ let mmIdx = 0;
       {navItems.map((n) => (
         <a class={`nl ${isActive(n.match) ? 'on' : ''}`} href={n.href}>{n.label}</a>
       ))}
+      <div class="nav-explore" data-explore-root>
+        <button
+          class={`nl nav-explore-btn ${exploreActive ? 'on' : ''}`}
+          type="button"
+          data-explore-button
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="explore-menu"
+        >
+          Explore
+        </button>
+        <div id="explore-menu" class="explore-menu" data-explore-menu hidden>
+          {exploreGroups.map((group) => (
+            <div class="explore-group">
+              <div class="explore-group-label">{group.label}</div>
+              <div class="explore-group-list">
+                {group.items.map((item) => (
+                  <a class={`explore-item ${isActive(item.match) ? 'explore-item--on' : ''}`} href={item.href} data-explore-item>
+                    <span class="explore-item-title">{item.label}</span>
+                    <span class="explore-item-desc">{item.desc}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
     <button
       class="nav-menu-btn"
