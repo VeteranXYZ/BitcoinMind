@@ -61,20 +61,16 @@ const websiteLd = {
   jsonLd={websiteLd}
 >
   <div class="page">
-    <div class="hero">
-      <div class="c">
-        <div class="hero-eye">bitcoinmind.com</div>
-        <h1 class="hero-title">
-          <span class="hero-title-bitcoin">Bitcoin</span><span class="hero-title-mind">Mind</span>
-        </h1>
-        <p class="hero-quote">A personal map for studying Bitcoin as money, protocol, and sovereignty.</p>
-        <p class="hero-by">A public record by {SITE.author} · est. 2017</p>
-        <TodaysPick client:only="preact" />
-        <PulsePlus client:idle />
-      </div>
-    </div>
-
     <div class="c">
+      <div class="ph">
+        <div class="ph-eye">bitcoinmind.com</div>
+        <h1 class="ph-title">Bitcoin<em>Mind</em></h1>
+        <p class="ph-desc">A personal map for studying Bitcoin as money, protocol, and sovereignty.</p>
+      </div>
+
+      <TodaysPick client:only="preact" />
+      <PulsePlus client:idle />
+
       <div class="section home-doors-section">
         <div class="home-doors">
           {primaryDoors.map((door) => (
@@ -187,7 +183,7 @@ const websiteLd = {
 
 <style>
   .home-doors-section {
-    padding-top: var(--sp-10);
+    padding-top: 0;
     padding-bottom: var(--sp-10);
   }
 
@@ -391,9 +387,11 @@ const websiteLd = {
     .home-preview-grid {
       grid-template-columns: 1fr;
     }
+
     .home-door-cta {
       width: 100%;
     }
+
     .hiei-links {
       grid-template-columns: 1fr;
     }
