@@ -157,6 +157,8 @@ const categories = [
   }
 
   .gl-entry {
+    display: flex;
+    flex-direction: column;
     padding: var(--sp-5);
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
@@ -183,13 +185,14 @@ const categories = [
     font-size: var(--fz-md);
     line-height: var(--lh-loose);
     color: var(--tx-2);
+    margin-bottom: var(--sp-4);
   }
 
   .gl-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--sp-4);
-    margin-top: var(--sp-3);
+    gap: var(--sp-2);
+    margin-top: auto;
   }
 
   @media (max-width: 640px) {

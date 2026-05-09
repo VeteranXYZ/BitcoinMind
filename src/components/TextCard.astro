@@ -9,7 +9,9 @@ const { item, preview = false } = Astro.props;
 const visibleTags = item.tags.slice(0, 3);
 const getTypeLabel = (text: TextItem) => {
   const title = text.title.toLowerCase();
-  if (title.includes('whitepaper')) return 'Paper';
+  if (text.resourceType === 'paper' || text.tags.includes('Whitepaper')) return 'Paper';
+  if (text.resourceType === 'series') return 'Series';
+  if (text.resourceType === 'reference') return 'Reference';
   if (title.includes('documentation') || title.includes('running a full node')) return 'Documentation';
   if (title.includes('gradually, then suddenly')) return 'Series';
   if (title.includes('questions') || title.includes('faq')) return 'Q&A';
@@ -18,7 +20,7 @@ const getTypeLabel = (text: TextItem) => {
 };
 const typeLabel = getTypeLabel(item);
 ---
-<a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
+<article class="card">
   <div class="card-layer card-layer--row">
     <span>{item.layer}</span>
     {item.year > 0 && <span>{item.year}</span>}
@@ -29,18 +31,20 @@ const typeLabel = getTypeLabel(item);
   <div class="card-desc card-desc--top">{item.shortDescription}</div>
   <div class="card-tags">
     <Tag label={typeLabel} />
-    {visibleTags.map((t) => <Tag label={t} />)}
-    <Tag label={item.difficulty} />
+    {visibleTags.filter((t) => t !== typeLabel).slice(0, 3).map((t) => <Tag label={t} />)}
   </div>
   {!preview && (
-    <div class="card-review">
-      <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
-      <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
-      <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
-    </div>
+    <details class="card-details">
+      <summary>Details</summary>
+      <div class="card-review">
+        <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
+        <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
+        <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
+      </div>
+    </details>
   )}
   <div class="card-ft">
-    <span class="card-meta">{item.timeCommitment}</span>
-    <span class="card-cta">Read →</span>
+    <span class="card-meta">{item.difficulty} · {item.timeCommitment}</span>
+    <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Read →</a>
   </div>
-</a>
+</article>

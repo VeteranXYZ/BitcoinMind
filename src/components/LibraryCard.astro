@@ -8,7 +8,7 @@ interface Props {
 const { item, preview = false } = Astro.props;
 const visibleTags = item.tags.slice(0, 3);
 ---
-<a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
+<article class="card">
   <div class="card-layer">{item.layerLabel}</div>
   <div class="card-role">{item.learningRole}</div>
   <div class="card-title">{item.title}</div>
@@ -16,17 +16,19 @@ const visibleTags = item.tags.slice(0, 3);
   <div class="card-desc">{item.shortDescription}</div>
   <div class="card-tags">
     {visibleTags.map((t) => <Tag label={t} />)}
-    <Tag label={item.difficulty} />
   </div>
   {!preview && (
-    <div class="card-review">
-      <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
-      <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
-      <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
-    </div>
+    <details class="card-details">
+      <summary>Details</summary>
+      <div class="card-review">
+        <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
+        <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
+        <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
+      </div>
+    </details>
   )}
   <div class="card-ft">
     <span class="card-meta">{item.difficulty}</span>
-    <span class="card-cta">Read →</span>
+    <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Read →</a>
   </div>
-</a>
+</article>

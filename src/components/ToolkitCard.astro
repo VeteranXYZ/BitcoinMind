@@ -30,7 +30,7 @@ const toolkitCategories = (tool: ToolkitItem) => {
 };
 const visibleCategories = toolkitCategories(item);
 ---
-<a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
+<article class="card">
   <div class="card-layer">{item.layer}</div>
   <div class="card-role">{item.learningRole}</div>
   <div class="card-title">{item.title}</div>
@@ -39,14 +39,17 @@ const visibleCategories = toolkitCategories(item);
     {visibleCategories.map((t) => <Tag label={t} />)}
   </div>
   {!preview && (
-    <div class="card-review">
-      <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
-      <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
-      <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
-    </div>
+    <details class="card-details">
+      <summary>Details</summary>
+      <div class="card-review">
+        <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
+        <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
+        <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
+      </div>
+    </details>
   )}
   <div class="card-ft">
     <span class="card-meta">{item.difficulty} · {item.cost}</span>
-    <span class="card-cta">Visit →</span>
+    <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Visit →</a>
   </div>
-</a>
+</article>

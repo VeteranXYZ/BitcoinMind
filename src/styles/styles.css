@@ -291,7 +291,7 @@ nav {
   border: 1px solid var(--bdr);
   border-radius: var(--radius);
   padding: var(--sp-6);
-  cursor: pointer;
+  cursor: default;
   transition: transform var(--ease-card), border-color var(--ease-card), box-shadow var(--ease-card);
   display: flex;
   flex-direction: column;
@@ -304,6 +304,7 @@ nav {
   content: '';
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background: radial-gradient(ellipse at top left, var(--gold-dim) 0%, transparent 62%);
   opacity: 0;
   transition: opacity var(--ease-slow);
@@ -362,24 +363,39 @@ nav {
 }
 .card-meta { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--tx-3); letter-spacing: var(--ls-3); }
 .card-cta  { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-5); text-transform: uppercase; }
-.card-review {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  margin-top: 0;
-  padding-top: 0;
-  border-top: 1px solid transparent;
-  transform: translateY(-4px);
-  transition: max-height var(--ease-slow), opacity var(--ease-card), margin-top var(--ease-card), padding-top var(--ease-card), transform var(--ease-card), border-color var(--ease-card);
+.card-cta:hover { color: var(--gold-hi); }
+.card-details {
+  margin-top: var(--sp-1);
+  margin-bottom: var(--sp-4);
 }
-.card:hover .card-review,
-.card:focus-within .card-review {
-  max-height: 420px;
-  opacity: 1;
+.card-details summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--fz-3xs);
+  color: var(--tx-3);
+  letter-spacing: var(--ls-5);
+  text-transform: uppercase;
+  transition: color var(--ease-fast);
+}
+.card-details summary::-webkit-details-marker { display: none; }
+.card-details summary::after {
+  content: '+';
+  color: var(--gold);
+}
+.card-details[open] summary {
+  color: var(--gold);
+}
+.card-details[open] summary::after {
+  content: '-';
+}
+.card-review {
   margin-top: var(--sp-3);
   padding-top: var(--sp-3);
-  border-top-color: var(--bdr);
-  transform: translateY(0);
+  border-top: 1px solid var(--bdr);
 }
 .card-ri {
   font-size: var(--fz-sm);
@@ -833,7 +849,6 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
 }
 @media (max-width: 640px) {
   .grid-auto { grid-template-columns: 1fr; }
-  .card-review { display: none; }
 
   /* Compact page headers on small screens — keep rhythm but reclaim ~30px. */
   .hero { padding: var(--sp-9) 0 var(--sp-8); }

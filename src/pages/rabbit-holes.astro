@@ -252,10 +252,10 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
 
   .rh-step {
     display: grid;
-    grid-template-columns: 32px minmax(0, 1fr) 132px;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
     align-items: center;
     gap: var(--sp-4);
-    padding: var(--sp-3) var(--sp-2);
+    padding: var(--sp-4) var(--sp-3);
     border-bottom: 1px solid var(--bdr);
     transition: background var(--ease-fast);
     cursor: pointer;
@@ -272,14 +272,19 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
     color: var(--gold);
     letter-spacing: var(--ls-5);
     width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius-sm);
     text-align: center;
   }
 
   .rh-step-body {
     display: flex;
-    align-items: baseline;
-    gap: var(--sp-3);
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
     min-width: 0;
   }
 
@@ -302,24 +307,27 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: var(--sp-3);
+    gap: var(--sp-2);
+    flex-wrap: wrap;
   }
 
-  .rh-step-type {
-    font-family: var(--font-mono);
-    font-size: var(--fz-3xs);
-    color: var(--tx-3);
-    letter-spacing: var(--ls-5);
-    text-transform: uppercase;
-  }
-
+  .rh-step-type,
   .rh-step-time {
     font-family: var(--font-mono);
     font-size: var(--fz-3xs);
+    letter-spacing: var(--ls-5);
+    text-transform: uppercase;
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius-sm);
+    padding: 3px var(--sp-2);
+  }
+
+  .rh-step-type {
     color: var(--tx-3);
-    letter-spacing: var(--ls-3);
-    min-width: var(--sp-9);
-    text-align: right;
+  }
+
+  .rh-step-time {
+    color: var(--gold);
   }
 
   @media (max-width: 1024px) {
