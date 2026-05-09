@@ -138,8 +138,9 @@ import Base from '@/layouts/Base.astro';
   }
 
   .stk-disclaimer-lbl {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
     color: var(--tx-3);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
@@ -154,14 +155,14 @@ import Base from '@/layouts/Base.astro';
   }
 
   .stk-kit {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-xs);
     color: var(--tx-2);
     padding: var(--sp-2) 0;
     border-bottom: 1px solid var(--bdr);
     display: flex;
     justify-content: space-between;
-    letter-spacing: var(--ls-3);
+    letter-spacing: 0;
     transition: color var(--ease-fast);
   }
   .stk-kit:last-child { border-bottom: none; }

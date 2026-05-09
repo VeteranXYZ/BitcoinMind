@@ -88,7 +88,8 @@ const websiteLd = {
               <div class="home-door-actions">
                 {door.ctas.map((cta) => (
                   <a class={`home-door-cta home-door-cta--${cta.variant}`} href={cta.href}>
-                    {cta.label} →
+                    <span>{cta.label}</span>
+                    <span class="home-door-cta-arrow" aria-hidden="true">→</span>
                   </a>
                 ))}
               </div>
@@ -216,8 +217,9 @@ const websiteLd = {
 
   .home-door-label,
   .home-door-meta {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
     letter-spacing: var(--ls-7);
     text-transform: uppercase;
   }
@@ -228,7 +230,7 @@ const websiteLd = {
   }
 
   .home-door-title {
-    font-family: var(--font-serif);
+    font-family: var(--font-body);
     font-size: var(--fz-2xl);
     line-height: var(--lh-snug);
     font-weight: var(--fw-bold);
@@ -250,53 +252,52 @@ const websiteLd = {
   }
 
   .home-door-actions {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     gap: var(--sp-2);
     margin-top: var(--sp-5);
   }
 
   .home-door-cta {
-    min-height: 36px;
+    min-height: 42px;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    padding: var(--sp-2) var(--sp-3);
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
     border: 1px solid var(--bdr);
     border-radius: var(--radius-sm);
-    font-family: var(--font-mono);
+    background: color-mix(in oklch, var(--bg-deep) 72%, transparent);
+    color: var(--tx-2);
+    font-family: var(--font-body);
     font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
     letter-spacing: var(--ls-5);
     line-height: 1;
     text-transform: uppercase;
-    transition: color var(--ease-fast), border-color var(--ease-fast), background var(--ease-fast);
+    transition: color var(--ease-fast), border-color var(--ease-fast), background var(--ease-fast), transform var(--ease-fast);
   }
 
   .home-door-cta:focus-visible {
-    outline: 1px solid var(--bdr-2);
+    outline: 1px solid var(--gold);
     outline-offset: 3px;
   }
 
-  .home-door-cta--primary {
-    color: var(--bg);
-    border-color: var(--gold-hi);
-    background: var(--gold-hi);
-  }
-
-  .home-door-cta--primary:hover {
+  .home-door-cta:hover {
+    color: var(--tx);
     border-color: var(--gold);
-    background: var(--gold);
+    background: color-mix(in oklch, var(--surf-2) 58%, transparent);
+    transform: translateY(-1px);
   }
 
-  .home-door-cta--secondary {
+  .home-door-cta-arrow {
     color: var(--gold);
-    background: transparent;
+    transition: color var(--ease-fast), transform var(--ease-fast);
   }
 
-  .home-door-cta--secondary:hover {
+  .home-door-cta:hover .home-door-cta-arrow {
     color: var(--gold-hi);
-    border-color: var(--gold);
-    background: var(--gold-dim);
+    transform: translateX(2px);
   }
 
   .home-preview-section {
@@ -335,7 +336,7 @@ const websiteLd = {
   }
 
   .hiei-link-title {
-    font-family: var(--font-serif);
+    font-family: var(--font-body);
     font-size: var(--fz-lg);
     font-weight: var(--fw-semi);
     letter-spacing: var(--ls-normal);
@@ -352,8 +353,9 @@ const websiteLd = {
   }
 
   .hiei-link-cta {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
     color: var(--gold);
     letter-spacing: var(--ls-5);
     text-transform: uppercase;
@@ -365,7 +367,7 @@ const websiteLd = {
       grid-template-columns: 1fr;
     }
     .home-door-actions {
-      flex-direction: column;
+      grid-template-columns: 1fr;
     }
     .home-door-cta {
       width: 100%;

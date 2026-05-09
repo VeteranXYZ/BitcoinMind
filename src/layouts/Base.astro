@@ -4,30 +4,23 @@ import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
 
-// Critical fonts preloaded in <head> below. These are visible above the fold on
-// every page (hero title + page-title <em> italics in gold). Preloading races
-// them with the HTML download instead of waiting for CSS parsing — kills FOUT.
-import playfair900Normal from '@fontsource/playfair-display/files/playfair-display-latin-900-normal.woff2?url';
-import playfair900Italic from '@fontsource/playfair-display/files/playfair-display-latin-900-italic.woff2?url';
-import lora400Normal from '@fontsource/lora/files/lora-latin-400-normal.woff2?url';
+// Critical fonts preloaded in <head> below. The first paint uses the same
+// three-family system as the rest of the site: display, body/UI, and mono.
+import literata700Normal from '@fontsource/literata/files/literata-latin-700-normal.woff2?url';
+import inter400Normal from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+import geistMono400Normal from '@fontsource/geist-mono/files/geist-mono-latin-400-normal.woff2?url';
 
-// Latin subset only — site is English. Skips cyrillic / vietnamese / latin-ext
-// font files that the browser would never use, cutting dist font count ~50%.
-import '@fontsource/playfair-display/latin-400.css';
-import '@fontsource/playfair-display/latin-600.css';
-import '@fontsource/playfair-display/latin-700.css';
-import '@fontsource/playfair-display/latin-900.css';
-import '@fontsource/playfair-display/latin-400-italic.css';
-import '@fontsource/playfair-display/latin-600-italic.css';
-import '@fontsource/playfair-display/latin-700-italic.css';
-import '@fontsource/playfair-display/latin-900-italic.css';
-import '@fontsource/lora/latin-400.css';
-import '@fontsource/lora/latin-500.css';
-import '@fontsource/lora/latin-400-italic.css';
-import '@fontsource/lora/latin-500-italic.css';
-import '@fontsource/dm-mono/latin-300.css';
-import '@fontsource/dm-mono/latin-400.css';
-import '@fontsource/dm-mono/latin-500.css';
+// Latin subset only — site is English. Keep weights deliberately narrow.
+import '@fontsource/literata/latin-600.css';
+import '@fontsource/literata/latin-700.css';
+import '@fontsource/literata/latin-600-italic.css';
+import '@fontsource/literata/latin-700-italic.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/inter/latin-700.css';
+import '@fontsource/geist-mono/latin-400.css';
+import '@fontsource/geist-mono/latin-500.css';
 
 import '@/styles/design-system.css';
 import '@/styles/styles.css';
@@ -65,9 +58,9 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   <link rel="canonical" href={url} />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-  <link rel="preload" href={playfair900Normal} as="font" type="font/woff2" crossorigin="anonymous" />
-  <link rel="preload" href={playfair900Italic} as="font" type="font/woff2" crossorigin="anonymous" />
-  <link rel="preload" href={lora400Normal} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={literata700Normal} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={inter400Normal} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={geistMono400Normal} as="font" type="font/woff2" crossorigin="anonymous" />
 
   <meta property="og:type" content={ogType} />
   <meta property="og:title" content={pageTitle} />
@@ -201,47 +194,6 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   ::view-transition-new(root) {
     animation: none !important;
     mix-blend-mode: normal !important;
-  }
-
-  /* Metric-aligned fallbacks. Numbers tuned to match each web font so that
-     Georgia (and its italic variant, accessed via font-style) occupies the
-     same vertical space — eliminates the layout shift the moment the real
-     font arrives. */
-  @font-face {
-    font-family: 'Playfair Fallback';
-    font-style: normal;
-    src: local('Georgia');
-    size-adjust: 116%;
-    ascent-override: 86%;
-    descent-override: 21%;
-    line-gap-override: 0%;
-  }
-  @font-face {
-    font-family: 'Playfair Fallback';
-    font-style: italic;
-    src: local('Georgia');
-    size-adjust: 116%;
-    ascent-override: 86%;
-    descent-override: 21%;
-    line-gap-override: 0%;
-  }
-  @font-face {
-    font-family: 'Lora Fallback';
-    font-style: normal;
-    src: local('Georgia');
-    size-adjust: 105%;
-    ascent-override: 91%;
-    descent-override: 23%;
-    line-gap-override: 0%;
-  }
-  @font-face {
-    font-family: 'Lora Fallback';
-    font-style: italic;
-    src: local('Georgia');
-    size-adjust: 105%;
-    ascent-override: 91%;
-    descent-override: 23%;
-    line-gap-override: 0%;
   }
 
   .grain {

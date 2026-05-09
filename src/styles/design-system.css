@@ -74,32 +74,41 @@
   --tag-advanced-fg:     var(--c-tag-red-fg);
 
   /* ── Typography ─────────────────────────────────────── */
-  /* Playfair Fallback / Lora Fallback are metric-aligned local fonts
-     declared in Base.astro — they prevent layout shift while the web
-     font loads. */
-  --font-serif: 'Playfair Display', 'Playfair Fallback', Georgia, serif;
-  --font-body:  'Lora', 'Lora Fallback', Georgia, serif;
-  --font-mono:  'DM Mono', 'Courier New', monospace;
+  --font-display: 'Literata', serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'Geist Mono', monospace;
+  --font-serif:   var(--font-display); /* compatibility alias for display roles */
 
-  /* Display sizes — fluid clamps for hero / section / step / quote. */
-  --fz-hero:    clamp(72px, 11vw, 132px);
-  --fz-page:    clamp(48px, 8vw,  96px);
-  --fz-section: clamp(28px, 4vw,  44px);
-  --fz-step:    clamp(21px, 2.8vw,28px);
-  --fz-note:    clamp(24px, 4vw,  38px);
-  --fz-quote:   clamp(16px, 2vw,  20px);
+  /* Display sizes — restrained, archival, and page-consistent. */
+  --fz-hero:    clamp(44px, 6.4vw, 76px);
+  --fz-page:    clamp(36px, 5.2vw, 56px);
+  --fz-section: clamp(26px, 3.2vw, 36px);
+  --fz-step:    clamp(22px, 2.3vw, 28px);
+  --fz-note:    clamp(28px, 3.8vw, 40px);
+  --fz-quote:   clamp(17px, 1.7vw, 21px);
 
-  /* Fixed sizes — t-shirt scale, was 18 near-duplicates with 0.5px steps,
-     now 9 distinct anchors. */
-  --fz-3xs:  9px;     /* tiny mono captions */
-  --fz-xs:   10px;    /* mono labels, eyebrow */
-  --fz-sm:   12px;    /* small UI text, search box */
-  --fz-base: 13.5px;  /* baseline body small */
-  --fz-md:   15px;    /* default body */
-  --fz-lg:   17px;    /* card titles */
-  --fz-xl:   21px;    /* prominent body / pulled-quote */
-  --fz-2xl:  24px;    /* sub-title */
-  --fz-3xl:  28px;    /* compact title */
+  /* Fixed type scale. */
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-lg:   18px;
+  --text-xl:   20px;
+  --text-2xl:  24px;
+  --text-3xl:  32px;
+  --text-4xl:  40px;
+  --text-5xl:  56px;
+  --text-6xl:  72px;
+
+  /* Compatibility aliases used by existing components. */
+  --fz-3xs:  var(--text-xs);
+  --fz-xs:   var(--text-xs);
+  --fz-sm:   var(--text-sm);
+  --fz-base: var(--text-base);
+  --fz-md:   var(--text-base);
+  --fz-lg:   var(--text-xl);
+  --fz-xl:   var(--text-2xl);
+  --fz-2xl:  var(--text-2xl);
+  --fz-3xl:  var(--text-3xl);
 
   /* Font weights */
   --fw-normal: 400;
@@ -108,26 +117,26 @@
   --fw-bold:   700;
   --fw-black:  900;
 
-  /* Line heights — was 10 (with 1.8/1.9/1.92 visually identical), now 8. */
-  --lh-hero:    0.88;
-  --lh-title:   1.05;
-  --lh-snug:    1.18;
-  --lh-card:    1.22;
+  /* Line heights. */
+  --lh-hero:    0.98;
+  --lh-title:   1.12;
+  --lh-snug:    1.22;
+  --lh-card:    1.48;
   --lh-normal:  1.6;
   --lh-relaxed: 1.68;
-  --lh-base:    1.78;
-  --lh-loose:   1.85;
+  --lh-base:    1.7;
+  --lh-loose:   1.75;
 
   /* Letter spacing — semantic for tight, anchored decimals for wide.
      Was 18 tokens (mixed semantic + numeric), now 8. */
-  --ls-tighter: -0.03em;  /* huge display titles */
-  --ls-snug:    -0.02em;  /* large body titles */
-  --ls-normal:  -0.01em;  /* card titles */
-  --ls-3:        0.05em;  /* small mono UI text */
-  --ls-5:        0.10em;  /* mono captions */
-  --ls-7:        0.14em;  /* spaced uppercase mono */
-  --ls-9:        0.20em;  /* labels / kicker */
-  --ls-11:       0.24em;  /* eyebrow / dense uppercase */
+  --ls-tighter: -0.02em;  /* large display titles */
+  --ls-snug:    -0.01em;  /* compact display headings */
+  --ls-normal:   0;       /* body/card text */
+  --ls-3:        0.04em;  /* metadata */
+  --ls-5:        0.06em;  /* labels */
+  --ls-7:        0.08em;  /* uppercase labels */
+  --ls-9:        0.08em;  /* dense labels */
+  --ls-11:       0.08em;  /* eyebrow labels */
 
   /* ── Spacing scale ──────────────────────────────────── */
   /* T-shirt scale — was 26 tokens (sp-1..sp-26 with 2px steps) folded
