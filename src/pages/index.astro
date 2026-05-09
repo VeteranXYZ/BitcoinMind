@@ -16,25 +16,32 @@ const previewToolkit = TOOLKIT.slice(0, 2);
 const textCount = TEXTS.length;
 const primaryDoors = [
   {
-    label: 'Start',
-    title: 'Primer',
-    body: 'A five-step path for approaching Bitcoin seriously before branching into the larger map.',
-    href: '/primer',
-    meta: '5 steps',
+    title: 'Start',
+    subtitle: 'The BitcoinMind Primer',
+    body: 'Five steps for approaching Bitcoin seriously.',
+    ctas: [
+      { href: '/primer', label: 'Start the Primer', variant: 'primary' },
+    ],
   },
   {
-    label: 'Study',
-    title: 'Library + Texts',
+    title: 'Study',
+    subtitle: 'Library + Texts',
     body: 'Books and primary writings arranged for monetary, technical, and sovereignty study.',
-    href: '/library',
     meta: `${LIBRARY.length} library items · ${textCount} texts`,
+    ctas: [
+      { href: '/library', label: 'Open Library', variant: 'primary' },
+      { href: '/texts', label: 'Read Texts', variant: 'secondary' },
+    ],
   },
   {
-    label: 'Practice',
-    title: 'Toolkit + Paths',
+    title: 'Practice',
+    subtitle: 'Toolkit + Paths',
     body: 'Tools and learning routes for observation, verification, custody, and deeper study.',
-    href: '/toolkit',
     meta: `${TOOLKIT.length} tools · 5 paths`,
+    ctas: [
+      { href: '/toolkit', label: 'Open Toolkit', variant: 'primary' },
+      { href: '/rabbit-holes', label: 'Follow Paths', variant: 'secondary' },
+    ],
   },
 ];
 
@@ -73,12 +80,19 @@ const websiteLd = {
       <div class="section home-doors-section">
         <div class="home-doors">
           {primaryDoors.map((door) => (
-            <a class="home-door" href={door.href}>
-              <span class="home-door-label">{door.label}</span>
-              <span class="home-door-title">{door.title}</span>
+            <article class="home-door">
+              <span class="home-door-label">{door.title}</span>
+              <span class="home-door-title">{door.subtitle}</span>
               <span class="home-door-body">{door.body}</span>
-              <span class="home-door-meta">{door.meta}</span>
-            </a>
+              {door.meta && <span class="home-door-meta">{door.meta}</span>}
+              <div class="home-door-actions">
+                {door.ctas.map((cta) => (
+                  <a class={`home-door-cta home-door-cta--${cta.variant}`} href={cta.href}>
+                    {cta.label} →
+                  </a>
+                ))}
+              </div>
+            </article>
           ))}
         </div>
       </div>
@@ -190,11 +204,11 @@ const websiteLd = {
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
     background: var(--surf);
-    text-decoration: none;
     color: inherit;
     transition: border-color var(--ease-card), background var(--ease-card);
   }
 
+  .home-door:focus-within,
   .home-door:hover {
     border-color: var(--gold);
     background: var(--surf-2);
@@ -233,6 +247,56 @@ const websiteLd = {
   .home-door-meta {
     color: var(--tx-3);
     margin-top: var(--sp-5);
+  }
+
+  .home-door-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-top: var(--sp-5);
+  }
+
+  .home-door-cta {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-2) var(--sp-3);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    letter-spacing: var(--ls-5);
+    line-height: 1;
+    text-transform: uppercase;
+    transition: color var(--ease-fast), border-color var(--ease-fast), background var(--ease-fast);
+  }
+
+  .home-door-cta:focus-visible {
+    outline: 1px solid var(--bdr-2);
+    outline-offset: 3px;
+  }
+
+  .home-door-cta--primary {
+    color: var(--bg);
+    border-color: var(--gold-hi);
+    background: var(--gold-hi);
+  }
+
+  .home-door-cta--primary:hover {
+    border-color: var(--gold);
+    background: var(--gold);
+  }
+
+  .home-door-cta--secondary {
+    color: var(--gold);
+    background: transparent;
+  }
+
+  .home-door-cta--secondary:hover {
+    color: var(--gold-hi);
+    border-color: var(--gold);
+    background: var(--gold-dim);
   }
 
   .home-preview-section {
@@ -299,6 +363,12 @@ const websiteLd = {
     .home-doors,
     .home-preview-grid {
       grid-template-columns: 1fr;
+    }
+    .home-door-actions {
+      flex-direction: column;
+    }
+    .home-door-cta {
+      width: 100%;
     }
     .hiei-links {
       grid-template-columns: 1fr;
