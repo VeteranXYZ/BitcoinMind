@@ -20,7 +20,7 @@ const primaryDoors = [
     subtitle: 'The Source Primer',
     body: 'Five steps from the original paper to money, sovereignty, and a personal 2011 note.',
     ctas: [
-      { href: '/primer', label: 'Start the Primer', variant: 'primary' },
+      { href: '/primer', label: 'Primer', action: 'Begin' },
     ],
   },
   {
@@ -29,8 +29,8 @@ const primaryDoors = [
     body: 'Books and writings arranged for monetary, technical, and sovereignty study.',
     meta: `${LIBRARY.length} library items · ${textCount} texts`,
     ctas: [
-      { href: '/library', label: 'Library', body: 'Books for building the mental model.', meta: `${LIBRARY.length} items`, action: 'Open', variant: 'primary' },
-      { href: '/texts', label: 'Texts', body: 'Canonical writings and references.', meta: `${textCount} texts`, action: 'Read', variant: 'secondary' },
+      { href: '/library', label: 'Library', meta: `${LIBRARY.length} items`, action: 'Browse' },
+      { href: '/texts', label: 'Texts', meta: `${textCount} texts`, action: 'Read' },
     ],
   },
   {
@@ -39,8 +39,8 @@ const primaryDoors = [
     body: 'Tools and learning routes for observation, verification, custody, and deeper study.',
     meta: `${TOOLKIT.length} tools · 5 paths`,
     ctas: [
-      { href: '/toolkit', label: 'Toolkit', body: 'Tools for observation, verification, custody, and research.', meta: `${TOOLKIT.length} tools`, action: 'Open', variant: 'primary' },
-      { href: '/rabbit-holes', label: 'Paths', body: 'Guided routes through the material.', meta: '5 paths', action: 'Follow', variant: 'secondary' },
+      { href: '/toolkit', label: 'Toolkit', meta: `${TOOLKIT.length} tools`, action: 'Use' },
+      { href: '/rabbit-holes', label: 'Paths', meta: '5 paths', action: 'Follow' },
     ],
   },
 ];
@@ -67,7 +67,6 @@ const websiteLd = {
         <h1 class="hero-title">
           <span class="hero-title-bitcoin">Bitcoin</span><span class="hero-title-mind">Mind</span>
         </h1>
-        <div class="hero-rule"><div class="hero-rule-dot"></div></div>
         <p class="hero-quote">A personal map for studying Bitcoin as money, protocol, and sovereignty.</p>
         <p class="hero-by">A public record by {SITE.author} · est. 2017</p>
         <TodaysPick client:only="preact" />
@@ -86,13 +85,10 @@ const websiteLd = {
               {door.meta && <span class="home-door-meta">{door.meta}</span>}
               <div class="home-door-actions">
                 {door.ctas.map((cta) => (
-                  <a class={`home-door-cta home-door-cta--${cta.variant}`} href={cta.href}>
-                    <span class="home-door-cta-copy">
-                      <span class="home-door-cta-title">{cta.label}</span>
-                      {'body' in cta && cta.body && <span class="home-door-cta-body">{cta.body}</span>}
-                      {'meta' in cta && cta.meta && <span class="home-door-cta-meta">{cta.meta}</span>}
-                      {'action' in cta && cta.action && <span class="home-door-cta-action">{cta.action}</span>}
-                    </span>
+                  <a class="home-door-cta" href={cta.href} aria-label={`${cta.action} ${cta.label}`}>
+                    <span class="home-door-cta-title">{cta.label}</span>
+                    {'meta' in cta && cta.meta && <span class="home-door-cta-meta">{cta.meta}</span>}
+                    <span class="home-door-cta-action">{cta.action}</span>
                     <span class="home-door-cta-arrow" aria-hidden="true">→</span>
                   </a>
                 ))}
@@ -202,7 +198,7 @@ const websiteLd = {
   }
 
   .home-door {
-    min-height: 220px;
+    min-height: 300px;
     display: flex;
     flex-direction: column;
     padding: var(--sp-6);
@@ -252,76 +248,71 @@ const websiteLd = {
 
   .home-door-meta {
     color: var(--tx-3);
-    margin-top: var(--sp-5);
+    margin-top: var(--sp-4);
   }
 
   .home-door-actions {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-    gap: var(--sp-2);
-    margin-top: var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: var(--sp-6);
+    border-top: 1px solid var(--bdr);
   }
 
   .home-door-cta {
-    min-height: 42px;
+    min-height: 48px;
     display: inline-flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: flex-start;
     gap: var(--sp-3);
-    padding: var(--sp-3) var(--sp-4);
-    border: 1px solid var(--bdr);
-    border-radius: var(--radius-sm);
-    background: var(--bg-deep);
+    padding: var(--sp-3) 0;
+    border: 0;
+    border-bottom: 1px solid var(--bdr);
+    border-radius: 0;
+    background: transparent;
     color: var(--tx-2);
     font-family: var(--font-body);
     font-size: var(--fz-3xs);
     font-weight: var(--fw-semi);
     letter-spacing: var(--ls-5);
-    line-height: 1;
-    text-transform: uppercase;
-    transition: color var(--ease-fast), border-color var(--ease-fast), background var(--ease-fast), transform var(--ease-fast);
-  }
-
-  .home-door-cta-copy {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: var(--sp-2);
-  }
-
-  .home-door-cta-title,
-  .home-door-cta-action {
-    color: var(--tx);
-  }
-
-  .home-door-cta-body {
-    color: var(--tx-2);
-    font-size: var(--fz-xs);
-    font-weight: var(--fw-normal);
     line-height: var(--lh-snug);
-    letter-spacing: 0;
-    text-transform: none;
+    text-transform: uppercase;
+    transition: color var(--ease-fast), border-color var(--ease-fast), background var(--ease-fast);
+  }
+
+  .home-door-cta:last-child {
+    border-bottom: 0;
+  }
+
+  .home-door-cta-title {
+    min-width: 0;
+    flex: 1;
+    color: var(--tx);
   }
 
   .home-door-cta-meta {
     color: var(--tx-3);
     font-size: var(--fz-3xs);
+    flex-shrink: 0;
   }
 
   .home-door-cta-action {
-    margin-top: var(--sp-1);
+    color: var(--tx-2);
+    flex-shrink: 0;
   }
 
   .home-door-cta:focus-visible {
     outline: 1px solid var(--focus-ring);
-    outline-offset: 3px;
+    outline-offset: 4px;
   }
 
   .home-door-cta:hover {
     color: var(--tx);
     border-color: var(--border-accent);
-    background: var(--accent-hover);
-    transform: translateY(-1px);
+  }
+
+  .home-door-cta:hover .home-door-cta-action {
+    color: var(--tx);
   }
 
   .home-door-cta-arrow {
@@ -398,9 +389,6 @@ const websiteLd = {
   @media (max-width: 640px) {
     .home-doors,
     .home-preview-grid {
-      grid-template-columns: 1fr;
-    }
-    .home-door-actions {
       grid-template-columns: 1fr;
     }
     .home-door-cta {
