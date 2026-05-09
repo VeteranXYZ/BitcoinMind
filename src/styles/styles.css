@@ -253,13 +253,13 @@ body > nav {
 }
 .hero-title {
   font-family: var(--font-display);
-  font-size: var(--fz-hero);
+  font-size: clamp(2.75rem, 8vw, 5.5rem);
   font-weight: var(--fw-bold);
-  line-height: var(--lh-hero);
-  letter-spacing: var(--ls-tighter);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  white-space: normal;
 }
-.hero-t1 { display: block; color: var(--tx); }
-.hero-t2 { display: block; color: var(--gold-hi); font-style: italic; }
+.hero-title em { color: var(--gold-hi); font-style: italic; }
 
 .hero-rule {
   display: flex;
@@ -1357,12 +1357,12 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
 
 .mm {
   position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background: var(--bg);
+  inset: 60px 0 0;
+  z-index: 90;
+  background: oklch(0.065 0.016 58 / 0.58);
   display: flex;
-  flex-direction: column;
-  padding: 0 var(--pad);
+  align-items: flex-start;
+  padding: var(--sp-3) var(--page-x-mobile) calc(var(--sp-4) + env(safe-area-inset-bottom));
   animation: mm-in 0.22s ease-out;
   overscroll-behavior: contain;
 }
@@ -1372,38 +1372,18 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   to   { opacity: 1; }
 }
 
-.mm-bar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 60px;
-  flex-shrink: 0;
-}
-
-.mm-close {
-  background: none;
-  border: none;
-  font-family: var(--font-body);
-  font-size: var(--fz-sm);
-  font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-9);
-  color: var(--gold-hi);
-  text-transform: uppercase;
-  /* Match .mm-item right padding so close, items, and footer all align. */
-  padding: var(--sp-2) var(--sp-5);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.mm-close:active { opacity: 0.5; }
-
-.mm-close:focus-visible {
-  outline: 1px solid var(--bdr-2);
-  outline-offset: 4px;
+.mm-panel {
+  width: 100%;
+  max-height: calc(100dvh - 60px - var(--sp-6) - env(safe-area-inset-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: oklch(0.095 0.022 62 / 0.96);
+  border: 1px solid var(--bdr);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 18px 60px oklch(0 0 0 / 0.28);
 }
 
 .mm-list {
-  flex: 1;
   display: flex;
   flex-direction: column;
   /* v2 grew menu to 14 items + 3 group labels + 2 dividers. Densified
@@ -1411,10 +1391,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
      scrolling. overflow-y:auto remains as a fallback for tiny screens. */
   justify-content: flex-start;
   align-items: flex-end;
-  padding: var(--sp-4) 0 var(--sp-3);
+  padding: var(--sp-4);
   gap: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .mm-group-label {
@@ -1424,7 +1402,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   letter-spacing: var(--ls-11);
   text-transform: uppercase;
   text-align: right;
-  padding: var(--sp-1) var(--sp-5) var(--sp-1) var(--sp-2);
+  padding: var(--sp-1) 0 var(--sp-1) var(--sp-2);
   flex-shrink: 0; /* don't compress in scrollable column */
   opacity: 0;
   animation: mm-item-in 0.32s ease-out forwards;
@@ -1437,7 +1415,6 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   background: var(--bdr);
   margin: var(--sp-2) 0;
   align-self: flex-end;
-  margin-right: var(--sp-5);
   flex-shrink: 0; /* preserve 1px height under flex pressure */
   opacity: 0;
   animation: mm-item-in 0.32s ease-out forwards;
@@ -1457,7 +1434,11 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   /* Tight vertical padding (sp-2 = 8px) keeps each item ~36-44px tall so all
      14 items + group labels fit in ~520-580px on iPhone-class viewports.
      Tap target ≈ 36-44px which clears Material's 36px minimum. */
-  padding: var(--sp-2) var(--sp-5) var(--sp-2) var(--sp-2);
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-2);
   cursor: pointer;
   transition: color var(--ease-fast), transform var(--ease-fast);
   opacity: 0;
@@ -1486,7 +1467,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
 
 .mm-foot {
   flex-shrink: 0;
-  padding: var(--sp-3) var(--sp-5) var(--sp-5);
+  padding: 0 var(--sp-4) var(--sp-4);
   font-family: var(--font-body);
   text-align: right;
 }

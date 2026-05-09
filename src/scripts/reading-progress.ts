@@ -1,5 +1,3 @@
-// One-time setup: scroll listener stays alive across ClientRouter swaps,
-// since #pb is persisted by the layout (always present).
 function update(): void {
   const bar = document.getElementById('pb');
   if (!bar) return;
@@ -8,5 +6,4 @@ function update(): void {
 }
 
 window.addEventListener('scroll', update, { passive: true });
-document.addEventListener('astro:page-load', update);
 update();

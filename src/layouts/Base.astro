@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
@@ -29,6 +28,11 @@ interface Props {
   title: string;
   description: string;
   path: string;
+  metaTitle?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
   ogType?: 'website' | 'article';
   showFooter?: boolean;
@@ -38,12 +42,21 @@ const {
   title,
   description,
   path,
+  metaTitle,
+  ogTitle,
+  ogDescription,
+  twitterTitle,
+  twitterDescription,
   jsonLd,
   ogType = 'website',
   showFooter = true,
 } = Astro.props;
 
-const pageTitle = fullTitle(title);
+const pageTitle = metaTitle ?? fullTitle(title);
+const socialTitle = ogTitle ?? pageTitle;
+const socialDescription = ogDescription ?? description;
+const tweetTitle = twitterTitle ?? socialTitle;
+const tweetDescription = twitterDescription ?? socialDescription;
 const url = canonical(path);
 const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 ---
@@ -63,16 +76,14 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   <link rel="preload" href={geistMono400Normal} as="font" type="font/woff2" crossorigin="anonymous" />
 
   <meta property="og:type" content={ogType} />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={description} />
+  <meta property="og:title" content={socialTitle} />
+  <meta property="og:description" content={socialDescription} />
   <meta property="og:url" content={url} />
   <meta property="og:site_name" content={SITE.name} />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content={pageTitle} />
-  <meta name="twitter:description" content={description} />
-
-  <ClientRouter />
+  <meta name="twitter:title" content={tweetTitle} />
+  <meta name="twitter:description" content={tweetDescription} />
 
   <script is:inline>
     // Hash redirect — must run before render so old SPA hash links land on the right page.
@@ -175,7 +186,6 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
         window.BitcoinMindFilterInput(event.target);
       });
 
-      document.addEventListener('astro:page-load', function () { init(document); });
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function () { init(document); });
       } else {
@@ -187,15 +197,6 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 </html>
 
 <style is:global>
-  /* Disable view-transition cross-fade — feels like a shake on top of font
-     swap. ClientRouter still does SPA navigation (no full reload) but the
-     swap is now instant, matching the original hand-rolled SPA behavior. */
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none !important;
-    mix-blend-mode: normal !important;
-  }
-
   .grain {
     position: fixed;
     inset: 0;

@@ -114,33 +114,32 @@ let mmIdx = 0;
 </nav>
 
 <div id="site-menu" class="mm" role="dialog" aria-modal="true" aria-label="Site menu" data-mobile-menu hidden>
-  <div class="mm-bar">
-    <button class="mm-close" data-menu-close aria-label="Close menu">Close</button>
-  </div>
-  <nav class="mm-list" aria-label="Primary">
-    {mmGroups.map((group, gi) => (
-      <>
-        {gi > 0 && <div class="mm-divider" />}
-        <div class="mm-group-label">{group.label}</div>
-        {group.items.map((n) => {
-          const delay = 0.04 + (mmIdx++) * 0.022;
-          return (
-            <a
-              class={`mm-item ${isActive(n.match) ? 'mm-item--on' : ''}`}
-              href={n.href}
-              data-menu-item
-              style={`animation-delay: ${delay}s`}
-            >
-              {n.label}
-            </a>
-          );
-        })}
-      </>
-    ))}
-  </nav>
-  <div class="mm-foot">
-    <div class="mm-foot-rule"></div>
-    <div class="mm-foot-l1">bitcoinmind.com · est. 2017</div>
-    <div class="mm-foot-l2">A public record by Hiei</div>
+  <div class="mm-panel" data-mobile-menu-panel>
+    <nav class="mm-list" aria-label="Primary">
+      {mmGroups.map((group, gi) => (
+        <>
+          {gi > 0 && <div class="mm-divider" />}
+          <div class="mm-group-label">{group.label}</div>
+          {group.items.map((n) => {
+            const delay = 0.04 + (mmIdx++) * 0.022;
+            return (
+              <a
+                class={`mm-item ${isActive(n.match) ? 'mm-item--on' : ''}`}
+                href={n.href}
+                data-menu-item
+                style={`animation-delay: ${delay}s`}
+              >
+                {n.label}
+              </a>
+            );
+          })}
+        </>
+      ))}
+    </nav>
+    <div class="mm-foot">
+      <div class="mm-foot-rule"></div>
+      <div class="mm-foot-l1">bitcoinmind.com · est. 2017</div>
+      <div class="mm-foot-l2">A public record by Hiei</div>
+    </div>
   </div>
 </div>

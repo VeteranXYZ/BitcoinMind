@@ -158,6 +158,7 @@
   /* ── Layout ─────────────────────────────────────────── */
   --max-w:     1200px;
   --pad:       clamp(24px, 5.5vw, 88px);
+  --page-x-mobile: var(--pad);
   --radius:    3px;
   --radius-sm: 2px;
 

@@ -41,7 +41,7 @@ const textSearch = (item: typeof TEXTS[number]) => [
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'BitcoinMind Primary Texts',
+  name: 'BitcoinMind Canonical Texts',
   itemListElement: TEXTS.map((item, i) => ({
     '@type': 'ListItem',
     position: i + 1,
@@ -57,17 +57,22 @@ const itemList = {
 };
 ---
 <Base
-  title="Bitcoin Primary Texts"
-  description="Essential Bitcoin texts including the whitepaper, monetary writings, adoption frameworks, objections, and philosophical work on time and sovereignty."
+  title="Bitcoin Texts"
+  metaTitle="Bitcoin Texts — Whitepaper, Essays, References, and Core Writings"
+  description="Canonical Bitcoin texts including the whitepaper, monetary essays, security references, sovereignty arguments, and writings that shaped Bitcoin thinking."
+  ogTitle="The Canonical Texts — BitcoinMind"
+  ogDescription="Original papers, essays, references, and arguments that shaped Bitcoin thinking."
+  twitterTitle="The Canonical Texts — BitcoinMind"
+  twitterDescription="Original papers, essays, references, and arguments that shaped Bitcoin thinking."
   path="/texts"
   jsonLd={itemList}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">Primary Texts</div>
-        <h1 class="ph-title">Primary <em>Texts</em></h1>
-        <p class="ph-desc">Texts — primary writings that shaped Bitcoin thinking. The whitepaper first, then the arguments around it.</p>
+        <div class="ph-eye">Texts</div>
+        <h1 class="ph-title">The Canonical <em>Texts</em></h1>
+        <p class="ph-desc">Original papers, essays, references, and arguments that shaped Bitcoin thinking.</p>
       </div>
       <div data-filter-scope data-active-filter="all">
         <div class="fb" role="group" aria-label="Filter texts">

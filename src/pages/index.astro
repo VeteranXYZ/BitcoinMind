@@ -17,8 +17,8 @@ const textCount = TEXTS.length;
 const primaryDoors = [
   {
     title: 'Start',
-    subtitle: 'The BitcoinMind Primer',
-    body: 'Five steps for approaching Bitcoin seriously.',
+    subtitle: 'The Source Primer',
+    body: 'Five steps from the original paper to money, sovereignty, and a personal 2011 note.',
     ctas: [
       { href: '/primer', label: 'Start the Primer', variant: 'primary' },
     ],
@@ -26,11 +26,11 @@ const primaryDoors = [
   {
     title: 'Study',
     subtitle: 'Library + Texts',
-    body: 'Books and primary writings arranged for monetary, technical, and sovereignty study.',
+    body: 'Books and writings arranged for monetary, technical, and sovereignty study.',
     meta: `${LIBRARY.length} library items · ${textCount} texts`,
     ctas: [
-      { href: '/library', label: 'Open Library', variant: 'primary' },
-      { href: '/texts', label: 'Read Texts', variant: 'secondary' },
+      { href: '/library', label: 'Library', body: 'Books for building the mental model.', meta: `${LIBRARY.length} items`, action: 'Open', variant: 'primary' },
+      { href: '/texts', label: 'Texts', body: 'Canonical writings and references.', meta: `${textCount} texts`, action: 'Read', variant: 'secondary' },
     ],
   },
   {
@@ -39,8 +39,8 @@ const primaryDoors = [
     body: 'Tools and learning routes for observation, verification, custody, and deeper study.',
     meta: `${TOOLKIT.length} tools · 5 paths`,
     ctas: [
-      { href: '/toolkit', label: 'Open Toolkit', variant: 'primary' },
-      { href: '/rabbit-holes', label: 'Follow Paths', variant: 'secondary' },
+      { href: '/toolkit', label: 'Toolkit', body: 'Tools for observation, verification, custody, and research.', meta: `${TOOLKIT.length} tools`, action: 'Open', variant: 'primary' },
+      { href: '/rabbit-holes', label: 'Paths', body: 'Guided routes through the material.', meta: '5 paths', action: 'Follow', variant: 'secondary' },
     ],
   },
 ];
@@ -64,10 +64,7 @@ const websiteLd = {
     <div class="hero">
       <div class="c">
         <div class="hero-eye">bitcoinmind.com</div>
-        <h1 class="hero-title">
-          <span class="hero-t1">Bitcoin</span>
-          <span class="hero-t2">Mind</span>
-        </h1>
+        <h1 class="hero-title">BitcoinMind</h1>
         <div class="hero-rule"><div class="hero-rule-dot"></div></div>
         <p class="hero-quote">A personal map for studying Bitcoin as money, protocol, and sovereignty.</p>
         <p class="hero-by">A public record by {SITE.author} · est. 2017</p>
@@ -88,7 +85,12 @@ const websiteLd = {
               <div class="home-door-actions">
                 {door.ctas.map((cta) => (
                   <a class={`home-door-cta home-door-cta--${cta.variant}`} href={cta.href}>
-                    <span>{cta.label}</span>
+                    <span class="home-door-cta-copy">
+                      <span class="home-door-cta-title">{cta.label}</span>
+                      {'body' in cta && cta.body && <span class="home-door-cta-body">{cta.body}</span>}
+                      {'meta' in cta && cta.meta && <span class="home-door-cta-meta">{cta.meta}</span>}
+                      {'action' in cta && cta.action && <span class="home-door-cta-action">{cta.action}</span>}
+                    </span>
                     <span class="home-door-cta-arrow" aria-hidden="true">→</span>
                   </a>
                 ))}
@@ -261,7 +263,7 @@ const websiteLd = {
   .home-door-cta {
     min-height: 42px;
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: var(--sp-3);
     padding: var(--sp-3) var(--sp-4);
@@ -276,6 +278,36 @@ const websiteLd = {
     line-height: 1;
     text-transform: uppercase;
     transition: color var(--ease-fast), border-color var(--ease-fast), background var(--ease-fast), transform var(--ease-fast);
+  }
+
+  .home-door-cta-copy {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+
+  .home-door-cta-title,
+  .home-door-cta-action {
+    color: var(--tx);
+  }
+
+  .home-door-cta-body {
+    color: var(--tx-2);
+    font-size: var(--fz-xs);
+    font-weight: var(--fw-normal);
+    line-height: var(--lh-snug);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .home-door-cta-meta {
+    color: var(--tx-3);
+    font-size: var(--fz-3xs);
+  }
+
+  .home-door-cta-action {
+    margin-top: var(--sp-1);
   }
 
   .home-door-cta:focus-visible {

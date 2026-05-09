@@ -77,6 +77,4 @@ document.addEventListener('keydown', (event) => {
   focusFirstItem(root);
 });
 
-document.addEventListener('astro:page-load', () => closeAll());
-
 export {};
