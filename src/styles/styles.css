@@ -259,7 +259,8 @@ body > nav {
   letter-spacing: -0.04em;
   white-space: normal;
 }
-.hero-title em { color: var(--gold-hi); font-style: italic; }
+.hero-title-bitcoin { color: var(--tx); }
+.hero-title-mind { color: var(--gold); }
 
 .hero-rule {
   display: flex;
