@@ -51,7 +51,6 @@ const primaryDoors = [
 const deeperCards = [
   {
     href: '/timeline',
-    layer: 'Timeline',
     title: 'Timeline',
     desc: 'Seventeen years of signal. The ideas and events that shaped Bitcoin, from the whitepaper to the present block.',
     meta: `${TIMELINE.length} events`,
@@ -59,7 +58,6 @@ const deeperCards = [
   },
   {
     href: '/glossary',
-    layer: 'Glossary',
     title: 'Glossary',
     desc: 'Not definitions — conceptual anchors. Each entry is a compact note on a core Bitcoin idea.',
     meta: `${GLOSSARY.length} terms`,
@@ -67,7 +65,6 @@ const deeperCards = [
   },
   {
     href: '/objections',
-    layer: 'Objections',
     title: 'Objections',
     desc: 'The strongest arguments against Bitcoin, answered without pretending they are weak.',
     meta: `${DEBATES.length} objections`,
@@ -161,7 +158,6 @@ const websiteLd = {
         <div class="grid3">
           {deeperCards.map((card) => (
             <a class="card" href={card.href}>
-              <div class="card-layer">{card.layer}</div>
               <div class="card-title">{card.title}</div>
               <div class="card-desc card-desc--top">{card.desc}</div>
               <div class="card-ft">
