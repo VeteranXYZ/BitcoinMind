@@ -553,6 +553,16 @@ body > nav {
   border-bottom: 1px solid var(--bdr);
   margin-bottom: calc(var(--sp-10) + var(--sp-7));
 }
+/* When .ph is the ONLY content (e.g. 404 page), zero its bottom margin
+   so the gap to the footer comes solely from .page's padding-bottom.
+   Without this, .ph's mb stacks on .page's pb, producing an oversized
+   gap relative to every other page. */
+.ph:last-child,
+.frames-hd:last-child,
+.frames-ix-hd:last-child,
+.f2-hd:last-child {
+  margin-bottom: 0;
+}
 .ph-eye {
   font-family: var(--font-mono);
   font-size: var(--fz-xs);
@@ -653,7 +663,12 @@ body > nav {
 
 /* ── Library Layers ─────────────────────────────────── */
 .layer      { margin-bottom: var(--sp-11); }
-.layer:last-child { margin-bottom: 0; }
+/* Use :last-of-type instead of :last-child because the sibling .no-res
+   <p> (always rendered, usually hidden) sits after the .layer divs.
+   With :last-child the rule never matches and the 3rd layer keeps its
+   64px margin — which stacked on .page's pb produced 144px to footer
+   on the Library page. */
+.layer:last-of-type { margin-bottom: 0; }
 .layer-hd   { display: flex; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-2); }
 .layer-n    {
   font-family: var(--font-mono);
