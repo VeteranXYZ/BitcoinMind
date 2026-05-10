@@ -325,6 +325,7 @@ body > nav {
 
 /* ── Home Sections ──────────────────────────────────── */
 .section { padding: var(--sp-12) 0; border-top: 1px solid var(--bdr); }
+.section:last-child { padding-bottom: 0; }
 .sec-hd  {
   display: flex;
   align-items: baseline;
