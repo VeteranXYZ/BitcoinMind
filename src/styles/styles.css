@@ -153,14 +153,17 @@ body > nav {
   top: calc(100% + var(--sp-3));
   right: 0;
   width: min(640px, calc(100vw - (var(--pad) * 2)));
-  /* Grid rows: 1 header row (labels) + 4 item rows.
-     1fr on item rows forces all 4 rows to the tallest item's height,
-     so items in both columns line up at the same Y positions. */
+  /* Outer grid: 1 label row + 4 items, each item is 2 rows (title + desc).
+     Total rows = 1 (label) + 4 × 2 (item title + item desc) = 9.
+     All rows are auto — each row sizes to the tallest element on that
+     row line, so titles in both columns share one track, descs share
+     another, and both columns align block-to-block even when descs
+     wrap to different line counts. */
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: auto repeat(4, 1fr);
+  grid-template-rows: auto repeat(4, auto auto);
   column-gap: var(--sp-5);
-  row-gap: var(--sp-2);
+  row-gap: 0;
   padding: var(--sp-5);
   border: 1px solid var(--bdr);
   border-radius: var(--radius);
@@ -174,14 +177,14 @@ body > nav {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* Each group is a subgrid that inherits the menu's row tracks, so its
-   label and 4 items sit on the same 5 row lines as the other group.
-   This is what guarantees the two columns' items align horizontally,
-   regardless of how many lines each description wraps to. */
+/* Each group is a subgrid inheriting all 9 row tracks so the label,
+   and every item's title+desc pair, sit on the exact same row lines
+   across both columns. Groups with fewer items (Deep Dives has 3,
+   Hiei has 4) simply leave the extra row slots empty. */
 .explore-group {
   display: grid;
   grid-template-rows: subgrid;
-  grid-row: 1 / span 5;
+  grid-row: 1 / span 9;
   row-gap: 0;
 }
 .explore-group-label {
@@ -197,13 +200,17 @@ body > nav {
 .explore-group-list {
   display: grid;
   grid-template-rows: subgrid;
-  grid-row: 2 / span 4;
+  grid-row: 2 / span 8;
   row-gap: 0;
 }
+/* Each item is itself a 2-row subgrid (title row + desc row).
+   Combined with the outer grid's track structure, this guarantees
+   title-to-title and desc-to-desc alignment across both columns. */
 .explore-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
+  row-gap: 0;
   padding: var(--sp-3);
   border: 1px solid transparent;
   border-radius: var(--radius);
