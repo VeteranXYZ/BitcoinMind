@@ -93,13 +93,10 @@ body > nav {
 .nav-links {
   display: flex;
   align-items: center;
-  /* Uniform breathing space between every top-level nav item.
-     Previously 2px between links and sp-8 (40px) between logo and the
-     first link — an awkward mix that clustered everything on one side
-     and left a large gap before the first link. margin-left: auto
-     on the logo now handles the logo→links separation, and this gap
-     provides consistent rhythm across Primer / Library / Texts /
-     Toolkit / Paths / Frames / Explore. */
+  /* Uniform breathing space between every top-level nav item. The
+     margin-right: auto on the logo handles the logo→links separation,
+     and this gap provides consistent rhythm across Primer / Library /
+     Texts / Toolkit / Paths / Explore. */
   gap: var(--sp-2);
 }
 .nl {
@@ -179,8 +176,8 @@ body > nav {
 }
 /* Each group is a subgrid inheriting all 9 row tracks so the label,
    and every item's title+desc pair, sit on the exact same row lines
-   across both columns. Groups with fewer items (Deep Dives has 3,
-   Hiei has 4) simply leave the extra row slots empty. */
+   across both columns. Both groups (Lens and Hiei) now have 4 items
+   each, so every row slot is filled in both columns. */
 .explore-group {
   display: grid;
   grid-template-rows: subgrid;
