@@ -578,13 +578,27 @@ body > nav {
 .frames-ix-title em,
 .f2-title em { font-style: italic; color: var(--gold-hi); }
 
+/* Unified ph-desc rhythm across every page:
+   - `min-height` reserves space for 2 lines (1em × line-height × 2),
+     so the border-bottom below always lands at the same Y, regardless
+     of whether the description is 1 line or 2.
+   - `max-width: 720px` lets most one-sentence descriptions sit on a
+     single line on desktop (the empty reserved second line costs no
+     visual noise). 720px keeps comfortable measure for readability.
+   - On mobile the max-width is irrelevant (the viewport clips first)
+     and most descriptions naturally fill both reserved lines.
+   - If a description legitimately needs 3 lines, it simply overflows
+     min-height and the header gets slightly taller on that page —
+     still a stable rule, just applied to copy too long for 2 lines.
+*/
 .ph-desc {
   font-family: var(--font-body);
   font-size: var(--fz-md);
   color: var(--tx-2);
-  max-width: 640px;
+  max-width: 720px;
   margin-top: var(--sp-5);
   line-height: var(--lh-loose);
+  min-height: calc(var(--fz-md) * var(--lh-loose) * 2);
 }
 .frames-sub,
 .frames-ix-sub,
