@@ -21,7 +21,7 @@ export default function TodaysPick() {
         <div class="pick-date">{dateStr}</div>
         <div class="pick-title">{pick.title}</div>
         <div class="pick-meta">
-          {pick.author} · {labelType}
+          {pick.author}
           <a class="pick-go" href={href}>View in {labelDest} →</a>
         </div>
       </div>
