@@ -1,5 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
+import { LIBRARY } from '@/data/library';
+import { RABBIT_HOLES } from '@/data/rabbit-holes';
 
 interface Step {
   n: string;
@@ -76,10 +78,44 @@ const steps: Step[] = [
         ))}
 
         <div class="steps-closing">
-          <div class="steps-closing-rule" aria-hidden="true"></div>
-          <p class="steps-closing-lead">That's enough.</p>
-          <p class="steps-closing-p">The full library is here when you want it. But these five are the ones I'd give to someone I wanted to help approach Bitcoin seriously — not as a trade, but as a durable idea.</p>
-          <div class="steps-signature">— Hiei</div>
+          <div class="steps-closing-eye">End of Primer · 5 steps</div>
+          <h2 class="steps-closing-lead">That's enough.</h2>
+
+          <p class="steps-closing-p">
+            These five are not the whole library — they are the entrance.
+            Read them in order. Take the time they ask for. The thinking
+            they start in you is the only thing that matters; everything
+            else on this site is here to continue it.
+          </p>
+
+          <div class="steps-closing-sig">
+            <span class="steps-closing-sig-name">— Hiei</span>
+            <span class="steps-closing-sig-meta">Curator, BitcoinMind</span>
+          </div>
+
+          <div class="steps-closing-next" aria-label="Continue after the primer">
+            <div class="steps-closing-next-lbl">Continue</div>
+            <div class="steps-closing-next-list">
+              <a class="steps-closing-next-card" href="/paths">
+                <span class="steps-closing-next-card-kind">Paths</span>
+                <span class="steps-closing-next-card-title">Choose a route</span>
+                <span class="steps-closing-next-card-desc">{RABBIT_HOLES.length} guided paths through money, protocol, custody, and philosophy.</span>
+                <span class="steps-closing-next-card-cta">Begin a path →</span>
+              </a>
+              <a class="steps-closing-next-card" href="/library">
+                <span class="steps-closing-next-card-kind">Library</span>
+                <span class="steps-closing-next-card-title">Go deeper</span>
+                <span class="steps-closing-next-card-desc">{LIBRARY.length} books, ordered by layer. Start wherever the primer ended for you.</span>
+                <span class="steps-closing-next-card-cta">Open the library →</span>
+              </a>
+              <a class="steps-closing-next-card" href="/notes">
+                <span class="steps-closing-next-card-kind">Notes</span>
+                <span class="steps-closing-next-card-title">Read the record</span>
+                <span class="steps-closing-next-card-desc">What I wrote in April 2011, when Bitcoin was one dollar. Nothing has been changed.</span>
+                <span class="steps-closing-next-card-cta">Read the note →</span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -88,18 +124,35 @@ const steps: Step[] = [
 
 <style>
   /* ── Closing block ──
-     Redesigned to feel like a final editorial statement.
-     Full-width within the steps-wrap (760px), using the display font
-     for the lead and a generous prose size for the explanatory text.
-     The paragraph sits at readable width without an artificial cap. */
+     A proper editorial close: eyebrow label establishes the end of
+     the primer, display headline carries the weight, one paragraph
+     sets the tone, signature with metadata anchors authorship, and
+     a "Continue" section gives the page somewhere to go instead of
+     ending as a dead-end. */
   .steps-closing {
     margin-top: var(--sp-9);
     padding-top: var(--sp-8);
     border-top: 1px solid var(--bdr);
   }
 
-  .steps-closing-rule {
-    display: none;
+  .steps-closing-eye {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--gold-hi);
+    letter-spacing: var(--ls-11);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-5);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    line-height: 1;
+  }
+  .steps-closing-eye::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--gold-hi);
+    flex-shrink: 0;
   }
 
   .steps-closing-lead {
@@ -118,16 +171,115 @@ const steps: Step[] = [
     line-height: var(--lh-loose);
     color: var(--tx-2);
     max-width: 100%;
-    margin-bottom: var(--sp-7);
+    margin-bottom: var(--sp-8);
   }
 
-  .steps-closing .steps-signature {
+  .steps-closing-sig {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-3);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--bdr);
+    margin-bottom: var(--sp-10);
+  }
+
+  .steps-closing-sig-name {
     font-family: var(--font-display);
     font-size: var(--fz-md);
     font-style: italic;
-    color: var(--tx-3);
-    text-align: right;
+    color: var(--tx-2);
     letter-spacing: var(--ls-snug);
+  }
+
+  .steps-closing-sig-meta {
+    font-family: var(--font-body);
+    font-size: var(--fz-3xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+  }
+
+  /* ── Continue section ── */
+  .steps-closing-next-lbl {
+    font-family: var(--font-body);
+    font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-9);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-5);
+  }
+
+  .steps-closing-next-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-4);
+  }
+
+  .steps-closing-next-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--sp-6);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--ease-card), background var(--ease-card);
+  }
+
+  @media (hover: hover) {
+    .steps-closing-next-card:hover {
+      border-color: var(--bdr-2);
+      background: var(--surf-2);
+    }
+    .steps-closing-next-card:hover .steps-closing-next-card-cta {
+      color: var(--gold-hi);
+    }
+  }
+
+  .steps-closing-next-card-kind {
+    font-family: var(--font-body);
+    font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
+    color: var(--gold);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-3);
+  }
+
+  .steps-closing-next-card-title {
+    font-family: var(--font-display);
+    font-size: var(--fz-xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-snug);
+    color: var(--tx);
+    margin-bottom: var(--sp-3);
+  }
+
+  .steps-closing-next-card-desc {
+    font-family: var(--font-body);
+    font-size: var(--fz-sm);
+    line-height: var(--lh-relaxed);
+    color: var(--tx-2);
+    flex: 1;
+    margin-bottom: var(--sp-5);
+  }
+
+  .steps-closing-next-card-cta {
+    font-family: var(--font-body);
+    font-size: var(--fz-xs);
+    font-weight: var(--fw-semi);
+    color: var(--gold);
+    letter-spacing: var(--ls-5);
+    text-transform: uppercase;
+    transition: color var(--ease-fast);
+  }
+
+  @media (max-width: 900px) {
+    .steps-closing-next-list {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 640px) {
@@ -136,6 +288,14 @@ const steps: Step[] = [
     }
     .steps-closing .steps-closing-p {
       font-size: var(--fz-md);
+    }
+    .steps-closing-sig {
+      flex-direction: column;
+      gap: var(--sp-1);
+      align-items: flex-start;
+    }
+    .steps-closing-next-card {
+      padding: var(--sp-5);
     }
   }
 </style>
