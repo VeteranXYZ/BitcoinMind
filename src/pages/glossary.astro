@@ -74,6 +74,11 @@ const categories = [
   .gl-section {
     margin-bottom: var(--sp-11);
   }
+  /* Last section: margin-bottom cleared so the gap to the footer comes
+     entirely from .page's padding-bottom (single source of truth). */
+  .gl-section:last-of-type {
+    margin-bottom: 0;
+  }
 
   .gl-index {
     display: grid;
@@ -199,6 +204,7 @@ const categories = [
   @media (max-width: 640px) {
     .gl-index { grid-template-columns: 1fr; }
     .gl-section { margin-bottom: var(--sp-9); }
+    .gl-section:last-of-type { margin-bottom: 0; }
     .gl-entry { padding: var(--sp-5); }
     .gl-cat-label { font-size: var(--fz-2xl); }
     .gl-cat-hd { margin-bottom: var(--sp-6); }

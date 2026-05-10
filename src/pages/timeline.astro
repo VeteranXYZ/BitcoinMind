@@ -60,7 +60,6 @@ import { TIMELINE } from '@/data/timeline';
 <style>
   .tl-wrap {
     max-width: 1100px;
-    padding-bottom: var(--sp-12);
   }
 
   .tl-node {
@@ -114,6 +113,12 @@ import { TIMELINE } from '@/data/timeline';
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
     background: var(--surf);
+  }
+
+  /* Last node: its .tl-content bottom margin is zeroed so the gap to
+     the footer comes solely from .page's padding-bottom. */
+  .tl-node:last-child .tl-content {
+    margin-bottom: 0;
   }
 
   .tl-node--hiei .tl-dot {

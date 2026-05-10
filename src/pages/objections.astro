@@ -55,12 +55,14 @@ import { DEBATES } from '@/data/debates';
 </Base>
 
 <style>
-  .db-list {
-    padding-bottom: var(--sp-12);
-  }
-
+  /* Bottom gap to the footer is governed by .page's padding-bottom, not
+     here. Only the per-item spacing remains, and the last item's margin
+     is zeroed so it doesn't stack. */
   .db-item {
     margin-bottom: var(--sp-11);
+  }
+  .db-item:last-child {
+    margin-bottom: 0;
   }
 
   .db-num-row {

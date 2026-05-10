@@ -208,8 +208,15 @@ body > nav {
 }
 
 /* ── Page Shell ─────────────────────────────────────── */
+/* `padding-bottom` on .page is the single source of truth for the gap
+   between the last content row and the footer border. It mirrors the
+   top rhythm: .ph adds var(--sp-12) padding-top under the fixed nav,
+   so .page adds the same at the bottom. Per-page wrappers no longer
+   set their own bottom padding — if they do, it stacks on this and
+   produces inconsistent spacing. */
 .page {
   padding-top: 60px;
+  padding-bottom: var(--sp-12);
   min-height: 100vh;
   position: relative;
   z-index: 1;
@@ -626,6 +633,7 @@ body > nav {
 
 /* ── Library Layers ─────────────────────────────────── */
 .layer      { margin-bottom: var(--sp-11); }
+.layer:last-child { margin-bottom: 0; }
 .layer-hd   { display: flex; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-2); }
 .layer-n    {
   font-family: var(--font-mono);
@@ -798,8 +806,11 @@ body > nav {
 .note-kicker-body { font-family: var(--font-body); font-size: var(--fz-prose); line-height: var(--lh-loose); color: var(--tx-2); }
 
 /* ── About ──────────────────────────────────────────── */
-.about-wrap { display: grid; grid-template-columns: 1fr 320px; gap: var(--sp-12); padding-bottom: var(--sp-12); }
+/* .page provides the bottom gap to the footer via padding-bottom; the
+   wrapper no longer sets its own. */
+.about-wrap { display: grid; grid-template-columns: 1fr 320px; gap: var(--sp-12); }
 .a-sec  { margin-bottom: var(--sp-10); }
+.a-sec:last-child { margin-bottom: 0; }
 .a-eye  {
   font-family: var(--font-body);
   font-size: var(--fz-3xs);
@@ -951,6 +962,11 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 }
 @media (max-width: 640px) {
   .grid-auto { grid-template-columns: 1fr; }
+
+  /* Mobile mirror: .ph on mobile uses var(--sp-9) padding-top, so
+     .page's padding-bottom matches it to keep the top/bottom rhythm
+     symmetric across every page. */
+  .page { padding-bottom: var(--sp-9); }
 
   /* Compact page headers on small screens — keep rhythm but reclaim ~30px. */
   .ph,

@@ -76,11 +76,57 @@ const steps: Step[] = [
         ))}
 
         <div class="steps-closing">
-          <p class="steps-closing-p">That's enough.</p>
-          <p class="steps-closing-p steps-closing-p--gap">The full library is here when you want it. But these five are the ones I'd give to someone I wanted to help approach Bitcoin seriously — not as a trade, but as a durable idea.</p>
+          <div class="steps-closing-rule" aria-hidden="true"></div>
+          <p class="steps-closing-lead">That's enough.</p>
+          <p class="steps-closing-p">The full library is here when you want it. But these five are the ones I'd give to someone I wanted to help approach Bitcoin seriously — not as a trade, but as a durable idea.</p>
           <div class="steps-signature">— Hiei</div>
         </div>
       </div>
     </div>
   </div>
 </Base>
+
+<style>
+  /* Closing block of the primer. The sequence is:
+     1. A short gold rule as a visual chapter break.
+     2. "That's enough." set as a display-size lead — this is the
+        argumentative punchline and deserves its own register.
+     3. The explanatory paragraph in standard prose below it.
+     4. "— Hiei" right-aligned and italic. */
+  .steps-closing {
+    max-width: 640px;
+    margin-top: var(--sp-6);
+    padding-top: var(--sp-7);
+  }
+
+  .steps-closing-rule {
+    width: 56px;
+    height: 1px;
+    background: var(--gold-hi);
+    margin-bottom: var(--sp-6);
+  }
+
+  .steps-closing-lead {
+    font-family: var(--font-display);
+    font-size: var(--fz-3xl);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-title);
+    letter-spacing: var(--ls-tighter);
+    color: var(--tx);
+    margin-bottom: var(--sp-5);
+  }
+
+  .steps-closing .steps-closing-p {
+    margin-bottom: var(--sp-7);
+  }
+
+  .steps-closing .steps-signature {
+    text-align: right;
+  }
+
+  @media (max-width: 640px) {
+    .steps-closing-lead {
+      font-size: var(--fz-2xl);
+    }
+  }
+</style>
