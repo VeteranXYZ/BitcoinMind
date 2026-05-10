@@ -84,13 +84,23 @@ body > nav {
   letter-spacing: var(--ls-snug);
   flex-shrink: 0;
   user-select: none;
+  /* Pushes the nav-links cluster to the right edge of .nav-in so the
+     logo anchors left and the links anchor right — a clean
+     asymmetric balance that doesn't need a fake spacer. */
+  margin-right: auto;
 }
 .nav-logo b { color: var(--gold-hi); font-style: italic; }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2px;
-  margin-left: var(--sp-8);
+  /* Uniform breathing space between every top-level nav item.
+     Previously 2px between links and sp-8 (40px) between logo and the
+     first link — an awkward mix that clustered everything on one side
+     and left a large gap before the first link. margin-left: auto
+     on the logo now handles the logo→links separation, and this gap
+     provides consistent rhythm across Primer / Library / Texts /
+     Toolkit / Paths / Frames / Explore. */
+  gap: var(--sp-2);
 }
 .nl {
   font-family: var(--font-body);
@@ -113,6 +123,11 @@ body > nav {
 }
 .nav-explore {
   position: relative;
+  /* Thin divider before Explore groups it visually as a secondary
+     cluster separate from the primary links. */
+  margin-left: var(--sp-2);
+  padding-left: var(--sp-3);
+  border-left: 1px solid var(--bdr);
 }
 .nav-explore-btn {
   display: inline-flex;
