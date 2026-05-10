@@ -96,6 +96,7 @@ const websiteLd = {
         <p class="ph-meta">By Hiei · Since 2017</p>
       </div>
 
+      <div class="home-divider"></div>
       <TodaysPick client:only="preact" />
       <PulsePlus client:idle />
 
@@ -204,6 +205,13 @@ const websiteLd = {
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: var(--sp-6);
+  }
+
+  .home-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--bdr);
+    margin-bottom: var(--sp-6);
   }
 
   .home-doors-section {
