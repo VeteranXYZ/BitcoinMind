@@ -84,9 +84,7 @@ const websiteLd = {
                 {door.ctas.map((cta) => (
                   <a class="home-door-cta" href={cta.href} aria-label={`${cta.action} ${cta.label}`}>
                     <span class="home-door-cta-title">{cta.label}</span>
-                    {'meta' in cta && cta.meta && <span class="home-door-cta-meta">{cta.meta}</span>}
-                    <span class="home-door-cta-action">{cta.action}</span>
-                    <span class="home-door-cta-arrow" aria-hidden="true">→</span>
+                    <span class="home-door-cta-action">{cta.action} →</span>
                   </a>
                 ))}
               </div>
@@ -108,7 +106,7 @@ const websiteLd = {
       <div class="section home-preview-section">
         <div class="sec-hd">
           <h2 class="sec-title">Preview the <em>Texts</em></h2>
-          <a class="va" href="/texts">View all {textCount} texts →</a>
+          <a class="va" href="/texts">View all texts →</a>
         </div>
         <div class="grid-auto home-preview-grid">
           {previewTexts.map((item) => <TextCard item={item} preview />)}
@@ -192,7 +190,7 @@ const websiteLd = {
   }
 
   .home-doors-section {
-    padding-top: 0;
+    padding-top: var(--sp-12);
     padding-bottom: var(--sp-10);
   }
 
@@ -268,21 +266,20 @@ const websiteLd = {
     min-height: 48px;
     display: inline-flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: var(--sp-3);
     padding: var(--sp-3) 0;
     border: 0;
     border-bottom: 1px solid var(--bdr);
     border-radius: 0;
     background: transparent;
-    color: var(--tx-2);
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     font-weight: var(--fw-semi);
     letter-spacing: var(--ls-5);
     line-height: var(--lh-snug);
     text-transform: uppercase;
-    transition: color var(--ease-fast), border-color var(--ease-fast), background var(--ease-fast);
+    color: inherit;
   }
 
   .home-door-cta:last-child {
@@ -290,44 +287,11 @@ const websiteLd = {
   }
 
   .home-door-cta-title {
-    min-width: 0;
-    flex: 1;
     color: var(--tx);
-  }
-
-  .home-door-cta-meta {
-    color: var(--tx-3);
-    font-size: var(--fz-3xs);
-    flex-shrink: 0;
   }
 
   .home-door-cta-action {
-    color: var(--tx-2);
-    flex-shrink: 0;
-  }
-
-  .home-door-cta:focus-visible {
-    outline: 1px solid var(--focus-ring);
-    outline-offset: 4px;
-  }
-
-  .home-door-cta:hover {
-    color: var(--tx);
-    border-color: var(--border-accent);
-  }
-
-  .home-door-cta:hover .home-door-cta-action {
-    color: var(--tx);
-  }
-
-  .home-door-cta-arrow {
     color: var(--gold);
-    transition: color var(--ease-fast), transform var(--ease-fast);
-  }
-
-  .home-door-cta:hover .home-door-cta-arrow {
-    color: var(--gold-hi);
-    transform: translateX(2px);
   }
 
   .home-preview-section {
@@ -392,12 +356,15 @@ const websiteLd = {
   }
 
   .home-deeper-section {
-    background: var(--surface);
     margin-left: calc(-1 * var(--pad));
     margin-right: calc(-1 * var(--pad));
     padding-left: var(--pad);
     padding-right: var(--pad);
     border-radius: var(--radius);
+  }
+
+  .home-deeper-section + .home-deeper-section {
+    margin-top: var(--sp-6);
   }
 
   @media (max-width: 640px) {
