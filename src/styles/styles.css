@@ -302,6 +302,7 @@ body > nav {
   }
   .pick-cta {
     margin-top: var(--sp-2);
+    align-self: flex-end;
   }
 }
 
