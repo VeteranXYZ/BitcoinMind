@@ -30,7 +30,7 @@ const primaryDoors = [
     meta: `${LIBRARY.length} library items · ${textCount} texts`,
     ctas: [
       { href: '/library', label: 'Library', meta: `${LIBRARY.length} items`, action: 'Browse' },
-      { href: '/texts', label: 'Texts', meta: `${textCount} texts`, action: 'Read' },
+      { href: '/texts', label: 'Texts', meta: `${textCount} texts`, action: 'View' },
     ],
   },
   {
@@ -96,7 +96,7 @@ const websiteLd = {
       <div class="section home-preview-section">
         <div class="sec-hd">
           <h2 class="sec-title">Preview the <em>Library</em></h2>
-          <a class="va" href="/library">Open the Library →</a>
+          <a class="va" href="/library">Browse the Library →</a>
         </div>
         <div class="grid-auto home-preview-grid">
           {foundationItems.map((item) => <LibraryCard item={item} preview />)}
@@ -116,7 +116,7 @@ const websiteLd = {
       <div class="section home-preview-section">
         <div class="sec-hd">
           <h2 class="sec-title">Preview the <em>Toolkit</em></h2>
-          <a class="va" href="/toolkit">Open the Toolkit →</a>
+          <a class="va" href="/toolkit">Use the Toolkit →</a>
         </div>
         <div class="grid-auto home-preview-grid">
           {previewToolkit.map((item) => <ToolkitCard item={item} preview />)}
@@ -126,7 +126,7 @@ const websiteLd = {
       <div class="section home-deeper-section">
         <div class="sec-hd">
           <h2 class="sec-title">Go <em>Deeper</em></h2>
-          <a class="va" href="/rabbit-holes">View all paths →</a>
+          <a class="va" href="/rabbit-holes">Follow all paths →</a>
         </div>
         <div class="grid3">
           <a class="card" href="/timeline">
@@ -348,11 +348,15 @@ const websiteLd = {
 
   .hiei-link-cta {
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     font-weight: var(--fw-semi);
-    color: var(--gold-hi);
+    color: var(--gold);
     letter-spacing: var(--ls-5);
     text-transform: uppercase;
+    align-self: flex-end;
+    margin-top: auto;
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--bdr);
   }
 
   .home-deeper-section {
