@@ -6,7 +6,14 @@
 
 /* ── Reset ──────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  /* Lock the document at top/bottom boundaries — prevents the mobile
+     rubber-band / pull-to-refresh behavior that, combined with our
+     smooth-scroll root, could fling the viewport back to the top when
+     the user kept swiping past the footer. */
+  overscroll-behavior-y: none;
+}
 body {
   background: var(--bg);
   color: var(--tx);
@@ -14,6 +21,7 @@ body {
   line-height: var(--lh-base);
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  overscroll-behavior-y: none;
 }
 /* Default anchor reset — selectors below override color where needed */
 a { color: inherit; text-decoration: none; }
