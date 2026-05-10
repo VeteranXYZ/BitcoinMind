@@ -13,7 +13,7 @@ export const QUESTIONS: Question[] = [
     date: 'May 2026',
     answer: 'This is the right question asked slightly wrong. If Bitcoin succeeds, energy production becomes more decentralized, not more centralized. Bitcoin miners are energy buyers of last resort — they seek the cheapest energy, which is almost always stranded, curtailed, or otherwise wasted. A methane flare in Texas. A hydroelectric dam in Paraguay producing more than the grid can absorb. Geothermal in Iceland. Bitcoin doesn\'t concentrate energy — it monetizes energy that would otherwise be lost. The power grid doesn\'t become the power structure. Bitcoin makes more of the power grid economically viable.',
     links: [
-      { label: 'Objections: Energy Consumption', href: '/debates' },
+      { label: 'Objections: Energy Consumption', href: '/objections' },
     ],
   },
   {
