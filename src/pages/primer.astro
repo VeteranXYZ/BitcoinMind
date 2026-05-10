@@ -87,46 +87,55 @@ const steps: Step[] = [
 </Base>
 
 <style>
-  /* Closing block of the primer. The sequence is:
-     1. A short gold rule as a visual chapter break.
-     2. "That's enough." set as a display-size lead — this is the
-        argumentative punchline and deserves its own register.
-     3. The explanatory paragraph in standard prose below it.
-     4. "— Hiei" right-aligned and italic. */
+  /* ── Closing block ──
+     Redesigned to feel like a final editorial statement.
+     Full-width within the steps-wrap (760px), using the display font
+     for the lead and a generous prose size for the explanatory text.
+     The paragraph sits at readable width without an artificial cap. */
   .steps-closing {
-    max-width: 640px;
-    margin-top: var(--sp-6);
-    padding-top: var(--sp-7);
+    margin-top: var(--sp-9);
+    padding-top: var(--sp-8);
+    border-top: 1px solid var(--bdr);
   }
 
   .steps-closing-rule {
-    width: 56px;
-    height: 1px;
-    background: var(--gold-hi);
-    margin-bottom: var(--sp-6);
+    display: none;
   }
 
   .steps-closing-lead {
     font-family: var(--font-display);
-    font-size: var(--fz-3xl);
+    font-size: var(--fz-page);
     font-weight: var(--fw-bold);
     line-height: var(--lh-title);
     letter-spacing: var(--ls-tighter);
     color: var(--tx);
-    margin-bottom: var(--sp-5);
+    margin-bottom: var(--sp-6);
   }
 
   .steps-closing .steps-closing-p {
+    font-family: var(--font-body);
+    font-size: var(--fz-lg);
+    line-height: var(--lh-loose);
+    color: var(--tx-2);
+    max-width: 100%;
     margin-bottom: var(--sp-7);
   }
 
   .steps-closing .steps-signature {
+    font-family: var(--font-display);
+    font-size: var(--fz-md);
+    font-style: italic;
+    color: var(--tx-3);
     text-align: right;
+    letter-spacing: var(--ls-snug);
   }
 
   @media (max-width: 640px) {
     .steps-closing-lead {
-      font-size: var(--fz-2xl);
+      font-size: var(--fz-3xl);
+    }
+    .steps-closing .steps-closing-p {
+      font-size: var(--fz-md);
     }
   }
 </style>

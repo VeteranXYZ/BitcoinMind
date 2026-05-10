@@ -209,14 +209,13 @@ body > nav {
 
 /* ── Page Shell ─────────────────────────────────────── */
 /* `padding-bottom` on .page is the single source of truth for the gap
-   between the last content row and the footer border. It mirrors the
-   top rhythm: .ph adds var(--sp-12) padding-top under the fixed nav,
-   so .page adds the same at the bottom. Per-page wrappers no longer
-   set their own bottom padding — if they do, it stacks on this and
-   produces inconsistent spacing. */
+   between the last content row and the footer border. The value matches
+   the homepage's effective bottom rhythm: sp-12 base + sp-9 section
+   tail = 128px of breathing room before the footer. All pages share
+   this so the transition to the footer feels identical everywhere. */
 .page {
   padding-top: 60px;
-  padding-bottom: var(--sp-12);
+  padding-bottom: calc(var(--sp-12) + var(--sp-9));
   min-height: 100vh;
   position: relative;
   z-index: 1;
@@ -978,9 +977,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   .grid-auto { grid-template-columns: 1fr; }
 
   /* Mobile mirror: .ph on mobile uses var(--sp-9) padding-top, so
-     .page's padding-bottom matches it to keep the top/bottom rhythm
-     symmetric across every page. */
-  .page { padding-bottom: var(--sp-9); }
+     .page's padding-bottom matches the same total rhythm as desktop:
+     sp-9 base + sp-9 section tail = 96px. */
+  .page { padding-bottom: calc(var(--sp-9) + var(--sp-9)); }
 
   /* Compact page headers on small screens — keep rhythm but reclaim ~30px. */
   .ph,
@@ -1031,14 +1030,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
     padding: var(--sp-5);
   }
 
-  /* Match the top-of-page breathing room (.ph padding-top = var(--sp-9)
-     on mobile) at the bottom of the page too, so the gap above the
-     footer mirrors the gap below the nav. Targets the *last* section
-     of any .c container so it only affects the transition to footer. */
-  .c > .section:last-child,
-  .c > .home-deeper-section:last-child {
-    padding-bottom: var(--sp-9);
-  }
+  /* .page's padding-bottom now includes the section tail so no extra
+     per-section override is needed. */
 }
 
 /* ═══════════════════════════════════════════════════════════════════
