@@ -339,9 +339,11 @@ const websiteLd = {
     border-radius: var(--radius);
   }
 
-  .home-deeper-section + .home-deeper-section {
-    margin-top: var(--sp-6);
-  }
+  /* Previously `.home-deeper-section + .home-deeper-section` added
+     var(--sp-6) on top, which stacked on the sibling's padding-top and
+     made the gap between Trace the Paths and From Hiei 120px, vs the
+     96px rhythm (sp-9 + sp-9) every other pair of sections uses.
+     Removed so all section-to-section spacing is uniform. */
 
   /* Mirror the page's top rhythm at the bottom of the last section.
      The top uses var(--sp-12) between the nav's bottom edge and the
