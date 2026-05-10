@@ -551,7 +551,10 @@ body > nav {
 .f2-hd {
   padding: var(--sp-12) 0 var(--sp-6);
   border-bottom: 1px solid var(--bdr);
-  margin-bottom: calc(var(--sp-10) + var(--sp-7));
+  /* margin-bottom = sp-9 (48px) matches the homepage's .home-divider
+     margin-bottom. Single source of truth for the gap between the
+     long divider line and the first content row on every page. */
+  margin-bottom: var(--sp-9);
 }
 /* When .ph is the ONLY content (e.g. 404 page), zero its bottom margin
    so the gap to the footer comes solely from .page's padding-bottom.
@@ -1004,11 +1007,13 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 
   /* Compact page headers on small screens — keep rhythm but reclaim ~30px.
      padding-bottom stays tight (sp-4) so the separator line sits close
-     to the desc text (mirroring the homepage). margin-bottom compensates. */
+     to the desc text (mirroring the homepage). margin-bottom matches the
+     homepage's .home-divider (sp-9 = 48px) for unified divider→content
+     spacing on every page. */
   .ph,
   .frames-hd,
   .frames-ix-hd,
-  .f2-hd { padding: var(--sp-9) 0 var(--sp-4); margin-bottom: calc(var(--sp-8) + var(--sp-4)); }
+  .f2-hd { padding: var(--sp-9) 0 var(--sp-4); margin-bottom: var(--sp-9); }
 
   /* Search input fills the row instead of fixed 240px (which overflows
      on 320–360px viewports once chips wrap below). */
