@@ -538,13 +538,19 @@ body > nav {
    shared selector below) — single source of truth for top padding,
    bottom padding, separator rule, and gap to first body content.
    ──────────────────────────────────────────────────────── */
+/* The separator line (border-bottom) position is anchored to sit close
+   to the description text — padding-bottom is intentionally tight
+   (sp-6 = 24px) so the line lands at the same Y on every page,
+   matching the homepage's .home-divider position. The larger
+   margin-bottom below the border creates breathing room to the first
+   content element without moving the line itself. */
 .ph,
 .frames-hd,
 .frames-ix-hd,
 .f2-hd {
-  padding: var(--sp-12) 0 var(--sp-10);
+  padding: var(--sp-12) 0 var(--sp-6);
   border-bottom: 1px solid var(--bdr);
-  margin-bottom: var(--sp-10);
+  margin-bottom: calc(var(--sp-10) + var(--sp-7));
 }
 .ph-eye {
   font-family: var(--font-mono);
@@ -981,11 +987,13 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
      sp-9 base + sp-9 section tail = 96px. */
   .page { padding-bottom: calc(var(--sp-9) + var(--sp-9)); }
 
-  /* Compact page headers on small screens — keep rhythm but reclaim ~30px. */
+  /* Compact page headers on small screens — keep rhythm but reclaim ~30px.
+     padding-bottom stays tight (sp-4) so the separator line sits close
+     to the desc text (mirroring the homepage). margin-bottom compensates. */
   .ph,
   .frames-hd,
   .frames-ix-hd,
-  .f2-hd { padding: var(--sp-9) 0 var(--sp-8); margin-bottom: var(--sp-8); }
+  .f2-hd { padding: var(--sp-9) 0 var(--sp-4); margin-bottom: calc(var(--sp-8) + var(--sp-4)); }
 
   /* Search input fills the row instead of fixed 240px (which overflows
      on 320–360px viewports once chips wrap below). */
