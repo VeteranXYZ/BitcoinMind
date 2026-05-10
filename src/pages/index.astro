@@ -279,16 +279,17 @@ const websiteLd = {
     border-bottom: 1px solid var(--bdr);
     text-decoration: none;
     color: inherit;
-    transition: color var(--ease-fast);
   }
 
   .hiei-row:first-child {
     border-top: 1px solid var(--bdr);
   }
 
-  .hiei-row:hover {
-    color: var(--gold-hi);
-  }
+  /* No hover recolor — on touch devices the `:hover` state sticks after a
+     tap (mobile browsers fire `:hover` on touch and only clear it on the
+     next interaction), which made the row flash gold and then stay gold
+     until the user tapped elsewhere. Desktop loses a small affordance,
+     but the arrow and the card border already signal interactivity. */
 
   .hiei-row-title {
     font-family: var(--font-body);
