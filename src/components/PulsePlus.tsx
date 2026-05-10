@@ -159,7 +159,7 @@ export default function PulsePlus() {
   return (
     <section class="pulse" aria-label="Bitcoin network clock">
       <div class="pulse-hd">
-        <span class="pulse-lbl">Network Clock</span>
+        <span class="pulse-lbl">Network <em>Clock</em></span>
         <span class={`pulse-live ${pulsed ? 'pulse-live--flash' : ''}`} aria-hidden="true">
           <span class="pulse-live-dot" /> live
         </span>

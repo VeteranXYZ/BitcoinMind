@@ -1081,6 +1081,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   color: var(--tx);
   text-transform: none;
 }
+.pulse-lbl em {
+  color: var(--gold);
+  font-style: normal;
+}
 
 .pulse-live {
   display: inline-flex;
