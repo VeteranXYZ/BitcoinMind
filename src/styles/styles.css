@@ -279,16 +279,11 @@ body > nav {
   display: flex;
   align-items: center;
   gap: var(--sp-5);
-  margin-top: var(--sp-5);
-  padding: var(--sp-3) 0;
-  border-bottom: 1px solid var(--bdr);
+  margin-top: var(--sp-4);
+  padding: 0;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  transition: border-color var(--ease-fast);
-}
-.pick:hover {
-  border-color: var(--border-accent);
 }
 .pick-label {
   font-family: var(--font-body);
@@ -339,7 +334,6 @@ body > nav {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--sp-2);
-    padding: var(--sp-3) 0;
   }
   .pick-content {
     flex-direction: column;
