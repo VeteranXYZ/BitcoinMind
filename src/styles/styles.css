@@ -654,15 +654,23 @@ body > nav {
   line-height: var(--lh-loose);
   min-height: calc(var(--fz-md) * var(--lh-loose) * 2);
 }
+/* .frames-sub / .frames-ix-sub / .f2-sub are the subtitle paragraphs
+   under the frames* page headers. Aliased to .ph-desc — every page
+   (frames included) now uses the same subtitle typography: fz-md,
+   lh-loose, 720px measure, 2-line reserved min-height. Previously
+   these used fz-quote (clamped 17–21px, bigger than the rest of the
+   site) and 640px measure, which made frames pages visibly diverge
+   from the other 14 pages. */
 .frames-sub,
 .frames-ix-sub,
 .f2-sub {
   font-family: var(--font-body);
-  font-size: var(--fz-quote);
-  line-height: var(--lh-relaxed);
+  font-size: var(--fz-md);
   color: var(--tx-2);
-  max-width: 640px;
+  max-width: 720px;
   margin-top: var(--sp-5);
+  line-height: var(--lh-loose);
+  min-height: calc(var(--fz-md) * var(--lh-loose) * 2);
 }
 
 /* ── Filter Bar ─────────────────────────────────────── */
