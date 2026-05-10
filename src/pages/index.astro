@@ -132,16 +132,16 @@ const websiteLd = {
         <div class="sec-hd">
           <h2 class="sec-title">From <em>Hiei</em></h2>
         </div>
-        <div class="hiei-links">
-          <a class="hiei-link" href="/stack">
-            <span class="hiei-link-title">Stack</span>
-            <span class="hiei-link-desc">How I hold Bitcoin — not how much, but how and why.</span>
-            <span class="hiei-link-cta">Read →</span>
+        <div class="hiei-list">
+          <a class="hiei-row" href="/stack">
+            <span class="hiei-row-title">Stack</span>
+            <span class="hiei-row-desc">How I hold Bitcoin — not how much, but how and why.</span>
+            <span class="hiei-row-cta">Read →</span>
           </a>
-          <a class="hiei-link" href="/questions">
-            <span class="hiei-link-title">Questions</span>
-            <span class="hiei-link-desc">Reader questions, answered when I have something worth saying.</span>
-            <span class="hiei-link-cta">Read →</span>
+          <a class="hiei-row" href="/questions">
+            <span class="hiei-row-title">Questions</span>
+            <span class="hiei-row-desc">Reader questions, answered when I have something worth saying.</span>
+            <span class="hiei-row-cta">Read →</span>
           </a>
         </div>
       </div>
@@ -255,57 +255,56 @@ const websiteLd = {
   }
 
   /* ── Hiei Links ── */
-  .hiei-links {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--sp-4);
-  }
-
-  .hiei-link {
+  /* ── Hiei Links ── */
+  .hiei-list {
     display: flex;
     flex-direction: column;
-    padding: var(--sp-6) var(--sp-6);
-    border: 1px solid var(--bdr);
-    border-radius: var(--radius);
-    transition: border-color var(--ease-card), background var(--ease-card);
-    cursor: pointer;
+  }
+
+  .hiei-row {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-4) 0;
+    border-bottom: 1px solid var(--bdr);
     text-decoration: none;
     color: inherit;
+    transition: color var(--ease-fast);
   }
 
-  .hiei-link:hover {
-    border-color: var(--bdr-2);
-    background: var(--surf);
+  .hiei-row:first-child {
+    border-top: 1px solid var(--bdr);
   }
 
-  .hiei-link-title {
-    font-family: var(--font-body);
-    font-size: var(--fz-lg);
-    font-weight: var(--fw-semi);
-    letter-spacing: var(--ls-normal);
-    margin-bottom: var(--sp-2);
+  .hiei-row:hover {
+    color: var(--gold-hi);
   }
 
-  .hiei-link-desc {
+  .hiei-row-title {
     font-family: var(--font-body);
     font-size: var(--fz-base);
-    color: var(--tx-2);
-    line-height: var(--lh-relaxed);
-    flex: 1;
-    margin-bottom: var(--sp-3);
+    font-weight: var(--fw-semi);
+    letter-spacing: var(--ls-normal);
+    flex-shrink: 0;
+    min-width: 100px;
   }
 
-  .hiei-link-cta {
+  .hiei-row-desc {
+    font-family: var(--font-body);
+    font-size: var(--fz-sm);
+    color: var(--tx-3);
+    line-height: var(--lh-relaxed);
+    flex: 1;
+  }
+
+  .hiei-row-cta {
     font-family: var(--font-body);
     font-size: var(--fz-xs);
     font-weight: var(--fw-semi);
     color: var(--gold);
     letter-spacing: var(--ls-5);
     text-transform: uppercase;
-    align-self: flex-end;
-    margin-top: auto;
-    padding-top: var(--sp-3);
-    border-top: 1px solid var(--bdr);
+    flex-shrink: 0;
   }
 
   /* ── Deeper Sections ── */
@@ -330,8 +329,14 @@ const websiteLd = {
       padding: var(--sp-5);
     }
 
-    .hiei-links {
-      grid-template-columns: 1fr;
+    .hiei-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--sp-2);
+    }
+
+    .hiei-row-cta {
+      align-self: flex-end;
     }
   }
 </style>

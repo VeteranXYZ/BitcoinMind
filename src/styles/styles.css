@@ -961,8 +961,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
     gap: var(--sp-5);
   }
   .ft-map {
-    grid-template-columns: 1fr;
-    gap: var(--sp-4);
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-3);
   }
 
   .step {
