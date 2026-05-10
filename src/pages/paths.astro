@@ -97,7 +97,11 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--sp-4);
-    margin: calc(var(--sp-3) * -1) 0 var(--sp-9);
+    /* margin-top was previously calc(sp-3 * -1) = -12px, which pulled
+       the grid up and broke the unified 48px divider→content gap
+       provided by .ph margin-bottom. Zeroed so the gap is exactly
+       sp-9 (48px) on paths like every other page. */
+    margin: 0 0 var(--sp-9);
   }
 
   .rh-route-card {
