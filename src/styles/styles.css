@@ -209,15 +209,7 @@ body > nav {
   padding: 0 var(--pad);
 }
 
-/* ── Hero ───────────────────────────────────────────── */
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding: var(--sp-10) 0 var(--sp-9);
-}
-.hero .c { position: relative; z-index: 1; }
-
-.hero-eye,
+/* ── Eye (shared across page headers) ───────────────── */
 .ph-eye,
 .frames-ix-eye,
 .f2-eye {
@@ -232,7 +224,6 @@ body > nav {
   gap: var(--sp-4);
   line-height: 1;
 }
-.hero-eye::before,
 .ph-eye::before,
 .frames-ix-eye::before,
 .f2-eye::before {
@@ -242,39 +233,7 @@ body > nav {
   background: var(--gold-hi);
   flex-shrink: 0;
 }
-.hero-eye {
-  display: block;
-  color: var(--tx-3);
-  margin-bottom: var(--sp-5);
-}
-.hero-eye::before {
-  content: none;
-}
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 5rem);
-  font-weight: var(--fw-bold);
-  line-height: 1;
-  letter-spacing: -0.035em;
-  white-space: normal;
-  margin-bottom: var(--sp-6);
-}
-.hero-title-bitcoin { color: var(--tx); }
-.hero-title-mind { color: var(--gold); }
-.hero-quote {
-  font-family: var(--font-body);
-  font-size: var(--fz-quote);
-  color: var(--tx-2);
-  max-width: 640px;
-  line-height: var(--lh-loose);
-  margin-bottom: var(--sp-2);
-}
-.hero-by {
-  font-family: var(--font-body);
-  font-size: var(--fz-sm);
-  color: var(--tx-3);
-  letter-spacing: 0;
-}
+
 
 /* ── Today's Pick ───────────────────────────────────── */
 .pick {
@@ -989,7 +948,6 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: v
   .grid-auto { grid-template-columns: 1fr; }
 
   /* Compact page headers on small screens — keep rhythm but reclaim ~30px. */
-  .hero { padding: var(--sp-9) 0 var(--sp-8); }
   .ph,
   .frames-hd,
   .frames-ix-hd,
