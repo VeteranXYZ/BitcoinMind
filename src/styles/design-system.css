@@ -13,8 +13,9 @@
   --card-hover: #1e1912;
 
   --text-heading: #f2ede3;
-  --text-body: #d8d0c3;
-  --text-muted: #948879;
+  --text-body: #c4bcb0;
+  --text-secondary: #a89d90;
+  --text-muted: #9a8f82;
   --text-faint: #6d6358;
 
   --accent: #c8913a;
@@ -37,6 +38,7 @@
   --bdr-2: var(--border-strong);
   --tx: var(--text-heading);
   --tx-2: var(--text-body);
+  --tx-2b: var(--text-secondary);
   --tx-3: var(--text-muted);
   --gold: var(--accent);
   --gold-dim: var(--accent-hover);
@@ -98,7 +100,7 @@
   --fz-quote:   clamp(17px, 1.7vw, 21px);
 
   /* Fixed type scale. */
-  --text-xs:   12px;
+  --text-xs:   13px;
   --text-sm:   14px;
   --text-base: 16px;
   --text-lg:   18px;
@@ -115,6 +117,7 @@
   --fz-sm:   var(--text-sm);
   --fz-base: var(--text-base);
   --fz-md:   var(--text-base);
+  --fz-prose: var(--text-lg);
   --fz-lg:   var(--text-xl);
   --fz-xl:   var(--text-2xl);
   --fz-2xl:  var(--text-2xl);
@@ -129,13 +132,13 @@
 
   /* Line heights. */
   --lh-hero:    0.98;
-  --lh-title:   1.12;
+  --lh-title:   1.18;
   --lh-snug:    1.22;
-  --lh-card:    1.48;
+  --lh-card:    1.38;
   --lh-normal:  1.6;
   --lh-relaxed: 1.68;
   --lh-base:    1.7;
-  --lh-loose:   1.75;
+  --lh-loose:   1.78;
 
   /* Letter spacing — semantic for tight, anchored decimals for wide.
      Was 18 tokens (mixed semantic + numeric), now 8. */
@@ -171,6 +174,7 @@
   --page-x-mobile: var(--pad);
   --radius:    3px;
   --radius-sm: 2px;
+  --radius-lg: 6px;
 
   /* Standard breakpoints — all @media queries should reference one of these. */
   --bp-sm: 640px;

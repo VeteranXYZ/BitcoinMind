@@ -125,7 +125,7 @@ const websiteLd = {
         </div>
       </div>
 
-      <div class="section">
+      <div class="section home-deeper-section">
         <div class="sec-hd">
           <h2 class="sec-title">Go <em>Deeper</em></h2>
           <a class="va" href="/rabbit-holes">View all paths →</a>
@@ -161,7 +161,7 @@ const websiteLd = {
         </div>
       </div>
 
-      <div class="section">
+      <div class="section home-deeper-section">
         <div class="sec-hd">
           <h2 class="sec-title">From <em>Hiei</em></h2>
         </div>
@@ -199,7 +199,7 @@ const websiteLd = {
   .home-doors {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--sp-4);
+    gap: var(--sp-6);
   }
 
   .home-door {
@@ -230,7 +230,7 @@ const websiteLd = {
   }
 
   .home-door-label {
-    color: var(--gold);
+    color: var(--gold-hi);
     margin-bottom: var(--sp-3);
   }
 
@@ -386,9 +386,18 @@ const websiteLd = {
     font-family: var(--font-body);
     font-size: var(--fz-3xs);
     font-weight: var(--fw-semi);
-    color: var(--gold);
+    color: var(--gold-hi);
     letter-spacing: var(--ls-5);
     text-transform: uppercase;
+  }
+
+  .home-deeper-section {
+    background: var(--surface);
+    margin-left: calc(-1 * var(--pad));
+    margin-right: calc(-1 * var(--pad));
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+    border-radius: var(--radius);
   }
 
   @media (max-width: 640px) {
