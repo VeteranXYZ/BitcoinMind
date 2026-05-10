@@ -73,7 +73,7 @@ import { DEBATES } from '@/data/debates';
   .db-num {
     font-family: var(--font-mono);
     font-size: var(--fz-3xs);
-    color: var(--gold);
+    color: var(--gold-hi);
     letter-spacing: var(--ls-7);
     border: 1px solid var(--border-accent);
     padding: 3px var(--sp-2);
@@ -98,7 +98,7 @@ import { DEBATES } from '@/data/debates';
   .db-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--sp-4);
+    gap: var(--sp-5);
   }
 
   .db-col {
@@ -136,12 +136,12 @@ import { DEBATES } from '@/data/debates';
 
   .db-col--res .db-col-lbl,
   .db-col--right .db-col-lbl {
-    color: var(--gold);
+    color: var(--gold-hi);
   }
 
   .db-col-body {
     font-family: var(--font-body);
-    font-size: var(--fz-md);
+    font-size: var(--fz-prose);
     line-height: var(--lh-loose);
     color: var(--tx-2);
   }
@@ -171,7 +171,7 @@ import { DEBATES } from '@/data/debates';
     font-family: var(--font-body);
     font-size: var(--fz-xs);
     font-weight: var(--fw-semi);
-    color: var(--gold);
+    color: var(--gold-hi);
     letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
@@ -181,11 +181,20 @@ import { DEBATES } from '@/data/debates';
 
   @media (max-width: 1024px) {
     .db-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
+    }
+    .db-col--res {
+      grid-column: 1 / -1;
     }
   }
 
   @media (max-width: 640px) {
+    .db-grid {
+      grid-template-columns: 1fr;
+    }
+    .db-col--res {
+      grid-column: auto;
+    }
     .db-col {
       padding: var(--sp-5) var(--sp-4);
     }
