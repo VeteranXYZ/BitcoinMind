@@ -8,6 +8,9 @@ import PulsePlus from '@/components/PulsePlus';
 import { LIBRARY } from '@/data/library';
 import { TEXTS } from '@/data/texts';
 import { TOOLKIT } from '@/data/toolkit';
+import { TIMELINE } from '@/data/timeline';
+import { GLOSSARY } from '@/data/glossary';
+import { DEBATES } from '@/data/debates';
 import { SITE } from '@/lib/seo';
 
 const foundationItems = LIBRARY.filter((item) => item.layer === 1).slice(0, 2);
@@ -42,6 +45,33 @@ const primaryDoors = [
       { href: '/toolkit', label: 'Toolkit', meta: `${TOOLKIT.length} tools`, action: 'Use' },
       { href: '/paths', label: 'Paths', meta: '5 paths', action: 'Follow' },
     ],
+  },
+];
+
+const deeperCards = [
+  {
+    href: '/timeline',
+    layer: 'Timeline',
+    title: 'Timeline',
+    desc: 'Seventeen years of signal. The ideas and events that shaped Bitcoin, from the whitepaper to the present block.',
+    meta: `${TIMELINE.length} events`,
+    cta: 'EXPLORE →',
+  },
+  {
+    href: '/glossary',
+    layer: 'Glossary',
+    title: 'Glossary',
+    desc: 'Not definitions — conceptual anchors. Each entry is a compact note on a core Bitcoin idea.',
+    meta: `${GLOSSARY.length} terms`,
+    cta: 'READ →',
+  },
+  {
+    href: '/objections',
+    layer: 'Objections',
+    title: 'Objections',
+    desc: 'The strongest arguments against Bitcoin, answered without pretending they are weak.',
+    meta: `${DEBATES.length} objections`,
+    cta: 'READ →',
   },
 ];
 
@@ -129,33 +159,17 @@ const websiteLd = {
           <a class="va" href="/paths">Follow all paths →</a>
         </div>
         <div class="grid3">
-          <a class="card" href="/timeline">
-            <div class="card-layer">Timeline</div>
-            <div class="card-title">Timeline</div>
-            <div class="card-desc card-desc--top">Seventeen years of signal. The ideas and events that shaped Bitcoin, from the whitepaper to the present block.</div>
-            <div class="card-ft">
-              <span class="card-meta">16 events</span>
-              <span class="card-cta">EXPLORE →</span>
-            </div>
-          </a>
-          <a class="card" href="/glossary">
-            <div class="card-layer">Glossary</div>
-            <div class="card-title">Glossary</div>
-            <div class="card-desc card-desc--top">Not definitions — conceptual anchors. Each entry is a compact note on a core Bitcoin idea.</div>
-            <div class="card-ft">
-              <span class="card-meta">15 terms</span>
-              <span class="card-cta">READ →</span>
-            </div>
-          </a>
-          <a class="card" href="/objections">
-            <div class="card-layer">Objections</div>
-            <div class="card-title">Objections</div>
-            <div class="card-desc card-desc--top">The strongest arguments against Bitcoin, answered without pretending they are weak.</div>
-            <div class="card-ft">
-              <span class="card-meta">6 objections</span>
-              <span class="card-cta">READ →</span>
-            </div>
-          </a>
+          {deeperCards.map((card) => (
+            <a class="card" href={card.href}>
+              <div class="card-layer">{card.layer}</div>
+              <div class="card-title">{card.title}</div>
+              <div class="card-desc card-desc--top">{card.desc}</div>
+              <div class="card-ft">
+                <span class="card-meta">{card.meta}</span>
+                <span class="card-cta">{card.cta}</span>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
 
