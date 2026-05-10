@@ -138,9 +138,14 @@ body > nav {
   top: calc(100% + var(--sp-3));
   right: 0;
   width: min(640px, calc(100vw - (var(--pad) * 2)));
+  /* Grid rows: 1 header row (labels) + 4 item rows.
+     1fr on item rows forces all 4 rows to the tallest item's height,
+     so items in both columns line up at the same Y positions. */
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--sp-5);
+  grid-template-rows: auto repeat(4, 1fr);
+  column-gap: var(--sp-5);
+  row-gap: var(--sp-2);
   padding: var(--sp-5);
   border: 1px solid var(--bdr);
   border-radius: var(--radius);
@@ -154,8 +159,19 @@ body > nav {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+/* Each group is a subgrid that inherits the menu's row tracks, so its
+   label and 4 items sit on the same 5 row lines as the other group.
+   This is what guarantees the two columns' items align horizontally,
+   regardless of how many lines each description wraps to. */
+.explore-group {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: 1 / span 5;
+  row-gap: 0;
+}
 .explore-group-label {
-  margin-bottom: var(--sp-3);
+  grid-row: 1;
+  margin-bottom: var(--sp-2);
   font-family: var(--font-body);
   font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
@@ -165,10 +181,14 @@ body > nav {
 }
 .explore-group-list {
   display: grid;
-  gap: var(--sp-2);
+  grid-template-rows: subgrid;
+  grid-row: 2 / span 4;
+  row-gap: 0;
 }
 .explore-item {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: var(--sp-3);
   border: 1px solid transparent;
   border-radius: var(--radius);
