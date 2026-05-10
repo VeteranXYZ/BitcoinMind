@@ -189,6 +189,13 @@ const websiteLd = {
     line-height: var(--lh-relaxed);
   }
 
+  /* Homepage ph — no border, reduced bottom padding since Today's Pick follows */
+  :global(.page .ph) {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: var(--sp-6);
+  }
+
   .home-doors-section {
     padding-top: var(--sp-12);
     padding-bottom: var(--sp-10);
