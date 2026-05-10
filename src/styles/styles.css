@@ -209,13 +209,13 @@ body > nav {
 
 /* ── Page Shell ─────────────────────────────────────── */
 /* `padding-bottom` on .page is the single source of truth for the gap
-   between the last content row and the footer border. The value matches
-   the homepage's effective bottom rhythm: sp-12 base + sp-9 section
-   tail = 128px of breathing room before the footer. All pages share
-   this so the transition to the footer feels identical everywhere. */
+   between the last content row and the footer border. The value equals
+   .ph padding-top (sp-12 = 80px) — the same distance as nav-bottom →
+   ph-eye on every page. This symmetry means the top breathing room
+   mirrors the bottom breathing room exactly. */
 .page {
   padding-top: 60px;
-  padding-bottom: calc(var(--sp-12) + var(--sp-9));
+  padding-bottom: var(--sp-12);
   min-height: 100vh;
   position: relative;
   z-index: 1;
@@ -982,10 +982,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 @media (max-width: 640px) {
   .grid-auto { grid-template-columns: 1fr; }
 
-  /* Mobile mirror: .ph on mobile uses var(--sp-9) padding-top, so
-     .page's padding-bottom matches the same total rhythm as desktop:
-     sp-9 base + sp-9 section tail = 96px. */
-  .page { padding-bottom: calc(var(--sp-9) + var(--sp-9)); }
+  /* Mobile: .ph padding-top is sp-9 on mobile, so .page padding-bottom
+     mirrors it for symmetric top/bottom breathing room. */
+  .page { padding-bottom: var(--sp-9); }
 
   /* Compact page headers on small screens — keep rhythm but reclaim ~30px.
      padding-bottom stays tight (sp-4) so the separator line sits close

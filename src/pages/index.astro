@@ -335,13 +335,6 @@ const websiteLd = {
      96px rhythm (sp-9 + sp-9) every other pair of sections uses.
      Removed so all section-to-section spacing is uniform. */
 
-  /* .page's padding-bottom now already includes the sp-9 that each
-     section's internal padding-bottom used to contribute. Zero the last
-     section's bottom padding so it doesn't double-stack. */
-  .home-deeper-section:last-child {
-    padding-bottom: 0;
-  }
-
   @media (max-width: 640px) {
     .home-preview-grid {
       grid-template-columns: 1fr;
