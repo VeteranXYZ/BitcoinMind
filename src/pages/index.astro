@@ -336,10 +336,12 @@ const websiteLd = {
      96px rhythm (sp-9 + sp-9) every other pair of sections uses.
      Removed so all section-to-section spacing is uniform. */
 
-  /* Bottom gap to the footer is governed by .page's padding-bottom
-     (single source of truth across every page), not by a last-child
-     override here. The last section keeps the same var(--sp-9)
-     padding-bottom as its siblings. */
+  /* .page's padding-bottom now already includes the sp-9 that each
+     section's internal padding-bottom used to contribute. Zero the last
+     section's bottom padding so it doesn't double-stack. */
+  .home-deeper-section:last-child {
+    padding-bottom: 0;
+  }
 
   @media (max-width: 640px) {
     .home-preview-grid {
