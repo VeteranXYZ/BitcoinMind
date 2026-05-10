@@ -279,17 +279,24 @@ const websiteLd = {
     border-bottom: 1px solid var(--bdr);
     text-decoration: none;
     color: inherit;
+    transition: color var(--ease-fast);
   }
 
   .hiei-row:first-child {
     border-top: 1px solid var(--bdr);
   }
 
-  /* No hover recolor — on touch devices the `:hover` state sticks after a
-     tap (mobile browsers fire `:hover` on touch and only clear it on the
-     next interaction), which made the row flash gold and then stay gold
-     until the user tapped elsewhere. Desktop loses a small affordance,
-     but the arrow and the card border already signal interactivity. */
+  /* Hover recolor is gated behind `@media (hover: hover)` so it only
+     fires on true pointer devices. On touch, `:hover` is sticky — it
+     latches on tap and only clears on the next interaction — which made
+     the tapped row (or any row the finger crossed while swiping) stay
+     gold. With the query in place, mobile gets no hover at all and
+     behaves normally. */
+  @media (hover: hover) {
+    .hiei-row:hover {
+      color: var(--gold-hi);
+    }
+  }
 
   .hiei-row-title {
     font-family: var(--font-body);
@@ -319,7 +326,12 @@ const websiteLd = {
   }
 
   /* ── Deeper Sections ── */
+  /* Match the vertical rhythm of .home-preview-section (var(--sp-9))
+     instead of inheriting .section's default var(--sp-12). The default
+     was producing ~80px top/bottom padding, which felt oversized next
+     to the 48px preview sections above and below. */
   .home-deeper-section {
+    padding: var(--sp-9) 0;
     margin-left: calc(-1 * var(--pad));
     margin-right: calc(-1 * var(--pad));
     padding-left: var(--pad);
