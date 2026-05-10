@@ -343,6 +343,17 @@ const websiteLd = {
     margin-top: var(--sp-6);
   }
 
+  /* Mirror the page's top rhythm at the bottom of the last section.
+     The top uses var(--sp-12) between the nav's bottom edge and the
+     'bitcoinmind.com' eyebrow (from .ph padding-top). The last section's
+     padding-bottom becomes the visual gap between its last row and the
+     footer's top border, so setting it to var(--sp-12) mirrors that
+     rhythm on desktop. The mobile override below matches .ph's mobile
+     padding-top (var(--sp-9)). */
+  .home-deeper-section:last-child {
+    padding-bottom: var(--sp-12);
+  }
+
   @media (max-width: 640px) {
     .home-preview-grid {
       grid-template-columns: 1fr;
@@ -360,6 +371,12 @@ const websiteLd = {
 
     .hiei-row-cta {
       align-self: flex-end;
+    }
+
+    /* Mobile mirror — .ph uses var(--sp-9) padding-top on small screens,
+       so the last section's padding-bottom should match. */
+    .home-deeper-section:last-child {
+      padding-bottom: var(--sp-9);
     }
   }
 </style>
