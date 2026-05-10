@@ -8,7 +8,7 @@ interface Props {
 const { item, preview = false } = Astro.props;
 const visibleTags = item.tags.slice(0, 3);
 ---
-<article class="card">
+<article class="card" id={item.id}>
   <div class="card-layer">{item.layerLabel}</div>
   <div class="card-role">{item.learningRole}</div>
   <div class="card-title">{item.title}</div>

@@ -8,7 +8,7 @@ export default function TodaysPick() {
     return {
       pick: p,
       dateStr: formatLongDate(now),
-      href: p.type === 'library' ? '/library' : '/texts',
+      href: (p.type === 'library' ? '/library' : '/texts') + '#' + p.id,
       labelDest: p.type === 'library' ? 'Library' : 'Texts',
     };
   }, []);

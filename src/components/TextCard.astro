@@ -20,7 +20,7 @@ const getTypeLabel = (text: TextItem) => {
 };
 const typeLabel = getTypeLabel(item);
 ---
-<article class="card">
+<article class="card" id={item.id}>
   <div class="card-layer card-layer--row">
     <span>{item.layer}</span>
     {item.year > 0 && <span>{item.year}</span>}
