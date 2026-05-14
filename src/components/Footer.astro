@@ -1,7 +1,13 @@
 ---
 import { SITE } from '@/lib/seo';
 
-const footerGroups = [
+type FooterItem = {
+  href: string;
+  label: string;
+  external?: boolean;
+};
+
+const footerGroups: { label: string; items: FooterItem[] }[] = [
   {
     label: 'Core',
     items: [
@@ -28,6 +34,7 @@ const footerGroups = [
       { href: '/questions', label: 'Questions' },
       { href: '/stack', label: 'Stack' },
       { href: '/about', label: 'About' },
+      { href: 'https://github.com/VeteranXYZ/BitcoinMind', label: 'Source on GitHub', external: true },
     ],
   },
 ];
@@ -40,7 +47,7 @@ const footerGroups = [
           <div class="ft-map-label">{group.label}</div>
           <div class="ft-map-links">
             {group.items.map((item) => (
-              <a href={item.href}>{item.label}</a>
+              <a href={item.href} {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{item.label}</a>
             ))}
           </div>
         </div>
