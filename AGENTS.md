@@ -1,42 +1,50 @@
-# BitcoinMind AGENTS.md
+# BitcoinMind Agent Guide
 
-This file defines how AI coding agents should work in this repository.
+This file defines how AI coding agents and automated editing tools should work in this repository.
 
-BitcoinMind is an Astro-based editorial website: a personal study map for Bitcoin as money, protocol, and sovereignty. The project’s value comes from curation, information architecture, writing tone, visual consistency, and disciplined AI-assisted development.
+BitcoinMind is an Astro-based editorial study site for Bitcoin as money, protocol, custody practice, and sovereignty. The project depends on stable information architecture, curated content, restrained visual design, and static-first implementation.
 
-Before changing UI, layout, copy, or structure, read:
+Before changing UI, layout, copy, routes, or content structure, read:
 
 ```text
 DESIGN.md
 ```
 
----
-
-## 1. Operating model
+## 1. Operating Model
 
 Think of the repository in four layers:
 
 ```text
-Content layer        src/data/*, src/pages/*, notes/about text
+Content layer        src/data/**, selected src/pages/** copy
 Design layer         DESIGN.md, src/styles/design-system.css, src/styles/styles.css
-Application layer    Astro pages, components, Preact islands, scripts
-Deployment layer     astro.config.mjs, wrangler.jsonc, public/_headers, package scripts
+Application layer    Astro pages, components, Preact islands, browser scripts
+Deployment layer     package.json, astro.config.mjs, wrangler.jsonc, public/_headers, CI
 ```
 
-Make changes in the correct layer. Do not solve a content problem with global CSS. Do not solve a design-token problem with one-off component overrides. Do not solve a route problem by rewriting unrelated pages.
+Make changes in the correct layer.
 
----
+Do not solve:
 
-## 2. Tech stack
+- a content problem with global CSS
+- a token problem with one-off component overrides
+- a route problem by rewriting unrelated pages
+- a local UI issue by replacing the whole design system
+- a documentation mismatch by ignoring the actual codebase
 
-Current stack:
+## 2. Current Stack
+
+The current stack is defined by `package.json`. At this snapshot, the project uses:
 
 ```text
-Astro 5
-Preact islands
-TypeScript
-Custom CSS variables
-Cloudflare Pages
+Astro 6
+@astrojs/preact 5
+@astrojs/sitemap 3
+Preact 10 islands
+TypeScript 5
+CSS custom properties
+Fontsource: Literata, Inter, Geist Mono
+GitHub Actions CI
+Cloudflare Workers static assets via Wrangler
 ```
 
 Important files:
@@ -44,6 +52,8 @@ Important files:
 ```text
 package.json
 astro.config.mjs
+wrangler.jsonc
+public/_headers
 src/layouts/Base.astro
 src/styles/design-system.css
 src/styles/styles.css
@@ -52,44 +62,63 @@ src/components/*.astro
 src/components/*.tsx
 src/data/*.ts
 src/lib/seo.ts
-src/pages/*.astro
-src/pages/frames/*.astro
+src/pages/**/*.astro
+src/pages/sitemap.xml.ts
 src/scripts/*.ts
-public/_headers
-wrangler.jsonc
+scripts-build/*.mjs
 ```
 
----
+If this section disagrees with `package.json`, `astro.config.mjs`, or `wrangler.jsonc`, trust the codebase and update this file.
 
 ## 3. Commands
 
-Use these commands when relevant:
+Install dependencies:
 
 ```bash
-npm install
+npm ci
+```
+
+Run local development:
+
+```bash
 npm run dev
+```
+
+Run validation:
+
+```bash
+npm run check
 npm run build
-npm run preview
+```
+
+Refresh generated data and assets:
+
+```bash
 npm run refresh-data
 ```
 
-Before reporting completion, run:
+Preview production output:
 
 ```bash
+npm run preview
+```
+
+Before reporting completion for source-code changes, run:
+
+```bash
+npm run check
 npm run build
 ```
 
-If the build cannot be run, explicitly state that it was not run and why.
+If a command cannot be run, state exactly which command was not run and why.
 
----
+## 4. Task Types
 
-## 4. Task classification
+Classify the task before editing.
 
-Classify the requested work before editing.
+### Documentation-Only Task
 
-### Documentation-only task
-
-Allowed files usually include:
+Likely files:
 
 ```text
 README.md
@@ -97,9 +126,14 @@ DESIGN.md
 AGENTS.md
 ```
 
-Do not modify source code.
+Rules:
 
-### Design-system task
+- Do not modify source code.
+- Keep technical claims aligned with current files.
+- Avoid turning project documentation into promotional copy.
+- If describing routes or dependencies, verify them against the repository.
+
+### Design-System Task
 
 Likely files:
 
@@ -113,33 +147,35 @@ src/components/*.astro
 Rules:
 
 - Use existing tokens first.
-- Add new tokens only for recurring roles.
-- Avoid hardcoded colors.
-- Preserve the serif-led editorial identity.
+- Add tokens only for recurring roles.
+- Do not hardcode colors in components.
+- Preserve Literata / Inter / Geist Mono unless changing the font system is the explicit task.
+- Preserve the quiet editorial identity.
 
-### Content or curation task
+### Content or Curation Task
 
 Likely files:
 
 ```text
 src/data/*.ts
-src/pages/about.astro
 src/pages/notes.astro
+src/pages/about.astro
 ```
 
 Rules:
 
-- Preserve type shape.
-- Preserve resource order unless asked.
-- Do not bulk-generate filler content.
-- Keep tone quiet, precise, and non-promotional.
+- Preserve TypeScript shapes.
+- Do not reorder curated lists unless the task asks for sequencing work.
+- Do not bulk-generate filler resources.
+- Keep tone precise, non-hype, and source-aware.
+- Prefer adding content to datasets rather than duplicating it inside pages.
 
-### Information architecture task
+### Information Architecture Task
 
 Likely files:
 
 ```text
-src/pages/*
+src/pages/**
 src/components/Nav.astro
 src/lib/seo.ts
 public/robots.txt
@@ -148,10 +184,11 @@ public/robots.txt
 Rules:
 
 - Treat route changes as high risk.
-- Preserve SEO metadata and canonical logic unless explicitly changing it.
-- Do not rename routes casually.
+- Preserve canonical metadata unless intentionally changing it.
+- Update navigation, page metadata, sitemap behavior, and internal links together.
+- Do not rename routes as an opportunistic cleanup.
 
-### Interactive behavior task
+### Interactive Behavior Task
 
 Likely files:
 
@@ -159,25 +196,83 @@ Likely files:
 src/components/*.tsx
 src/scripts/*.ts
 src/pages/frames/*.astro
+scripts-build/*.mjs
+public/pulse.json
 ```
 
 Rules:
 
-- Keep islands small.
-- Do not convert static pages into client-heavy apps.
-- Preserve reduced-motion and mobile behavior.
+- Keep islands small and purposeful.
+- Do not convert static pages into a broad client-side app.
+- Preserve accessible labels, keyboard behavior, and mobile behavior.
+- Keep Frames educational rather than trading-oriented.
+- Handle unavailable live data with fallbacks.
 
----
+### Deployment or Build Task
 
-## 5. Brand and product constraints
+Likely files:
 
-BitcoinMind is not:
+```text
+package.json
+package-lock.json
+astro.config.mjs
+wrangler.jsonc
+public/_headers
+.github/workflows/*
+scripts-build/*.mjs
+```
 
-- A crypto news site.
-- A trading dashboard.
-- A price tracker.
-- A generic Web3 landing page.
-- A SaaS marketing site.
+Rules:
+
+- Avoid changing dependency versions casually.
+- Keep CI commands aligned with `package.json`.
+- Preserve Cloudflare static-assets behavior unless deployment strategy changes.
+- Do not remove defensive fallback behavior from data-refresh scripts.
+
+## 5. Route Constraints
+
+The current public routes are defined by `src/pages/**`. At this snapshot they include:
+
+```text
+/
+/primer
+/library
+/texts
+/toolkit
+/paths
+/frames
+/frames/1
+/frames/2
+/timeline
+/glossary
+/objections
+/stack
+/notes
+/questions
+/about
+/404
+/sitemap.xml
+```
+
+Navigation is defined primarily in:
+
+```text
+src/components/Nav.astro
+```
+
+Do not rename, remove, redirect, or reorder routes unless the task explicitly asks for information architecture work.
+
+If route changes are required, also check:
+
+```text
+src/lib/seo.ts
+src/components/Nav.astro
+internal links in src/pages/** and src/data/**
+public/robots.txt
+sitemap behavior
+```
+
+## 6. Brand and Writing Constraints
 
 The brand name is always:
 
@@ -194,249 +289,137 @@ Bitcoin-Mind
 Bitcoin Mindset
 ```
 
-Do not rewrite the site into promotional crypto copy.
+The site should not become:
 
----
+- a crypto news site
+- a trading dashboard
+- a price tracker
+- a generic Web3 landing page
+- a SaaS marketing site
+- a personal resume page
 
-## 6. Route constraints
+Keep writing:
 
-Current public routes:
+- quiet
+- precise
+- editorial
+- non-promotional
+- honest about tradeoffs
+- respectful toward serious objections
 
-```text
-/
-/start
-/books
-/essays
-/tools
-/frames
-/frames/1
-/frames/2
-/about
-/notes
-```
+Avoid:
 
-Do not rename, delete, redirect, or reorder navigation routes unless the task explicitly asks for information architecture work.
+- hype language
+- price predictions
+- financial advice
+- maximalist slogans
+- vague motivational copy
 
-Do not change navigation labels or hierarchy as an opportunistic improvement.
+## 7. CSS and Design Rules
 
----
-
-## 7. Design rules
-
-Source of truth:
+Primary styling files:
 
 ```text
 src/styles/design-system.css
-```
-
-Shared component and layout styles:
-
-```text
 src/styles/styles.css
 ```
 
 Rules:
 
-- Use CSS custom properties.
-- Do not hardcode new colors in components.
-- Do not introduce Tailwind, shadcn, Bootstrap, or another UI system.
-- Do not replace the serif-led identity with a generic sans-serif UI.
-- Do not overuse gold accents.
-- Do not add loud animation or decorative effects unless explicitly requested.
-- Do not make the site look like an exchange, dashboard, or generic SaaS product.
+- Use tokens from `design-system.css`.
+- Add new tokens only for recurring semantic roles.
+- Avoid one-off hex values.
+- Avoid broad CSS rewrites for local changes.
+- Keep global styles predictable.
+- Preserve mobile behavior and prevent horizontal overflow.
+- Preserve visible focus states.
 
-Follow `DESIGN.md` for visual and editorial decisions.
+If adding component-level CSS, keep it scoped to the component and aligned with existing tokens.
 
----
+## 8. Data Rules
 
-## 8. Content voice
+Primary content lives in `src/data/**`.
 
-The site voice is:
+Rules:
 
-- English.
-- Quiet.
-- Serious.
-- Editorial.
-- Reflective.
-- Personal but not self-promotional.
-- Skeptical of hype.
+- Keep exported names and item shapes stable.
+- Preserve IDs unless the task explicitly requires migration.
+- Keep internal links valid.
+- Avoid duplicating the same resource copy across pages.
+- Prefer explicit fields over hidden parsing conventions.
+- Check dependent filters/cards if adding or changing fields.
 
-Avoid:
+## 9. SEO and Metadata Rules
 
-```text
-ultimate platform
-unlock alpha
-next-gen crypto
-revolutionary Web3
-start your journey today
-```
-
-Prefer direct, precise language. When editing resources, explain why something matters rather than only what it is.
-
----
-
-## 9. Change discipline
-
-### Minimal diffs
-
-Make the smallest safe change that satisfies the task.
-
-Do not reformat unrelated files. Do not rewrite entire files for small edits.
-
-### No opportunistic refactors
-
-Do not refactor unrelated components, styles, scripts, routes, or data while completing a focused task.
-
-If you notice a useful improvement outside the task, mention it separately instead of implementing it.
-
-### Preserve working behavior
-
-Be careful with:
-
-- Astro transitions.
-- Font preloads.
-- Mobile menu scripts.
-- Reading progress script.
-- Frame interactions.
-- Preact islands.
-- Data imports.
-- Cloudflare deployment configuration.
-
-Do not remove code just because it appears unused without verifying usage.
-
----
-
-## 10. File-specific guidance
-
-### `src/styles/design-system.css`
-
-Use this for tokens only.
-
-Good changes:
-
-- Add a named token for a recurring visual role.
-- Adjust an existing token intentionally across the system.
-
-Bad changes:
-
-- Add component selectors.
-- Add one-off values.
-- Duplicate tokens.
-
-### `src/styles/styles.css`
-
-Use this for shared component and layout styles.
-
-Good changes:
-
-- Extend existing classes.
-- Add styles that follow the token system.
-- Keep sections organized.
-
-Bad changes:
-
-- Add large hardcoded one-off blocks.
-- Create competing card/page-header systems.
-- Override tokens casually.
-
-### `src/layouts/Base.astro`
-
-This controls global shell, fonts, metadata, scripts, and layout.
-
-Edit carefully. Do not remove font preload logic, fallback font declarations, navigation, reading progress, or grain unless explicitly instructed.
-
-### `src/components/Nav.astro`
-
-Navigation is part of the brand system.
-
-Do not change labels, route order, mobile behavior, or the BitcoinMind logo treatment without explicit instruction.
-
-### `src/data/*.ts`
-
-These files hold curated content.
-
-Preserve:
-
-- Type shape.
-- Curation logic.
-- Resource order where meaningful.
-- Editorial tone.
-
-Do not bulk-generate filler items.
-
-### `src/pages/about.astro` and `src/pages/notes.astro`
-
-These pages carry the personal record.
-
-Avoid rewriting them into a resume, sales page, founder bio, or generic blog unless explicitly asked.
-
----
-
-## 11. Quality bar
-
-Maintain:
-
-- Valid Astro and TypeScript.
-- Semantic headings.
-- Usable links and buttons.
-- Keyboard-friendly controls.
-- Reasonable contrast.
-- Mobile readability.
-- Reduced-motion compatibility.
-- Existing SEO metadata unless intentionally changed.
-
-Do not hide important content behind hover-only interactions.
-
----
-
-## 12. Hard constraints
-
-Do not do these unless explicitly asked:
-
-- Rename routes.
-- Change project name.
-- Split “BitcoinMind” into two words.
-- Replace the design system.
-- Convert the site into Tailwind/shadcn or another UI framework.
-- Rewrite all CSS.
-- Replace Astro with another framework.
-- Add analytics, tracking, ads, or third-party scripts.
-- Add price widgets or speculative trading features.
-- Bulk-add AI-generated content.
-
----
-
-## 13. Completion response format
-
-After work, summarize only what matters:
+SEO helpers live in:
 
 ```text
-Files changed:
-- ...
-
-What changed:
-- ...
-
-Validation:
-- npm run build passed.
-
-Notes:
-- ...
+src/lib/seo.ts
+src/layouts/Base.astro
 ```
 
-If validation was not run, say so directly.
+Rules:
 
----
+- Preserve canonical URL behavior.
+- Keep titles and descriptions page-specific.
+- Do not remove Open Graph or Twitter metadata casually.
+- Keep structured data factual and minimal.
+- Do not add keyword-stuffed copy.
 
-## 14. Best working style
+## 10. Generated Data and Assets
 
-For this repository, prefer:
+Generated or refreshed outputs include:
 
-- Small, reviewable changes.
-- Clear diffs.
-- Token consistency.
-- Preservation of editorial tone.
-- No surprise redesigns.
-- Explicit validation.
+```text
+public/pulse.json
+public/grain.png
+src/lib/block-height.ts
+```
 
-The goal is not to make BitcoinMind louder. The goal is to make it more coherent and easier to maintain.
+Build scripts live in:
+
+```text
+scripts-build/fetch-block-height.mjs
+scripts-build/fetch-pulse.mjs
+scripts-build/generate-grain.mjs
+```
+
+Rules:
+
+- Do not hand-edit generated files unless the task explicitly requires it.
+- Prefer updating scripts and rerunning `npm run refresh-data`.
+- Preserve fallback behavior for network failures.
+- Do not make the static site depend on live API availability at runtime unless explicitly required.
+
+## 11. Review Checklist
+
+Before finishing a change, check:
+
+- Does the change fit `DESIGN.md`?
+- Are routes and navigation still valid?
+- Are metadata and internal links still correct?
+- Did the change avoid unnecessary rewrites?
+- Are colors and typography using tokens?
+- Is mobile behavior preserved?
+- Did `npm run check` pass?
+- Did `npm run build` pass?
+
+For documentation-only changes, check:
+
+- Are stack claims current?
+- Are route lists current?
+- Is the tone normal project documentation rather than promotional copy?
+- Does the documentation avoid duplicating stale facts from older versions?
+
+## 12. Source-of-Truth Rule
+
+When files disagree, use this priority order:
+
+1. Current codebase files
+2. `package.json`, `astro.config.mjs`, `wrangler.jsonc`, and CI config for stack/build/deploy facts
+3. `src/pages/**` and `Nav.astro` for routes/navigation
+4. `src/styles/design-system.css` and `styles.css` for visual implementation
+5. `src/data/**` for content inventory
+6. `README.md`, `DESIGN.md`, and this file for documented intent
+
+If documentation is stale, update it as part of the task or clearly report the mismatch.

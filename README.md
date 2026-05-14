@@ -1,30 +1,42 @@
 # BitcoinMind
 
-## Overview
-
-BitcoinMind is a static-first Bitcoin learning application for studying Bitcoin as money, protocol, custody practice, and sovereignty.
+BitcoinMind is a static-first Bitcoin study site for understanding Bitcoin as money, protocol, custody practice, and sovereignty.
 
 Live site: https://bitcoinmind.com
 
-It is not a price site, trading dashboard, or generic crypto portal. The problem it solves is orientation: Bitcoin has too much noise around it, and serious readers often do not know where to begin, what to read next, or how monetary history, protocol design, self-custody, and sovereignty fit together.
+The site is not a price tracker, trading dashboard, news feed, or generic crypto portal. It is a curated learning map: a structured place to read, compare ideas, follow study paths, inspect long-term frames, and connect practical tools with monetary and protocol-level concepts.
 
-BitcoinMind turns that study process into a structured product. It uses Astro for static routes, Preact islands for targeted interaction, TypeScript datasets for content modeling, build scripts for generated network snapshots, shared SEO infrastructure, GitHub Actions CI, and Cloudflare static deployment.
+## Purpose
 
-As a portfolio project, the important part is the path from prototype to product:
+Bitcoin information is easy to collect and hard to sequence. New readers often encounter price commentary, ideology, technical fragments, and scattered resource lists before they understand the basic order of ideas.
 
-- an AI-generated single-file prototype became a maintainable Astro application
-- hardcoded page content became structured data that powers multiple surfaces
-- interactivity was added selectively instead of turning the site into a heavy SPA
-- AI tools were used for architecture, copy, refactoring, UI polish, and debugging
-- product judgment stayed human-led: scope, navigation, tone, hierarchy, and final acceptance
+BitcoinMind organizes the subject around a few recurring questions:
 
-## Why This Exists
+- What is money, and why does hardness matter?
+- What did Bitcoin change at the protocol level?
+- Why do verification and custody matter?
+- Which texts and tools are worth studying first?
+- What are the serious objections, and what do they get right?
 
-Bitcoin is usually explained through price, news, or ideology. BitcoinMind takes a narrower route: money before market price, protocol before narrative, verification before trust, custody before speculation.
+The project favors curation over volume. A resource belongs in the site only if it improves the learning path.
 
-The site is built for readers who want a serious path through the subject. It moves from the Bitcoin whitepaper and monetary history into primary texts, tools, objections, custody practice, and long-term frames for thinking about value.
+## Core Sections
 
-The product is intentionally curated rather than exhaustive. The standard is not "more links"; it is better sequencing, clearer rationale, and fewer dead ends for the reader.
+Current public sections include:
+
+- **Primer** — a five-step introduction from the whitepaper to money, sovereignty, and the original 2011 note.
+- **Library** — curated books and long-form resources organized by learning layer.
+- **Texts** — primary essays and foundational Bitcoin writings.
+- **Toolkit** — custody, node, wallet, verification, and network-observation tools.
+- **Paths** — guided routes through money, protocol, custody, philosophy, and economic context.
+- **Frames** — interactive conceptual views for understanding monetary hardness and purchasing power.
+- **Timeline** — major Bitcoin events across protocol, market, institutional, and cultural history.
+- **Glossary** — compact explanations for important terms.
+- **Objections** — serious criticisms answered without treating them as weak arguments.
+- **Stack** — the site owner's approach to DCA, cold storage, verification, and inheritance.
+- **Notes** — personal writing and source notes, including the April 2011 Bitcoin note.
+- **Questions** — reader-style questions answered from the site's point of view.
+- **About** — origin story and curation principles.
 
 ## Architecture
 
@@ -33,149 +45,133 @@ flowchart TD
   A[TypeScript content data] --> B[Astro static pages]
   A --> C[Cards, filters, paths, metadata]
   D[Build scripts] --> E[public/pulse.json]
-  E --> F[Network Clock island]
+  D --> F[public/grain.png]
+  E --> G[Network Clock island]
   H[Preact islands] --> B
-  B --> G[Static HTML output]
-  G --> I[Cloudflare static assets]
-  J[GitHub Actions] --> K[npm ci / npm run check / npm run build]
+  I[Browser scripts] --> B
+  B --> J[Static HTML output]
+  J --> K[Cloudflare Workers static assets]
+  L[GitHub Actions] --> M[npm ci / npm run check / npm run build]
+  N[DESIGN.md + AGENTS.md] --> O[Documented design and agent constraints]
 ```
 
-## Product Decisions
+## Technical Stack
 
-- Static first: content should load quickly, remain crawlable, and work without a custom application server.
-- Structured data over duplication: resources live in TypeScript datasets that power pages, cards, filters, paths, counts, and metadata.
-- Selective interactivity: Preact is used only where client-side behavior adds value, such as the Network Clock, Today's Pick, and interactive Frames.
-- Curated over exhaustive: the site chooses a path through the subject instead of trying to cover every Bitcoin resource.
-- AI as leverage: AI helped generate, migrate, refactor, and polish, but product direction, content standards, navigation choices, and final acceptance remained human-led.
-
-## Product Surface
-
-Core sections:
-
-- Primer: a five-step entrance from the Bitcoin whitepaper to money, sovereignty, and the author's 2011 note
-- Library: curated books and long-form resources organized by learning layer
-- Texts: primary essays and foundational Bitcoin writings
-- Toolkit: custody, node, wallet, and verification tools
-- Paths: guided study routes through money, protocol, custody, philosophy, and economic context
-- Frames: interactive conceptual views for understanding money and purchasing power
-- Timeline: major Bitcoin events across protocol, market, institutional, and cultural history
-- Glossary: compact conceptual anchors for important terms
-- Objections: serious criticisms answered without pretending they are weak
-- Stack: the author's approach to DCA, cold storage, verification, and inheritance
-- Notes: personal writing, including the April 2011 Bitcoin note
-- Questions: reader-style questions answered from the site's point of view
-- About: the origin story and curation principles
-
-The current curated dataset includes 13 library items, 16 primary texts, 18 toolkit items, 6 guided learning paths, 17 timeline events, 16 glossary entries, 7 objections, 6 questions, and 2 interactive frames.
-
-## Key Features
-
-### Curated Knowledge Architecture
-
-Problem: Bitcoin resources are easy to collect and hard to sequence. A long list of links does not tell a reader what to read first or why it matters.
-
-Decision: Build the site around learning progression instead of resource volume.
-
-Implementation: TypeScript datasets model resources by role, difficulty, learning stage, tags, and conceptual purpose. The same data powers resource cards, guided paths, filters, homepage previews, counts, and metadata, so the product can grow without duplicating content across pages.
-
-### Network Clock
-
-Problem: Bitcoin is a live network, but a static learning site should not become fragile because several third-party APIs are called directly from the browser.
-
-Decision: Generate a first-party static network snapshot and let the client read from that stable endpoint.
-
-Implementation: Build scripts fetch block height, hash rate, mempool count, and node count where available, then write `public/pulse.json`. A Preact island reads that file and displays block height, time since genesis, halving estimate, difficulty epoch progress, mined supply progress, hash rate, and mempool count with fallbacks.
-
-### Interactive Purchasing-Power Frame
-
-Problem: Monetary arguments are easier to evaluate when the reader can inspect time, purchasing power, and volatility directly.
-
-Decision: Build a conceptual chart, not a trading dashboard.
-
-Implementation: A Preact/SVG island combines CPI data, Big Mac price anchors, Bitcoin price anchors, a live BTC quote fallback path, log-scale rendering, pointer inspection, event jumps, and accessible chart labels. The result stays educational rather than financial-advice oriented.
-
-### Search and Filtering
-
-Problem: The site has many resource types, but a heavy client-side app would be unnecessary for mostly static content.
-
-Decision: Keep filtering lightweight and compatible with static HTML.
-
-Implementation: Resource pages use structured data attributes and a shared browser filter controller for search, filter buttons, grouped visibility, and empty states. The pages stay simple HTML first, with behavior layered on top.
-
-### SEO and Static Publishing
-
-Problem: A content-heavy learning site needs clean metadata, canonical URLs, and reliable static output.
-
-Decision: Centralize page shell, metadata, and publishing concerns.
-
-Implementation: A shared Astro base layout provides canonical URLs, descriptions, Open Graph metadata, Twitter metadata, structured JSON-LD where useful, font preloading, sitemap integration, and Cloudflare-ready static output.
-
-## Development Approach
-
-BitcoinMind began as a personal idea and a Claude Design-generated single-file HTML prototype. That prototype was useful as a visual and conceptual seed, but it was not a maintainable application.
-
-The project was then guided into an Astro architecture:
-
-1. Preserve the useful product direction from the prototype.
-2. Replace the one-file structure with routes, layouts, components, and typed datasets.
-3. Turn static page fragments into reusable content data.
-4. Add Preact only where interaction was worth the client-side cost.
-5. Use AI to propose code, copy, refactors, layout fixes, and design alternatives.
-6. Review, rewrite, reject, or narrow AI output until the product stayed coherent.
-
-The main skill demonstrated here is not prompting AI to generate pages, but repeatedly converting AI output into a coherent, maintainable product.
-
-AI accelerated the work. Human judgment decided what belonged: scope, tone, navigation, content hierarchy, layout rhythm, mobile behavior, factual restraint, and final acceptance. Many changes were intentionally small: navigation labels, footer rhythm, mobile overscroll, page header spacing, filter behavior, and SEO copy were refined until the site felt like one product instead of a set of generated sections.
-
-## Engineering Notes
-
-### Stack
+The repository currently uses:
 
 - Astro 6
-- Preact islands
-- TypeScript
-- CSS custom design system
-- GitHub Actions
+- `@astrojs/preact` 5
+- `@astrojs/sitemap` 3
+- Preact 10 islands
+- TypeScript 5
+- CSS custom properties for the design system
+- Fontsource packages for Literata, Inter, and Geist Mono
+- GitHub Actions CI
 - Cloudflare Workers static assets via Wrangler
 
-### Project Structure
+The dependency source of truth is `package.json`. Deployment details are in `astro.config.mjs`, `wrangler.jsonc`, and `public/_headers`.
+
+## Project Structure
 
 ```text
 src/
-  components/       Reusable Astro and Preact components
+  components/       Astro and Preact UI components
   data/             Curated content and chart datasets
-  layouts/          Shared document shell and SEO layout
-  lib/              Site metadata, helpers, generated block height
+  layouts/          Shared document shell and metadata layout
+  lib/              SEO helpers, site metadata, generated values
   pages/            Static routes
   scripts/          Browser interaction scripts
   styles/           Design tokens and global styles
 
 scripts-build/      Data refresh and generated asset scripts
-public/             Static files and generated pulse snapshot
-.github/workflows/  CI pipeline
+public/             Static files, generated pulse snapshot, headers
+.github/workflows/  CI workflow
 ```
 
-### Build-Time Data Refresh
+Important files:
 
-`npm run refresh-data` updates generated data used by the site:
+```text
+README.md                    Project overview and development notes
+DESIGN.md                    Design system and editorial constraints
+AGENTS.md                    Rules for AI coding agents and scripted edits
+src/styles/design-system.css Design tokens
+src/styles/styles.css        Global component/page styling
+src/layouts/Base.astro       Shared page shell and metadata
+src/components/Nav.astro     Main navigation
+src/lib/seo.ts               SEO metadata helpers
+```
 
-- latest block height fallback
+## Content Model
+
+Most curated resources live in TypeScript data files under `src/data/`. These files are used by pages, cards, filters, paths, counts, and metadata.
+
+This avoids duplicating the same resource descriptions across multiple pages. When adding or editing content, prefer updating the relevant dataset instead of hardcoding a copy directly inside an Astro page.
+
+Typical content files include:
+
+```text
+src/data/library.ts
+src/data/texts.ts
+src/data/toolkit.ts
+src/data/rabbit-holes.ts
+src/data/timeline.ts
+src/data/glossary.ts
+src/data/debates.ts
+src/data/questions.ts
+src/data/frame-one.ts
+src/data/frame-two.ts
+```
+
+## Design System
+
+The visual system is intentionally quiet and editorial:
+
+- warm dark background
+- restrained cream text
+- muted secondary copy
+- sparse amber accents
+- serif-led headings
+- readable long-form spacing
+- thin borders and low-noise surfaces
+
+Design tokens live in:
+
+```text
+src/styles/design-system.css
+```
+
+Design rules and product-level visual constraints live in:
+
+```text
+DESIGN.md
+```
+
+Use existing tokens before adding new values. Avoid hardcoded colors, one-off page styles, or visual changes that make the site feel like a trading app, SaaS landing page, or crypto news product.
+
+## Interactivity
+
+The site is static-first. Client-side code is used only where it adds clear value.
+
+Examples:
+
+- Network Clock / pulse display
+- Today's Pick
+- interactive Frames
+- resource filtering and empty states
+
+Keep new interactive behavior small, accessible, and scoped to the relevant component or page. Do not convert static content pages into a broad client-side application unless there is a clear reason.
+
+## Build-Time Data Refresh
+
+`npm run refresh-data` updates generated assets and data used by the site:
+
+- latest block-height fallback
 - `public/pulse.json` network snapshot
 - `public/grain.png` texture asset
 
-The data refresh path is defensive. If a live source fails, scripts preserve cached or fallback values instead of breaking the site.
+The refresh path should be defensive. If a live source fails, the site should preserve a cached or fallback value rather than fail unnecessarily.
 
-### Continuous Integration
-
-GitHub Actions runs on pull requests and pushes to `main`:
-
-```text
-npm ci
-npm run check
-npm run build
-```
-
-## Running Locally
+## Development
 
 Install dependencies:
 
@@ -183,16 +179,21 @@ Install dependencies:
 npm ci
 ```
 
-Start development server:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Run validation:
+Run type and Astro checks:
 
 ```bash
 npm run check
+```
+
+Build the site:
+
+```bash
 npm run build
 ```
 
@@ -202,38 +203,59 @@ Refresh generated data:
 npm run refresh-data
 ```
 
-Preview production build:
+Preview the production build:
 
 ```bash
 npm run preview
 ```
 
-## Limitations
+## Working With AI Agents
 
-This is not yet a full AI application in the narrow LLM-engineering sense. It does not currently include:
+This repository includes two guidance files for AI-assisted maintenance:
 
+```text
+DESIGN.md   Design, tone, visual identity, and editorial constraints
+AGENTS.md   Execution rules, file boundaries, validation, and high-risk areas
+```
+
+Before making automated or AI-assisted changes, read both files. Keep diffs small, respect the existing information architecture, and validate with `npm run check` and `npm run build` when source code changes.
+
+If documentation conflicts with the current codebase, treat the codebase source files as authoritative, then update the documentation so the mismatch does not persist.
+
+## CI and Deployment
+
+GitHub Actions runs validation on pull requests and pushes to `main`:
+
+```text
+npm ci
+npm run check
+npm run build
+```
+
+The production build outputs static assets from Astro. Cloudflare deployment is configured through Wrangler using the `dist` directory as the static assets source.
+
+## Maintenance Principles
+
+- Keep the site static-first unless interactivity is clearly useful.
+- Add content through typed datasets when possible.
+- Preserve route stability and canonical metadata.
+- Keep the visual system restrained and editorial.
+- Prefer small coherent changes over broad rewrites.
+- Update `DESIGN.md` and `AGENTS.md` when project rules or architecture change.
+- Treat `package.json`, `astro.config.mjs`, `wrangler.jsonc`, and `src/pages/**` as the source of truth for current stack and routes.
+
+## Current Limitations
+
+BitcoinMind is currently a curated static learning site with selective interactive components. It does not include:
+
+- user accounts
+- personalization
+- runtime LLM calls
 - retrieval-augmented generation
-- runtime model calls
-- prompt/version tracking
 - automated content evaluation
 - citation-grounded AI answers
-- user accounts or personalization
 
-That is intentional for the current version. The site first establishes the content system and product point of view.
-
-## Future Work
-
-The strongest next step would be a small, citation-grounded AI feature that respects the site's curated nature.
-
-Possible directions:
-
-- Ask BitcoinMind
-- Build My Path
-- Explain This Term
-- Objection Coach
-- Reading Companion
-
-Any AI feature should cite sources, admit uncertainty, and stay inside the site's knowledge boundary. The goal is not to bolt on a chatbot, but to extend the knowledge map without weakening trust.
+Any future AI feature should stay within the site's curated knowledge boundary, cite sources, admit uncertainty, and avoid becoming a generic chatbot.
 
 ## Author
 

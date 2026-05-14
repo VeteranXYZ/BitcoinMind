@@ -1,143 +1,130 @@
-# BitcoinMind DESIGN.md
+# BitcoinMind Design Guide
 
-BitcoinMind is a quiet, editorial study map for Bitcoin as money, protocol, and sovereignty. It should feel like a long-term reading room: serious, selective, and calm.
+BitcoinMind is a quiet editorial study map for Bitcoin as money, protocol, custody practice, and sovereignty. The site should feel like a long-term reading room: serious, selective, calm, and built for repeated study.
 
-This document is the design source of truth for humans and AI agents. Read it before changing visual design, page structure, component behavior, typography, content presentation, or tone.
+This document defines the product's design direction, content tone, visual constraints, and interface principles. Use it when changing layout, typography, color, page rhythm, navigation, content presentation, or UI behavior.
 
----
+## 1. Product Definition
 
-## 1. Product definition
-
-### What BitcoinMind is
+### What BitcoinMind Is
 
 BitcoinMind is:
 
-- A personal study map for Bitcoin as money, protocol, and sovereignty.
-- A curated path through books, primary texts, tools, notes, and visual frames.
-- A public record by Hiei, shaped by long-term curiosity since 2017.
-- An editorial website designed for reading, judgment, and intellectual trust.
-- A demonstration of AI-assisted design work with explicit constraints.
+- a personal map for studying Bitcoin as money, protocol, and sovereignty
+- a curated route through books, primary texts, tools, notes, objections, questions, and conceptual frames
+- an editorial site designed for reading, comparison, and long-term reference
+- a static-first product with selective interactive components
+- a public record by Hiei, shaped by long-term study and curation
 
-### What BitcoinMind is not
+### What BitcoinMind Is Not
 
 BitcoinMind is not:
 
-- A trading dashboard.
-- A crypto news site.
-- A price prediction product.
-- A token discovery tool.
-- A generic Web3 marketing page.
-- A loud fintech landing page.
-- A personal resume disguised as a product.
+- a trading dashboard
+- a price prediction product
+- a crypto news site
+- a token discovery tool
+- a generic Web3 landing page
+- a fintech SaaS marketing page
+- a maximalist resource dump
 
-The site should communicate seriousness through structure, restraint, typography, curation, and consistency.
+The site should communicate trust through structure, restraint, clarity, typography, and curation.
 
----
+## 2. Design Principles
 
-## 2. Design architecture
+### Quiet Authority
 
-BitcoinMind has three design layers:
-
-```text
-Brand layer        → name, tone, visual identity, trust
-Editorial layer    → reading paths, curation, notes, explanations
-Interface layer    → navigation, cards, filters, frames, responsive behavior
-```
-
-Changes should respect all three layers. A page can be visually polished only if it still preserves the brand and editorial layer.
-
----
-
-## 3. Core principles
-
-### 3.1 Quiet authority
-
-Use restraint. The site should feel confident because it is clear and consistent, not because it is loud.
+The site should feel confident because it is consistent and clear, not because it is loud.
 
 Prefer:
 
-- Large editorial titles.
-- Warm dark surfaces.
-- Muted body text.
-- Sparse gold accents.
-- Thin borders.
-- Strong reading rhythm.
-- Selective use of interaction.
+- large editorial titles
+- warm dark backgrounds
+- readable cream text
+- muted secondary copy
+- sparse amber highlights
+- thin borders
+- stable page rhythm
+- clear hierarchy
 
 Avoid:
 
-- Neon colors.
-- Crypto exchange energy.
-- Dashboard density where reading is the goal.
-- Heavy gradients or glowing cards.
-- Overactive animations.
-- Decorative effects that do not clarify meaning.
+- neon color systems
+- heavy crypto-exchange energy
+- high-density dashboards on reading pages
+- large glowing cards
+- glossy SaaS gradients
+- decorative animation that does not clarify meaning
 
-### 3.2 Editorial over promotional
+### Editorial Over Promotional
 
 Write and design like an editor, not a growth marketer.
 
-Prefer:
+Prefer language such as:
 
-- “study map”
-- “public record”
-- “curated resources”
-- “money, protocol, and sovereignty”
-- “first principles”
-- “long-term learning”
+- study map
+- curated resources
+- primary texts
+- monetary history
+- protocol design
+- self-custody
+- verification
+- sovereignty
 
-Avoid:
+Avoid language such as:
 
-- “unlock alpha”
-- “ultimate Bitcoin hub”
-- “next-gen crypto platform”
-- “start your journey today”
-- “revolutionary Web3”
-- “moonshot”
+- unlock alpha
+- ultimate crypto hub
+- next-gen Web3 platform
+- moonshot
+- start your journey today
+- revolutionary
 
-### 3.3 Curation over volume
+### Curation Over Volume
 
-The site should feel selected, not filled. More content is only better when it improves the study path.
+More content is only better when it improves the learning path.
 
-When adding a book, essay, tool, or note, ask:
+Before adding a resource, ask:
 
 - What question does this answer?
-- Why does it belong here?
-- Is it foundational, practical, or personal?
-- Does it improve the map or merely increase the count?
+- Where does it belong in the learning sequence?
+- Is it foundational, practical, historical, critical, or personal?
+- Does it reduce confusion or only increase quantity?
 
-### 3.4 One system, not separate pages
+### One System, Many Surfaces
 
-The homepage, Start, Books, Essays, Tools, Frames, About, and Notes should feel like parts of one system.
+The homepage, Primer, Library, Texts, Toolkit, Paths, Frames, Timeline, Glossary, Objections, Stack, Notes, Questions, and About should feel like one product.
 
-Do not invent a separate visual language for a single page unless the content type truly requires it. Frame pages may be more interactive, but they still belong to the same editorial system.
+Frames may be more interactive, but they should still share the same editorial DNA: restrained color, clear reading hierarchy, and conceptual usefulness.
 
----
+## 3. Brand Rules
 
-## 4. Brand identity
+### Name
 
-### 4.1 Name
-
-The brand name is always:
+Always write the project name as:
 
 ```text
 BitcoinMind
 ```
 
-Rules:
+Do not write:
 
-- Do not write “Bitcoin Mind”.
-- Do not write “Bitcoinmind”.
-- Do not write “Bitcoin-Mind”.
-- Do not force a line break between Bitcoin and Mind.
-- Do not rename the project to a generic phrase like “Bitcoin Study Hub”.
+```text
+Bitcoin Mind
+Bitcoinmind
+Bitcoin-Mind
+Bitcoin Mindset
+```
 
-### 4.2 Visual brand treatment
+Do not insert a visible space or forced line break between `Bitcoin` and `Mind`.
 
-The brand can use a two-tone treatment:
+### Two-Tone Brand Treatment
 
-- “Bitcoin” uses the primary warm text color.
-- “Mind” uses the restrained gold/highlight tone.
+When using the two-tone brand treatment:
+
+- `Bitcoin` should use the primary warm text color.
+- `Mind` should use the restrained amber accent.
+- The word must still read as one name.
 
 The current navigation pattern uses:
 
@@ -145,9 +132,9 @@ The current navigation pattern uses:
 Bitcoin<b>Mind</b>
 ```
 
-The word should still read as one name. Do not introduce a visible space.
+Preserve this one-word identity unless the brand system is intentionally redesigned.
 
-### 4.3 Positioning line
+### Positioning Line
 
 Preferred positioning:
 
@@ -156,432 +143,244 @@ A personal map for studying Bitcoin as money, protocol, and sovereignty.
 By Hiei · Since 2017
 ```
 
-Keep the ownership line quiet and factual. Avoid stacking two adjacent lines that both begin with “A …”.
+Keep ownership language factual and quiet. Do not turn it into a pitch, campaign, or personal branding slogan.
 
----
+## 4. Color System
 
-## 5. Color system
-
-The source of truth is:
+The token source of truth is:
 
 ```text
 src/styles/design-system.css
 ```
 
-Use CSS custom properties. Do not hardcode new hex, RGB, HSL, or OKLCH values in components unless the task is explicitly to update the design system.
+Use CSS custom properties. Do not hardcode new hex, RGB, HSL, or OKLCH values inside components unless the task is explicitly to update the design system.
 
-### 5.1 Color roles
+### Current Color Roles
 
-Current design roles:
+Core roles include:
 
 ```css
---bg        main warm dark background
---bg-deep   deeper background layer
---surf      card / surface background
---surf-2    elevated surface background
---bdr       default border
---bdr-2     stronger border
---tx        primary warm text
---tx-2      secondary body text
---tx-3      muted metadata text
---gold      primary accent
---gold-dim  subtle accent wash
---gold-glow restrained hover glow
---gold-hi   bright highlight
---nav-glass fixed navigation glass layer
+--bg              main warm dark background
+--surface         deeper surface layer
+--card            card / panel background
+--card-hover      elevated or hover surface
+
+--text-heading    primary warm heading text
+--text-body       main body text
+--text-secondary  secondary copy
+--text-muted      metadata and subdued labels
+--text-faint      low-emphasis utility text
+
+--accent          primary amber accent
+--accent-bright   brighter amber highlight
+--accent-muted    subdued amber
+
+--border          default border
+--border-strong   stronger border
+--border-accent   accent border
+--focus-ring      accessible focus indicator
 ```
 
-### 5.2 Accent discipline
+Legacy aliases such as `--tx`, `--tx-2`, `--gold`, `--surf`, and `--bdr` exist for compatibility. Prefer the semantic role names for new work unless editing existing CSS that already uses aliases.
 
-Gold is a signal, not a decoration layer.
+### Accent Discipline
 
-Use gold for:
+Amber is a signal, not a decoration layer.
 
-- Brand emphasis.
-- Active navigation states.
-- Small metadata labels.
-- Thin rules, dots, and highlights.
-- Focus and hover borders.
-- Minimal data highlights.
+Use amber for:
+
+- brand emphasis
+- active navigation state
+- small metadata labels
+- thin rules and highlights
+- focus and hover borders
+- minimal data emphasis
 
 Avoid:
 
-- Large gold panels.
-- Gold-heavy card backgrounds.
-- Repeated glowing elements.
-- Making the site look “premium crypto”.
+- large amber backgrounds
+- repeated glowing elements
+- gold-heavy cards
+- decorative accents with no informational role
+- making the site look like a premium crypto product
 
-### 5.3 Background atmosphere
+## 5. Typography
 
-The site should keep:
-
-- Warm dark depth.
-- Subtle radial atmosphere.
-- Low-opacity grain.
-- Thin grid or rule details only where meaningful.
-
-Do not make the site pure black, flat gray, bright blue, or exchange-style dark navy.
-
----
-
-## 6. Typography
-
-The source of truth is:
-
-```text
-src/styles/design-system.css
-```
-
-### 6.1 Font roles
-
-Current font roles:
+The current font system is:
 
 ```css
---font-serif: Playfair Display, Playfair Fallback, Georgia, serif;
---font-body:  Lora, Lora Fallback, Georgia, serif;
---font-mono:  DM Mono, Courier New, monospace;
+--font-display: 'Literata', serif;
+--font-body:    'Inter', sans-serif;
+--font-mono:    'Geist Mono', monospace;
 ```
 
-Use them by purpose:
+Use:
 
-- `--font-serif`: brand, hero titles, page titles, section titles, card titles.
-- `--font-body`: descriptions, essays, notes, long-form prose.
-- `--font-mono`: labels, metadata, filters, dates, navigation details.
+- Literata for display titles, major headings, and editorial identity.
+- Inter for body copy, UI text, filters, navigation, and metadata.
+- Geist Mono for numbers, labels, technical values, and compact data.
 
-Do not replace the serif-led system with a generic sans-serif product UI.
+Do not reintroduce older font systems such as Playfair Display, Lora, or DM Mono unless the codebase intentionally changes back to them.
 
-### 6.2 Hierarchy
+### Type Rhythm
 
-The site depends on editorial hierarchy:
+Use the existing type tokens in `design-system.css`:
 
-- Hero title: very large, serif, high contrast, compact line height.
-- Page title: large serif, often with one restrained gold emphasis.
-- Section title: serif, medium-large, calm.
-- Card title: serif, compact and readable.
-- Body copy: Lora, relaxed line height, muted warm tone.
-- Metadata: DM Mono, small, uppercase or tightly structured.
+- display sizes: `--fz-hero`, `--fz-page`, `--fz-section`, `--fz-step`, `--fz-note`, `--fz-quote`
+- fixed scale: `--text-xs` through `--text-6xl`
+- line heights: `--lh-title`, `--lh-card`, `--lh-base`, `--lh-loose`
+- tracking: `--ls-tighter`, `--ls-snug`, `--ls-normal`, `--ls-3`, `--ls-5`, `--ls-7`, `--ls-9`, `--ls-11`
 
-### 6.3 Reading rhythm
+Avoid oversized hero typography on inner pages. The site should feel archival and editorial, not like a launch-page template.
 
-Long prose should feel slow and readable.
+## 6. Layout and Components
 
-Preserve:
+### Page Rhythm
 
-- Comfortable line length.
-- Relaxed paragraph spacing.
-- Clear hierarchy between title, deck, body, and metadata.
-- Muted text for long reading.
+Maintain generous but controlled spacing. Reading pages should have enough air for long-form comprehension without feeling sparse or unfinished.
 
-The About and Notes pages are especially sensitive. Do not compress them into dashboard blocks or resume sections.
+Use existing spacing and layout tokens:
 
----
-
-## 7. Layout and components
-
-### 7.1 Global shell
-
-The current shell uses:
-
-- Fixed top navigation.
-- A consistent top offset for pages.
-- `.page` as the page wrapper.
-- `.c` as the centered content container.
-- Width and spacing tokens from the design system.
-
-Do not create competing global containers.
-
-### 7.2 Spacing
-
-Use the spacing tokens in `src/styles/design-system.css`.
-
-Do not scatter arbitrary spacing values across pages. The site’s authority depends on stable vertical rhythm.
-
-### 7.3 Page headers
-
-Non-home pages should share the same page-header logic:
-
-```text
-.ph
-.ph-eye
-.ph-title
-.ph-desc
+```css
+--max-w
+--pad
+--sp-1 through --sp-13
+--radius
+--radius-sm
+--radius-lg
 ```
 
-Frame pages can use aliases, but they should remain visually related to the same system.
+Avoid one-off page margins unless a layout genuinely needs a new reusable pattern.
 
-Do not create a new H1 style for every page.
+### Cards
 
-### 7.4 Cards
+Cards should feel like quiet editorial containers, not product tiles.
 
-Cards are editorial resource cards, not SaaS pricing cards.
+Use cards for:
 
-Use the existing card system:
+- resource entries
+- study path steps
+- toolkit items
+- objections and responses
+- glossary entries
+- structured summaries
 
-- Warm dark surface.
-- Thin border.
-- Small radius.
-- Subtle hover lift.
-- Restrained gold hover state.
-- Serif title.
-- Mono metadata.
-- Muted explanation.
+Cards should use restrained borders, muted metadata, readable titles, and limited hover motion.
 
-Avoid:
+### Navigation
 
-- Rounded 2xl app-store cards.
-- Large colorful icons for every card.
-- Heavy shadows.
-- Bright borders.
-- Image-heavy thumbnails unless the content requires imagery.
+Navigation should remain stable and simple. It should help readers understand the site map without turning the header into a dense application menu.
 
-### 7.5 Filters and controls
+Do not rename, reorder, or remove public routes as a side effect of unrelated work.
 
-Filters should feel like archive controls:
+Current public route structure is defined by `src/pages/**` and `src/components/Nav.astro`.
 
-- Mono labels.
-- Small uppercase buttons.
-- Thin borders.
-- Gold active state.
-- Minimal motion.
+### Frames
 
-Do not turn filters into colorful SaaS pills.
+Frames are conceptual views, not trading tools.
 
----
+They may use charts, SVG, pointer inspection, and live or generated data, but the design goal is explanation rather than market action.
 
-## 8. Page intent
+Frame UI should:
 
-### Home `/`
+- support reading first
+- keep labels clear
+- avoid financial-advice framing
+- avoid trading-terminal density
+- preserve accessibility and mobile behavior
 
-Purpose:
+## 7. Content Tone
 
-- Explain what BitcoinMind is.
-- Show the three-door structure: start, study, practice.
-- Preview important sections without becoming cluttered.
-- Establish visual and intellectual identity.
-
-Do not turn the homepage into a portal, dashboard, or sales landing page.
-
-### Start `/start`
-
-Purpose:
-
-- A guided introduction path.
-- Serious beginner orientation.
-- A clear sequence, not a marketing funnel.
-
-Preserve the ordered, step-by-step feeling.
-
-### Books `/books`
-
-Purpose:
-
-- Curated Bitcoin library.
-- Clear learning layers.
-- Quality over quantity.
-
-Do not turn it into a generic book database.
-
-### Essays `/essays`
-
-Purpose:
-
-- Foundational essays and primary texts.
-- Canonical, selective, historically aware.
-
-Do not turn it into a blog feed.
-
-### Tools `/tools`
-
-Purpose:
-
-- Sovereignty and intelligence tools.
-- Help users verify, inspect, protect, and think.
-
-Avoid app-store noise. Explain why each tool matters.
-
-### Frames `/frames`, `/frames/1`, `/frames/2`
-
-Purpose:
-
-- Visual essays about money, history, time, and institutions.
-- More interactive than the rest of the site, but still editorial.
-
-Interactivity should clarify the idea, not become the point.
-
-### About `/about`
-
-Purpose:
-
-- Personal context and philosophy.
-- A public record, not a founder biography or resume.
-
-Preserve reflective tone.
-
-### Notes `/notes`
-
-Purpose:
-
-- Original writing.
-- Essay-like reflections.
-
-Do not make notes feel like social posts or snippets.
-
----
-
-## 9. Content voice
-
-The writing should be:
-
-- English.
-- Quiet.
-- Precise.
-- Reflective.
-- Personal but not self-promotional.
-- Skeptical of hype.
-- Clear about Bitcoin without sounding tribal.
-
-### Preferred sentence style
+BitcoinMind should sound precise, calm, and intellectually honest.
 
 Prefer:
 
-```text
-BitcoinMind is my attempt to think that question through in public.
-```
+- clear claims
+- explicit tradeoffs
+- practical sequencing
+- direct explanations
+- serious treatment of objections
+- source-aware writing
 
 Avoid:
 
-```text
-BitcoinMind is the ultimate platform that empowers users to unlock Bitcoin’s revolutionary potential.
-```
+- hype
+- tribal language
+- overconfident predictions
+- anti-everything rhetoric
+- vague motivational copy
+- excessive personal branding
 
-### Resource descriptions
+### Objections
 
-Resource copy should explain:
+Objection pages should not strawman critics. Each objection should first state what the criticism gets right, then respond with a narrower and more careful argument.
 
-- Why the item matters.
-- What question it answers.
-- Where it belongs in the learning path.
-- Whether it remains useful over time.
+### Toolkit
 
-Avoid pure summaries, SEO filler, and promotional blurbs.
+Toolkit entries should explain why a tool belongs in the learning path. Avoid turning the Toolkit into a generic recommendation list.
 
----
+### Notes
 
-## 10. Motion and interaction
+Personal notes can be more reflective, but they should remain connected to the site's larger study map.
 
-Motion should be subtle and functional.
+## 8. Responsive Behavior
 
-Allowed:
+Mobile pages should preserve the same editorial identity:
 
-- Slight card lift on hover.
-- Border-color changes.
-- Soft hover glow when restrained.
-- Reading progress indicator.
-- Mobile menu transition.
-- Frame-specific transitions that clarify sequence.
+- readable type
+- stable spacing
+- no horizontal overflow
+- accessible controls
+- filters that remain usable on small screens
+- cards that do not become dense or cramped
 
-Avoid:
+Do not solve mobile issues by hiding important content unless a specific progressive-disclosure pattern is intended.
 
-- Bounce effects.
-- Confetti.
-- Excessive scroll animation.
-- Dramatic page transitions.
-- Motion that makes reading harder.
-
-Respect reduced-motion behavior already present in the codebase.
-
----
-
-## 11. Responsive behavior
-
-Mobile should remain readable and calm.
-
-Preserve:
-
-- Collapsed navigation.
-- Single-column card flow.
-- Comfortable touch targets.
-- Clear page-header hierarchy.
-- Long-form reading rhythm.
-
-Avoid:
-
-- Over-compressing text.
-- Hiding essential content behind too many interactions.
-- Letting the hero title dominate the mobile screen without context.
-
----
-
-## 12. Accessibility and trust
+## 9. Accessibility
 
 Maintain:
 
-- Semantic headings.
-- Clear links.
-- Keyboard-accessible controls.
-- Visible focus states.
-- Sufficient contrast within the dark palette.
-- Descriptive page titles and metadata.
-- Canonical URLs and structured data when relevant.
+- semantic headings
+- meaningful link text
+- visible focus states
+- keyboard-usable controls
+- sufficient contrast
+- reduced-motion behavior where relevant
+- readable chart labels and fallbacks
 
-Do not sacrifice readability for minimalism.
+Interactive charts and controls should be understandable without relying only on color.
 
----
+## 10. AI-Assisted Work
 
-## 13. Implementation boundaries
+AI tools may be used to propose code, copy, refactors, and design alternatives, but changes must be checked against this document and the current codebase.
 
-### Token-first styling
+Do not let AI output drift into:
 
-Use existing tokens in `src/styles/design-system.css`.
+- generic SaaS design
+- crypto marketing copy
+- route churn
+- broad CSS rewrites
+- unreviewed content expansion
+- hardcoded visual values
 
-If a recurring visual role is needed, add a named token first, then use it.
+The goal is not to preserve every existing line. The goal is to preserve the product identity while improving the implementation.
 
-### Source-of-truth files
+## 11. Source of Truth
 
-```text
-src/styles/design-system.css   design tokens
-src/styles/styles.css          component and layout styles
-src/layouts/Base.astro         global shell, fonts, metadata, scripts
-src/components/Nav.astro       primary navigation
-src/data/*.ts                  curated content data
-src/lib/seo.ts                 site metadata helpers
-```
+When documentation and code disagree, inspect the current codebase before editing.
 
-### No broad rewrites
-
-Small changes should produce small diffs. Do not rewrite entire files for targeted visual changes.
-
-### Route caution
-
-Current public routes:
+Use these files as source-of-truth references:
 
 ```text
-/
-/start
-/books
-/essays
-/tools
-/frames
-/frames/1
-/frames/2
-/about
-/notes
+package.json                    dependencies and commands
+astro.config.mjs                Astro integrations and build behavior
+wrangler.jsonc                  Cloudflare Workers static assets config
+src/pages/**                    public routes
+src/components/Nav.astro        navigation structure
+src/styles/design-system.css    tokens
+src/styles/styles.css           global styling
+src/data/**                     curated datasets
+src/lib/seo.ts                  metadata helpers
 ```
 
-Do not rename or redirect routes unless the task is explicitly about information architecture.
-
----
-
-## 14. Design review checklist
-
-Before accepting a visual change, check:
-
-- Does it still feel like a quiet study map?
-- Does it preserve BitcoinMind as one word?
-- Does it use existing tokens?
-- Does it avoid exchange/dashboard/SaaS language?
-- Does it improve reading or navigation?
-- Does it avoid unnecessary visual noise?
-- Does it preserve the current information architecture unless instructed otherwise?
-
-The goal is not to make BitcoinMind louder. The goal is to make it more coherent.
+After project architecture changes, update this document so future work does not rely on stale rules.
