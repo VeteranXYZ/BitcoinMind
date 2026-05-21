@@ -150,12 +150,6 @@ body > nav {
   top: calc(100% + var(--sp-3));
   right: 0;
   width: min(640px, calc(100vw - (var(--pad) * 2)));
-  /* Outer grid: 1 label row + 4 items, each item is 2 rows (title + desc).
-     Total rows = 1 (label) + 4 × 2 (item title + item desc) = 9.
-     All rows are auto — each row sizes to the tallest element on that
-     row line, so titles in both columns share one track, descs share
-     another, and both columns align block-to-block even when descs
-     wrap to different line counts. */
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: auto repeat(4, auto auto);
@@ -174,17 +168,11 @@ body > nav {
   from { opacity: 0; transform: translateY(-4px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-/* Each group is a subgrid inheriting all 9 row tracks so the label,
-   and every item's title+desc pair, sit on the exact same row lines
-   across both columns. Both groups (Lens and Hiei) now have 4 items
-   each, so every row slot is filled in both columns. */
 .explore-group {
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: 1 / span 9;
-  row-gap: 0;
+  display: contents;
 }
 .explore-group-label {
+  grid-column: var(--explore-col);
   grid-row: 1;
   margin-bottom: var(--sp-2);
   font-family: var(--font-body);
@@ -195,18 +183,13 @@ body > nav {
   text-transform: uppercase;
 }
 .explore-group-list {
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: 2 / span 8;
-  row-gap: 0;
+  display: contents;
 }
-/* Each item is itself a 2-row subgrid (title row + desc row).
-   Combined with the outer grid's track structure, this guarantees
-   title-to-title and desc-to-desc alignment across both columns. */
 .explore-item {
+  grid-column: var(--explore-col);
+  grid-row: var(--explore-row-start) / span 2;
   display: grid;
   grid-template-rows: subgrid;
-  grid-row: span 2;
   row-gap: 0;
   padding: var(--sp-3);
   border: 1px solid transparent;
@@ -227,8 +210,10 @@ body > nav {
   background: var(--gold-dim);
 }
 .explore-item-title {
+  grid-row: 1;
+  align-self: start;
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 0;
   font-family: var(--font-body);
   font-size: var(--fz-sm);
   font-weight: var(--fw-semi);
@@ -240,6 +225,8 @@ body > nav {
   color: var(--gold-hi);
 }
 .explore-item-desc {
+  grid-row: 2;
+  align-self: start;
   display: block;
   font-size: var(--fz-sm);
   line-height: var(--lh-card);

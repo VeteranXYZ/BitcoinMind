@@ -87,12 +87,17 @@ let mmIdx = 0;
           Explore
         </button>
         <div id="explore-menu" class="explore-menu" data-explore-menu hidden>
-          {exploreGroups.map((group) => (
-            <div class="explore-group">
+          {exploreGroups.map((group, groupIndex) => (
+            <div class="explore-group" style={`--explore-col: ${groupIndex + 1}`}>
               <div class="explore-group-label">{group.label}</div>
               <div class="explore-group-list">
-                {group.items.map((item) => (
-                  <a class={`explore-item ${isActive(item.match) ? 'explore-item--on' : ''}`} href={item.href} data-explore-item>
+                {group.items.map((item, itemIndex) => (
+                  <a
+                    class={`explore-item ${isActive(item.match) ? 'explore-item--on' : ''}`}
+                    href={item.href}
+                    data-explore-item
+                    style={`--explore-row-start: ${itemIndex * 2 + 2}`}
+                  >
                     <span class="explore-item-title">{item.label}</span>
                     <span class="explore-item-desc">{item.desc}</span>
                   </a>
