@@ -14,7 +14,7 @@ The production fixes completed during this phase corrected the canonical host, r
 
 The concise `/frames` directory and the exact-day precision used in the historical `/notes` structured data are non-blocking editorial follow-ups. Neither prevents indexing or webmaster-tool setup.
 
-The separate external-account phase is currently held on Google and Bing ownership/access. That account state does not change this pre-indexing readiness classification.
+The separate external-account phase subsequently completed Google ownership verification, Google and Bing sitemap registration, representative URL inspection, and initial indexing requests. Those later account results do not change this pre-indexing readiness classification.
 
 ## Repository Baseline
 
@@ -373,9 +373,8 @@ Known validation note: the existing Astro/Vite dependency tree has separate audi
 
 ## Known Issues
 
-- Google Search Console property access/ownership is not complete for the current signed-in session.
-- Bing Webmaster Tools ownership/access is not confirmed.
-- Completing provider-assisted Google verification would authorize a Cloudflare DNS record change and therefore belongs to the explicit account/DNS handoff, not this pre-indexing audit.
+- Google and Bing are now configured; indexing and report refreshes remain subject to normal search-engine processing delays.
+- Several representative pages were discovered but not yet indexed, and one initial request was submitted for each eligible pending URL.
 - Dependency advisories remain for a separate maintenance phase.
 - Cloudflare prepends Managed Content-Signal text to `robots.txt`; search crawling remains allowed.
 - `http://www.bitcoinmind.com/*` uses a two-hop redirect before the canonical origin.
@@ -400,4 +399,4 @@ https://bitcoinmind.com/notes
 https://bitcoinmind.com/about
 ```
 
-The webmaster-tool phase should complete ownership verification, submit the sitemap, inspect the representative URLs, request indexing once where eligible, and record the initial coverage state. The current account/DNS authorization hold is documented separately in `docs/bitcoinmind-seo-search-console-and-bing-completion.md`.
+The completed webmaster-tool setup, representative inspection results, and initial monitoring baseline are recorded in `docs/bitcoinmind-seo-search-console-and-bing-completion.md`.
