@@ -736,17 +736,20 @@ body > nav {
 }
 
 /* ── Primer Steps ───────────────────────────────────── */
-.steps-wrap { max-width: 760px; }
+.steps-wrap { width: 100%; }
 .step {
   position: relative;
-  padding: 0 0 var(--sp-9) var(--sp-9);
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  column-gap: var(--sp-6);
+  padding: 0 0 var(--sp-9);
   margin-bottom: var(--sp-9);
   border-bottom: 1px solid var(--bdr);
 }
 .step::before {
   content: '';
   position: absolute;
-  left: 15px;
+  left: 17px;
   top: var(--sp-8);
   bottom: 0;
   width: 1px;
@@ -758,15 +761,15 @@ body > nav {
   font-size: var(--fz-xs);
   color: var(--gold-hi);
   letter-spacing: var(--ls-9);
-  margin-bottom: var(--sp-4);
+  grid-column: 1;
+  grid-row: 1 / span 4;
+  margin-bottom: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--sp-3);
 }
 .step-num-badge {
-  position: absolute;
-  left: 0;
-  top: 0;
+  position: relative;
   border: 1px solid var(--border-accent);
   padding: 3px var(--sp-2);
   border-radius: var(--radius-sm);
@@ -774,6 +777,7 @@ body > nav {
 }
 .step-num-line  { display: none; }
 .step-heading   {
+  grid-column: 2;
   font-family: var(--font-body);
   font-size: var(--fz-step);
   font-weight: var(--fw-semi);
@@ -781,15 +785,20 @@ body > nav {
   line-height: var(--lh-snug);
   margin-bottom: var(--sp-5);
   color: var(--tx);
+  max-width: 860px;
 }
 .step-body {
+  grid-column: 2;
   font-family: var(--font-body);
   font-size: var(--fz-prose);
   line-height: var(--lh-loose);
   color: var(--tx-2);
   margin-bottom: var(--sp-6);
+  max-width: 780px;
 }
 .step-cta {
+  grid-column: 2;
+  justify-self: start;
   display: inline-flex;
   align-items: center;
   gap: var(--sp-3);
@@ -799,6 +808,7 @@ body > nav {
   border: 1px solid var(--bdr);
   border-radius: var(--radius);
   text-decoration: none;
+  max-width: 100%;
   transition: border-color var(--ease-fast), box-shadow var(--ease-fast);
 }
 .step-cta:hover { border-color: var(--border-accent); box-shadow: 0 6px 28px rgba(0, 0, 0, 0.14); }
@@ -806,13 +816,19 @@ body > nav {
 .step-resource  { font-family: var(--font-body); font-size: var(--fz-lg); font-weight: var(--fw-semi); color: var(--tx); letter-spacing: 0; }
 .step-auth  { font-family: var(--font-body); font-size: var(--fz-xs); color: var(--tx-3); margin-left: var(--sp-2); letter-spacing: 0; }
 
-.steps-closing     { padding-top: var(--sp-2); }
+.steps-closing     { max-width: 860px; margin-left: calc(72px + var(--sp-6)); padding-top: var(--sp-2); }
 .steps-closing-p   { font-family: var(--font-body); font-size: var(--fz-prose); line-height: var(--lh-loose); color: var(--tx-2); margin-bottom: 6px; }
 .steps-closing-p--gap { margin-bottom: var(--sp-7); }
 .steps-signature   { font-family: var(--font-body); font-size: var(--fz-md); color: var(--tx-3); font-style: italic; }
 
 /* ── Notes ──────────────────────────────────────────── */
-.note-wrap { max-width: 760px; }
+.note-wrap {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 280px);
+  gap: var(--sp-7);
+  align-items: start;
+}
 .note-doc {
   padding: var(--sp-7);
   border: 1px solid var(--bdr);
@@ -854,7 +870,7 @@ body > nav {
 .note-sig-block { margin-top: var(--sp-8); padding-top: var(--sp-7); border-top: 1px solid var(--bdr); }
 .note-sig { font-family: var(--font-body); font-size: var(--fz-md); color: var(--tx-2); font-style: italic; margin-bottom: 6px; }
 .note-kicker {
-  margin-top: var(--sp-7);
+  margin-top: 0;
   padding: var(--sp-6) var(--sp-7);
   background: var(--surf);
   border: 1px solid var(--bdr);
@@ -862,7 +878,7 @@ body > nav {
   border-radius: var(--radius);
 }
 .note-kicker-lbl  { font-family: var(--font-body); font-size: var(--fz-3xs); font-weight: var(--fw-semi); color: var(--gold-hi); letter-spacing: var(--ls-7); text-transform: uppercase; margin-bottom: var(--sp-3); }
-.note-kicker-body { font-family: var(--font-body); font-size: var(--fz-prose); line-height: var(--lh-loose); color: var(--tx-2); }
+.note-kicker-body { font-family: var(--font-body); font-size: var(--fz-md); line-height: var(--lh-loose); color: var(--tx-2); }
 
 /* ── About ──────────────────────────────────────────── */
 /* .page provides the bottom gap to the footer via padding-bottom; the
@@ -1017,6 +1033,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 }
 @media (max-width: 900px) {
   .about-wrap { grid-template-columns: 1fr; }
+  .note-wrap { grid-template-columns: 1fr; }
+  .note-kicker { margin-top: var(--sp-7); }
+  .note-kicker-body { font-size: var(--fz-prose); }
   .grid3 { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
@@ -1061,7 +1080,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   }
 
   .step {
-    padding-left: var(--sp-8);
+    grid-template-columns: var(--sp-7) minmax(0, 1fr);
+    column-gap: var(--sp-3);
   }
   .step::before {
     left: 12px;
@@ -1074,6 +1094,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
     display: block;
     margin-left: 0;
     margin-top: 3px;
+  }
+  .steps-closing {
+    max-width: none;
+    margin-left: 0;
   }
   .note-doc {
     padding: var(--sp-5);
