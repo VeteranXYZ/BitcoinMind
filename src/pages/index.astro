@@ -16,7 +16,6 @@ import { SITE } from '@/lib/seo';
 const foundationItems = LIBRARY.filter((item) => item.layer === 1).slice(0, 2);
 const previewTexts = TEXTS.slice(0, 2);
 const previewToolkit = TOOLKIT.slice(0, 2);
-const textCount = TEXTS.length;
 
 const deeperCards = [
   {
@@ -48,7 +47,9 @@ const websiteLd = {
   name: SITE.name,
   url: SITE.url,
   description: SITE.tagline,
+  inLanguage: 'en',
   author: { '@type': 'Person', name: SITE.author },
+  publisher: { '@type': 'Person', name: SITE.author },
 };
 ---
 <Base

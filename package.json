@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@astrojs/preact": "^5.1.2",
-    "@astrojs/sitemap": "^3.7.2",
     "@fontsource/geist-mono": "^5.2.7",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/literata": "^5.2.8",

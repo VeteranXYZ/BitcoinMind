@@ -7,7 +7,7 @@ import { TOOLKIT } from '@/data/toolkit';
 
 const stats: [string, string][] = [
   ['Library items', String(LIBRARY.length)], ['Primary texts', String(TEXTS.length)], ['Toolkit items', String(TOOLKIT.length)],
-  ['First contact', 'April 2011'], ['Last updated', 'May 2026'],
+  ['First contact', 'April 2011'], ['Last updated', SITE.lastUpdated],
 ];
 const principles = [
   'Time-tested only', 'First principles only', 'No price predictions',
@@ -22,12 +22,27 @@ const personLd = {
   url: `${SITE.url}/about`,
   email: SITE.contactEmail,
 };
+
+const aboutPageLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About BitcoinMind',
+  url: `${SITE.url}/about`,
+  description: 'BitcoinMind is a personal public record for studying Bitcoin as money, technology, and an instrument for sovereignty.',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: SITE.url,
+  },
+  dateModified: '2026-07-04',
+  author: { '@type': 'Person', name: SITE.author },
+};
 ---
 <Base
   title="About BitcoinMind"
   description="BitcoinMind is a personal public record for studying Bitcoin as money, technology, and an instrument for sovereignty."
   path="/about"
-  jsonLd={personLd}
+  jsonLd={[aboutPageLd, personLd]}
 >
   <div class="page">
     <div class="c">
@@ -67,6 +82,16 @@ const personLd = {
               <p>The standard: would I recommend this to someone I respect who is thinking seriously about Bitcoin for the first time? That filters out a lot.</p>
               <p>Included: resources that have held up over time, argue from first principles, and don't depend on Bitcoin's price being higher to make their point. Excluded: price predictions, technical analysis, altcoin comparisons, anything I haven't read myself and thought carefully about.</p>
               <p>The list is intentionally short. Curation means saying no.</p>
+            </div>
+          </div>
+
+          <div class="a-sec">
+            <div class="a-eye">Method and Limits</div>
+            <h2 class="a-h">How to read this site.</h2>
+            <div class="a-body">
+              <p>BitcoinMind is a curated study map, not investment research, legal guidance, tax advice, or a guarantee of outcomes. The site is built from public sources, primary texts, books, practical tools, and my own long-term notes.</p>
+              <p>Time-sensitive material is treated cautiously. Network data can change, tools can break, custody practices can become outdated, and good arguments can age badly. When a page uses current context, it should be read as a snapshot, not a promise.</p>
+              <p>The purpose is to make Bitcoin easier to study and question. Readers should verify sources directly, understand the tradeoffs, and make their own decisions.</p>
             </div>
           </div>
 

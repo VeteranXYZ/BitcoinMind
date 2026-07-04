@@ -1,13 +1,12 @@
 import { useMemo } from 'preact/hooks';
-import { getTodaysPick, formatLongDate } from '@/lib/todays-pick';
+import { getTodaysPick } from '@/lib/todays-pick';
 
 export default function TodaysPick() {
-  const { pick, dateStr, href, labelDest } = useMemo(() => {
+  const { pick, href, labelDest } = useMemo(() => {
     const now = new Date();
     const p = getTodaysPick(now);
     return {
       pick: p,
-      dateStr: formatLongDate(now),
       href: (p.type === 'library' ? '/library' : '/texts') + '#' + p.id,
       labelDest: p.type === 'library' ? 'Library' : 'Texts',
     };

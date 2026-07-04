@@ -61,7 +61,6 @@ The repository currently uses:
 
 - Astro 6
 - `@astrojs/preact` 5
-- `@astrojs/sitemap` 3
 - Preact 10 islands
 - TypeScript 5
 - CSS custom properties for the design system

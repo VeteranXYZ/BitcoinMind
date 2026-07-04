@@ -38,7 +38,6 @@ The current stack is defined by `package.json`. At this snapshot, the project us
 ```text
 Astro 6
 @astrojs/preact 5
-@astrojs/sitemap 3
 Preact 10 islands
 TypeScript 5
 CSS custom properties
