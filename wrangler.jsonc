@@ -8,12 +8,12 @@
   },
   "routes": [
     {
-      "pattern": "bitcoinmind.com",
-      "custom_domain": true
+      "pattern": "bitcoinmind.com/*",
+      "zone_name": "bitcoinmind.com"
     },
     {
-      "pattern": "www.bitcoinmind.com",
-      "custom_domain": true
+      "pattern": "www.bitcoinmind.com/*",
+      "zone_name": "bitcoinmind.com"
     }
   ],
   "assets": {
