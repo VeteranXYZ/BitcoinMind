@@ -50,9 +50,10 @@ flowchart TD
   H[Preact islands] --> B
   I[Browser scripts] --> B
   B --> J[Static HTML output]
-  J --> K[Cloudflare Workers static assets]
-  L[GitHub Actions] --> M[npm ci / npm run check / npm run build]
-  N[DESIGN.md + AGENTS.md] --> O[Documented design and agent constraints]
+  J --> K[Cloudflare Worker routing script]
+  K --> L[Cloudflare Workers static assets]
+  M[GitHub Actions] --> N[npm ci / npm run check / npm run build]
+  O[DESIGN.md + AGENTS.md] --> P[Documented design and agent constraints]
 ```
 
 ## Technical Stack
@@ -66,9 +67,9 @@ The repository currently uses:
 - CSS custom properties for the design system
 - Fontsource packages for Literata, Inter, and Geist Mono
 - GitHub Actions CI
-- Cloudflare Workers static assets via Wrangler
+- Cloudflare Workers static assets via Wrangler with a small Worker routing script
 
-The dependency source of truth is `package.json`. Deployment details are in `astro.config.mjs`, `wrangler.jsonc`, and `public/_headers`.
+The dependency source of truth is `package.json`. Deployment details are in `astro.config.mjs`, `wrangler.jsonc`, `worker/index.js`, and `public/_headers`.
 
 ## Project Structure
 
@@ -98,6 +99,7 @@ src/styles/styles.css        Global component/page styling
 src/layouts/Base.astro       Shared page shell and metadata
 src/components/Nav.astro     Main navigation
 src/lib/seo.ts               SEO metadata helpers
+worker/index.js              Canonical host and legacy sitemap redirects before static assets
 ```
 
 ## Content Model
@@ -231,7 +233,7 @@ npm run check
 npm run build
 ```
 
-The production build outputs static assets from Astro. Cloudflare deployment is configured through Wrangler using the `dist` directory as the static assets source.
+The production build outputs static assets from Astro. Cloudflare deployment is configured through Wrangler using the `dist` directory as the static assets source. `worker/index.js` runs before assets to redirect `www.bitcoinmind.com` to the apex domain and route legacy sitemap asset paths to the canonical sitemap.
 
 ## Maintenance Principles
 

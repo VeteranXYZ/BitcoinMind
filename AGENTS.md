@@ -18,7 +18,7 @@ Think of the repository in four layers:
 Content layer        src/data/**, selected src/pages/** copy
 Design layer         DESIGN.md, src/styles/design-system.css, src/styles/styles.css
 Application layer    Astro pages, components, Preact islands, browser scripts
-Deployment layer     package.json, astro.config.mjs, wrangler.jsonc, public/_headers, CI
+Deployment layer     package.json, astro.config.mjs, wrangler.jsonc, worker/index.js, public/_headers, CI
 ```
 
 Make changes in the correct layer.
@@ -43,7 +43,7 @@ TypeScript 5
 CSS custom properties
 Fontsource: Literata, Inter, Geist Mono
 GitHub Actions CI
-Cloudflare Workers static assets via Wrangler
+Cloudflare Workers static assets via Wrangler with a small Worker routing script
 ```
 
 Important files:
@@ -52,6 +52,7 @@ Important files:
 package.json
 astro.config.mjs
 wrangler.jsonc
+worker/index.js
 public/_headers
 src/layouts/Base.astro
 src/styles/design-system.css
