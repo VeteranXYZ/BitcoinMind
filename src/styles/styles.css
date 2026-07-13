@@ -30,8 +30,32 @@ body {
 a { color: inherit; text-decoration: none; }
 button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; padding: 0; }
 [hidden] { display: none !important; }
+.study-enhanced { display: none !important; }
+.js .study-enhanced { display: inline-flex !important; }
 /* Offset anchor scroll for fixed nav */
 [id] { scroll-margin-top: 80px; }
+
+.skip-link {
+  position: fixed;
+  top: var(--sp-3);
+  left: var(--sp-3);
+  z-index: 10000;
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text-heading);
+  font-size: var(--fz-sm);
+  font-weight: var(--fw-semi);
+  transform: translateY(calc(-100% - var(--sp-4)));
+  transition: transform var(--ease-fast);
+}
+
+.skip-link:focus {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  transform: translateY(0);
+}
 
 /* Warm atmospheric radial glow */
 body::before {
@@ -467,6 +491,19 @@ body > nav {
   border-top: 1px solid var(--bdr);
   margin-top: auto;
 }
+.card-actions { display: flex; align-items: center; gap: var(--sp-3); }
+.study-save { font-family: var(--font-body); font-size: var(--fz-xs); font-weight: var(--fw-semi); color: var(--tx-3); letter-spacing: var(--ls-3); text-transform: uppercase; }
+.study-save[aria-pressed='true'] { color: var(--gold-hi); }
+.card-stage { margin-bottom: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
+.card-review-meta { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--bdr); font-size: var(--fz-3xs); color: var(--tx-3); }
+.study-queue-item { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: var(--sp-3); align-items: center; padding: var(--sp-3); border: 1px solid var(--bdr); }
+.study-queue-item a { font-size: var(--fz-sm); font-weight: var(--fw-semi); }
+.study-queue-item span { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--tx-3); text-transform: uppercase; }
+.study-queue-item button { font-size: var(--fz-3xs); color: var(--gold); }
+.review-policy { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: var(--sp-5); margin-bottom: var(--sp-7); padding: var(--sp-4); border: 1px solid var(--border-accent); background: var(--accent-hover); }
+.review-policy strong { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold-hi); letter-spacing: var(--ls-7); text-transform: uppercase; }
+.review-policy p { font-size: var(--fz-sm); line-height: var(--lh-relaxed); color: var(--tx-2); }
+@media (max-width: 640px) { .review-policy { grid-template-columns: 1fr; gap: var(--sp-2); } .study-queue-item { grid-template-columns: 1fr auto; } .study-queue-item span { grid-row: 2; } }
 .card-meta { font-family: var(--font-body); font-size: var(--fz-xs); color: var(--tx-3); letter-spacing: 0; }
 .card-cta  { font-family: var(--font-body); font-size: var(--fz-xs); font-weight: var(--fw-semi); color: var(--gold); letter-spacing: var(--ls-3); text-transform: uppercase; }
 .card-cta:hover { color: var(--gold-hi); }
@@ -1146,10 +1183,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   font-size: var(--fz-3xs);
   font-weight: var(--fw-semi);
   letter-spacing: var(--ls-5);
-  color: var(--gold);
+  color: var(--gold-hi);
   text-transform: uppercase;
-  opacity: 0.65;
-  animation: pulse-breath 4s ease-in-out infinite;
+  opacity: 0.9;
   transition: opacity var(--ease-slow);
 }
 
@@ -1163,15 +1199,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 
 .pulse-live--flash { animation: pulse-live-flash 0.7s ease-out; }
 
-@keyframes pulse-breath {
-  0%, 100% { opacity: 0.5; }
-  50%      { opacity: 0.95; }
-}
-
 @keyframes pulse-live-flash {
-  0%   { opacity: 0.65; transform: scale(1); }
+  0%   { opacity: 0.9; transform: scale(1); }
   30%  { opacity: 1;    transform: scale(1.08); }
-  100% { opacity: 0.65; transform: scale(1); }
+  100% { opacity: 0.9; transform: scale(1); }
 }
 
 .pulse-line {

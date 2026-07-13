@@ -17,6 +17,8 @@ export interface Frame {
   title: string;
   subtitle: string;
   question: string;
+  reviewedAt: string;
+  sources: { label: string; href: string }[];
   nodes: FrameNode[];
 }
 
@@ -25,6 +27,14 @@ export const FRAME_ONE: Frame = {
   title: 'A History of Hardness',
   subtitle: 'Five thousand years of money, told through the question every era had to answer:',
   question: '"What stops you from making more?"',
+  reviewedAt: '2026-07-12',
+  sources: [
+    { label: 'Smithsonian — The Stone Money of Yap', href: 'https://www.smithsonianmag.com/history/the-stone-money-of-yap-98029050/' },
+    { label: 'Federal Reserve History — Gold Reserve Act of 1934', href: 'https://www.federalreservehistory.org/essays/gold-reserve-act' },
+    { label: 'American Presidency Project — Address of August 15, 1971', href: 'https://www.presidency.ucsb.edu/documents/address-the-nation-outlining-new-economic-policy-the-challenge-peace' },
+    { label: 'Bitcoin whitepaper', href: 'https://bitcoin.org/bitcoin.pdf' },
+    { label: 'Bitcoin genesis block', href: 'https://mempool.space/block/000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f' },
+  ],
   nodes: [
     {
       n: '01', year: '3000 BCE', title: 'Yap', epigraph: 'Stone too heavy to steal', hardness: 'high',

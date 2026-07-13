@@ -21,7 +21,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Mempool",
       "Explorer"
     ],
-    link: "https://mempool.space/"
+    link: "https://mempool.space/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
     id: "bitcoin-core",
@@ -43,7 +44,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Consensus",
       "Reference Implementation"
     ],
-    link: "https://bitcoincore.org/"
+    link: "https://bitcoincore.org/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
     id: "sparrow-wallet",
@@ -65,7 +67,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Coin Control",
       "Self-Custody"
     ],
-    link: "https://sparrowwallet.com/"
+    link: "https://sparrowwallet.com/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
     id: "bluewallet",
@@ -86,7 +89,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Watch-Only",
       "Receiving"
     ],
-    link: "https://bluewallet.io/"
+    link: "https://bluewallet.io/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
     id: "trezor-safe-3",
@@ -107,7 +111,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Self-Custody",
       "Signing Device"
     ],
-    link: "https://trezor.io/trezor-safe-3"
+    link: "https://trezor.io/trezor-safe-3",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official product site"
   },
   {
     id: "coldcard",
@@ -129,7 +134,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Air-Gapped",
       "Bitcoin-Only"
     ],
-    link: "https://coldcard.com/"
+    link: "https://coldcard.com/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official product site"
   },
   {
     id: "nunchuk",
@@ -151,7 +157,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Collaborative Custody",
       "Recovery"
     ],
-    link: "https://nunchuk.io/"
+    link: "https://nunchuk.io/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
     id: "btcpay-server",
@@ -173,7 +180,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Merchant",
       "Open Source"
     ],
-    link: "https://btcpayserver.org/"
+    link: "https://btcpayserver.org/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
     id: "bitcoin-optech-toolkit",
@@ -195,7 +203,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Newsletter",
       "Reference"
     ],
-    link: "https://bitcoinops.org/"
+    link: "https://bitcoinops.org/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
     id: "seedsigner",
@@ -217,7 +226,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Signing Device",
       "Open Source"
     ],
-    link: "https://seedsigner.com/"
+    link: "https://seedsigner.com/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
     id: "blockstream-jade",
@@ -239,7 +249,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "QR",
       "Self-Custody"
     ],
-    link: "https://blockstream.com/jade/"
+    link: "https://blockstream.com/jade/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official product site"
   },
   {
     id: "bitbox02-bitcoin-only",
@@ -261,7 +272,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Self-Custody",
       "Simple"
     ],
-    link: "https://bitbox.swiss/bitbox02/bitcoin-only/"
+    link: "https://bitbox.swiss/bitbox02/bitcoin-only/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official product site"
   },
   {
     id: "electrum",
@@ -282,7 +294,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Classic",
       "Bitcoin"
     ],
-    link: "https://electrum.org/"
+    link: "https://electrum.org/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
     id: "lookintobitcoin",
@@ -304,7 +317,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Market Context",
       "Research"
     ],
-    link: "https://www.lookintobitcoin.com/"
+    link: "https://www.lookintobitcoin.com/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official data site"
   },
   {
     id: "coinmetrics",
@@ -326,7 +340,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Metrics",
       "Network"
     ],
-    link: "https://coinmetrics.io/"
+    link: "https://coinmetrics.io/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official data site"
   },
   {
     id: "clark-moody-dashboard",
@@ -348,7 +363,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Supply",
       "Statistics"
     ],
-    link: "https://bitcoin.clarkmoody.com/dashboard/"
+    link: "https://bitcoin.clarkmoody.com/dashboard/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official data site"
   },
   {
     id: "bitcoin-visuals",
@@ -370,7 +386,8 @@ export const TOOLKIT: ToolkitItem[] = [
       "Visualization",
       "Reference"
     ],
-    link: "https://bitcoinvisuals.com/"
+    link: "https://bitcoinvisuals.com/",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official data site"
   },
   {
     id: "lopp-bitcoin-resources",
@@ -392,6 +409,7 @@ export const TOOLKIT: ToolkitItem[] = [
       "Security",
       "Research"
     ],
-    link: "https://www.lopp.net/bitcoin-information.html"
+    link: "https://www.lopp.net/bitcoin-information.html",
+    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Maintainer's reference archive"
   }
 ];

@@ -1,6 +1,8 @@
 ---
 import Base from '@/layouts/Base.astro';
 import TextCard from '@/components/TextCard.astro';
+import StudyLoop from '@/components/StudyLoop.astro';
+import StudyNext from '@/components/StudyNext.astro';
 import { TEXTS } from '@/data/texts';
 
 const TAGS = ['All', 'Primary', 'Security', 'Verification', 'Adoption', 'Sovereignty', 'Reference', 'Beginner', 'Intermediate', 'Advanced'];
@@ -74,6 +76,7 @@ const itemList = {
         <h1 class="ph-title">The Canonical <em>Texts</em></h1>
         <p class="ph-desc">Original papers, essays, references, and arguments that shaped Bitcoin thinking.</p>
       </div>
+      <StudyLoop compact />
       <div data-filter-scope data-active-filter="all">
         <div class="fb" role="group" aria-label="Filter texts">
           <span class="fb-lbl">Filter:</span>
@@ -105,6 +108,11 @@ const itemList = {
           ))}
         </div>
       </div>
+      <StudyNext
+        previous={{ href: '/library', label: 'Library', description: 'Return to the curated books and learning roles.' }}
+        next={{ href: '/toolkit', label: 'Toolkit', description: 'Move from reading claims to observing and verifying systems.' }}
+      />
     </div>
   </div>
+  <script>import '@/scripts/study-list';</script>
 </Base>

@@ -14,6 +14,11 @@ import Base from '@/layouts/Base.astro';
         <p class="ph-desc">Not how much. How — and more importantly, why. No amounts. No financial advice. Just the thinking behind the practice.</p>
       </div>
 
+      <aside class="review-policy" aria-label="Operational guidance review note">
+        <strong>Reviewed Jul 2026</strong>
+        <p>Custody guidance is time-sensitive and deliberately principle-level. Before moving meaningful value, verify current wallet documentation, test recovery with small amounts, and consult the official <a href="https://bitcoin.org/en/secure-your-wallet" target="_blank" rel="noopener noreferrer">Bitcoin wallet security guidance</a>.</p>
+      </aside>
+
       <div class="stk-wrap">
         <div class="stk-main">
           <div class="a-sec stk-principle-card">
@@ -64,6 +69,11 @@ import Base from '@/layouts/Base.astro';
           <div class="stk-disclaimer">
             <div class="stk-disclaimer-lbl">Disclaimer</div>
             <p>This is how I think about holding Bitcoin. It is not financial advice. I am not a financial advisor. Your situation is different from mine. Do your own research. Make your own decisions. The only advice I'll give: don't invest more than you can afford to lose, and don't custody more than you can secure.</p>
+          </div>
+          <div class="stk-sources">
+            <span>Operational references</span>
+            <a href="https://bitcoin.org/en/secure-your-wallet" target="_blank" rel="noopener noreferrer">Securing your wallet ↗</a>
+            <a href="https://bitcoincore.org/en/doc/" target="_blank" rel="noopener noreferrer">Bitcoin Core documentation ↗</a>
           </div>
         </div>
 
@@ -152,6 +162,9 @@ import Base from '@/layouts/Base.astro';
     line-height: var(--lh-relaxed);
     color: var(--tx-3);
   }
+  .stk-sources { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-4); font-size: var(--fz-xs); }
+  .stk-sources span { font-family: var(--font-mono); color: var(--tx-3); text-transform: uppercase; }
+  .stk-sources a { color: var(--gold); }
 
   .stk-kit {
     font-family: var(--font-body);

@@ -1,0 +1,79 @@
+---
+import { STUDY_STAGES, type StudyStageKey } from '@/lib/study';
+
+interface Props {
+  active?: StudyStageKey;
+  compact?: boolean;
+}
+
+const { active, compact = false } = Astro.props;
+---
+<section class={`study-loop ${compact ? 'study-loop--compact' : ''}`} aria-label="BitcoinMind study stages">
+  <div class="study-loop-head">
+    <span class="study-loop-eye">Study loop</span>
+    <p>Move from orientation to reflection. The stages describe a learning order, not a score.</p>
+  </div>
+  <ol class="study-loop-list">
+    {STUDY_STAGES.map((stage) => (
+      <li class={`study-loop-item ${active === stage.key ? 'study-loop-item--active' : ''}`}>
+        <span class="study-loop-number">{String(stage.number).padStart(2, '0')}</span>
+        <span class="study-loop-copy">
+          <strong>{stage.label}</strong>
+          {!compact && <span>{stage.question}</span>}
+        </span>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .study-loop {
+    margin-bottom: var(--sp-9);
+    padding: var(--sp-5);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--bg-deep);
+  }
+  .study-loop-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-4);
+  }
+  .study-loop-eye,
+  .study-loop-number {
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+  }
+  .study-loop-eye { color: var(--gold-hi); }
+  .study-loop-head p { color: var(--tx-3); font-size: var(--fz-sm); }
+  .study-loop-list {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--sp-2);
+    list-style: none;
+  }
+  .study-loop-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-2);
+    padding: var(--sp-3);
+    border-top: 1px solid var(--bdr);
+  }
+  .study-loop-item--active { border-color: var(--border-accent); background: var(--accent-hover); }
+  .study-loop-number { color: var(--gold); }
+  .study-loop-copy { display: flex; flex-direction: column; gap: var(--sp-1); min-width: 0; }
+  .study-loop-copy strong { font-size: var(--fz-sm); color: var(--tx); }
+  .study-loop-copy span { font-size: var(--fz-3xs); line-height: var(--lh-card); color: var(--tx-3); }
+  .study-loop--compact .study-loop-head { margin-bottom: var(--sp-3); }
+  @media (max-width: 900px) {
+    .study-loop-list { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .study-loop-head { flex-direction: column; gap: var(--sp-2); }
+    .study-loop-list { grid-template-columns: 1fr; }
+  }
+</style>

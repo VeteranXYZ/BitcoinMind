@@ -3,24 +3,32 @@
   "type": "module",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "check": "astro check",
+    "audit": "node scripts-build/audit-site.mjs",
+    "test:browser": "playwright test",
+    "validate": "npm run check && npm run build && npm run audit && npm run test:browser",
     "preview": "astro preview",
     "astro": "astro",
     "refresh-data": "node scripts-build/fetch-block-height.mjs && node scripts-build/fetch-pulse.mjs && node scripts-build/generate-grain.mjs"
   },
   "dependencies": {
-    "@astrojs/preact": "^5.1.2",
+    "@astrojs/preact": "^6.0.1",
     "@fontsource/geist-mono": "^5.2.7",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/literata": "^5.2.8",
-    "astro": "^6.3.1",
+    "astro": "^7.0.7",
     "preact": "^10.24.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^22.20.1",
     "typescript": "^5.9.3"
   },
   "overrides": {

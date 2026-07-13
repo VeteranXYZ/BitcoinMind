@@ -97,6 +97,16 @@ The homepage, Primer, Library, Texts, Toolkit, Paths, Frames, Timeline, Glossary
 
 Frames may be more interactive, but they should still share the same editorial DNA: restrained color, clear reading hierarchy, and conceptual usefulness.
 
+### A Visible Learning Loop
+
+Use the shared study sequence when a surface benefits from orientation or continuation:
+
+```text
+Orient -> Understand -> Verify -> Practice -> Reflect
+```
+
+The stages describe reader intent, not completion badges or a gamified funnel. Paths should state prerequisites, outcomes, and a meaningful next step. Resource cards may expose their stage and a quiet local save action, but reading must never depend on saved state.
+
 ## 3. Brand Rules
 
 ### Name
@@ -319,6 +329,12 @@ Objection pages should not strawman critics. Each objection should first state w
 
 Toolkit entries should explain why a tool belongs in the learning path. Avoid turning the Toolkit into a generic recommendation list.
 
+Operational and time-sensitive entries should expose a review date and a primary or first-party source label. A review date communicates editorial maintenance; it is not a warranty, endorsement, or substitute for verifying the current release and documentation.
+
+### Sources and Evidence
+
+Use citations selectively where provenance changes how a claim should be judged. Prefer primary sources, official documentation, and representative critical work. Objections should expose more than one perspective where useful. Frames and generated network data should identify their source or snapshot context without turning the page into a bibliography wall.
+
 ### Notes
 
 Personal notes can be more reflective, but they should remain connected to the site's larger study map.
@@ -349,6 +365,8 @@ Maintain:
 - readable chart labels and fallbacks
 
 Interactive charts and controls should be understandable without relying only on color.
+
+Browser-local study controls must announce state changes, expose pressed state, remain keyboard usable, and degrade to the complete static reading experience when JavaScript or storage is unavailable. Local state must not be described as synced, private cloud storage, or an account.
 
 ## 10. AI-Assisted Work
 

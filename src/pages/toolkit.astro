@@ -1,6 +1,8 @@
 ---
 import Base from '@/layouts/Base.astro';
 import ToolkitCard from '@/components/ToolkitCard.astro';
+import StudyLoop from '@/components/StudyLoop.astro';
+import StudyNext from '@/components/StudyNext.astro';
 import { TOOLKIT } from '@/data/toolkit';
 
 const FILTERS = ['All', 'Observation', 'Verification', 'Custody', 'Protocol', 'Research', 'Free', 'Beginner', 'Intermediate', 'Advanced'];
@@ -81,6 +83,11 @@ const itemList = {
         <h1 class="ph-title">The Sovereignty <em>Toolkit</em></h1>
         <p class="ph-desc">Practical instruments for observing, verifying, holding, receiving, and studying Bitcoin.</p>
       </div>
+      <StudyLoop active="practice" compact />
+      <aside class="review-policy" aria-label="Toolkit review policy">
+        <strong>Review policy</strong>
+        <p>Tools change. Each entry shows when its official project or product source was last reviewed. Verify current releases, device support, and recovery guidance before using a tool with meaningful value.</p>
+      </aside>
       <div data-filter-scope data-active-filter="all">
         <div class="fb" role="group" aria-label="Filter toolkit">
           <span class="fb-lbl">Filter:</span>
@@ -123,6 +130,11 @@ const itemList = {
 
         <p class="no-res" data-filter-empty hidden>No toolkit items match this filter.</p>
       </div>
+      <StudyNext
+        previous={{ href: '/texts', label: 'Canonical Texts', description: 'Return to the protocol and verification references.' }}
+        next={{ href: '/paths', label: 'Study Paths', description: 'Put reading and instruments into a question-led sequence.' }}
+      />
     </div>
   </div>
+  <script>import '@/scripts/study-list';</script>
 </Base>

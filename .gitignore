@@ -4,6 +4,8 @@ node_modules/
 # Build output
 dist/
 .astro/
+test-results/
+playwright-report/
 
 # Environment / secrets
 .env*

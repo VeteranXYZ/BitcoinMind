@@ -20,6 +20,23 @@ import FrameTwoChart from '@/components/FrameTwoChart';
       </header>
 
       <FrameTwoChart client:load />
+      <aside class="f2-method" aria-label="Data sources and method">
+        <div class="f2-method-title">Sources and method · data through April 2026</div>
+        <p>CPI uses annual U.S. CPI-U averages with monthly interpolation. Bitcoin anchors preserve selected monthly price inflections and use logarithmic interpolation between them. Big Mac prices are an illustrative consumer-price proxy, not an official inflation index. The latest Bitcoin quote attempts Mempool.space first and CoinGecko second, then keeps the cached anchor.</p>
+        <div class="f2-method-links">
+          <a href="https://www.bls.gov/cpi/data.htm" target="_blank" rel="noopener noreferrer">U.S. Bureau of Labor Statistics CPI data ↗</a>
+          <a href="https://mempool.space/api/v1/prices" target="_blank" rel="noopener noreferrer">Mempool.space price endpoint ↗</a>
+          <a href="https://www.coingecko.com/en/api" target="_blank" rel="noopener noreferrer">CoinGecko API ↗</a>
+        </div>
+      </aside>
     </div>
   </div>
 </Base>
+
+<style>
+  .f2-method { margin-top: var(--sp-7); padding: var(--sp-5); border: 1px solid var(--bdr); background: var(--bg-deep); }
+  .f2-method-title { margin-bottom: var(--sp-3); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold-hi); letter-spacing: var(--ls-7); text-transform: uppercase; }
+  .f2-method p { max-width: 860px; font-size: var(--fz-sm); line-height: var(--lh-relaxed); color: var(--tx-2); }
+  .f2-method-links { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-4); }
+  .f2-method-links a { font-size: var(--fz-xs); color: var(--gold); }
+</style>

@@ -1,7 +1,13 @@
 ---
 import Base from '@/layouts/Base.astro';
 import Tag from '@/components/Tag.astro';
+import StudyLoop from '@/components/StudyLoop.astro';
+import StudyLedger from '@/components/StudyLedger.astro';
+import StudyNext from '@/components/StudyNext.astro';
 import { RABBIT_HOLES } from '@/data/rabbit-holes';
+import { LIBRARY } from '@/data/library';
+import { TEXTS } from '@/data/texts';
+import { TOOLKIT } from '@/data/toolkit';
 
 const typeIcon: Record<string, string> = {
   library: 'Library',
@@ -18,6 +24,28 @@ const routeQuestions: Record<string, string> = {
   'rh-economics': 'How should long-term Bitcoin data be read?',
 };
 const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/, '');
+const catalogs = {
+  library: { route: '/library', items: LIBRARY },
+  text: { route: '/texts', items: TEXTS },
+  toolkit: { route: '/toolkit', items: TOOLKIT },
+};
+const paths = RABBIT_HOLES.map((path) => ({
+  ...path,
+  steps: path.steps.map((step) => {
+    if ('resourceId' in step) {
+      const catalog = catalogs[step.type];
+      const resource = catalog.items.find((item) => item.id === step.resourceId);
+      if (!resource) throw new Error(`Unknown ${step.type} resource: ${step.resourceId}`);
+      return {
+        ...step,
+        title: resource.title,
+        author: 'author' in resource ? resource.author : undefined,
+        href: `${catalog.route}#${resource.id}`,
+      };
+    }
+    return step;
+  }),
+}));
 ---
 <Base
   title="Bitcoin Learning Paths"
@@ -37,8 +65,11 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
         <p class="ph-desc">Guided routes through money, protocol, custody, sovereignty, and long-term Bitcoin study.</p>
       </div>
 
+      <StudyLoop />
+      <StudyLedger />
+
       <div class="rh-route-grid" aria-label="Learning path routes">
-        {RABBIT_HOLES.map((rh) => (
+        {paths.map((rh) => (
           <a class="rh-route-card" href={`#${rh.id}`}>
             <div class="rh-route-kicker">{routeName(rh.title)}</div>
             <h2 class="rh-route-question">{routeQuestions[rh.id]}</h2>
@@ -53,12 +84,12 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
       </div>
 
       <div class="rh-list">
-        {RABBIT_HOLES.map((rh, idx) => (
-          <div class="rh-card" id={rh.id}>
+        {paths.map((rh, idx) => (
+          <article class="rh-card" id={rh.id} data-study-path data-path-id={rh.id} data-path-title={rh.title}>
             <div class="rh-header">
               <div class="rh-index" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</div>
               <div class="rh-header-text">
-                <div class="rh-path-num">Path {idx + 1} of {RABBIT_HOLES.length}</div>
+                <div class="rh-path-num">Path {idx + 1} of {paths.length}</div>
                 <h2 class="rh-title">{rh.title}</h2>
                 <p class="rh-subtitle">{rh.subtitle}</p>
               </div>
@@ -69,27 +100,52 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
             </div>
 
             <p class="rh-desc">{rh.desc}</p>
+            <div class="rh-contract">
+              <div><strong>Prerequisite</strong><span>{rh.prerequisite}</span></div>
+              <div><strong>Outcome</strong><span>{rh.outcome}</span></div>
+            </div>
 
             <div class="rh-steps">
               {rh.steps.map((step, si) => (
-                <a class="rh-step" href={step.href}>
-                  <span class="rh-step-num">{si + 1}</span>
-                  <div class="rh-step-body">
-                    <span class="rh-step-title">{step.title}</span>
-                    {step.author && <span class="rh-step-author">{step.author}</span>}
-                  </div>
-                  <div class="rh-step-right">
-                    <span class="rh-step-type">{typeIcon[step.type]}</span>
-                    {step.time && <span class="rh-step-time">{step.time}</span>}
-                  </div>
-                </a>
+                <div class="rh-step">
+                  <a class="rh-step-main" href={step.href}>
+                    <span class="rh-step-num">{si + 1}</span>
+                    <span class="rh-step-body">
+                      <span class="rh-step-title">{step.title}</span>
+                      {step.author && <span class="rh-step-author">{step.author}</span>}
+                    </span>
+                    <span class="rh-step-right">
+                      <span class="rh-step-type">{typeIcon[step.type]}</span>
+                      {step.time && <span class="rh-step-time">{step.time}</span>}
+                    </span>
+                  </a>
+                  <button
+                    type="button"
+                    class="study-progress study-enhanced"
+                    data-study-progress
+                    data-path-id={rh.id}
+                    data-path-title={rh.title}
+                    data-step-index={si}
+                    data-step-count={rh.steps.length}
+                    aria-pressed="false"
+                  >Done</button>
+                </div>
               ))}
             </div>
-          </div>
+            <a class="rh-next" href={rh.nextHref}><span>After this path</span>{rh.nextLabel} →</a>
+          </article>
         ))}
       </div>
+      <StudyNext
+        previous={{ href: '/toolkit', label: 'Toolkit', description: 'Return to the instruments for verification and practice.' }}
+        next={{ href: '/objections', label: 'Objections', description: 'Pressure-test the thesis before treating conviction as knowledge.' }}
+      />
     </div>
   </div>
+
+  <script>
+    import '@/scripts/study-list';
+  </script>
 </Base>
 
 <style>
@@ -259,6 +315,16 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
     margin-bottom: var(--sp-6);
   }
 
+  .rh-contract {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-6);
+  }
+  .rh-contract > div { padding: var(--sp-4); border: 1px solid var(--bdr); background: var(--bg-deep); }
+  .rh-contract strong { display: block; margin-bottom: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
+  .rh-contract span { display: block; font-size: var(--fz-sm); line-height: var(--lh-relaxed); color: var(--tx-2); }
+
   .rh-steps {
     display: flex;
     flex-direction: column;
@@ -268,18 +334,22 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
 
   .rh-step {
     display: grid;
-    grid-template-columns: 40px minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: var(--sp-4);
-    padding: var(--sp-4) var(--sp-3);
+    gap: var(--sp-3);
     border-bottom: 1px solid var(--bdr);
     transition: background var(--ease-fast);
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
   }
   .rh-step:hover {
     background: var(--surf-2);
+  }
+  .rh-step-main {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--sp-4);
+    min-width: 0;
+    padding: var(--sp-4) var(--sp-3);
   }
 
   .rh-step-num {
@@ -345,6 +415,10 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
   .rh-step-time {
     color: var(--gold);
   }
+  .study-progress { margin-right: var(--sp-3); padding: var(--sp-2); border: 1px solid var(--bdr); border-radius: var(--radius); font-size: var(--fz-3xs); color: var(--tx-3); }
+  .study-progress[aria-pressed='true'] { color: var(--gold-hi); border-color: var(--border-accent); background: var(--accent-hover); }
+  .rh-next { display: flex; justify-content: flex-end; gap: var(--sp-2); margin-top: var(--sp-5); font-size: var(--fz-sm); color: var(--gold-hi); }
+  .rh-next span { color: var(--tx-3); }
 
   @media (max-width: 1024px) {
     .rh-route-grid {
@@ -381,12 +455,14 @@ const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/
       grid-column: 1;
     }
     .rh-step {
-      grid-template-columns: 28px minmax(0, 1fr);
-      gap: var(--sp-2);
+      grid-template-columns: minmax(0, 1fr) auto;
     }
+    .rh-step-main { grid-template-columns: 28px minmax(0, 1fr); gap: var(--sp-2); }
     .rh-step-right {
       grid-column: 2;
       justify-content: flex-start;
     }
+    .rh-contract { grid-template-columns: 1fr; }
+    .rh-next { flex-direction: column; }
   }
 </style>

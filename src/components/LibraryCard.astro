@@ -1,14 +1,17 @@
 ---
 import Tag from './Tag.astro';
 import type { LibraryItem } from '@/data/types';
+import { studyStageFor } from '@/lib/study';
 interface Props {
   item: LibraryItem;
   preview?: boolean;
 }
 const { item, preview = false } = Astro.props;
 const visibleTags = item.tags.slice(0, 3);
+const stage = studyStageFor(item.pathStage);
 ---
 <article class="card" id={item.id}>
+  <div class="card-stage">Stage {stage.number} · {stage.label}</div>
   <div class="card-layer">{item.layerLabel}</div>
   <div class="card-role">{item.learningRole}</div>
   <div class="card-title">{item.title}</div>
@@ -29,6 +32,9 @@ const visibleTags = item.tags.slice(0, 3);
   )}
   <div class="card-ft">
     <span class="card-meta">{item.difficulty}</span>
-    <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Read →</a>
+    <span class="card-actions">
+      {!preview && <button type="button" class="study-save study-enhanced" data-study-save data-study-id={`library:${item.id}`} data-study-title={item.title} data-study-href={`/library#${item.id}`} data-study-kind="Library" aria-pressed="false">Save</button>}
+      <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Read →</a>
+    </span>
   </div>
 </article>

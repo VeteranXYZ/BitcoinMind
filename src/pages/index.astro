@@ -12,6 +12,7 @@ import { TIMELINE } from '@/data/timeline';
 import { GLOSSARY } from '@/data/glossary';
 import { DEBATES } from '@/data/debates';
 import { SITE } from '@/lib/seo';
+import pulseSnapshot from '../../public/pulse.json';
 
 const foundationItems = LIBRARY.filter((item) => item.layer === 1).slice(0, 2);
 const previewTexts = TEXTS.slice(0, 2);
@@ -67,8 +68,8 @@ const websiteLd = {
       </div>
 
       <div class="home-divider"></div>
-      <TodaysPick client:only="preact" />
-      <PulsePlus client:idle />
+      <TodaysPick />
+      <PulsePlus initialSnapshot={pulseSnapshot} client:idle />
 
       <div class="section home-primer-section">
         <a class="home-primer" href="/primer">

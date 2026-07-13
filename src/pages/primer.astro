@@ -1,5 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
+import StudyLoop from '@/components/StudyLoop.astro';
+import StudyNext from '@/components/StudyNext.astro';
 
 interface Step {
   n: string;
@@ -52,6 +54,8 @@ const steps: Step[] = [
         <p class="ph-desc">A five-step path from the original paper to money, the Bitcoin case, sovereignty, and a personal record of being early but unconvinced.</p>
       </div>
 
+      <StudyLoop active="orient" />
+
       <div class="steps-wrap">
         {steps.map((s) => (
           <div class="step">
@@ -92,6 +96,7 @@ const steps: Step[] = [
           </div>
         </div>
       </div>
+      <StudyNext next={{ href: '/paths', label: 'Study Paths', description: 'Choose a question-led route and make the learning outcome explicit.' }} />
     </div>
   </div>
 </Base>

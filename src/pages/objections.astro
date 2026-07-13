@@ -1,6 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { DEBATES } from '@/data/debates';
+import { formatReviewedAt } from '@/lib/study';
 ---
 <Base
   title="Objections"
@@ -47,6 +48,14 @@ import { DEBATES } from '@/data/debates';
                 ))}
               </div>
             )}
+            <div class="db-sources">
+              <span class="db-further-lbl">Sources · reviewed {formatReviewedAt(d.reviewedAt)}</span>
+              {d.sources.map((source) => (
+                <a class="db-source-link" href={source.href} target="_blank" rel="noopener noreferrer">
+                  <span>{source.perspective}</span>{source.label} ↗
+                </a>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -159,6 +168,9 @@ import { DEBATES } from '@/data/debates';
     margin-top: var(--sp-4);
     padding-top: var(--sp-3);
   }
+  .db-sources { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; margin-top: var(--sp-3); }
+  .db-source-link { font-size: var(--fz-xs); color: var(--tx-2); }
+  .db-source-link span { margin-right: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); text-transform: uppercase; }
 
   .db-further-lbl {
     font-family: var(--font-body);

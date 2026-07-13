@@ -36,14 +36,15 @@ Do not solve:
 The current stack is defined by `package.json`. At this snapshot, the project uses:
 
 ```text
-Astro 6
-@astrojs/preact 5
+Astro 7
+@astrojs/preact 6
 Preact 10 islands
 TypeScript 5
 CSS custom properties
 Fontsource: Literata, Inter, Geist Mono
 GitHub Actions CI
 Cloudflare Workers static assets via Wrangler with a small Worker routing script
+Node.js 22.12 or newer for local and CI builds
 ```
 
 Important files:
@@ -87,8 +88,16 @@ npm run dev
 Run validation:
 
 ```bash
+npm run validate
+```
+
+Run individual validation stages when diagnosing a failure:
+
+```bash
 npm run check
 npm run build
+npm run audit
+npm run test:browser
 ```
 
 Refresh generated data and assets:
@@ -106,8 +115,7 @@ npm run preview
 Before reporting completion for source-code changes, run:
 
 ```bash
-npm run check
-npm run build
+npm run validate
 ```
 
 If a command cannot be run, state exactly which command was not run and why.
@@ -198,6 +206,7 @@ src/scripts/*.ts
 src/pages/frames/*.astro
 scripts-build/*.mjs
 public/pulse.json
+src/scripts/study-list.ts
 ```
 
 Rules:
@@ -207,6 +216,8 @@ Rules:
 - Preserve accessible labels, keyboard behavior, and mobile behavior.
 - Keep Frames educational rather than trading-oriented.
 - Handle unavailable live data with fallbacks.
+- Keep study state local-only unless account or synchronization work is explicitly requested.
+- Preserve a complete static reading experience when JavaScript or storage is unavailable.
 
 ### Deployment or Build Task
 
@@ -403,6 +414,7 @@ Before finishing a change, check:
 - Is mobile behavior preserved?
 - Did `npm run check` pass?
 - Did `npm run build` pass?
+- Did `npm run audit` pass?
 
 For documentation-only changes, check:
 

@@ -1,6 +1,8 @@
 ---
 import Base from '@/layouts/Base.astro';
 import LibraryCard from '@/components/LibraryCard.astro';
+import StudyLoop from '@/components/StudyLoop.astro';
+import StudyNext from '@/components/StudyNext.astro';
 import { LIBRARY } from '@/data/library';
 
 const TAGS = ['All', 'Money', 'Economics', 'Foundations', 'Technical', 'Protocol', 'History', 'Macro Companion', 'Sovereignty', 'Beginner', 'Intermediate', 'Advanced'];
@@ -60,6 +62,7 @@ const itemList = {
         <h1 class="ph-title">The Bitcoin <em>Library</em></h1>
         <p class="ph-desc">Books for building the mental model: money first, Bitcoin second, sovereignty last.</p>
       </div>
+      <StudyLoop compact />
       <div data-filter-scope data-active-filter="all">
         <div class="fb" role="group" aria-label="Filter library">
           <span class="fb-lbl">Filter:</span>
@@ -105,6 +108,11 @@ const itemList = {
 
         <p class="no-res" data-filter-empty hidden>No library items match this filter.</p>
       </div>
+      <StudyNext
+        previous={{ href: '/primer', label: 'Primer', description: 'Return to the five-step entrance.' }}
+        next={{ href: '/texts', label: 'Canonical Texts', description: 'Move from curated interpretation to primary and foundational writing.' }}
+      />
     </div>
   </div>
+  <script>import '@/scripts/study-list';</script>
 </Base>

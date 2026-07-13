@@ -1,6 +1,7 @@
 ---
 import Tag from './Tag.astro';
 import type { ToolkitItem } from '@/data/types';
+import { formatReviewedAt, studyStageFor } from '@/lib/study';
 interface Props {
   item: ToolkitItem;
   preview?: boolean;
@@ -29,8 +30,10 @@ const toolkitCategories = (tool: ToolkitItem) => {
   return Array.from(categories).slice(0, 4);
 };
 const visibleCategories = toolkitCategories(item);
+const stage = studyStageFor(item.pathStage);
 ---
-<article class="card">
+<article class="card" id={item.id}>
+  <div class="card-stage">Stage {stage.number} · {stage.label}</div>
   <div class="card-layer">{item.layer}</div>
   <div class="card-role">{item.learningRole}</div>
   <div class="card-title">{item.title}</div>
@@ -45,11 +48,18 @@ const visibleCategories = toolkitCategories(item);
         <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
         <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
         <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
+        <div class="card-review-meta">
+          Reviewed {formatReviewedAt(item.reviewedAt)}{item.timeSensitive ? ' · Time-sensitive' : ''} ·
+          <a href={item.link} target="_blank" rel="noopener noreferrer">{item.sourceLabel}</a>
+        </div>
       </div>
     </details>
   )}
   <div class="card-ft">
     <span class="card-meta">{item.difficulty} · {item.cost}</span>
-    <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Visit →</a>
+    <span class="card-actions">
+      {!preview && <button type="button" class="study-save study-enhanced" data-study-save data-study-id={`toolkit:${item.id}`} data-study-title={item.title} data-study-href={`/toolkit#${item.id}`} data-study-kind="Toolkit" aria-pressed="false">Save</button>}
+      <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Visit →</a>
+    </span>
   </div>
 </article>

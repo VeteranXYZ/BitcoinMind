@@ -73,6 +73,7 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   {robots && <meta name="robots" content={robots} />}
   <link rel="canonical" href={url} />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <script is:inline>document.documentElement.classList.add('js');</script>
 
   <link rel="preload" href={literata700Normal} as="font" type="font/woff2" crossorigin="anonymous" />
   <link rel="preload" href={inter400Normal} as="font" type="font/woff2" crossorigin="anonymous" />
@@ -116,12 +117,13 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   ))}
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div id="pb"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <Nav />
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <slot />
   </main>
 
