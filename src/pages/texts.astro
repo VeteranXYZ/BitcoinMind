@@ -39,19 +39,21 @@ const textSearch = (item: typeof TEXTS[number]) => [
   item.layer,
   ...item.tags,
 ].join(' ').toLowerCase();
+const authorType = (author: string) =>
+  author === 'Bitcoin.org' || author.toLowerCase().includes('contributors') ? 'Organization' : 'Person';
 
 const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'BitcoinMind Canonical Texts',
+  name: 'BitcoinMind Foundational Texts',
   itemListElement: TEXTS.map((item, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     item: {
-      '@type': 'Article',
-      headline: item.title,
-      author: { '@type': 'Person', name: item.author },
-      datePublished: String(item.year),
+      '@type': 'CreativeWork',
+      name: item.title,
+      author: { '@type': authorType(item.author), name: item.author },
+      ...(item.year > 0 ? { datePublished: String(item.year) } : {}),
       description: item.shortDescription,
       url: item.link,
     },
@@ -60,12 +62,12 @@ const itemList = {
 ---
 <Base
   title="Bitcoin Texts"
-  metaTitle="Bitcoin Texts — Whitepaper, Essays, References, and Core Writings"
-  description="Canonical Bitcoin texts including the whitepaper, monetary essays, security references, sovereignty arguments, and writings that shaped Bitcoin thinking."
-  ogTitle="The Canonical Texts — BitcoinMind"
-  ogDescription="Original papers, essays, references, and arguments that shaped Bitcoin thinking."
-  twitterTitle="The Canonical Texts — BitcoinMind"
-  twitterDescription="Original papers, essays, references, and arguments that shaped Bitcoin thinking."
+  metaTitle="Bitcoin Texts — Whitepaper, Essays, and Technical References"
+  description="Foundational Bitcoin texts: the whitepaper, monetary history, protocol security, full-node verification, adoption arguments, and critical references."
+  ogTitle="Foundational Bitcoin Texts — BitcoinMind"
+  ogDescription="Primary sources and influential arguments, selected for study rather than treated as doctrine."
+  twitterTitle="Foundational Bitcoin Texts — BitcoinMind"
+  twitterDescription="Primary sources and influential arguments, selected for study rather than treated as doctrine."
   path="/texts"
   jsonLd={itemList}
 >
@@ -73,8 +75,8 @@ const itemList = {
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Texts</div>
-        <h1 class="ph-title">The Canonical <em>Texts</em></h1>
-        <p class="ph-desc">Original papers, essays, references, and arguments that shaped Bitcoin thinking.</p>
+        <h1 class="ph-title">Foundational <em>Texts</em></h1>
+        <p class="ph-desc">Primary sources and influential arguments, selected for study rather than treated as doctrine.</p>
       </div>
       <StudyLoop compact />
       <div data-filter-scope data-active-filter="all">
@@ -114,5 +116,4 @@ const itemList = {
       />
     </div>
   </div>
-  <script>import '@/scripts/study-list';</script>
 </Base>

@@ -14,15 +14,25 @@ import { DEBATES } from '@/data/debates';
 import { SITE } from '@/lib/seo';
 import pulseSnapshot from '../../public/pulse.json';
 
-const foundationItems = LIBRARY.filter((item) => item.layer === 1).slice(0, 2);
-const previewTexts = TEXTS.slice(0, 2);
-const previewToolkit = TOOLKIT.slice(0, 2);
+const byId = <T extends { id: string }>(items: T[], ids: string[]) =>
+  ids.map((id) => items.find((item) => item.id === id)).filter((item): item is T => Boolean(item));
+const foundationItems = byId(LIBRARY, ['broken-money', 'inventing-bitcoin']);
+const previewTexts = byId(TEXTS, ['shelling-out', 'bitcoin-whitepaper']);
+const previewToolkit = byId(TOOLKIT, ['mempool-space', 'bitcoin-core']);
+
+const coreQuestions = [
+  { n: '01', question: 'What problem does money solve?', href: '/paths#rh-monetary', stage: 'Orient' },
+  { n: '02', question: 'How can Bitcoin’s rules hold?', href: '/paths#rh-technical', stage: 'Understand' },
+  { n: '03', question: 'Which claims can I verify?', href: '/paths#rh-verification', stage: 'Verify' },
+  { n: '04', question: 'Which risks become mine?', href: '/paths#rh-custody', stage: 'Practice' },
+  { n: '05', question: 'What remains uncertain?', href: '/paths#rh-philosophy', stage: 'Reflect' },
+];
 
 const deeperCards = [
   {
     href: '/timeline',
     title: 'Timeline',
-    desc: 'Seventeen years of signal. The ideas and events that shaped Bitcoin, from the whitepaper to the present block.',
+    desc: 'From digital-cash precursors to a protocol, market, and political institution. Milestones without price mythology.',
     meta: `${TIMELINE.length} events`,
     cta: 'EXPLORE →',
   },
@@ -36,7 +46,7 @@ const deeperCards = [
   {
     href: '/objections',
     title: 'Objections',
-    desc: 'The strongest arguments against Bitcoin, answered without pretending they are weak.',
+    desc: 'Nine serious criticisms. Each begins with what it gets right before attempting a narrower response.',
     meta: `${DEBATES.length} objections`,
     cta: 'READ →',
   },
@@ -55,6 +65,7 @@ const websiteLd = {
 ---
 <Base
   title={SITE.name}
+  metaTitle="BitcoinMind — Learn Bitcoin from First Principles"
   description={SITE.tagline}
   path="/"
   jsonLd={websiteLd}
@@ -64,21 +75,37 @@ const websiteLd = {
       <div class="ph">
         <div class="ph-eye">bitcoinmind.com</div>
         <h1 class="ph-title">Bitcoin<em>Mind</em></h1>
-        <p class="ph-desc">A personal map for studying Bitcoin as money, protocol, and sovereignty.</p>
+        <p class="ph-desc">A curated map for studying Bitcoin as money, protocol, custody practice, and a contested institution.</p>
       </div>
 
       <div class="home-divider"></div>
-      <TodaysPick />
-      <PulsePlus initialSnapshot={pulseSnapshot} client:idle />
 
       <div class="section home-primer-section">
         <a class="home-primer" href="/primer">
           <span class="home-primer-label">Start Here</span>
-          <span class="home-primer-title">The Source <em>Primer</em></span>
-          <span class="home-primer-body">Five steps from the original paper to money, sovereignty, and a personal 2011 note. This is where to begin.</span>
+          <span class="home-primer-title">The First-Principles <em>Primer</em></span>
+          <span class="home-primer-body">Begin with the monetary problem, then move through mechanism, verification, custody, and objections. Five steps; no price thesis required.</span>
           <span class="home-primer-cta">Begin the Primer →</span>
         </a>
       </div>
+
+      <div class="section home-preview-section">
+        <div class="sec-hd">
+          <h2 class="sec-title">Five Questions, <em>One Map</em></h2>
+          <a class="va" href="/paths">View the study paths →</a>
+        </div>
+        <div class="home-question-grid">
+          {coreQuestions.map((item) => (
+            <a class="home-question" href={item.href}>
+              <span class="home-question-num">{item.n}</span>
+              <strong>{item.question}</strong>
+              <span>{item.stage} →</span>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <TodaysPick />
 
       <div class="section home-preview-section">
         <div class="sec-hd">
@@ -112,8 +139,8 @@ const websiteLd = {
 
       <div class="section home-deeper-section">
         <div class="sec-hd">
-          <h2 class="sec-title">Trace the <em>Paths</em></h2>
-          <a class="va" href="/paths">Follow all paths →</a>
+          <h2 class="sec-title">Use the <em>Reference Desk</em></h2>
+          <a class="va" href="/glossary">Open the glossary →</a>
         </div>
         <div class="grid3">
           {deeperCards.map((card) => (
@@ -129,24 +156,32 @@ const websiteLd = {
         </div>
       </div>
 
+      <div class="section home-preview-section">
+        <div class="sec-hd">
+          <h2 class="sec-title">The Network, <em>Now</em></h2>
+          <a class="va" href="/timeline">Place it in history →</a>
+        </div>
+        <PulsePlus initialSnapshot={pulseSnapshot} client:idle />
+      </div>
+
       <div class="section home-deeper-section">
         <div class="sec-hd">
           <h2 class="sec-title">From <em>Hiei</em></h2>
         </div>
         <div class="hiei-list">
-          <a class="hiei-row" href="/stack">
-            <span class="hiei-row-title">Stack</span>
-            <span class="hiei-row-desc">How I hold Bitcoin — not how much, but how and why.</span>
+          <a class="hiei-row" href="/notes">
+            <span class="hiei-row-title">Notes</span>
+            <span class="hiei-row-desc">A primary record from April 2011, preserved against the convenience of hindsight.</span>
             <span class="hiei-row-cta">Read →</span>
           </a>
           <a class="hiei-row" href="/questions">
             <span class="hiei-row-title">Questions</span>
-            <span class="hiei-row-desc">Reader questions, answered when I have something worth saying.</span>
+            <span class="hiei-row-desc">Protocol facts, tradeoffs, and open problems kept separate from forecasts.</span>
             <span class="hiei-row-cta">Read →</span>
           </a>
-          <a class="hiei-row" href="/notes">
-            <span class="hiei-row-title">Notes</span>
-            <span class="hiei-row-desc">Original writing from the archive — including what I wrote in April 2011.</span>
+          <a class="hiei-row" href="/stack">
+            <span class="hiei-row-title">Stack</span>
+            <span class="hiei-row-desc">Custody principles, explicit trust boundaries, recovery, and inheritance.</span>
             <span class="hiei-row-cta">Read →</span>
           </a>
           <a class="hiei-row" href="/about">
@@ -256,6 +291,45 @@ const websiteLd = {
     background: transparent;
   }
 
+  .home-question-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--sp-3);
+  }
+
+  .home-question {
+    display: flex;
+    min-height: 178px;
+    flex-direction: column;
+    gap: var(--sp-3);
+    padding: var(--sp-4);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
+    color: inherit;
+  }
+
+  .home-question:hover {
+    border-color: var(--border-accent);
+    background: var(--surf-2);
+  }
+
+  .home-question-num,
+  .home-question > span:last-child {
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-5);
+    text-transform: uppercase;
+  }
+
+  .home-question strong {
+    flex: 1;
+    font-family: var(--font-body);
+    font-size: var(--fz-base);
+    line-height: var(--lh-snug);
+  }
+
   /* ── Hiei Links ── */
   /* ── Hiei Links ── */
   .hiei-list {
@@ -334,6 +408,12 @@ const websiteLd = {
     padding-bottom: 0;
   }
 
+  @media (max-width: 1000px) {
+    .home-question-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   /* Previously `.home-deeper-section + .home-deeper-section` added
      var(--sp-6) on top, which stacked on the sibling's padding-top and
      made the gap between Trace the Paths and From Hiei 120px, vs the
@@ -341,6 +421,14 @@ const websiteLd = {
      Removed so all section-to-section spacing is uniform. */
 
   @media (max-width: 640px) {
+    .home-question-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .home-question {
+      min-height: 0;
+    }
+
     .home-preview-grid {
       grid-template-columns: 1fr;
     }

@@ -7,18 +7,19 @@ export interface PageSeo {
 export const SITE = {
   name: 'BitcoinMind',
   url: 'https://bitcoinmind.com',
-  tagline: 'BitcoinMind is a personal knowledge map for studying Bitcoin through the Library, primary texts, custody instruments, monetary history, verification, and sovereignty.',
+  tagline: 'A curated, first-principles guide to Bitcoin: money, protocol, verification, self-custody, history, and the strongest objections.',
   author: 'Hiei',
   contactEmail: 'hiei1988@gmail.com',
   foundedYear: 2017,
   currentYear: 2026,
   lastUpdated: 'July 2026',
+  lastModified: '2026-07-12',
   socialImage: 'https://bitcoinmind.com/og-image.png',
 };
 
 export function fullTitle(title: string): string {
   return title === SITE.name
-    ? `${SITE.name} — A Bitcoin Learning Path for Money, Custody, and Sovereignty`
+    ? `${SITE.name} — Learn Bitcoin from First Principles`
     : `${title} — ${SITE.name}`;
 }
 

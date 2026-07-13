@@ -37,6 +37,7 @@ interface Props {
   ogType?: 'website' | 'article';
   robots?: string;
   showFooter?: boolean;
+  dateModified?: string;
 }
 
 const {
@@ -52,6 +53,7 @@ const {
   ogType = 'website',
   robots,
   showFooter = true,
+  dateModified = SITE.lastModified,
 } = Astro.props;
 
 const pageTitle = metaTitle ?? fullTitle(title);
@@ -60,7 +62,32 @@ const socialDescription = ogDescription ?? description;
 const tweetTitle = twitterTitle ?? socialTitle;
 const tweetDescription = twitterDescription ?? socialDescription;
 const url = canonical(path);
-const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+const robotsDirective = robots ?? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+const suppliedLd = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+const pageLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: pageTitle,
+  description,
+  url,
+  inLanguage: 'en',
+  dateModified,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: SITE.name,
+    url: SITE.url,
+  },
+  author: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
+};
+const breadcrumbLd = path === '/' ? null : {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: SITE.name, item: SITE.url },
+    { '@type': 'ListItem', position: 2, name: title, item: url },
+  ],
+};
+const ldArray = [pageLd, ...(breadcrumbLd ? [breadcrumbLd] : []), ...suppliedLd];
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -70,8 +97,10 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
   <meta name="author" content={SITE.author} />
-  {robots && <meta name="robots" content={robots} />}
+  <meta name="theme-color" content="#0d0b08" />
+  <meta name="robots" content={robotsDirective} />
   <link rel="canonical" href={url} />
+  <link rel="sitemap" href="/sitemap.xml" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <script is:inline>document.documentElement.classList.add('js');</script>
 
@@ -84,13 +113,15 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   <meta property="og:description" content={socialDescription} />
   <meta property="og:url" content={url} />
   <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:image" content={SITE.socialImage} />
   <meta property="og:image:secure_url" content={SITE.socialImage} />
   <meta property="og:image:width" content="1024" />
   <meta property="og:image:height" content="1024" />
-  <meta property="og:image:alt" content="BitcoinMind mark" />
+  <meta property="og:image:alt" content="BitcoinMind — a first-principles guide to Bitcoin" />
+  {ogType === 'article' && <meta property="article:modified_time" content={dateModified} />}
 
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={tweetTitle} />
   <meta name="twitter:description" content={tweetDescription} />
   <meta name="twitter:image" content={SITE.socialImage} />

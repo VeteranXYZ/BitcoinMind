@@ -56,9 +56,9 @@ const itemList = {
     '@type': 'ListItem',
     position: i + 1,
     item: {
-      '@type': 'SoftwareApplication',
+      '@type': 'Thing',
       name: item.title,
-      applicationCategory: item.layer,
+      category: item.layer,
       description: item.shortDescription,
       url: item.link,
     },
@@ -67,12 +67,12 @@ const itemList = {
 ---
 <Base
   title="Bitcoin Toolkit"
-  metaTitle="Bitcoin Toolkit — Tools for Verification, Custody, Payments, and Research"
-  description="A practical Bitcoin toolkit for observing the network, running a node, managing custody, receiving payments, and studying long-term data."
-  ogTitle="The Sovereignty Toolkit — BitcoinMind"
-  ogDescription="Practical instruments for observing, verifying, holding, receiving, and studying Bitcoin."
-  twitterTitle="The Sovereignty Toolkit — BitcoinMind"
-  twitterDescription="Practical instruments for observing, verifying, holding, receiving, and studying Bitcoin."
+  metaTitle="Bitcoin Tools — Nodes, Wallets, Custody, and Research"
+  description="A selective Bitcoin toolkit for observing blocks, running a node, managing UTXOs, comparing custody designs, accepting payments, and checking network data."
+  ogTitle="The Bitcoin Toolkit — BitcoinMind"
+  ogDescription="A small, reviewed set of instruments for observation, verification, custody, payments, and research."
+  twitterTitle="The Bitcoin Toolkit — BitcoinMind"
+  twitterDescription="A small, reviewed set of instruments for observation, verification, custody, payments, and research."
   path="/toolkit"
   jsonLd={itemList}
 >
@@ -80,8 +80,8 @@ const itemList = {
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Toolkit</div>
-        <h1 class="ph-title">The Sovereignty <em>Toolkit</em></h1>
-        <p class="ph-desc">Practical instruments for observing, verifying, holding, receiving, and studying Bitcoin.</p>
+        <h1 class="ph-title">The Bitcoin <em>Toolkit</em></h1>
+        <p class="ph-desc">A small set of instruments for observation, verification, custody, and research. Inclusion is not a security guarantee.</p>
       </div>
       <StudyLoop active="practice" compact />
       <aside class="review-policy" aria-label="Toolkit review policy">
@@ -131,10 +131,9 @@ const itemList = {
         <p class="no-res" data-filter-empty hidden>No toolkit items match this filter.</p>
       </div>
       <StudyNext
-        previous={{ href: '/texts', label: 'Canonical Texts', description: 'Return to the protocol and verification references.' }}
+        previous={{ href: '/texts', label: 'Foundational Texts', description: 'Return to the protocol and verification references.' }}
         next={{ href: '/paths', label: 'Study Paths', description: 'Put reading and instruments into a question-led sequence.' }}
       />
     </div>
   </div>
-  <script>import '@/scripts/study-list';</script>
 </Base>

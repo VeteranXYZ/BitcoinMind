@@ -35,7 +35,7 @@ function toUrl(path: string): string {
 
 export function GET() {
   const urls = canonicalPaths
-    .map((path) => `  <url><loc>${xmlEscape(toUrl(path))}</loc></url>`)
+    .map((path) => `  <url><loc>${xmlEscape(toUrl(path))}</loc><lastmod>${SITE.lastModified}</lastmod></url>`)
     .join('\n');
 
   return new Response(

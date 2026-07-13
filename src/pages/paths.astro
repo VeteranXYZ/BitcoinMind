@@ -2,26 +2,27 @@
 import Base from '@/layouts/Base.astro';
 import Tag from '@/components/Tag.astro';
 import StudyLoop from '@/components/StudyLoop.astro';
-import StudyLedger from '@/components/StudyLedger.astro';
 import StudyNext from '@/components/StudyNext.astro';
 import { RABBIT_HOLES } from '@/data/rabbit-holes';
 import { LIBRARY } from '@/data/library';
 import { TEXTS } from '@/data/texts';
 import { TOOLKIT } from '@/data/toolkit';
+import { SITE } from '@/lib/seo';
 
 const typeIcon: Record<string, string> = {
   library: 'Library',
   text: 'Text',
   toolkit: 'Toolkit',
   frame: 'Frame',
+  internal: 'BitcoinMind',
   external: 'External',
 };
 const routeQuestions: Record<string, string> = {
   'rh-monetary': 'What is money, and why does scarcity matter?',
   'rh-technical': 'How does Bitcoin actually work?',
-  'rh-custody': 'What changes when custody and verification become personal?',
-  'rh-philosophy': 'What kind of institution is Bitcoin replacing?',
-  'rh-economics': 'How should long-term Bitcoin data be read?',
+  'rh-verification': 'Which claims can you verify for yourself?',
+  'rh-custody': 'Which risks become yours when you hold the keys?',
+  'rh-philosophy': 'Which conclusions follow—and which remain arguments?',
 };
 const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/, '');
 const catalogs = {
@@ -46,27 +47,39 @@ const paths = RABBIT_HOLES.map((path) => ({
     return step;
   }),
 }));
+const pathsLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'BitcoinMind First-Principles Learning Paths',
+  itemListElement: paths.map((path, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: path.title,
+    description: path.desc,
+    url: `${SITE.url}/paths#${path.id}`,
+  })),
+};
 ---
 <Base
   title="Bitcoin Learning Paths"
-  metaTitle="Bitcoin Learning Paths — Guided Routes Through Money, Protocol, and Custody"
-  description="Guided Bitcoin study paths through money, protocol, self-custody, sovereignty, philosophy, and long-term economic context."
+  metaTitle="Bitcoin Learning Paths — Money, Protocol, and Custody"
+  description="Five guided Bitcoin learning paths through money, protocol mechanics, independent verification, self-custody, objections, and sovereignty."
   ogTitle="The Study Paths — BitcoinMind"
-  ogDescription="Guided routes through money, protocol, custody, sovereignty, and long-term Bitcoin study."
+  ogDescription="Five question-led routes through money, protocol, verification, custody, and reflection."
   twitterTitle="The Study Paths — BitcoinMind"
-  twitterDescription="Guided routes through money, protocol, custody, sovereignty, and long-term Bitcoin study."
+  twitterDescription="Five question-led routes through money, protocol, verification, custody, and reflection."
   path="/paths"
+  jsonLd={pathsLd}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Paths</div>
         <h1 class="ph-title">The Study <em>Paths</em></h1>
-        <p class="ph-desc">Guided routes through money, protocol, custody, sovereignty, and long-term Bitcoin study.</p>
+        <p class="ph-desc">Five question-led routes. Each begins with a prerequisite, ends with a testable outcome, and makes uncertainty part of the curriculum.</p>
       </div>
 
       <StudyLoop />
-      <StudyLedger />
 
       <div class="rh-route-grid" aria-label="Learning path routes">
         {paths.map((rh) => (
@@ -85,7 +98,7 @@ const paths = RABBIT_HOLES.map((path) => ({
 
       <div class="rh-list">
         {paths.map((rh, idx) => (
-          <article class="rh-card" id={rh.id} data-study-path data-path-id={rh.id} data-path-title={rh.title}>
+          <article class="rh-card" id={rh.id}>
             <div class="rh-header">
               <div class="rh-index" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</div>
               <div class="rh-header-text">
@@ -119,16 +132,6 @@ const paths = RABBIT_HOLES.map((path) => ({
                       {step.time && <span class="rh-step-time">{step.time}</span>}
                     </span>
                   </a>
-                  <button
-                    type="button"
-                    class="study-progress study-enhanced"
-                    data-study-progress
-                    data-path-id={rh.id}
-                    data-path-title={rh.title}
-                    data-step-index={si}
-                    data-step-count={rh.steps.length}
-                    aria-pressed="false"
-                  >Done</button>
                 </div>
               ))}
             </div>
@@ -143,9 +146,6 @@ const paths = RABBIT_HOLES.map((path) => ({
     </div>
   </div>
 
-  <script>
-    import '@/scripts/study-list';
-  </script>
 </Base>
 
 <style>

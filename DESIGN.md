@@ -105,7 +105,21 @@ Use the shared study sequence when a surface benefits from orientation or contin
 Orient -> Understand -> Verify -> Practice -> Reflect
 ```
 
-The stages describe reader intent, not completion badges or a gamified funnel. Paths should state prerequisites, outcomes, and a meaningful next step. Resource cards may expose their stage and a quiet local save action, but reading must never depend on saved state.
+The stages describe reader intent, not completion badges or a gamified funnel. Paths should state prerequisites, outcomes, and a meaningful next step. The site is display-first: resource cards may expose their learning stage, but they should not accumulate account-shaped controls, saved state, progress tracking, or engagement mechanics.
+
+### Questions Before Conclusions
+
+Use the shared first-principles questions to keep the site coherent:
+
+```text
+What problem is being solved?
+How can the rules hold?
+Which claims can be verified?
+Which risks move to the user?
+What remains uncertain?
+```
+
+Separate protocol facts from historical interpretation, personal practice, political values, and forecasts. Do not turn a favorable thesis into a certainty. Where evidence supports only a conditional claim, state the condition.
 
 ## 3. Brand Rules
 
@@ -365,8 +379,6 @@ Maintain:
 - readable chart labels and fallbacks
 
 Interactive charts and controls should be understandable without relying only on color.
-
-Browser-local study controls must announce state changes, expose pressed state, remain keyboard usable, and degrade to the complete static reading experience when JavaScript or storage is unavailable. Local state must not be described as synced, private cloud storage, or an account.
 
 ## 10. AI-Assisted Work
 

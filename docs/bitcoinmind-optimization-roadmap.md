@@ -156,32 +156,26 @@ Exit criteria:
 Phase result, 2026-07-12:
 
 - `npm run audit` verifies the 16-route sitemap, built documents, one-H1 structure, metadata, canonicals, internal routes and fragments, duplicate IDs, selected accessibility/interaction contracts, pulse freshness, and asset budgets.
-- `npm run test:browser` runs four Chrome checks for the modal mobile menu, resource filtering, local study persistence, and the Frame 2 no-JavaScript reading experience.
+- `npm run test:browser` runs three Chrome checks for the modal mobile menu, resource filtering, and the Frame 2 no-JavaScript reading experience.
 - `npm run validate` composes type checking, production build, deterministic audit, and browser tests; GitHub Actions now runs that single contract.
 - Direct and transitive dependencies were updated, followed by a dedicated Astro 7 migration. Astro 7.0.7, `@astrojs/preact` 6.0.1, Vite 8.1.4, and esbuild 0.28.1 now install with zero reported npm vulnerabilities.
 - Generated-data fallback remains a warning instead of a build failure. The current `partial-snapshot` warning records an upstream node-count failure while keeping the cached metric behavior explicit.
 
 ### Phase 4 — Add selective return value
 
-Goal: support continued study without turning BitcoinMind into an account-heavy application.
+Goal: keep BitcoinMind display-first and avoid account-shaped features.
 
-- Prototype local-only reading state and saved resources.
-- Let readers resume a path or keep a private study queue in the browser.
-- Consider export/import before considering user accounts.
 - Evaluate a citation-grounded question interface only within the curated corpus.
 - Keep all AI output source-linked, bounded, and explicit about uncertainty.
 
 Exit criteria:
 
-- Return mechanics work without an account and degrade cleanly without JavaScript.
 - No feature changes the site into a generic chatbot, feed, dashboard, or trading product.
 
 Phase result, 2026-07-12:
 
-- Library, Texts, and Toolkit cards can be saved to a private browser-local study list.
-- Path steps can be marked complete, and Paths offers a resume link to the next incomplete step.
-- Study state supports JSON export, validated import, item removal, and complete local clearing.
-- All content remains server-rendered; save/progress controls appear only when JavaScript is available, and no account or network synchronization was added.
+- The browser-local study desk was removed after it proved misaligned with the site's display-first role.
+- The site remains server-rendered and static-first.
 - A citation-grounded question interface was evaluated and deliberately deferred. The curated corpus does not yet have the claim-level citation manifest and coverage gate required to make runtime answers more trustworthy than the existing editorial Questions route.
 
 ## Completion Verification
@@ -193,11 +187,11 @@ Final local production verification, 2026-07-12:
 | Astro / TypeScript | 60 files, 0 errors, 0 warnings |
 | Production build | 17 pages generated |
 | Deterministic audit | 16 public routes passed; 1 explicit partial-snapshot warning |
-| Browser regression suite | 4 of 4 mobile Chrome tests passed |
+| Browser regression suite | 3 of 3 mobile Chrome tests passed |
 | Mobile performance trace | LCP 1,401 ms; CLS 0.00 under 4x CPU and Slow 4G after Astro 7 migration |
 | Lighthouse mobile | Accessibility 100; Best Practices 100; SEO 100; Agentic Browsing 100; 0 failed audits |
 
-The remaining work is recurring editorial maintenance, not an unfinished implementation phase: refresh generated data and re-review time-sensitive guidance. The Astro 7 migration is complete, with the strict compiler, JSX whitespace behavior, static route output, browser interactions, accessibility, and performance verified against the existing release gates.
+The Astro 7 migration is complete. A later editorial pass rebuilt the content hierarchy around five first-principles questions, narrowed overconfident claims, pruned duplicate reference and market-dashboard entries, expanded objections and glossary coverage, and added page-level structured data plus sitemap modification dates. Remaining work is recurring editorial maintenance: refresh generated data, verify external sources, and re-review time-sensitive guidance.
 
 ## Explicit Non-Goals
 

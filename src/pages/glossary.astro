@@ -1,24 +1,41 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { GLOSSARY } from '@/data/glossary';
+import { SITE } from '@/lib/seo';
 
 const categories = [
   { key: 'monetary', label: 'Monetary' },
   { key: 'technical', label: 'Technical' },
   { key: 'philosophical', label: 'Philosophical' },
 ] as const;
+
+const glossaryLd = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  name: 'BitcoinMind Bitcoin Glossary',
+  url: `${SITE.url}/glossary`,
+  hasDefinedTerm: GLOSSARY.map((entry) => ({
+    '@type': 'DefinedTerm',
+    name: entry.term,
+    description: entry.body,
+    url: `${SITE.url}/glossary#${entry.id}`,
+    inDefinedTermSet: `${SITE.url}/glossary`,
+  })),
+};
 ---
 <Base
-  title="Glossary"
-  description="Bitcoin concepts as anchors, not dictionary entries. Monetary, technical, and philosophical terms explained as ways into the idea."
+  title="Bitcoin Glossary"
+  metaTitle="Bitcoin Glossary — Money, Protocol, Mining, Nodes, and Custody"
+  description="A precise Bitcoin glossary covering monetary hardness, UTXOs, private keys, proof of work, nodes, confirmations, fees, multisig, Lightning, and sovereignty."
   path="/glossary"
+  jsonLd={glossaryLd}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Glossary</div>
         <h1 class="ph-title">The <em>Glossary</em></h1>
-        <p class="ph-desc">Concepts as anchors, not dictionary entries. Each term is a way into the idea.</p>
+        <p class="ph-desc">Compact definitions with boundaries: what each term means, what it does not prove, and where to continue.</p>
       </div>
 
       <div class="gl-index" aria-label="Term index">

@@ -7,10 +7,19 @@ import { LIBRARY } from '@/data/library';
 
 const TAGS = ['All', 'Money', 'Economics', 'Foundations', 'Technical', 'Protocol', 'History', 'Macro Companion', 'Sovereignty', 'Beginner', 'Intermediate', 'Advanced'];
 const LAYER_DESC: Record<number, string> = {
-  1: 'Money, Bitcoin, and the first mental model.',
-  2: 'Technical, historical, and monetary structure.',
-  3: 'Bitcoin as a shift in power, custody, and institutional trust.',
+  1: 'Accessible entrances to money and open monetary networks.',
+  2: 'History, protocol mechanics, settlement, and governance.',
+  3: 'Human consequences, institutions, and claims about sovereignty.',
 };
+const CURATED_ORDER = [
+  'the-internet-of-money', 'broken-money', 'the-bitcoin-standard',
+  'digital-gold', 'inventing-bitcoin', 'grokking-bitcoin', 'mastering-bitcoin',
+  'layered-money', 'the-blocksize-war', 'the-price-of-tomorrow',
+  'check-your-financial-privilege', '21-lessons', 'the-sovereign-individual',
+];
+const orderIndex = new Map(CURATED_ORDER.map((id, index) => [id, index]));
+const ORDERED_LIBRARY = [...LIBRARY].sort((a, b) =>
+  (orderIndex.get(a.id) ?? Number.MAX_SAFE_INTEGER) - (orderIndex.get(b.id) ?? Number.MAX_SAFE_INTEGER));
 const filterValues = (values: string[]) => values.map((value) => value.toLowerCase()).join('|');
 const libraryValues = (item: typeof LIBRARY[number]) => filterValues([
   ...item.tags,
@@ -31,7 +40,7 @@ const itemList = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
   name: 'BitcoinMind Library',
-  itemListElement: LIBRARY.map((item, i) => ({
+  itemListElement: ORDERED_LIBRARY.map((item, i) => ({
     '@type': 'ListItem',
     position: i + 1,
     item: {
@@ -46,12 +55,12 @@ const itemList = {
 ---
 <Base
   title="Bitcoin Library"
-  metaTitle="Bitcoin Library — Books for Understanding Money, Protocol, and Sovereignty"
-  description="A curated Bitcoin library for studying money, Bitcoin history, technical foundations, monetary systems, protocol governance, and sovereignty."
+  metaTitle="Bitcoin Books — Money, Protocol, Custody, and History"
+  description="A selective Bitcoin book list ordered from money and history through protocol mechanics, governance, self-custody, human rights, and institutional change."
   ogTitle="The Bitcoin Library — BitcoinMind"
-  ogDescription="Books for building the mental model: money first, Bitcoin second, sovereignty last."
+  ogDescription="A short shelf ordered by learning role: orientation, mechanism, governance, and consequences."
   twitterTitle="The Bitcoin Library — BitcoinMind"
-  twitterDescription="Books for building the mental model: money first, Bitcoin second, sovereignty last."
+  twitterDescription="A short shelf ordered by learning role: orientation, mechanism, governance, and consequences."
   path="/library"
   jsonLd={itemList}
 >
@@ -60,7 +69,7 @@ const itemList = {
       <div class="ph">
         <div class="ph-eye">Library</div>
         <h1 class="ph-title">The Bitcoin <em>Library</em></h1>
-        <p class="ph-desc">Books for building the mental model: money first, Bitcoin second, sovereignty last.</p>
+        <p class="ph-desc">A short shelf ordered by learning role: orientation, mechanism, governance, and consequences. Inclusion is not agreement.</p>
       </div>
       <StudyLoop compact />
       <div data-filter-scope data-active-filter="all">
@@ -87,7 +96,7 @@ const itemList = {
         </div>
 
         {[1, 2, 3].map((layer) => {
-          const layerItems = LIBRARY.filter((item) => item.layer === layer);
+          const layerItems = ORDERED_LIBRARY.filter((item) => item.layer === layer);
           return (
             <div class="layer" data-filter-group>
               <div class="layer-hd">
@@ -110,9 +119,8 @@ const itemList = {
       </div>
       <StudyNext
         previous={{ href: '/primer', label: 'Primer', description: 'Return to the five-step entrance.' }}
-        next={{ href: '/texts', label: 'Canonical Texts', description: 'Move from curated interpretation to primary and foundational writing.' }}
+        next={{ href: '/texts', label: 'Foundational Texts', description: 'Move from curated interpretation to primary and foundational writing.' }}
       />
     </div>
   </div>
-  <script>import '@/scripts/study-list';</script>
 </Base>

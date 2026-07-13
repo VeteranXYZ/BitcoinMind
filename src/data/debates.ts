@@ -90,4 +90,44 @@ export const DEBATES: Debate[] = [
       { label: 'After the Anchor', href: '/frames/2' },
     ],
   },
+  {
+    id: 'd-scale', title: 'Scale and Transaction Fees',
+    objection: 'Bitcoin’s base layer processes too few transactions for a global payment system, while fees can become expensive when block space is scarce. A network that cannot cheaply settle everyone’s everyday payments cannot be serious money.',
+    getsRight: 'Bitcoin deliberately limits base-layer capacity, and fee spikes can price out small or urgent transactions. Payment layers introduce additional liquidity, availability, routing, and custody tradeoffs rather than making scarcity disappear.',
+    response: 'The narrower Bitcoin claim is that a globally replicated base layer should optimize for verifiability and final settlement, while higher-volume payments can use channels, batching, or custodial services with different trust models. Whether that layered design serves enough people without recreating concentrated intermediaries is an empirical and institutional question. “More transactions” is not free, but neither is limited access to block space.',
+    reviewedAt: '2026-07-12',
+    sources: [
+      { label: 'Bitcoin developer guide: block chain', href: 'https://developer.bitcoin.org/devguide/block_chain.html', perspective: 'technical' },
+      { label: 'Lightning Network paper', href: 'https://lightning.network/lightning-network-paper.pdf', perspective: 'technical' },
+    ],
+  },
+  {
+    id: 'd-custody', title: 'Irreversible Loss and Consumer Protection',
+    objection: 'Bitcoin shifts key management onto ordinary people. Keys can be lost, backups stolen, payments misdirected, and fraud irreversible. Traditional finance provides account recovery, dispute resolution, and consumer protection for good reasons.',
+    getsRight: 'Final settlement removes some forms of institutional discretion but also removes familiar recovery mechanisms. Self-custody can be dangerous when confidence exceeds competence, and custodial alternatives reintroduce counterparty risk.',
+    response: 'Bitcoin does not abolish the need for institutions; it makes custody and verification choices more explicit. Individuals can self-custody, share control through multisignature policies, or use regulated custodians. Each option moves risk rather than eliminating it. The useful standard is not ideological purity but whether the holder understands the failure modes, can recover, and has chosen an appropriate trust boundary.',
+    reviewedAt: '2026-07-12',
+    sources: [
+      { label: 'Bitcoin.org: Securing your wallet', href: 'https://bitcoin.org/en/secure-your-wallet', perspective: 'technical' },
+      { label: 'BIS: Crypto ecosystem risks', href: 'https://www.bis.org/publ/othp72.htm', perspective: 'critical' },
+    ],
+    further: [
+      { label: 'The Custody Path', href: '/paths#rh-custody' },
+      { label: 'Is self-custody always more sovereign?', href: '/questions#q-07' },
+    ],
+  },
+  {
+    id: 'd-governance', title: 'Governance and Concentration',
+    objection: 'Bitcoin is described as decentralized, yet mining pools, core developers, exchanges, custodians, and wealthy holders are concentrated. Informal power still exists; it is simply less accountable and harder to see.',
+    getsRight: 'Bitcoin has real centers of influence. Decentralization is not a binary property, and protocol rules do not prevent market concentration, persuasive authority, infrastructure dependencies, or political pressure.',
+    response: 'Bitcoin separates powers that other monetary systems often combine. Developers propose software, miners order valid transactions, nodes enforce chosen rules, and markets assign value; none has complete control. That separation can make capture harder, but it does not guarantee fair representation or permanent decentralization. The right practice is to track concentration by function and ask what exit options remain when one group overreaches.',
+    reviewedAt: '2026-07-12',
+    sources: [
+      { label: 'Bitcoin Core development process', href: 'https://bitcoincore.org/en/contribute/', perspective: 'technical' },
+      { label: 'Cambridge digital mining research', href: 'https://ccaf.io/cbnsi/cbeci', perspective: 'context' },
+    ],
+    further: [
+      { label: 'The Blocksize War', href: '/library#the-blocksize-war' },
+    ],
+  },
 ];

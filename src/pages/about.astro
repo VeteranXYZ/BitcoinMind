@@ -34,13 +34,14 @@ const aboutPageLd = {
     name: SITE.name,
     url: SITE.url,
   },
-  dateModified: '2026-07-04',
+  dateModified: SITE.lastModified,
   author: { '@type': 'Person', name: SITE.author },
 };
 ---
 <Base
   title="About BitcoinMind"
-  description="BitcoinMind is a personal public record for studying Bitcoin as money, technology, and an instrument for sovereignty."
+  metaTitle="About BitcoinMind — Editorial Method and Sources"
+  description="How BitcoinMind selects, orders, reviews, and limits its material on Bitcoin, money, protocol mechanics, verification, custody, and sovereignty."
   path="/about"
   jsonLd={[aboutPageLd, personLd]}
 >
@@ -49,7 +50,7 @@ const aboutPageLd = {
       <div class="ph">
         <div class="ph-eye">About</div>
         <h1 class="ph-title"><em>Hiei</em></h1>
-        <p class="ph-desc">First wrote about Bitcoin in April 2011. The price was $1. I stayed on the sidelines.</p>
+        <p class="ph-desc">First wrote about Bitcoin in April 2011, at roughly one dollar. The questions survived better than the conclusion.</p>
       </div>
 
       <div class="about-wrap">
@@ -59,7 +60,8 @@ const aboutPageLd = {
             <h2 class="a-h">I was right about the risk. I was wrong to stay on the sidelines.</h2>
             <div class="a-body">
               <p>In April 2011, I wrote a blog post about Bitcoin. The price was around $1. I called it devil-like — something that could be either temptation or the mouth of hell, depending on the person who touched it. I questioned whether its cryptographic guarantees were real, whether its creators might secretly inflate the supply, whether value produced without labor could ever earn genuine exchange value from the public. I ended the post with a single sentence: <em>I will stay on the sidelines for now.</em></p>
-              <p>That post is still the most honest thing I've ever written about Bitcoin — not because the conclusions were correct, but because the questions were real. Thirteen years later, I've stopped asking whether Bitcoin is reliable. The question that occupies me now is different: what does it mean to hold a monetary asset that no government issued, no institution backs, and no single person controls? What does that do to how you think about time, sovereignty, and value?</p>
+              <p>That post remains useful not because its conclusion was correct, but because its questions were concrete: can the rules be verified, can insiders alter supply, and how can a digital object acquire exchange value? Fifteen years later, I no longer treat reliability as one yes-or-no question. Protocol validation, software maintenance, mining, custody, markets, and law each fail differently.</p>
+              <p>The question that occupies me now is narrower and harder: what can a monetary network remove from institutional discretion, which powers merely move elsewhere, and what responsibilities return to the individual?</p>
               <p>BitcoinMind is my attempt to think that question through in public.</p>
             </div>
           </div>
@@ -70,8 +72,7 @@ const aboutPageLd = {
             <div class="a-body">
               <p>BitcoinMind is not a Bitcoin news site. It is not a price dashboard. It is not a trading guide.</p>
               <p>It is a personal knowledge map for studying Bitcoin as money, protocol, institution, and discipline. Every library item, primary text, and toolkit entry on this site is something I've read, used, or returned to more than once. Nothing is here because it is popular. Everything is here because it changed how I think.</p>
-              <p>My conviction is simple: Bitcoin is the strongest example we have of a decentralized monetary asset. Its importance is best measured in decades, not months. I'm not interested in converting anyone. I'm interested in finding the people who are already asking the same questions I am.</p>
-              <p>If that's you, you're in the right place.</p>
+              <p>My view is that Bitcoin is the most durable experiment in a scarce, openly verifiable monetary asset without a central issuer. That view can be wrong, and this site should make its assumptions and failure conditions easier to inspect—not recruit agreement.</p>
             </div>
           </div>
 

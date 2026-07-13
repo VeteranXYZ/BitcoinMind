@@ -1,12 +1,25 @@
 ---
 import Base from '@/layouts/Base.astro';
 import FrameTwoChart from '@/components/FrameTwoChart';
+import { SITE, canonical } from '@/lib/seo';
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'After the Anchor: Dollar Purchasing Power and Bitcoin',
+  description: 'An interactive, source-labeled comparison of U.S. dollar purchasing power since 1971 and Bitcoin since 2009.',
+  image: SITE.socialImage,
+  dateModified: SITE.lastModified,
+  author: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
+  mainEntityOfPage: canonical('/frames/2'),
+};
 ---
 <Base
   title="After the Anchor"
-  description="What happens to money when the anchor is cut. An interactive view of fifty-five years of dollar drift, beside sixteen years of bitcoin."
+  metaTitle="U.S. Dollar Purchasing Power Since 1971 vs. Bitcoin — Interactive"
+  description="An interactive, source-labeled view of U.S. dollar purchasing power since 1971 beside Bitcoin since 2009, with CPI methodology and explicit limitations."
   path="/frames/2"
   ogType="article"
+  jsonLd={articleLd}
 >
   <div class="page f2">
     <div class="c">
@@ -16,13 +29,13 @@ import FrameTwoChart from '@/components/FrameTwoChart';
           <span class="f2-eye-sep">·</span><span>№2</span>
         </div>
         <h1 class="f2-title">After the <em>Anchor</em></h1>
-        <p class="f2-sub">What happens to money when the anchor is cut.</p>
+        <p class="f2-sub">What changed after 1971—and what the chart can and cannot establish.</p>
       </header>
 
       <FrameTwoChart client:load />
       <aside class="f2-method" aria-label="Data sources and method">
         <div class="f2-method-title">Sources and method · data through April 2026</div>
-        <p>CPI uses annual U.S. CPI-U averages with monthly interpolation. Bitcoin anchors preserve selected monthly price inflections and use logarithmic interpolation between them. Big Mac prices are an illustrative consumer-price proxy, not an official inflation index. The latest Bitcoin quote attempts Mempool.space first and CoinGecko second, then keeps the cached anchor.</p>
+        <p>CPI uses annual U.S. CPI-U averages with monthly interpolation. Bitcoin anchors preserve selected monthly price inflections and use logarithmic interpolation between them. Big Mac prices are an illustrative consumer-price proxy, not an official inflation index. The latest Bitcoin quote attempts Mempool.space first and CoinGecko second, then keeps the cached anchor. Comparing a consumer-price index with an asset price is a frame for inquiry, not proof that one caused the other or a forecast of future returns.</p>
         <div class="f2-method-links">
           <a href="https://www.bls.gov/cpi/data.htm" target="_blank" rel="noopener noreferrer">U.S. Bureau of Labor Statistics CPI data ↗</a>
           <a href="https://mempool.space/api/v1/prices" target="_blank" rel="noopener noreferrer">Mempool.space price endpoint ↗</a>

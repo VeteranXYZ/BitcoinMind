@@ -1,16 +1,30 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { FRAMES_LIST } from '@/data/frame-one';
+import { SITE } from '@/lib/seo';
 
 const idToHref: Record<string, string> = {
   'frames-1': '/frames/1',
   'frames-2': '/frames/2',
 };
+const framesLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'BitcoinMind Conceptual Frames',
+  itemListElement: FRAMES_LIST.map((frame, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: frame.title,
+    url: `${SITE.url}${idToHref[frame.id]}`,
+  })),
+};
 ---
 <Base
-  title="Frames"
-  description="Ways of seeing money that make Bitcoin easier to understand."
+  title="Bitcoin Monetary Frames"
+  metaTitle="Bitcoin Monetary History and Purchasing Power — Visual Frames"
+  description="Two visual essays for understanding Bitcoin: a history of monetary hardness and an interactive comparison of dollar purchasing power and Bitcoin since 1971."
   path="/frames"
+  jsonLd={framesLd}
 >
   <div class="page frames-ix">
     <div class="c">
@@ -18,7 +32,7 @@ const idToHref: Record<string, string> = {
         <div class="frames-ix-eye">Frames</div>
         <h1 class="frames-ix-title">A series of <em>Frames</em></h1>
         <p class="frames-ix-sub">
-          Ways of seeing money that make Bitcoin easier to understand. History, purchasing power, and the accidents of decades.
+          Visual arguments about monetary hardness and purchasing power. Each frame exposes its method, sources, and limits.
         </p>
       </header>
 

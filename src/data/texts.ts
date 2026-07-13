@@ -170,30 +170,6 @@ export const TEXTS: TextItem[] = [
     link: "https://bitcoin.org/en/full-node"
   },
   {
-    id: "bitcoin-optech",
-    title: "Bitcoin Optech",
-    author: "Bitcoin Optech",
-    year: 0,
-    group: "Security & Verification",
-    pathStage: "Protocol",
-    resourceType: "reference",
-    layer: "Security & Verification",
-    learningRole: "Protocol development literacy",
-    shortDescription: "A long-running technical publication tracking Bitcoin development, scaling, infrastructure changes, and open-source discussions.",
-    whyItBelongs: "It belongs here because serious Bitcoin study is not frozen in old texts. Optech helps the reader follow how the protocol and infrastructure continue to evolve.",
-    bestFor: "Advanced readers, builders, and anyone who wants to track Bitcoin development without relying on social media summaries.",
-    learningPathPosition: "Use as an ongoing reference after the foundations are in place. It is not a beginner starting point.",
-    difficulty: "Advanced",
-    timeCommitment: "Reference",
-    tags: [
-      "Development",
-      "Protocol",
-      "Scaling",
-      "Reference"
-    ],
-    link: "https://bitcoinops.org/"
-  },
-  {
     id: "bitcoin-core-documentation",
     title: "Bitcoin Core Documentation",
     author: "Bitcoin Core contributors",
@@ -216,30 +192,6 @@ export const TEXTS: TextItem[] = [
       "Reference"
     ],
     link: "https://bitcoincore.org/en/doc/"
-  },
-  {
-    id: "bitcoin-stack-exchange",
-    title: "Bitcoin Stack Exchange",
-    author: "Bitcoin Stack Exchange community",
-    year: 0,
-    group: "Security & Verification",
-    pathStage: "Protocol",
-    resourceType: "reference",
-    layer: "Security & Verification",
-    learningRole: "Applied technical Q&A",
-    shortDescription: "A searchable technical knowledge base for specific Bitcoin questions, implementation details, and edge cases.",
-    whyItBelongs: "It belongs here because learning Bitcoin produces precise questions. A good question-and-answer archive often teaches what general texts cannot.",
-    bestFor: "Readers solving concrete technical questions about transactions, wallets, nodes, scripting, fees, and protocol behavior.",
-    learningPathPosition: "Use as a reference after basic vocabulary is familiar. It rewards specific questions.",
-    difficulty: "Advanced",
-    timeCommitment: "Reference",
-    tags: [
-      "Q&A",
-      "Technical",
-      "Reference",
-      "Protocol"
-    ],
-    link: "https://bitcoin.stackexchange.com/"
   },
   {
     id: "speculative-attack",

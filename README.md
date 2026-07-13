@@ -1,6 +1,6 @@
 # BitcoinMind
 
-BitcoinMind is a static-first Bitcoin study site for understanding Bitcoin as money, protocol, custody practice, and sovereignty.
+BitcoinMind is a static-first, first-principles study site for understanding Bitcoin as money, protocol, verification practice, custody, and a contested institution.
 
 Live site: https://bitcoinmind.com
 
@@ -12,11 +12,11 @@ Bitcoin information is easy to collect and hard to sequence. New readers often e
 
 BitcoinMind organizes the subject around a few recurring questions:
 
-- What is money, and why does hardness matter?
-- What did Bitcoin change at the protocol level?
-- Why do verification and custody matter?
-- Which texts and tools are worth studying first?
-- What are the serious objections, and what do they get right?
+- What problem does money solve?
+- How can Bitcoin's rules hold without a central operator?
+- Which claims can a reader verify independently?
+- Which risks move to the holder in self-custody?
+- Which conclusions remain uncertain or contestable?
 
 The project favors curation over volume. A resource belongs in the site only if it improves the learning path.
 
@@ -24,16 +24,16 @@ The project favors curation over volume. A resource belongs in the site only if 
 
 Current public sections include:
 
-- **Primer** — a five-step introduction from the whitepaper to money, sovereignty, and the original 2011 note.
-- **Library** — curated books and long-form resources organized by learning layer.
-- **Texts** — primary essays and foundational Bitcoin writings.
-- **Toolkit** — custody, node, wallet, verification, and network-observation tools.
-- **Paths** — guided routes through money, protocol, custody, philosophy, and economic context.
+- **Primer** — a five-step entrance through money, protocol mechanics, verification, custody, and objections.
+- **Paths** — guided routes through orientation, understanding, verification, practice, and reflection.
+- **Library** — a selective book shelf organized by learning role rather than popularity.
+- **Texts** — primary sources, influential essays, and technical references.
+- **Toolkit** — a reviewed set of node, wallet, custody, payment, and network-observation tools.
 - **Frames** — interactive conceptual views for understanding monetary hardness and purchasing power.
-- **Timeline** — major Bitcoin events across protocol, market, institutional, and cultural history.
-- **Glossary** — compact explanations for important terms.
-- **Objections** — serious criticisms answered without treating them as weak arguments.
-- **Stack** — the site owner's approach to DCA, cold storage, verification, and inheritance.
+- **Timeline** — digital-cash precursors and major protocol, custody, market, and policy milestones.
+- **Glossary** — bounded definitions that state what a term does and does not prove.
+- **Objections** — serious criticisms answered by first stating what each criticism gets right.
+- **Stack** — the site owner's custody principles, failure modes, recovery, and inheritance practice.
 - **Notes** — personal writing and source notes, including the April 2011 Bitcoin note.
 - **Questions** — reader-style questions answered from the site's point of view.
 - **About** — origin story and curation principles.
@@ -162,11 +162,8 @@ Examples:
 - Network Clock / pulse display
 - interactive Frames
 - resource filtering and empty states
-- a browser-local study list, path progress, and JSON export/import
 
 Keep new interactive behavior small, accessible, and scoped to the relevant component or page. Do not convert static content pages into a broad client-side application unless there is a clear reason.
-
-The study desk stores data only in the current browser under `bitcoinmind.study.v1`. It has no account, analytics, or server synchronization dependency, and the underlying resources and paths remain readable without JavaScript.
 
 ## Learning and Evidence Model
 
@@ -177,6 +174,8 @@ Orient -> Understand -> Verify -> Practice -> Reflect
 ```
 
 Guided paths state a prerequisite, expected outcome, and next step. Internal path entries reference the canonical resource datasets by ID instead of duplicating titles and links.
+
+The sequence is question-led rather than conversion-led. Protocol facts, editorial inferences, personal practices, and forecasts should remain visibly distinct. Claims are narrowed when evidence does not support certainty; unresolved questions stay unresolved.
 
 Time-sensitive Toolkit entries include a review date and source label. Objections expose representative critical, technical, and contextual sources. Frames and generated network data identify their source or snapshot context. These fields are editorial review signals, not claims that a resource or recommendation is permanently current.
 
@@ -262,7 +261,7 @@ npm ci
 npm run validate
 ```
 
-The audit runs against the generated `dist` output. It checks the sitemap route set, document metadata, one-H1 structure, internal routes and fragments, duplicate IDs, selected interactive/accessibility contracts, generated-data freshness, and static asset budgets. Playwright then checks the mobile menu, resource filtering, local study persistence, and the Frame 2 no-JavaScript experience in Chrome. Freshness fallback states are reported as warnings so a temporary upstream outage does not make a static build unavailable.
+The audit runs against the generated `dist` output. It checks the sitemap route set, document metadata, one-H1 structure, internal routes and fragments, duplicate IDs, selected interactive/accessibility contracts, generated-data freshness, and static asset budgets. Playwright then checks the mobile menu, resource filtering, and the Frame 2 no-JavaScript experience in Chrome. Freshness fallback states are reported as warnings so a temporary upstream outage does not make a static build unavailable.
 
 The production build outputs static assets from Astro. Cloudflare deployment is configured through Wrangler using the `dist` directory as the static assets source. `worker/index.js` runs before assets to redirect `www.bitcoinmind.com` to the apex domain and route legacy sitemap asset paths to the canonical sitemap.
 
@@ -282,7 +281,6 @@ BitcoinMind is currently a curated static learning site with selective interacti
 
 - user accounts
 - personalization
-- cloud-synchronized study state
 - runtime LLM calls
 - retrieval-augmented generation
 - automated content evaluation

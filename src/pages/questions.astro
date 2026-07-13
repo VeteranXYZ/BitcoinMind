@@ -2,18 +2,32 @@
 import Base from '@/layouts/Base.astro';
 import { QUESTIONS } from '@/data/questions';
 import { SITE } from '@/lib/seo';
+
+const questionsLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Bitcoin Questions, Tradeoffs, and Open Problems',
+  itemListElement: QUESTIONS.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: `${SITE.url}/questions#${item.id}`,
+    name: item.question,
+  })),
+};
 ---
 <Base
-  title="Questions"
-  description="Selected reader questions about Bitcoin, answered when there is something worth saying. Objections, custody, philosophy, and practice."
+  title="Bitcoin Questions"
+  metaTitle="Bitcoin Questions — Clear Answers, Tradeoffs, and Open Problems"
+  description="Careful answers to difficult Bitcoin questions about energy, buying, the 21 million limit, miner fees, smart contracts, self-custody, and protocol change."
   path="/questions"
+  jsonLd={questionsLd}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Questions</div>
         <h1 class="ph-title">Open <em>Questions</em></h1>
-        <p class="ph-desc">Selected reader questions, answered when there is something worth saying.</p>
+        <p class="ph-desc">Answers that distinguish protocol facts from forecasts, values, and unresolved tradeoffs.</p>
       </div>
 
       <div class="qa-list">
@@ -48,7 +62,7 @@ import { SITE } from '@/lib/seo';
           <div class="a-eye">Submit</div>
           <h2 class="qa-submit-title">Have a question?</h2>
         </div>
-        <p class="qa-submit-body">If you have a question about Bitcoin that you think deserves a thoughtful answer — not a price prediction, not "when moon" — send it. I read everything. I answer what I can.</p>
+        <p class="qa-submit-body">Send a question that survives a quick search and deserves a careful answer. The most useful questions expose an assumption, a tradeoff, or evidence that could change the conclusion.</p>
         <a class="qa-submit-cta" href={`mailto:${SITE.contactEmail}?subject=Question for BitcoinMind`} target="_blank" rel="noopener noreferrer">
           <span class="qa-submit-arrow">→</span>
           <span>{SITE.contactEmail}</span>

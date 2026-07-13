@@ -2,18 +2,33 @@
 import Base from '@/layouts/Base.astro';
 import Tag from '@/components/Tag.astro';
 import { TIMELINE } from '@/data/timeline';
+import { SITE } from '@/lib/seo';
+const timelineLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Bitcoin History Timeline',
+  itemListElement: TIMELINE.map((event, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: `${event.year}: ${event.title}`,
+    description: event.body,
+    url: `${SITE.url}/timeline#${event.id}`,
+  })),
+};
 ---
 <Base
-  title="Timeline"
-  description="Seventeen years of Bitcoin signal, stripped of market noise. Ideas, events, and protocol moments from the whitepaper to the present block."
+  title="Bitcoin History"
+  metaTitle="Bitcoin History — Hashcash, the Whitepaper, and Beyond"
+  description="A Bitcoin history timeline from Hashcash, b-money, and RPOW through the whitepaper, halvings, custody failures, protocol conflicts, ETPs, and state reserves."
   path="/timeline"
+  jsonLd={timelineLd}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Timeline</div>
         <h1 class="ph-title">The <em>Timeline</em></h1>
-        <p class="ph-desc">Seventeen years of signal, stripped of market noise. Ideas, events, and protocol moments only.</p>
+        <p class="ph-desc">From digital-cash precursors to a protocol, market, and political institution. Milestones without price mythology.</p>
       </div>
 
       <div class="tl-wrap">

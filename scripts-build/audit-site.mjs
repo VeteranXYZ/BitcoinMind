@@ -33,6 +33,9 @@ for (const route of [...sitemapRoutes, "/404"]) {
   }
 }
 
+const pageTitles = new Map();
+const pageDescriptions = new Map();
+
 for (const [route, html] of pages) {
   const h1s = html.match(/<h1(?:\s|>)/g) ?? [];
   if (h1s.length !== 1) fail(`${route}: expected one h1, found ${h1s.length}`);
@@ -40,10 +43,35 @@ for (const [route, html] of pages) {
   if (!/<meta\s+name="description"\s+content="[^"]+"/.test(html)) fail(`${route}: missing meta description`);
   if (!/<link\s+rel="canonical"\s+href="[^"]+"/.test(html)) fail(`${route}: missing canonical URL`);
   if (!/<meta\s+property="og:url"\s+content="[^"]+"/.test(html)) fail(`${route}: missing og:url`);
+  if (!/<meta\s+name="robots"\s+content="[^"]+"/.test(html)) fail(`${route}: missing robots directive`);
+  if (!/<meta\s+property="og:image"\s+content="https:\/\/[^"]+"/.test(html)) fail(`${route}: missing absolute og:image`);
+  if (!/<meta\s+name="twitter:card"\s+content="summary_large_image"/.test(html)) fail(`${route}: missing large-image Twitter card`);
+  if (!/<script[^>]+type="application\/ld\+json"/.test(html)) fail(`${route}: missing structured data`);
+
+  const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
+  const description = html.match(/<meta\s+name="description"\s+content="([^"]+)"/)?.[1];
+  if (title) {
+    const prior = pageTitles.get(title);
+    if (prior) fail(`${route}: duplicate title also used by ${prior}`);
+    pageTitles.set(title, route);
+  }
+  if (description) {
+    const prior = pageDescriptions.get(description);
+    if (prior) fail(`${route}: duplicate description also used by ${prior}`);
+    pageDescriptions.set(description, route);
+  }
 
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
   const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
   if (duplicateIds.length) fail(`${route}: duplicate ids ${duplicateIds.join(", ")}`);
+}
+
+const sitemapLastmods = [...sitemap.matchAll(/<lastmod>(.*?)<\/lastmod>/g)].map((match) => match[1]);
+if (sitemapLastmods.length !== sitemapRoutes.length) fail('sitemap: every URL must have a lastmod value');
+for (const value of sitemapLastmods) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(Date.parse(value))) {
+    fail(`sitemap: invalid lastmod ${value}`);
+  }
 }
 
 for (const [route, html] of pages) {
@@ -70,14 +98,9 @@ for (const [route, html] of pages) {
 }
 
 const contracts = [
-  ["/paths", /data-study-ledger/, "local study ledger"],
-  ["/paths", /data-study-progress/, "path progress controls"],
   ["/library", /data-filter-scope/, "library filters"],
-  ["/library", /data-study-save/, "library save controls"],
   ["/texts", /data-filter-scope/, "text filters"],
-  ["/texts", /data-study-save/, "text save controls"],
   ["/toolkit", /data-filter-scope/, "toolkit filters"],
-  ["/toolkit", /data-study-save/, "toolkit save controls"],
   ["/frames/2", /aria-labelledby="f2-chart-title f2-chart-desc"/, "accessible chart fallback"],
   ["/", /aria-modal="true"/, "welcome dialog semantics"],
 ];

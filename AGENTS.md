@@ -206,7 +206,6 @@ src/scripts/*.ts
 src/pages/frames/*.astro
 scripts-build/*.mjs
 public/pulse.json
-src/scripts/study-list.ts
 ```
 
 Rules:
@@ -216,8 +215,6 @@ Rules:
 - Preserve accessible labels, keyboard behavior, and mobile behavior.
 - Keep Frames educational rather than trading-oriented.
 - Handle unavailable live data with fallbacks.
-- Keep study state local-only unless account or synchronization work is explicitly requested.
-- Preserve a complete static reading experience when JavaScript or storage is unavailable.
 
 ### Deployment or Build Task
 

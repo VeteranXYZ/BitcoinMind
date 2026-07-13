@@ -2,18 +2,33 @@
 import Base from '@/layouts/Base.astro';
 import { DEBATES } from '@/data/debates';
 import { formatReviewedAt } from '@/lib/study';
+import { SITE } from '@/lib/seo';
+
+const objectionsLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Serious Objections to Bitcoin',
+  itemListElement: DEBATES.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    url: `${SITE.url}/objections#${item.id}`,
+    name: item.title,
+  })),
+};
 ---
 <Base
-  title="Objections"
-  description="The strongest arguments against Bitcoin, answered without pretending they are weak."
+  title="Bitcoin Objections"
+  metaTitle="Bitcoin Criticisms — Energy, Scale, Custody, and Governance"
+  description="Nine serious Bitcoin objections—energy, volatility, quantum risk, regulation, backing, scale, custody, and governance—answered with sources and limits."
   path="/objections"
+  jsonLd={objectionsLd}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Objections</div>
         <h1 class="ph-title">Honest <em>Objections</em></h1>
-        <p class="ph-desc">The strongest arguments against Bitcoin, answered without pretending they are weak.</p>
+        <p class="ph-desc">Each criticism begins with what it gets right. A response is useful only when it narrows the claim instead of erasing the tradeoff.</p>
       </div>
 
       <div class="db-list">

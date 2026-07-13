@@ -2,6 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import StudyLoop from '@/components/StudyLoop.astro';
 import StudyNext from '@/components/StudyNext.astro';
+import { SITE } from '@/lib/seo';
 
 interface Step {
   n: string;
@@ -15,43 +16,61 @@ interface Step {
 }
 
 const steps: Step[] = [
-  { n: '01', head: 'Read the document that began everything.',
-    body: "Nine pages. Written by a person no one has ever identified. Read it not to understand the cryptography — read it to feel the problem it's solving. Two people. No bank in between. That's the whole idea.",
-    label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto', time: '45 min',
-    href: 'https://bitcoin.org/bitcoin.pdf', external: true },
-  { n: '02', head: 'Learn what money actually is.',
-    body: "You cannot understand what Bitcoin is replacing without understanding what money is. Most people never ask. The Bitcoin Standard is where I'd begin — not the whole work, just Part One. The history of money is the only context that makes Bitcoin legible.",
-    label: 'The Bitcoin Standard', author: 'Saifedean Ammous', time: '3-4 hrs',
-    href: 'https://saifedean.com/tbs/', external: true },
-  { n: '03', head: 'Understand the monetary case.',
-    body: "Many people first meet Bitcoin through the broader crypto market. This step separates Bitcoin's monetary structure from the noise around it. Parker Lewis frames it through monetary properties, credibility, and network effects. Read Gradually, Then Suddenly before you decide where Bitcoin belongs.",
-    label: 'Gradually, Then Suddenly', author: 'Parker Lewis', time: '2-3 hrs',
-    href: 'https://unchained.com/gradually-then-suddenly/', external: true },
-  { n: '04', head: 'Consider the question of sovereignty.',
-    body: "If the first three steps landed, you'll feel it — something shifts in how you think about savings, governments, time, sovereignty. The Sovereign Individual was written in 1997. It has no business being this accurate about the present. Read it slowly.",
-    label: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg', time: '6-8 hrs',
-    href: 'https://www.amazon.com/Sovereign-Individual-Mastering-Transition-Information/dp/0684832720', external: true },
-  { n: '05', head: 'Read the 2011 note.',
-    body: "The Notes section is where I write without a net. Begin with the first entry — April 2011, Bitcoin at $1. I called it devil-like. I wasn't wrong about the nature of it. I was wrong about what to do.",
-    label: 'Notes', author: null, time: '10 min', href: '/notes', external: false },
+  { n: '01', head: 'Begin with the problem, not the asset.',
+    body: 'Money coordinates strangers across time. Before asking whether Bitcoin has value, ask why societies adopt monetary goods, why settlement requires trust, and what happens when the rules of money can change. This keeps price from becoming the explanation.',
+    label: 'Shelling Out: The Origins of Money', author: 'Nick Szabo', time: '40 min',
+    href: '/texts#shelling-out', external: false },
+  { n: '02', head: 'Read the proposal in its own words.',
+    body: 'The whitepaper proposes a way to order electronic payments without a trusted central operator. Read it once for the problem and structure, not mastery. Notice what it claims, what it leaves to implementation, and what later Bitcoin culture has added.',
+    label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto', time: '20 min',
+    href: '/texts#bitcoin-whitepaper', external: false },
+  { n: '03', head: 'Replace metaphors with mechanisms.',
+    body: 'Scarcity is not secured by a slogan. It emerges from transaction rules, proof of work, difficulty adjustment, incentives, and users independently rejecting invalid history. Learn enough of the machinery to explain where trust was reduced — and where it remains.',
+    label: 'Inventing Bitcoin', author: 'Yan Pritzker', time: '2 hrs',
+    href: '/library#inventing-bitcoin', external: false },
+  { n: '04', head: 'Move from belief to verification.',
+    body: 'A block explorer lets you observe someone else’s view. A validating node checks the rules for itself. Then custody asks a harder question: if no intermediary can reverse the payment, which mistakes and recovery duties become yours?',
+    label: 'Verification and custody tools', author: null, time: '45–90 min',
+    href: '/toolkit', external: false },
+  { n: '05', head: 'Try to disprove the thesis.',
+    body: 'A serious view of Bitcoin must survive energy costs, volatility, regulation, governance, cryptographic risk, and the burden of self-custody. The goal is not instant conviction. It is a position precise enough to be revised when evidence changes.',
+    label: 'Honest Objections', author: null, time: '30 min',
+    href: '/objections', external: false },
 ];
+const primerLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LearningResource',
+  name: 'The First-Principles Bitcoin Primer',
+  description: 'A five-step introduction to money, the Bitcoin protocol, verification, custody, and serious objections.',
+  url: `${SITE.url}/primer`,
+  inLanguage: 'en',
+  educationalLevel: 'Beginner',
+  teaches: [
+    'Why money and settlement require trust',
+    'How Bitcoin transactions and proof of work fit together',
+    'The difference between observing and verifying Bitcoin',
+    'The tradeoffs of Bitcoin self-custody',
+    'How to evaluate serious objections to Bitcoin',
+  ],
+};
 ---
 <Base
   title="Bitcoin Primer"
-  metaTitle="Bitcoin Primer — A Five-Step Path to Understanding Bitcoin"
-  description="A five-step Bitcoin learning path from the original whitepaper to money, the Bitcoin case, sovereignty, and a personal 2011 archive note."
-  ogTitle="The Source Primer — BitcoinMind"
-  ogDescription="A five-step path from Bitcoin’s original paper to money, sovereignty, and a personal record of being early but unconvinced."
-  twitterTitle="The Source Primer — BitcoinMind"
-  twitterDescription="A five-step path from Bitcoin’s original paper to money, sovereignty, and a personal record of being early but unconvinced."
+  metaTitle="What Is Bitcoin? A First-Principles Primer — BitcoinMind"
+  description="Understand Bitcoin from first principles in five steps: money, the whitepaper, protocol mechanics, verification, self-custody, and serious objections."
+  ogTitle="The First-Principles Bitcoin Primer"
+  ogDescription="Five questions for understanding Bitcoin without price hype, tribal slogans, or borrowed conviction."
+  twitterTitle="The First-Principles Bitcoin Primer"
+  twitterDescription="Money, protocol, verification, custody, and objections—in the order that makes Bitcoin intelligible."
   path="/primer"
+  jsonLd={primerLd}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Primer</div>
-        <h1 class="ph-title">The Source <em>Primer</em></h1>
-        <p class="ph-desc">A five-step path from the original paper to money, the Bitcoin case, sovereignty, and a personal record of being early but unconvinced.</p>
+        <h1 class="ph-title">The First-Principles <em>Primer</em></h1>
+        <p class="ph-desc">Five questions for understanding Bitcoin without price hype, tribal slogans, or borrowed conviction.</p>
       </div>
 
       <StudyLoop active="orient" />
@@ -81,13 +100,13 @@ const steps: Step[] = [
 
         <div class="steps-closing">
           <div class="steps-closing-eye">End of Primer · 5 steps</div>
-          <h2 class="steps-closing-lead">That's enough.</h2>
+          <h2 class="steps-closing-lead">Now choose what to test.</h2>
 
           <p class="steps-closing-p">
-            These five are not the whole library — they are the entrance.
-            Read them in order. Take the time they ask for. The thinking
-            they start in you is the only thing that matters; everything
-            else on this site is here to continue it.
+            The primer is an orientation, not a conclusion. If the monetary
+            question is strongest, follow the Money path. If the mechanism is
+            still unclear, follow Protocol. If ownership is the point, study
+            verification and custody before moving meaningful value.
           </p>
 
           <div class="steps-closing-sig">

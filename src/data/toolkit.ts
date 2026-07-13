@@ -230,52 +230,6 @@ export const TOOLKIT: ToolkitItem[] = [
     reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
   },
   {
-    id: "blockstream-jade",
-    title: "Blockstream Jade",
-    group: "Custody Instruments",
-    pathStage: "Custody",
-    resourceType: "instrument",
-    layer: "Custody",
-    learningRole: "Affordable hardware signing",
-    shortDescription: "A Bitcoin hardware wallet option with QR workflows and a focus on accessible self-custody.",
-    whyItBelongs: "It belongs here because hardware custody should not be represented by only one vendor or one security style. Jade offers another path into hardware signing.",
-    bestFor: "Users comparing hardware wallets or looking for a more accessible signing device option.",
-    learningPathPosition: "Consider alongside Trezor, Coldcard, and SeedSigner when learning tradeoffs among custody instruments.",
-    difficulty: "Intermediate",
-    cost: "Paid",
-    tags: [
-      "Hardware Wallet",
-      "Signing Device",
-      "QR",
-      "Self-Custody"
-    ],
-    link: "https://blockstream.com/jade/",
-    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official product site"
-  },
-  {
-    id: "bitbox02-bitcoin-only",
-    title: "BitBox02 Bitcoin-only",
-    group: "Custody Instruments",
-    pathStage: "Custody",
-    resourceType: "instrument",
-    layer: "Custody",
-    learningRole: "Simple hardware custody",
-    shortDescription: "A hardware wallet with a Bitcoin-only edition for users who prefer a narrower and simpler custody device.",
-    whyItBelongs: "It belongs here because good custody instruments should include simpler options as well as advanced ones. A Bitcoin-only device can reduce distraction and scope.",
-    bestFor: "Users who want a clean hardware-wallet experience without a broad multi-asset surface.",
-    learningPathPosition: "Consider as a custody alternative after learning the basic hardware-wallet model.",
-    difficulty: "Intermediate",
-    cost: "Paid",
-    tags: [
-      "Hardware Wallet",
-      "Bitcoin-Only",
-      "Self-Custody",
-      "Simple"
-    ],
-    link: "https://bitbox.swiss/bitbox02/bitcoin-only/",
-    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official product site"
-  },
-  {
     id: "electrum",
     title: "Electrum",
     group: "Custody Instruments",
@@ -296,29 +250,6 @@ export const TOOLKIT: ToolkitItem[] = [
     ],
     link: "https://electrum.org/",
     reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official project site"
-  },
-  {
-    id: "lookintobitcoin",
-    title: "LookIntoBitcoin",
-    group: "Research and Context",
-    pathStage: "Research",
-    resourceType: "instrument",
-    layer: "Research",
-    learningRole: "Long-term cycle context",
-    shortDescription: "A public dashboard of long-term Bitcoin valuation, cycle, and on-chain indicators.",
-    whyItBelongs: "It belongs here because long-term data can be useful when it is kept in context. The goal is patience and structure, not short-term prediction.",
-    bestFor: "Long-term holders and students of Bitcoin market cycles who want context without living inside trading screens.",
-    learningPathPosition: "Use late and carefully. It should support study, not replace monetary or technical understanding.",
-    difficulty: "Intermediate",
-    cost: "Free",
-    tags: [
-      "Cycles",
-      "On-Chain",
-      "Market Context",
-      "Research"
-    ],
-    link: "https://www.lookintobitcoin.com/",
-    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official data site"
   },
   {
     id: "coinmetrics",
@@ -364,29 +295,6 @@ export const TOOLKIT: ToolkitItem[] = [
       "Statistics"
     ],
     link: "https://bitcoin.clarkmoody.com/dashboard/",
-    reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official data site"
-  },
-  {
-    id: "bitcoin-visuals",
-    title: "Bitcoin Visuals",
-    group: "Research and Context",
-    pathStage: "Observation",
-    resourceType: "instrument",
-    layer: "Observation",
-    learningRole: "Visual network statistics",
-    shortDescription: "A visual reference for Bitcoin network statistics, node metrics, fees, and related historical data.",
-    whyItBelongs: "It belongs here because some Bitcoin concepts become easier to understand when seen over time rather than described abstractly.",
-    bestFor: "Visual learners and researchers looking for network charts and historical context.",
-    learningPathPosition: "Use as a supporting reference while studying nodes, fees, mining, and network growth.",
-    difficulty: "Intermediate",
-    cost: "Free",
-    tags: [
-      "Charts",
-      "Network",
-      "Visualization",
-      "Reference"
-    ],
-    link: "https://bitcoinvisuals.com/",
     reviewedAt: "2026-07-12", timeSensitive: true, sourceLabel: "Official data site"
   },
   {

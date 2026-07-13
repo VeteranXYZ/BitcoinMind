@@ -2,8 +2,9 @@
 import Base from '@/layouts/Base.astro';
 ---
 <Base
-  title="Stack"
-  description="Not how much. How — and more importantly, why. Hiei's approach to holding Bitcoin."
+  title="Bitcoin Custody Principles"
+  metaTitle="Bitcoin Custody — Keys, Recovery, and Inheritance"
+  description="A principle-level Bitcoin custody practice covering allocation, cold storage, verification, recovery, privacy, and inheritance without a universal setup."
   path="/stack"
 >
   <div class="page">
@@ -11,7 +12,7 @@ import Base from '@/layouts/Base.astro';
       <div class="ph">
         <div class="ph-eye">Stack</div>
         <h1 class="ph-title">The <em>Stack</em></h1>
-        <p class="ph-desc">Not how much. How — and more importantly, why. No amounts. No financial advice. Just the thinking behind the practice.</p>
+        <p class="ph-desc">Not a model portfolio or a setup to copy. A record of the principles, failure modes, and limits behind one custody practice.</p>
       </div>
 
       <aside class="review-policy" aria-label="Operational guidance review note">
@@ -22,11 +23,11 @@ import Base from '@/layouts/Base.astro';
       <div class="stk-wrap">
         <div class="stk-main">
           <div class="a-sec stk-principle-card">
-            <div class="a-eye">Approach</div>
-            <h2 class="a-h">DCA. Don't time. Don't trade.</h2>
+            <div class="a-eye">Allocation</div>
+            <h2 class="a-h">A position should be survivable when the thesis is wrong.</h2>
             <div class="a-body">
-              <p>I buy a fixed amount of Bitcoin at regular intervals. This is called dollar-cost averaging — DCA. I don't try to predict the price. I don't wait for dips. I don't sell into strength. The thesis is simple: if Bitcoin is what I think it is, the price I pay today will be irrelevant in a decade. If it isn't what I think it is, no amount of timing will save me.</p>
-              <p>DCA removes emotion from the process. It turns conviction into a recurring action. It is the investment strategy equivalent of showing up every day.</p>
+              <p>I prefer a regular schedule to discretionary trading because I have no reliable edge in short-term price prediction. That method reduces one kind of error; it does not make the asset safe or the price reasonable.</p>
+              <p>The governing constraint is survivability. No leverage, no dependence on a near-term sale, and no position large enough to force a decision during a drawdown. A thesis deserves explicit failure conditions, not only reasons to believe it.</p>
             </div>
           </div>
 
@@ -43,18 +44,18 @@ import Base from '@/layouts/Base.astro';
             <div class="a-eye">Security</div>
             <h2 class="a-h">What I practice.</h2>
             <div class="a-body">
-              <p><em>Seed phrases are never digital.</em> Not in a photo, not in a note, not in the cloud. The moment a seed touches a network-connected device, it is compromised in principle even if not yet in practice.</p>
-              <p><em>Keep recovery realistic.</em> A custody setup that cannot be recovered by the right person at the right time is not secure. It is fragile.</p>
-              <p><em>Verify, don't trust.</em> I run my own node where practical. The aim is independent verification, not dependence on a third-party view of the network.</p>
+              <p><em>Keep signing secrets away from general-purpose networked devices.</em> Photos, cloud notes, messaging apps, and ordinary computers create failure modes that are difficult to audit.</p>
+              <p><em>Test recovery.</em> A backup that has never been restored is an assumption. A custody setup that the intended person cannot recover at the intended time is fragile, however sophisticated it appears.</p>
+              <p><em>Name the trust boundary.</em> A personal node can verify consensus rules and transaction history. It cannot verify hardware manufacturing, protect a stolen seed, or make operational mistakes reversible.</p>
             </div>
           </div>
 
           <div class="a-sec stk-principle-card">
-            <div class="a-eye">Psychology</div>
-            <h2 class="a-h">How I think about drawdowns.</h2>
+            <div class="a-eye">Thesis Review</div>
+            <h2 class="a-h">Price is evidence of demand, not proof of the system.</h2>
             <div class="a-body">
-              <p>Bitcoin has dropped 80% or more — four times. I expect it to do so again. The question is not whether drawdowns happen, but whether you've built a conviction strong enough to sit through them. If your thesis depends on the price going up next quarter, you don't have a thesis. You have a trade.</p>
-              <p>My framework: if the network is still producing blocks, the supply schedule hasn't changed, and the hash rate is growing — the thesis is intact. The price is noise. The protocol is signal.</p>
+              <p>Bitcoin has repeatedly suffered deep drawdowns. Endurance is not automatically wisdom: holding through a decline is sensible only if the underlying reasons still survive scrutiny and the position remains appropriate.</p>
+              <p>I watch several categories separately: consensus integrity, mining and node concentration, custody and market infrastructure, demand for block space, legal access, and the quality of competing monetary systems. No single metric—price, hash rate, or block production—can validate the whole thesis.</p>
             </div>
           </div>
 
@@ -68,7 +69,7 @@ import Base from '@/layouts/Base.astro';
 
           <div class="stk-disclaimer">
             <div class="stk-disclaimer-lbl">Disclaimer</div>
-            <p>This is how I think about holding Bitcoin. It is not financial advice. I am not a financial advisor. Your situation is different from mine. Do your own research. Make your own decisions. The only advice I'll give: don't invest more than you can afford to lose, and don't custody more than you can secure.</p>
+            <p>This is a personal operating record, not financial, legal, tax, or security advice. Custody choices depend on amount, jurisdiction, technical ability, family needs, and threat model. Verify current documentation and test every procedure with small amounts before relying on it.</p>
           </div>
           <div class="stk-sources">
             <span>Operational references</span>
@@ -80,11 +81,11 @@ import Base from '@/layouts/Base.astro';
         <div class="about-aside stk-side">
           <div class="aside-card">
             <div class="aside-card-title">Principles</div>
-            <div class="aside-curate-item">✓ DCA, never time</div>
-            <div class="aside-curate-item">✓ Cold storage only</div>
-            <div class="aside-curate-item">✓ Own node, independent verification</div>
-            <div class="aside-curate-item">✓ No leverage, no lending</div>
-            <div class="aside-curate-item">✓ Plan for inheritance</div>
+            <div class="aside-curate-item">✓ Survive being wrong</div>
+            <div class="aside-curate-item">✓ Separate signing from observation</div>
+            <div class="aside-curate-item">✓ Test recovery</div>
+            <div class="aside-curate-item">✓ Name every trust boundary</div>
+            <div class="aside-curate-item">✓ Plan for absence</div>
           </div>
 
           <div class="aside-card">
@@ -105,7 +106,7 @@ import Base from '@/layouts/Base.astro';
 
           <a class="aside-card aside-card--link" href="/paths">
             <div class="aside-card-title">Learn Self-Custody</div>
-            <p class="aside-notes-quote">The Sovereignty Path — from basic wallet practice to resilient custody.</p>
+            <p class="aside-notes-quote">The Custody Path — from basic wallet practice to resilient recovery.</p>
             <p class="aside-notes-link">Open the path →</p>
           </a>
         </div>

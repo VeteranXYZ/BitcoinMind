@@ -31,50 +31,6 @@ test('resource filters keep one matching card and expose an empty state', async 
   await expect(page.getByText('No library items match this filter.')).toBeVisible();
 });
 
-test('saved resources and path progress persist locally', async ({ page }) => {
-  await page.goto('/library');
-  const save = page.locator('[data-study-save]').first();
-  await save.click();
-  await expect(save).toHaveAttribute('aria-pressed', 'true');
-
-  await page.reload();
-  await expect(page.locator('[data-study-save]').first()).toHaveAttribute('aria-pressed', 'true');
-
-  await page.goto('/paths');
-  await expect(page.locator('[data-study-queue]')).toContainText('The Bitcoin Standard');
-  const firstStep = page.locator('[data-study-progress]').first();
-  await firstStep.click();
-  await expect(firstStep).toHaveAttribute('aria-pressed', 'true');
-
-  await page.reload();
-  await expect(page.locator('[data-study-progress]').first()).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('[data-study-resume]')).toBeVisible();
-  await expect(page.locator('[data-study-resume-link]')).toContainText('step 2 of 5');
-
-  const downloadPromise = page.waitForEvent('download');
-  await page.locator('[data-study-export]').click();
-  expect((await downloadPromise).suggestedFilename()).toBe('bitcoinmind-study.json');
-
-  const imported = {
-    version: 1,
-    saved: [{
-      id: 'text:bitcoin-whitepaper',
-      title: 'Bitcoin: A Peer-to-Peer Electronic Cash System',
-      href: '/texts#bitcoin-whitepaper',
-      kind: 'Text',
-      savedAt: '2026-07-12T00:00:00.000Z',
-    }],
-    progress: { 'rh-technical': [0, 1] },
-  };
-  await page.locator('[data-study-import]').setInputFiles({
-    name: 'bitcoinmind-study.json',
-    mimeType: 'application/json',
-    buffer: Buffer.from(JSON.stringify(imported)),
-  });
-  await expect(page.locator('[data-study-queue]')).toContainText('Bitcoin: A Peer-to-Peer Electronic Cash System');
-  await expect(page.locator('[data-study-status]')).toHaveText('Local study data imported.');
-});
-
 test('Frame 2 keeps its explanation and accessible chart without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
