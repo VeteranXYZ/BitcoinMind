@@ -12,6 +12,10 @@ function getOpenButton(): HTMLButtonElement | null {
   return document.querySelector<HTMLButtonElement>('[data-menu-open]');
 }
 
+function getPanel(): HTMLElement | null {
+  return document.querySelector<HTMLElement>('[data-mobile-menu-panel]');
+}
+
 function getFocusable(root: HTMLElement): HTMLElement[] {
   return Array.from(root.querySelectorAll<HTMLElement>(
     'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -25,7 +29,10 @@ function setBackgroundInert(inert: boolean): void {
 }
 
 function setExpanded(expanded: boolean): void {
-  getOpenButton()?.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  const button = getOpenButton();
+  if (!button) return;
+  button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  button.setAttribute('aria-label', expanded ? 'Close menu' : 'Open menu');
 }
 
 function hideVisual(): void {
@@ -37,11 +44,30 @@ function hideVisual(): void {
   root.setAttribute('hidden', '');
 }
 
+function handleOutsidePointerDown(event: PointerEvent): void {
+  if (!menuOpen) return;
+  const panel = getPanel();
+  const button = getOpenButton();
+  const target = event.target;
+  if (!(target instanceof Node) || !panel || !button) return;
+
+  if (!panel.contains(target) && !button.contains(target)) {
+    close(false);
+  }
+}
+
+function addOutsideListener(): void {
+  document.addEventListener('pointerdown', handleOutsidePointerDown);
+}
+
+function removeOutsideListener(): void {
+  document.removeEventListener('pointerdown', handleOutsidePointerDown);
+}
+
 function open(): void {
   if (menuOpen) return;
   const root = getRoot();
-  const closeBtn = root?.querySelector<HTMLButtonElement>('[data-menu-close]');
-  if (!root || !closeBtn) return;
+  if (!root) return;
   menuOpener = document.activeElement instanceof HTMLElement ? document.activeElement : getOpenButton();
   menuOpen = true;
   prevOverflow = document.body.style.overflow;
@@ -49,12 +75,13 @@ function open(): void {
   setBackgroundInert(true);
   setExpanded(true);
   root.removeAttribute('hidden');
-  requestAnimationFrame(() => closeBtn.focus());
+  addOutsideListener();
 }
 
 function close(restoreFocus = true): void {
   if (!menuOpen) return;
   menuOpen = false;
+  removeOutsideListener();
   hideVisual();
   if (restoreFocus) menuOpener?.focus();
   menuOpener = null;
@@ -97,21 +124,23 @@ function bindButtons(): void {
   const root = getRoot();
   if (!root) return;
   const openBtn = document.querySelector<HTMLButtonElement & { [BOUND]?: boolean }>('[data-menu-open]');
-  const closeBtn = root.querySelector<HTMLButtonElement & { [BOUND]?: boolean }>('[data-menu-close]');
   const items = root.querySelectorAll<HTMLAnchorElement & { [BOUND]?: boolean }>('[data-menu-item]');
 
   if (openBtn && !openBtn[BOUND]) {
-    openBtn.addEventListener('click', open);
+    openBtn.addEventListener('click', () => {
+      if (menuOpen) {
+        close(false);
+      } else {
+        open();
+      }
+    });
     openBtn[BOUND] = true;
-  }
-  if (closeBtn && !closeBtn[BOUND]) {
-    closeBtn.addEventListener('click', () => close());
-    closeBtn[BOUND] = true;
   }
   items.forEach((a) => {
     if (a[BOUND]) return;
     a.addEventListener('click', () => {
       menuOpen = false;
+      removeOutsideListener();
       hideVisual();
       menuOpener = null;
     });
@@ -119,5 +148,4 @@ function bindButtons(): void {
   });
 }
 
-document.addEventListener('astro:page-load', bindButtons);
 bindButtons();

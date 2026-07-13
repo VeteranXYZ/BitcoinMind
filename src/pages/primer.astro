@@ -1,5 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
+import StudyLoop from '@/components/StudyLoop.astro';
+import StudyNext from '@/components/StudyNext.astro';
 
 interface Step {
   n: string;
@@ -7,44 +9,52 @@ interface Step {
   body: string;
   label: string;
   author: string | null;
+  time: string;
   href: string;
   external: boolean;
 }
 
 const steps: Step[] = [
-  { n: '1', head: 'Read the document that began everything.',
+  { n: '01', head: 'Read the document that began everything.',
     body: "Nine pages. Written by a person no one has ever identified. Read it not to understand the cryptography — read it to feel the problem it's solving. Two people. No bank in between. That's the whole idea.",
-    label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto',
+    label: 'Bitcoin: A Peer-to-Peer Electronic Cash System', author: 'Satoshi Nakamoto', time: '45 min',
     href: 'https://bitcoin.org/bitcoin.pdf', external: true },
-  { n: '2', head: 'Learn what money actually is.',
+  { n: '02', head: 'Learn what money actually is.',
     body: "You cannot understand what Bitcoin is replacing without understanding what money is. Most people never ask. The Bitcoin Standard is where I'd begin — not the whole work, just Part One. The history of money is the only context that makes Bitcoin legible.",
-    label: 'The Bitcoin Standard', author: 'Saifedean Ammous',
+    label: 'The Bitcoin Standard', author: 'Saifedean Ammous', time: '3-4 hrs',
     href: 'https://saifedean.com/tbs/', external: true },
-  { n: '3', head: 'Understand why this one.',
-    body: "Someone will tell you about other cryptocurrencies. This is where most people get lost. Parker Lewis doesn't argue from loyalty — he argues from structure. Read Gradually, Then Suddenly before you make up your mind.",
-    label: 'Gradually, Then Suddenly', author: 'Parker Lewis',
+  { n: '03', head: 'Understand the monetary case.',
+    body: "Many people first meet Bitcoin through the broader crypto market. This step separates Bitcoin's monetary structure from the noise around it. Parker Lewis frames it through monetary properties, credibility, and network effects. Read Gradually, Then Suddenly before you decide where Bitcoin belongs.",
+    label: 'Gradually, Then Suddenly', author: 'Parker Lewis', time: '2-3 hrs',
     href: 'https://unchained.com/gradually-then-suddenly/', external: true },
-  { n: '4', head: 'Follow the idea to its conclusion.',
+  { n: '04', head: 'Consider the question of sovereignty.',
     body: "If the first three steps landed, you'll feel it — something shifts in how you think about savings, governments, time, sovereignty. The Sovereign Individual was written in 1997. It has no business being this accurate about the present. Read it slowly.",
-    label: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg',
+    label: 'The Sovereign Individual', author: 'Davidson & Rees-Mogg', time: '6-8 hrs',
     href: 'https://www.amazon.com/Sovereign-Individual-Mastering-Transition-Information/dp/0684832720', external: true },
-  { n: '5', head: 'Read what I actually think.',
+  { n: '05', head: 'Read the 2011 note.',
     body: "The Notes section is where I write without a net. Begin with the first entry — April 2011, Bitcoin at $1. I called it devil-like. I wasn't wrong about the nature of it. I was wrong about what to do.",
-    label: 'Notes', author: null, href: '/notes', external: false },
+    label: 'Notes', author: null, time: '10 min', href: '/notes', external: false },
 ];
 ---
 <Base
   title="Bitcoin Primer"
-  description="A five-step Bitcoin learning path for readers who want to understand the whitepaper, money, Bitcoin's monetary case, sovereignty, and self-custody."
+  metaTitle="Bitcoin Primer — A Five-Step Path to Understanding Bitcoin"
+  description="A five-step Bitcoin learning path from the original whitepaper to money, the Bitcoin case, sovereignty, and a personal 2011 archive note."
+  ogTitle="The Source Primer — BitcoinMind"
+  ogDescription="A five-step path from Bitcoin’s original paper to money, sovereignty, and a personal record of being early but unconvinced."
+  twitterTitle="The Source Primer — BitcoinMind"
+  twitterDescription="A five-step path from Bitcoin’s original paper to money, sovereignty, and a personal record of being early but unconvinced."
   path="/primer"
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Primer</div>
-        <h1 class="ph-title">The BitcoinMind <em>Primer</em></h1>
-        <p class="ph-desc">Five steps for approaching Bitcoin seriously: the document, the problem of money, the monetary case, sovereignty, and my own record.</p>
+        <h1 class="ph-title">The Source <em>Primer</em></h1>
+        <p class="ph-desc">A five-step path from the original paper to money, the Bitcoin case, sovereignty, and a personal record of being early but unconvinced.</p>
       </div>
+
+      <StudyLoop active="orient" />
 
       <div class="steps-wrap">
         {steps.map((s) => (
@@ -63,18 +73,117 @@ const steps: Step[] = [
               <span class="step-arrow">→</span>
               <span>
                 <span class="step-resource">{s.label}</span>
-                {s.author && <span class="step-auth">{s.author}</span>}
+                <span class="step-auth">{s.author ? `${s.author} · ${s.time}` : s.time}</span>
               </span>
             </a>
           </div>
         ))}
 
         <div class="steps-closing">
-          <p class="steps-closing-p">That's enough.</p>
-          <p class="steps-closing-p steps-closing-p--gap">The full library is here when you want it. But these five are the ones I'd give to someone I was trying to convince — not that Bitcoin is a good investment, but that it's a serious idea worth your serious attention.</p>
-          <div class="steps-signature">— Hiei</div>
+          <div class="steps-closing-eye">End of Primer · 5 steps</div>
+          <h2 class="steps-closing-lead">That's enough.</h2>
+
+          <p class="steps-closing-p">
+            These five are not the whole library — they are the entrance.
+            Read them in order. Take the time they ask for. The thinking
+            they start in you is the only thing that matters; everything
+            else on this site is here to continue it.
+          </p>
+
+          <div class="steps-closing-sig">
+            <span class="steps-closing-sig-name">— Hiei</span>
+            <span class="steps-closing-sig-meta">Curator, BitcoinMind</span>
+          </div>
         </div>
       </div>
+      <StudyNext next={{ href: '/paths', label: 'Study Paths', description: 'Choose a question-led route and make the learning outcome explicit.' }} />
     </div>
   </div>
 </Base>
+
+<style>
+  /* ── Closing block ──
+     A proper editorial close: eyebrow label establishes the end of
+     the primer, display headline carries the weight, one paragraph
+     sets the tone, and the signature is anchored bottom-right in
+     gold — the curator's mark. */
+  .steps-closing {
+    margin-top: var(--sp-9);
+    padding-top: var(--sp-8);
+    border-top: 1px solid var(--bdr);
+  }
+
+  .steps-closing-eye {
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    color: var(--gold-hi);
+    letter-spacing: var(--ls-11);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-5);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    line-height: 1;
+  }
+  .steps-closing-eye::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--gold-hi);
+    flex-shrink: 0;
+  }
+
+  .steps-closing-lead {
+    font-family: var(--font-display);
+    font-size: var(--fz-page);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-title);
+    letter-spacing: var(--ls-tighter);
+    color: var(--tx);
+    margin-bottom: var(--sp-6);
+  }
+
+  .steps-closing .steps-closing-p {
+    font-family: var(--font-body);
+    font-size: var(--fz-lg);
+    line-height: var(--lh-loose);
+    color: var(--tx-2);
+    max-width: 100%;
+    margin-bottom: var(--sp-9);
+  }
+
+  /* Signature — anchored bottom-right, gold, curator's mark */
+  .steps-closing-sig {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: var(--sp-1);
+  }
+
+  .steps-closing-sig-name {
+    font-family: var(--font-display);
+    font-size: var(--fz-lg);
+    font-style: italic;
+    font-weight: var(--fw-semi);
+    color: var(--gold-hi);
+    letter-spacing: var(--ls-snug);
+  }
+
+  .steps-closing-sig-meta {
+    font-family: var(--font-body);
+    font-size: var(--fz-3xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 640px) {
+    .steps-closing-lead {
+      font-size: var(--fz-3xl);
+    }
+    .steps-closing .steps-closing-p {
+      font-size: var(--fz-md);
+    }
+  }
+</style>

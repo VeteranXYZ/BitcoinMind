@@ -5,29 +5,30 @@ import { TIMELINE } from '@/data/timeline';
 ---
 <Base
   title="Timeline"
-  description="Seventeen years of signal, stripped of market noise."
+  description="Seventeen years of Bitcoin signal, stripped of market noise. Ideas, events, and protocol moments from the whitepaper to the present block."
   path="/timeline"
 >
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">Chronology</div>
+        <div class="ph-eye">Timeline</div>
         <h1 class="ph-title">The <em>Timeline</em></h1>
         <p class="ph-desc">Seventeen years of signal, stripped of market noise. Ideas, events, and protocol moments only.</p>
       </div>
 
       <div class="tl-wrap">
         {TIMELINE.map((ev, i) => (
-          <div class="tl-node" id={ev.id}>
+          <div class:list={['tl-node', ev.hiei && 'tl-node--hiei']} id={ev.id}>
+            <div class="tl-date">
+              <span class="tl-year">{ev.year}</span>
+              {ev.month && <span class="tl-month">{ev.month}</span>}
+            </div>
             <div class="tl-rail">
               <div class="tl-dot" />
               {i < TIMELINE.length - 1 && <div class="tl-line" />}
             </div>
             <div class="tl-content">
-              <div class="tl-meta">
-                <span class="tl-year">{ev.year}</span>
-                {ev.month && <span class="tl-month">{ev.month}</span>}
-              </div>
+              {ev.hiei && <div class="tl-personal">Personal Record</div>}
               <h2 class="tl-title">{ev.title}</h2>
               <p class="tl-body">{ev.body}</p>
               {ev.hiei && (
@@ -58,18 +59,29 @@ import { TIMELINE } from '@/data/timeline';
 
 <style>
   .tl-wrap {
-    max-width: 768px;
-    padding-bottom: var(--sp-12);
+    max-width: 1100px;
   }
 
   .tl-node {
     display: grid;
-    grid-template-columns: 40px 1fr;
+    grid-template-columns: 160px 48px minmax(0, 1fr);
     gap: var(--sp-5);
     min-height: 0;
   }
 
+  .tl-date {
+    grid-column: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    gap: var(--sp-2);
+    padding-top: 2px;
+    text-align: right;
+  }
+
   .tl-rail {
+    grid-column: 2;
+    grid-row: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -95,21 +107,32 @@ import { TIMELINE } from '@/data/timeline';
   }
 
   .tl-content {
-    padding-bottom: var(--sp-9);
+    grid-column: 3;
+    padding: var(--sp-5);
+    margin-bottom: var(--sp-7);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
   }
 
-  .tl-meta {
-    display: flex;
-    align-items: baseline;
-    gap: var(--sp-2);
-    margin-bottom: var(--sp-2);
+  /* Last node: its .tl-content bottom margin is zeroed so the gap to
+     the footer comes solely from .page's padding-bottom. */
+  .tl-node:last-child .tl-content {
+    margin-bottom: 0;
+  }
+
+  .tl-node--hiei .tl-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--gold-hi);
+    box-shadow: 0 0 0 4px var(--gold-dim);
   }
 
   .tl-year {
     font-family: var(--font-mono);
     font-size: var(--fz-sm);
     font-weight: var(--fw-medium);
-    color: var(--gold);
+    color: var(--gold-hi);
     letter-spacing: var(--ls-7);
   }
 
@@ -121,8 +144,22 @@ import { TIMELINE } from '@/data/timeline';
     text-transform: uppercase;
   }
 
+  .tl-personal {
+    display: inline-flex;
+    margin-bottom: var(--sp-3);
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-sm);
+    padding: 3px var(--sp-2);
+    font-family: var(--font-body);
+    font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
+    color: var(--gold-hi);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+  }
+
   .tl-title {
-    font-family: var(--font-serif);
+    font-family: var(--font-body);
     font-size: var(--fz-xl);
     font-weight: var(--fw-bold);
     letter-spacing: var(--ls-snug);
@@ -133,7 +170,7 @@ import { TIMELINE } from '@/data/timeline';
 
   .tl-body {
     font-family: var(--font-body);
-    font-size: var(--fz-md);
+    font-size: var(--fz-prose);
     line-height: var(--lh-loose);
     color: var(--tx-2);
     margin-bottom: var(--sp-3);
@@ -148,9 +185,10 @@ import { TIMELINE } from '@/data/timeline';
   }
 
   .tl-hiei-lbl {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-3xs);
-    color: var(--gold);
+    font-weight: var(--fw-semi);
+    color: var(--gold-hi);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
     display: block;
@@ -158,8 +196,8 @@ import { TIMELINE } from '@/data/timeline';
   }
 
   .tl-hiei p {
-    font-family: var(--font-serif);
-    font-size: var(--fz-md);
+    font-family: var(--font-body);
+    font-size: var(--fz-prose);
     font-style: italic;
     line-height: var(--lh-relaxed);
     color: var(--tx-2);
@@ -180,9 +218,10 @@ import { TIMELINE } from '@/data/timeline';
   }
 
   .tl-link {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-xs);
-    color: var(--gold);
+    font-weight: var(--fw-semi);
+    color: var(--gold-hi);
     letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
@@ -195,8 +234,25 @@ import { TIMELINE } from '@/data/timeline';
       grid-template-columns: 24px 1fr;
       gap: var(--sp-3);
     }
+    .tl-date {
+      grid-column: 2;
+      justify-content: flex-start;
+      padding-top: 0;
+      margin-bottom: var(--sp-2);
+      grid-row: 1;
+    }
+    .tl-wrap {
+      max-width: 760px;
+    }
+    .tl-rail {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
     .tl-content {
-      padding-bottom: var(--sp-7);
+      grid-column: 2;
+      grid-row: 2;
+      padding: var(--sp-5);
+      margin-bottom: var(--sp-5);
     }
   }
 </style>

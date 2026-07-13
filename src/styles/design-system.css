@@ -7,99 +7,121 @@
 :root {
 
   /* ── Base colors ────────────────────────────────────── */
-  --bg:        oklch(0.09 0.022 62);
-  --bg-deep:   oklch(0.065 0.016 58);
-  --surf:      oklch(0.135 0.028 65);
-  --surf-2:    oklch(0.175 0.034 67);
-  --bdr:       oklch(0.235 0.032 67);
-  --bdr-2:     oklch(0.31 0.040 70);
-  --tx:        oklch(0.91 0.032 82);
-  --tx-2:      oklch(0.64 0.026 76);
-  --tx-3:      oklch(0.40 0.020 68);
-  --gold:      oklch(0.68 0.12 74);
-  --gold-dim:  oklch(0.68 0.12 74 / 0.13);
-  --gold-glow: oklch(0.68 0.12 74 / 0.25);
-  --gold-hi:   oklch(0.80 0.13 82);
-  --nav-glass: oklch(0.09 0.022 62 / 0.88);
+  --bg: #0d0b08;
+  --surface: #14110d;
+  --card: #19150f;
+  --card-hover: #1e1912;
+
+  --text-heading: #f2ede3;
+  --text-body: #c4bcb0;
+  --text-secondary: #a89d90;
+  --text-muted: #9a8f82;
+  --text-faint: #6d6358;
+
+  --accent: #c8913a;
+  --accent-bright: #d8a24a;
+  --accent-muted: #8a642f;
+
+  --border: rgba(242, 237, 227, 0.10);
+  --border-strong: rgba(242, 237, 227, 0.16);
+  --border-accent: rgba(200, 145, 58, 0.35);
+
+  --hover: rgba(242, 237, 227, 0.04);
+  --accent-hover: rgba(200, 145, 58, 0.10);
+  --focus-ring: rgba(216, 162, 74, 0.45);
+
+  /* Legacy aliases used throughout the existing CSS. */
+  --bg-deep: var(--surface);
+  --surf: var(--card);
+  --surf-2: var(--card-hover);
+  --bdr: var(--border);
+  --bdr-2: var(--border-strong);
+  --tx: var(--text-heading);
+  --tx-2: var(--text-body);
+  --tx-2b: var(--text-secondary);
+  --tx-3: var(--text-muted);
+  --gold: var(--accent);
+  --gold-dim: var(--accent-hover);
+  --gold-glow: rgba(200, 145, 58, 0.14);
+  --gold-hi: var(--accent-bright);
+  --nav-glass: rgba(13, 11, 8, 0.9);
 
   /* ── Decorative atmospherics ────────────────────────── */
   /* Inlined oklch literals from styles.css are now tokenised so a future
      palette tweak only touches design-system.css. */
-  --bg-glow-warm:  oklch(0.22 0.04 70 / 0.18);   /* page radial glow top */
-  --bg-glow-deep:  oklch(0.06 0.02 58 / 0.5);    /* page radial glow bottom */
-  --hero-grid-v:   oklch(0.30 0.035 68 / 0.22);  /* hero vertical grid */
-  --hero-grid-h:   oklch(0.30 0.035 68 / 0.15);  /* hero horizontal grid */
-  --pb-beg:        oklch(0.60 0.10 72);          /* reading-progress bar gradient */
+  --bg-glow-warm:  rgba(200, 145, 58, 0.08);      /* page radial warmth */
+  --bg-glow-deep:  rgba(20, 17, 13, 0.55);        /* page radial depth */
+  --pb-beg:        var(--accent-muted);           /* reading-progress bar gradient */
 
   /* ── Tag base palette ──────────────────────────────────
      7 unique color families. Tag classes alias these — eliminates
      the duplication where two tags pointed at identical hex pairs. */
-  --c-tag-gold-bg:   oklch(0.68 0.12 74  / 0.16);
-  --c-tag-gold-fg:   oklch(0.80 0.12 80);
-  --c-tag-purple-bg: oklch(0.68 0.12 280 / 0.16);
-  --c-tag-purple-fg: oklch(0.78 0.10 288);
-  --c-tag-blue-bg:   oklch(0.68 0.12 232 / 0.16);
-  --c-tag-blue-fg:   oklch(0.78 0.10 238);
-  --c-tag-teal-bg:   oklch(0.68 0.12 162 / 0.16);
-  --c-tag-teal-fg:   oklch(0.78 0.10 168);
-  --c-tag-yellow-bg: oklch(0.72 0.11 95  / 0.16);
-  --c-tag-yellow-fg: oklch(0.80 0.10 98);
-  --c-tag-green-bg:  oklch(0.68 0.12 148 / 0.16);
-  --c-tag-green-fg:  oklch(0.78 0.10 152);
-  --c-tag-red-bg:    oklch(0.68 0.11 28  / 0.16);
-  --c-tag-red-fg:    oklch(0.78 0.09 32);
+  --c-tag-neutral-bg: rgba(242, 237, 227, 0.055);
+  --c-tag-neutral-fg: var(--text-muted);
+  --c-tag-warm-bg:    rgba(200, 145, 58, 0.095);
+  --c-tag-warm-fg:    #c9a46f;
 
   /* Semantic mapping — change a tag's color via the alias only. */
-  --tag-essential-bg:    var(--c-tag-gold-bg);
-  --tag-essential-fg:    var(--c-tag-gold-fg);
-  --tag-philosophy-bg:   var(--c-tag-purple-bg);
-  --tag-philosophy-fg:   var(--c-tag-purple-fg);
-  --tag-economics-bg:    var(--c-tag-blue-bg);
-  --tag-economics-fg:    var(--c-tag-blue-fg);
-  --tag-technical-bg:    var(--c-tag-teal-bg);
-  --tag-technical-fg:    var(--c-tag-teal-fg);
-  --tag-history-bg:      var(--c-tag-yellow-bg);
-  --tag-history-fg:      var(--c-tag-yellow-fg);
-  --tag-free-bg:         var(--c-tag-green-bg);
-  --tag-free-fg:         var(--c-tag-green-fg);
-  --tag-freemium-bg:     var(--c-tag-gold-bg);
-  --tag-freemium-fg:     var(--c-tag-gold-fg);
-  --tag-paid-bg:         var(--c-tag-red-bg);
-  --tag-paid-fg:         var(--c-tag-red-fg);
-  --tag-beginner-bg:     var(--c-tag-green-bg);
-  --tag-beginner-fg:     var(--c-tag-green-fg);
-  --tag-intermediate-bg: var(--c-tag-yellow-bg);
-  --tag-intermediate-fg: var(--c-tag-yellow-fg);
-  --tag-advanced-bg:     var(--c-tag-red-bg);
-  --tag-advanced-fg:     var(--c-tag-red-fg);
+  --tag-essential-bg:    var(--c-tag-warm-bg);
+  --tag-essential-fg:    var(--c-tag-warm-fg);
+  --tag-philosophy-bg:   var(--c-tag-neutral-bg);
+  --tag-philosophy-fg:   var(--c-tag-neutral-fg);
+  --tag-economics-bg:    var(--c-tag-neutral-bg);
+  --tag-economics-fg:    var(--c-tag-neutral-fg);
+  --tag-technical-bg:    var(--c-tag-neutral-bg);
+  --tag-technical-fg:    var(--c-tag-neutral-fg);
+  --tag-history-bg:      var(--c-tag-neutral-bg);
+  --tag-history-fg:      var(--c-tag-neutral-fg);
+  --tag-free-bg:         var(--c-tag-neutral-bg);
+  --tag-free-fg:         var(--c-tag-neutral-fg);
+  --tag-freemium-bg:     var(--c-tag-neutral-bg);
+  --tag-freemium-fg:     var(--c-tag-neutral-fg);
+  --tag-paid-bg:         var(--c-tag-neutral-bg);
+  --tag-paid-fg:         var(--c-tag-neutral-fg);
+  --tag-beginner-bg:     var(--c-tag-neutral-bg);
+  --tag-beginner-fg:     var(--c-tag-neutral-fg);
+  --tag-intermediate-bg: var(--c-tag-neutral-bg);
+  --tag-intermediate-fg: var(--c-tag-neutral-fg);
+  --tag-advanced-bg:     var(--c-tag-neutral-bg);
+  --tag-advanced-fg:     var(--c-tag-neutral-fg);
 
   /* ── Typography ─────────────────────────────────────── */
-  /* Playfair Fallback / Lora Fallback are metric-aligned local fonts
-     declared in Base.astro — they prevent layout shift while the web
-     font loads. */
-  --font-serif: 'Playfair Display', 'Playfair Fallback', Georgia, serif;
-  --font-body:  'Lora', 'Lora Fallback', Georgia, serif;
-  --font-mono:  'DM Mono', 'Courier New', monospace;
+  --font-display: 'Literata', serif;
+  --font-body:    'Inter', sans-serif;
+  --font-mono:    'Geist Mono', monospace;
+  --font-serif:   var(--font-display); /* compatibility alias for display roles */
 
-  /* Display sizes — fluid clamps for hero / section / step / quote. */
-  --fz-hero:    clamp(72px, 11vw, 132px);
-  --fz-page:    clamp(48px, 8vw,  96px);
-  --fz-section: clamp(28px, 4vw,  44px);
-  --fz-step:    clamp(21px, 2.8vw,28px);
-  --fz-note:    clamp(24px, 4vw,  38px);
-  --fz-quote:   clamp(16px, 2vw,  20px);
+  /* Display sizes — restrained, archival, and page-consistent. */
+  --fz-hero:    clamp(44px, 6.4vw, 76px);
+  --fz-page:    clamp(36px, 5.2vw, 56px);
+  --fz-section: clamp(26px, 3.2vw, 36px);
+  --fz-step:    clamp(22px, 2.3vw, 28px);
+  --fz-note:    clamp(28px, 3.8vw, 40px);
+  --fz-quote:   clamp(17px, 1.7vw, 21px);
 
-  /* Fixed sizes — t-shirt scale, was 18 near-duplicates with 0.5px steps,
-     now 9 distinct anchors. */
-  --fz-3xs:  9px;     /* tiny mono captions */
-  --fz-xs:   10px;    /* mono labels, eyebrow */
-  --fz-sm:   12px;    /* small UI text, search box */
-  --fz-base: 13.5px;  /* baseline body small */
-  --fz-md:   15px;    /* default body */
-  --fz-lg:   17px;    /* card titles */
-  --fz-xl:   21px;    /* prominent body / pulled-quote */
-  --fz-2xl:  24px;    /* sub-title */
-  --fz-3xl:  28px;    /* compact title */
+  /* Fixed type scale. */
+  --text-xs:   13px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-lg:   18px;
+  --text-xl:   20px;
+  --text-2xl:  24px;
+  --text-3xl:  32px;
+  --text-4xl:  40px;
+  --text-5xl:  56px;
+  --text-6xl:  72px;
+
+  /* Compatibility aliases used by existing components. */
+  --fz-3xs:  var(--text-xs);
+  --fz-xs:   var(--text-xs);
+  --fz-sm:   var(--text-sm);
+  --fz-base: var(--text-base);
+  --fz-md:   var(--text-base);
+  --fz-prose: var(--text-lg);
+  --fz-lg:   var(--text-xl);
+  --fz-xl:   var(--text-2xl);
+  --fz-2xl:  var(--text-2xl);
+  --fz-3xl:  var(--text-3xl);
 
   /* Font weights */
   --fw-normal: 400;
@@ -108,26 +130,26 @@
   --fw-bold:   700;
   --fw-black:  900;
 
-  /* Line heights — was 10 (with 1.8/1.9/1.92 visually identical), now 8. */
-  --lh-hero:    0.88;
-  --lh-title:   1.05;
-  --lh-snug:    1.18;
-  --lh-card:    1.22;
+  /* Line heights. */
+  --lh-hero:    0.98;
+  --lh-title:   1.18;
+  --lh-snug:    1.22;
+  --lh-card:    1.38;
   --lh-normal:  1.6;
   --lh-relaxed: 1.68;
-  --lh-base:    1.78;
-  --lh-loose:   1.85;
+  --lh-base:    1.7;
+  --lh-loose:   1.78;
 
   /* Letter spacing — semantic for tight, anchored decimals for wide.
      Was 18 tokens (mixed semantic + numeric), now 8. */
-  --ls-tighter: -0.03em;  /* huge display titles */
-  --ls-snug:    -0.02em;  /* large body titles */
-  --ls-normal:  -0.01em;  /* card titles */
-  --ls-3:        0.05em;  /* small mono UI text */
-  --ls-5:        0.10em;  /* mono captions */
-  --ls-7:        0.14em;  /* spaced uppercase mono */
-  --ls-9:        0.20em;  /* labels / kicker */
-  --ls-11:       0.24em;  /* eyebrow / dense uppercase */
+  --ls-tighter: -0.02em;  /* large display titles */
+  --ls-snug:    -0.01em;  /* compact display headings */
+  --ls-normal:   0;       /* body/card text */
+  --ls-3:        0.04em;  /* metadata */
+  --ls-5:        0.06em;  /* labels */
+  --ls-7:        0.08em;  /* uppercase labels */
+  --ls-9:        0.08em;  /* dense labels */
+  --ls-11:       0.08em;  /* eyebrow labels */
 
   /* ── Spacing scale ──────────────────────────────────── */
   /* T-shirt scale — was 26 tokens (sp-1..sp-26 with 2px steps) folded
@@ -149,8 +171,10 @@
   /* ── Layout ─────────────────────────────────────────── */
   --max-w:     1200px;
   --pad:       clamp(24px, 5.5vw, 88px);
+  --page-x-mobile: var(--pad);
   --radius:    3px;
   --radius-sm: 2px;
+  --radius-lg: 6px;
 
   /* Standard breakpoints — all @media queries should reference one of these. */
   --bp-sm: 640px;

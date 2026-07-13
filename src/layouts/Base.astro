@@ -1,33 +1,25 @@
 ---
-import { ClientRouter } from 'astro:transitions';
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
 
-// Critical fonts preloaded in <head> below. These are visible above the fold on
-// every page (hero title + page-title <em> italics in gold). Preloading races
-// them with the HTML download instead of waiting for CSS parsing — kills FOUT.
-import playfair900Normal from '@fontsource/playfair-display/files/playfair-display-latin-900-normal.woff2?url';
-import playfair900Italic from '@fontsource/playfair-display/files/playfair-display-latin-900-italic.woff2?url';
-import lora400Normal from '@fontsource/lora/files/lora-latin-400-normal.woff2?url';
+// Critical fonts preloaded in <head> below. The first paint uses the same
+// three-family system as the rest of the site: display, body/UI, and mono.
+import literata700Normal from '@fontsource/literata/files/literata-latin-700-normal.woff2?url';
+import inter400Normal from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+import geistMono400Normal from '@fontsource/geist-mono/files/geist-mono-latin-400-normal.woff2?url';
 
-// Latin subset only — site is English. Skips cyrillic / vietnamese / latin-ext
-// font files that the browser would never use, cutting dist font count ~50%.
-import '@fontsource/playfair-display/latin-400.css';
-import '@fontsource/playfair-display/latin-600.css';
-import '@fontsource/playfair-display/latin-700.css';
-import '@fontsource/playfair-display/latin-900.css';
-import '@fontsource/playfair-display/latin-400-italic.css';
-import '@fontsource/playfair-display/latin-600-italic.css';
-import '@fontsource/playfair-display/latin-700-italic.css';
-import '@fontsource/playfair-display/latin-900-italic.css';
-import '@fontsource/lora/latin-400.css';
-import '@fontsource/lora/latin-500.css';
-import '@fontsource/lora/latin-400-italic.css';
-import '@fontsource/lora/latin-500-italic.css';
-import '@fontsource/dm-mono/latin-300.css';
-import '@fontsource/dm-mono/latin-400.css';
-import '@fontsource/dm-mono/latin-500.css';
+// Latin subset only — site is English. Keep weights deliberately narrow.
+import '@fontsource/literata/latin-600.css';
+import '@fontsource/literata/latin-700.css';
+import '@fontsource/literata/latin-600-italic.css';
+import '@fontsource/literata/latin-700-italic.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/inter/latin-700.css';
+import '@fontsource/geist-mono/latin-400.css';
+import '@fontsource/geist-mono/latin-500.css';
 
 import '@/styles/design-system.css';
 import '@/styles/styles.css';
@@ -36,8 +28,14 @@ interface Props {
   title: string;
   description: string;
   path: string;
+  metaTitle?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  twitterTitle?: string;
+  twitterDescription?: string;
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
   ogType?: 'website' | 'article';
+  robots?: string;
   showFooter?: boolean;
 }
 
@@ -45,12 +43,22 @@ const {
   title,
   description,
   path,
+  metaTitle,
+  ogTitle,
+  ogDescription,
+  twitterTitle,
+  twitterDescription,
   jsonLd,
   ogType = 'website',
+  robots,
   showFooter = true,
 } = Astro.props;
 
-const pageTitle = fullTitle(title);
+const pageTitle = metaTitle ?? fullTitle(title);
+const socialTitle = ogTitle ?? pageTitle;
+const socialDescription = ogDescription ?? description;
+const tweetTitle = twitterTitle ?? socialTitle;
+const tweetDescription = twitterDescription ?? socialDescription;
 const url = canonical(path);
 const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 ---
@@ -62,24 +70,30 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
   <meta name="author" content={SITE.author} />
+  {robots && <meta name="robots" content={robots} />}
   <link rel="canonical" href={url} />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <script is:inline>document.documentElement.classList.add('js');</script>
 
-  <link rel="preload" href={playfair900Normal} as="font" type="font/woff2" crossorigin="anonymous" />
-  <link rel="preload" href={playfair900Italic} as="font" type="font/woff2" crossorigin="anonymous" />
-  <link rel="preload" href={lora400Normal} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={literata700Normal} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={inter400Normal} as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href={geistMono400Normal} as="font" type="font/woff2" crossorigin="anonymous" />
 
   <meta property="og:type" content={ogType} />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={description} />
+  <meta property="og:title" content={socialTitle} />
+  <meta property="og:description" content={socialDescription} />
   <meta property="og:url" content={url} />
   <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:image" content={SITE.socialImage} />
+  <meta property="og:image:secure_url" content={SITE.socialImage} />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:image:alt" content="BitcoinMind mark" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content={pageTitle} />
-  <meta name="twitter:description" content={description} />
-
-  <ClientRouter />
+  <meta name="twitter:title" content={tweetTitle} />
+  <meta name="twitter:description" content={tweetDescription} />
+  <meta name="twitter:image" content={SITE.socialImage} />
 
   <script is:inline>
     // Hash redirect — must run before render so old SPA hash links land on the right page.
@@ -88,8 +102,8 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
         '#home': '/', '#primer': '/primer', '#library': '/library', '#texts': '/texts',
         '#toolkit': '/toolkit', '#frames': '/frames', '#frames-1': '/frames/1',
         '#frames-2': '/frames/2', '#about': '/about', '#notes': '/notes',
-        '#timeline': '/timeline', '#glossary': '/glossary', '#debates': '/debates',
-        '#rabbit-holes': '/rabbit-holes', '#stack': '/stack', '#questions': '/questions'
+        '#timeline': '/timeline', '#glossary': '/glossary', '#objections': '/objections',
+        '#paths': '/paths', '#stack': '/stack', '#questions': '/questions'
       };
       var t = map[location.hash];
       if (t && location.pathname === '/') {
@@ -103,12 +117,13 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   ))}
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div id="pb"></div>
   <div class="grain" aria-hidden="true"></div>
 
   <Nav />
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <slot />
   </main>
 
@@ -117,61 +132,82 @@ const ldArray = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
   <script>
     import '@/scripts/reading-progress';
     import '@/scripts/mobile-menu';
+    import '@/scripts/explore-menu';
+  </script>
+  <script is:inline data-cfasync="false">
+    (function () {
+      function tokens(value) {
+        return (value || '').split('|').map(function (v) { return v.trim().toLowerCase(); }).filter(Boolean);
+      }
+
+      function update(scope) {
+        var active = (scope.getAttribute('data-active-filter') || 'all').toLowerCase();
+        var input = scope.querySelector('[data-filter-search]');
+        var query = input ? input.value.trim().toLowerCase() : '';
+        var visibleCount = 0;
+
+        scope.querySelectorAll('[data-filter-button]').forEach(function (button) {
+          var isActive = (button.getAttribute('data-filter') || '').toLowerCase() === active;
+          button.classList.toggle('on', isActive);
+          button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        scope.querySelectorAll('[data-filter-card]').forEach(function (card) {
+          var values = tokens(card.getAttribute('data-filter-values'));
+          var search = (card.getAttribute('data-filter-search') || '').toLowerCase();
+          var matchesFilter = active === 'all' || values.indexOf(active) !== -1;
+          var matchesSearch = !query || search.indexOf(query) !== -1;
+          var show = matchesFilter && matchesSearch;
+          card.hidden = !show;
+          if (show) visibleCount += 1;
+        });
+
+        scope.querySelectorAll('[data-filter-group]').forEach(function (group) {
+          group.hidden = group.querySelectorAll('[data-filter-card]:not([hidden])').length === 0;
+        });
+
+        var empty = scope.querySelector('[data-filter-empty]');
+        if (empty) empty.hidden = visibleCount !== 0;
+      }
+
+      function init(root) {
+        (root || document).querySelectorAll('[data-filter-scope]').forEach(update);
+      }
+
+      window.BitcoinMindFilterClick = function (button) {
+        var scope = button && button.closest('[data-filter-scope]');
+        if (!scope) return;
+        scope.setAttribute('data-active-filter', button.getAttribute('data-filter') || 'all');
+        update(scope);
+      };
+
+      window.BitcoinMindFilterInput = function (input) {
+        var scope = input && input.closest('[data-filter-scope]');
+        if (scope) update(scope);
+      };
+
+      document.addEventListener('click', function (event) {
+        var button = event.target.closest && event.target.closest('[data-filter-button]');
+        if (!button) return;
+        window.BitcoinMindFilterClick(button);
+      });
+
+      document.addEventListener('input', function (event) {
+        if (!event.target.matches || !event.target.matches('[data-filter-search]')) return;
+        window.BitcoinMindFilterInput(event.target);
+      });
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () { init(document); });
+      } else {
+        init(document);
+      }
+    })();
   </script>
 </body>
 </html>
 
 <style is:global>
-  /* Disable view-transition cross-fade — feels like a shake on top of font
-     swap. ClientRouter still does SPA navigation (no full reload) but the
-     swap is now instant, matching the original hand-rolled SPA behavior. */
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none !important;
-    mix-blend-mode: normal !important;
-  }
-
-  /* Metric-aligned fallbacks. Numbers tuned to match each web font so that
-     Georgia (and its italic variant, accessed via font-style) occupies the
-     same vertical space — eliminates the layout shift the moment the real
-     font arrives. */
-  @font-face {
-    font-family: 'Playfair Fallback';
-    font-style: normal;
-    src: local('Georgia');
-    size-adjust: 116%;
-    ascent-override: 86%;
-    descent-override: 21%;
-    line-gap-override: 0%;
-  }
-  @font-face {
-    font-family: 'Playfair Fallback';
-    font-style: italic;
-    src: local('Georgia');
-    size-adjust: 116%;
-    ascent-override: 86%;
-    descent-override: 21%;
-    line-gap-override: 0%;
-  }
-  @font-face {
-    font-family: 'Lora Fallback';
-    font-style: normal;
-    src: local('Georgia');
-    size-adjust: 105%;
-    ascent-override: 91%;
-    descent-override: 23%;
-    line-gap-override: 0%;
-  }
-  @font-face {
-    font-family: 'Lora Fallback';
-    font-style: italic;
-    src: local('Georgia');
-    size-adjust: 105%;
-    ascent-override: 91%;
-    descent-override: 23%;
-    line-gap-override: 0%;
-  }
-
   .grain {
     position: fixed;
     inset: 0;

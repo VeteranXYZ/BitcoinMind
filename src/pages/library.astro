@@ -1,7 +1,31 @@
 ---
 import Base from '@/layouts/Base.astro';
-import LibraryFilter from '@/components/LibraryFilter';
+import LibraryCard from '@/components/LibraryCard.astro';
+import StudyLoop from '@/components/StudyLoop.astro';
+import StudyNext from '@/components/StudyNext.astro';
 import { LIBRARY } from '@/data/library';
+
+const TAGS = ['All', 'Money', 'Economics', 'Foundations', 'Technical', 'Protocol', 'History', 'Macro Companion', 'Sovereignty', 'Beginner', 'Intermediate', 'Advanced'];
+const LAYER_DESC: Record<number, string> = {
+  1: 'Money, Bitcoin, and the first mental model.',
+  2: 'Technical, historical, and monetary structure.',
+  3: 'Bitcoin as a shift in power, custody, and institutional trust.',
+};
+const filterValues = (values: string[]) => values.map((value) => value.toLowerCase()).join('|');
+const libraryValues = (item: typeof LIBRARY[number]) => filterValues([
+  ...item.tags,
+  item.difficulty,
+  item.group,
+  item.pathStage,
+  item.layerLabel.replace(/^Layer \d+ - /, ''),
+]);
+const librarySearch = (item: typeof LIBRARY[number]) => [
+  item.title,
+  item.author,
+  item.learningRole,
+  item.shortDescription,
+  ...item.tags,
+].join(' ').toLowerCase();
 
 const itemList = {
   '@context': 'https://schema.org',
@@ -22,18 +46,73 @@ const itemList = {
 ---
 <Base
   title="Bitcoin Library"
-  description="A curated Bitcoin library arranged by learning path: monetary foundations, Bitcoin history, technical literacy, fiat systems, and sovereignty."
+  metaTitle="Bitcoin Library — Books for Understanding Money, Protocol, and Sovereignty"
+  description="A curated Bitcoin library for studying money, Bitcoin history, technical foundations, monetary systems, protocol governance, and sovereignty."
+  ogTitle="The Bitcoin Library — BitcoinMind"
+  ogDescription="Books for building the mental model: money first, Bitcoin second, sovereignty last."
+  twitterTitle="The Bitcoin Library — BitcoinMind"
+  twitterDescription="Books for building the mental model: money first, Bitcoin second, sovereignty last."
   path="/library"
   jsonLd={itemList}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">Canon</div>
-        <h1 class="ph-title">The <em>Library</em></h1>
-        <p class="ph-desc">Library — works for building the mental model. Money first, Bitcoin second, sovereignty last.</p>
+        <div class="ph-eye">Library</div>
+        <h1 class="ph-title">The Bitcoin <em>Library</em></h1>
+        <p class="ph-desc">Books for building the mental model: money first, Bitcoin second, sovereignty last.</p>
       </div>
-      <LibraryFilter client:visible />
+      <StudyLoop compact />
+      <div data-filter-scope data-active-filter="all">
+        <div class="fb" role="group" aria-label="Filter library">
+          <span class="fb-lbl">Filter:</span>
+          <input
+            class="srch"
+            type="search"
+            aria-label="Search library"
+            placeholder="Search..."
+            data-filter-search
+            oninput="window.BitcoinMindFilterInput && window.BitcoinMindFilterInput(this)"
+          />
+          {TAGS.map((t) => (
+            <button
+              type="button"
+              class={`fb-btn ${t === 'All' ? 'on' : ''}`}
+              aria-pressed={t === 'All' ? 'true' : 'false'}
+              data-filter-button
+              data-filter={t.toLowerCase()}
+              onclick="window.BitcoinMindFilterClick && window.BitcoinMindFilterClick(this)"
+            >{t}</button>
+          ))}
+        </div>
+
+        {[1, 2, 3].map((layer) => {
+          const layerItems = LIBRARY.filter((item) => item.layer === layer);
+          return (
+            <div class="layer" data-filter-group>
+              <div class="layer-hd">
+                <span class="layer-n">Layer {layer}</span>
+                <span class="layer-name">{layerItems[0]?.layerLabel.replace(/^Layer \d+ - /, '')}</span>
+              </div>
+              <p class="layer-desc">{LAYER_DESC[layer]}</p>
+              <div class="grid-auto">
+                {layerItems.map((item) => (
+                  <div data-filter-card data-filter-values={libraryValues(item)} data-filter-search={librarySearch(item)}>
+                    <LibraryCard item={item} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+
+        <p class="no-res" data-filter-empty hidden>No library items match this filter.</p>
+      </div>
+      <StudyNext
+        previous={{ href: '/primer', label: 'Primer', description: 'Return to the five-step entrance.' }}
+        next={{ href: '/texts', label: 'Canonical Texts', description: 'Move from curated interpretation to primary and foundational writing.' }}
+      />
     </div>
   </div>
+  <script>import '@/scripts/study-list';</script>
 </Base>

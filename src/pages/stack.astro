@@ -9,14 +9,19 @@ import Base from '@/layouts/Base.astro';
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">Practice</div>
+        <div class="ph-eye">Stack</div>
         <h1 class="ph-title">The <em>Stack</em></h1>
         <p class="ph-desc">Not how much. How — and more importantly, why. No amounts. No financial advice. Just the thinking behind the practice.</p>
       </div>
 
+      <aside class="review-policy" aria-label="Operational guidance review note">
+        <strong>Reviewed Jul 2026</strong>
+        <p>Custody guidance is time-sensitive and deliberately principle-level. Before moving meaningful value, verify current wallet documentation, test recovery with small amounts, and consult the official <a href="https://bitcoin.org/en/secure-your-wallet" target="_blank" rel="noopener noreferrer">Bitcoin wallet security guidance</a>.</p>
+      </aside>
+
       <div class="stk-wrap">
         <div class="stk-main">
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Approach</div>
             <h2 class="a-h">DCA. Don't time. Don't trade.</h2>
             <div class="a-body">
@@ -25,26 +30,26 @@ import Base from '@/layouts/Base.astro';
             </div>
           </div>
 
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Storage</div>
-            <h2 class="a-h">Cold. Air-gapped. Geographically distributed.</h2>
+            <h2 class="a-h">Cold storage, with recovery planned.</h2>
             <div class="a-body">
-              <p>My Bitcoin is held in cold storage — a hardware wallet that never connects to the internet. The signing device is air-gapped: transactions are constructed on a watch-only wallet, transferred via SD card, signed offline, and broadcast. No USB. No Bluetooth. No wireless attack surface.</p>
-              <p>The seeds are backed up on metal, stored in multiple physical locations. No single point of failure. If one location is compromised — fire, theft, natural disaster — the others remain intact. This is not paranoia. This is engineering against catastrophe.</p>
+              <p>My long-term Bitcoin is held in cold storage. The important principle is separation: the device that signs transactions is not the same environment that watches balances, builds transactions, or browses the internet.</p>
+              <p>Backups are physical, redundant, and private. The goal is not to describe an implementation for others to copy; it is to avoid single points of failure while keeping the setup understandable enough to maintain over time.</p>
             </div>
           </div>
 
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Security</div>
             <h2 class="a-h">What I practice.</h2>
             <div class="a-body">
               <p><em>Seed phrases are never digital.</em> Not in a photo, not in a note, not in the cloud. The moment a seed touches a network-connected device, it is compromised in principle even if not yet in practice.</p>
-              <p><em>Passphrase as a second factor.</em> The hardware wallet is protected by a passphrase that exists only in my head and in a sealed backup. Without both the seed and the passphrase, the wallet cannot be accessed.</p>
-              <p><em>Verify, don't trust.</em> I run my own node. Every transaction I make is validated against my own copy of the blockchain. I don't rely on someone else's truth.</p>
+              <p><em>Keep recovery realistic.</em> A custody setup that cannot be recovered by the right person at the right time is not secure. It is fragile.</p>
+              <p><em>Verify, don't trust.</em> I run my own node where practical. The aim is independent verification, not dependence on a third-party view of the network.</p>
             </div>
           </div>
 
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Psychology</div>
             <h2 class="a-h">How I think about drawdowns.</h2>
             <div class="a-body">
@@ -53,11 +58,11 @@ import Base from '@/layouts/Base.astro';
             </div>
           </div>
 
-          <div class="a-sec">
+          <div class="a-sec stk-principle-card">
             <div class="a-eye">Inheritance</div>
             <h2 class="a-h">Planning for the permanent absence.</h2>
             <div class="a-body">
-              <p>Self-custody means you are your own bank. It also means you are a single point of failure for your family. If you die without a plan, your Bitcoin dies with you. I've built an inheritance protocol: a set of instructions, stored securely, that allows a designated person to recover the funds. The details are private. The principle is not: if you hold Bitcoin for the long term, you owe it to someone else to make it recoverable.</p>
+              <p>Self-custody can make you a single point of failure for your family. If long-term savings cannot be recovered by the people who should inherit them, the setup is incomplete. The details are private. The principle is not: if you hold Bitcoin for the long term, you owe it to someone else to make recovery possible.</p>
             </div>
           </div>
 
@@ -65,37 +70,42 @@ import Base from '@/layouts/Base.astro';
             <div class="stk-disclaimer-lbl">Disclaimer</div>
             <p>This is how I think about holding Bitcoin. It is not financial advice. I am not a financial advisor. Your situation is different from mine. Do your own research. Make your own decisions. The only advice I'll give: don't invest more than you can afford to lose, and don't custody more than you can secure.</p>
           </div>
+          <div class="stk-sources">
+            <span>Operational references</span>
+            <a href="https://bitcoin.org/en/secure-your-wallet" target="_blank" rel="noopener noreferrer">Securing your wallet ↗</a>
+            <a href="https://bitcoincore.org/en/doc/" target="_blank" rel="noopener noreferrer">Bitcoin Core documentation ↗</a>
+          </div>
         </div>
 
-        <div class="about-aside">
-          <div class="aside-card">
-            <div class="aside-card-title">Toolkit I Use</div>
-            <a class="stk-kit" href="/toolkit">
-              <span>Coldcard MK4</span>
-              <span class="stk-kit-role">Signing</span>
-            </a>
-            <a class="stk-kit" href="/toolkit">
-              <span>Sparrow Wallet</span>
-              <span class="stk-kit-role">Watch-only</span>
-            </a>
-            <a class="stk-kit" href="/toolkit">
-              <span>Bitcoin Core</span>
-              <span class="stk-kit-role">Verification</span>
-            </a>
-          </div>
-
+        <div class="about-aside stk-side">
           <div class="aside-card">
             <div class="aside-card-title">Principles</div>
             <div class="aside-curate-item">✓ DCA, never time</div>
             <div class="aside-curate-item">✓ Cold storage only</div>
-            <div class="aside-curate-item">✓ Own node, own truth</div>
+            <div class="aside-curate-item">✓ Own node, independent verification</div>
             <div class="aside-curate-item">✓ No leverage, no lending</div>
             <div class="aside-curate-item">✓ Plan for inheritance</div>
           </div>
 
-          <a class="aside-card aside-card--link" href="/rabbit-holes">
+          <div class="aside-card">
+            <div class="aside-card-title">Toolkit Categories</div>
+            <a class="stk-kit" href="/toolkit">
+              <span>Signing devices</span>
+              <span class="stk-kit-role">Custody</span>
+            </a>
+            <a class="stk-kit" href="/toolkit">
+              <span>Wallet software</span>
+              <span class="stk-kit-role">Control</span>
+            </a>
+            <a class="stk-kit" href="/toolkit">
+              <span>Full node</span>
+              <span class="stk-kit-role">Verification</span>
+            </a>
+          </div>
+
+          <a class="aside-card aside-card--link" href="/paths">
             <div class="aside-card-title">Learn Self-Custody</div>
-            <p class="aside-notes-quote">The Sovereignty Path — from exchange to air-gapped in five steps.</p>
+            <p class="aside-notes-quote">The Sovereignty Path — from basic wallet practice to resilient custody.</p>
             <p class="aside-notes-link">Open the path →</p>
           </a>
         </div>
@@ -109,11 +119,23 @@ import Base from '@/layouts/Base.astro';
     display: grid;
     grid-template-columns: 1fr 320px;
     gap: var(--sp-12);
-    padding-bottom: var(--sp-12);
   }
 
   .stk-main {
     max-width: 768px;
+  }
+
+  .stk-side {
+    position: sticky;
+    top: calc(60px + var(--sp-6));
+    align-self: start;
+  }
+
+  .stk-principle-card {
+    padding: var(--sp-7);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
   }
 
   .stk-disclaimer {
@@ -125,8 +147,9 @@ import Base from '@/layouts/Base.astro';
   }
 
   .stk-disclaimer-lbl {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
     color: var(--tx-3);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
@@ -139,16 +162,19 @@ import Base from '@/layouts/Base.astro';
     line-height: var(--lh-relaxed);
     color: var(--tx-3);
   }
+  .stk-sources { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-4); font-size: var(--fz-xs); }
+  .stk-sources span { font-family: var(--font-mono); color: var(--tx-3); text-transform: uppercase; }
+  .stk-sources a { color: var(--gold); }
 
   .stk-kit {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-xs);
     color: var(--tx-2);
     padding: var(--sp-2) 0;
     border-bottom: 1px solid var(--bdr);
     display: flex;
     justify-content: space-between;
-    letter-spacing: var(--ls-3);
+    letter-spacing: 0;
     transition: color var(--ease-fast);
   }
   .stk-kit:last-child { border-bottom: none; }
@@ -161,14 +187,18 @@ import Base from '@/layouts/Base.astro';
     text-transform: uppercase;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1100px) {
+    .stk-wrap {
+      grid-template-columns: 1fr 260px;
+    }
+  }
+  @media (max-width: 900px) {
     .stk-wrap {
       grid-template-columns: 1fr;
       gap: var(--sp-8);
     }
   }
   @media (max-width: 640px) {
-    .stk-wrap { padding-bottom: var(--sp-10); }
     .stk-disclaimer { padding: var(--sp-5) var(--sp-5); }
   }
 </style>

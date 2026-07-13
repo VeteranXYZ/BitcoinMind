@@ -64,6 +64,12 @@ const frame = FRAME_ONE;
             <p class="frames-end-note">
               End of Frames {frame.number}. More frames in time.
             </p>
+            <div class="frame-sources">
+              <div>Sources · reviewed {frame.reviewedAt}</div>
+              {frame.sources.map((source) => (
+                <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label} ↗</a>
+              ))}
+            </div>
           </div>
         </main>
 
@@ -90,3 +96,9 @@ const frame = FRAME_ONE;
     import '@/scripts/frame-one-spy';
   </script>
 </Base>
+
+<style>
+  .frame-sources { display: grid; gap: var(--sp-2); margin-top: var(--sp-5); padding-top: var(--sp-4); border-top: 1px solid var(--bdr); }
+  .frame-sources div { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--tx-3); letter-spacing: var(--ls-7); text-transform: uppercase; }
+  .frame-sources a { font-size: var(--fz-xs); color: var(--gold); }
+</style>

@@ -1,12 +1,31 @@
 ---
 const navItems = [
-  { href: '/primer',   label: 'Primer',    match: ['/primer'] },
-  { href: '/library',   label: 'Library',   match: ['/library'] },
-  { href: '/texts',  label: 'Texts',     match: ['/texts'] },
-  { href: '/toolkit',   label: 'Toolkit',   match: ['/toolkit'] },
-  { href: '/frames',  label: 'Frames',    match: ['/frames', '/frames/1', '/frames/2'] },
-  { href: '/notes',   label: 'Notes',     match: ['/notes'] },
-  { href: '/about',   label: 'About',     match: ['/about'] },
+  { href: '/primer',  label: 'Primer',  match: ['/primer'] },
+  { href: '/library', label: 'Library', match: ['/library'] },
+  { href: '/texts',   label: 'Texts',   match: ['/texts'] },
+  { href: '/toolkit', label: 'Toolkit', match: ['/toolkit'] },
+  { href: '/paths',   label: 'Paths',   match: ['/paths'] },
+];
+
+const exploreGroups = [
+  {
+    label: 'Lens',
+    items: [
+      { href: '/frames', label: 'Frames', desc: 'Two lenses to read Bitcoin through.', match: ['/frames', '/frames/1', '/frames/2'] },
+      { href: '/timeline', label: 'Timeline', desc: 'Bitcoin history and personal milestones.', match: ['/timeline'] },
+      { href: '/glossary', label: 'Glossary', desc: 'Conceptual anchors, not dictionary entries.', match: ['/glossary'] },
+      { href: '/objections', label: 'Objections', desc: 'Strong arguments answered carefully.', match: ['/objections'] },
+    ],
+  },
+  {
+    label: 'Hiei',
+    items: [
+      { href: '/notes', label: 'Notes', desc: 'Personal writing and archive notes.', match: ['/notes'] },
+      { href: '/questions', label: 'Questions', desc: 'Reader questions and serious answers.', match: ['/questions'] },
+      { href: '/stack', label: 'Stack', desc: 'How I think about holding Bitcoin.', match: ['/stack'] },
+      { href: '/about', label: 'About', desc: 'The story and curation principles.', match: ['/about'] },
+    ],
+  },
 ];
 
 /* ── Mobile menu: grouped sections ── */
@@ -14,21 +33,21 @@ const mmGroups = [
   {
     label: 'Core',
     items: [
-      { href: '/',        label: 'Home',       match: ['/'] },
-      { href: '/primer',   label: 'Primer',     match: ['/primer'] },
-      { href: '/library',   label: 'Library',    match: ['/library'] },
-      { href: '/texts',  label: 'Texts',      match: ['/texts'] },
-      { href: '/toolkit',   label: 'Toolkit',    match: ['/toolkit'] },
-      { href: '/frames',  label: 'Frames',     match: ['/frames', '/frames/1', '/frames/2'] },
+      { href: '/',         label: 'Home',    match: ['/'] },
+      { href: '/primer',   label: 'Primer',  match: ['/primer'] },
+      { href: '/library',  label: 'Library', match: ['/library'] },
+      { href: '/texts',    label: 'Texts',   match: ['/texts'] },
+      { href: '/toolkit',  label: 'Toolkit', match: ['/toolkit'] },
+      { href: '/paths',    label: 'Paths',   match: ['/paths'] },
     ],
   },
   {
-    label: 'Deep Dives',
+    label: 'Lens',
     items: [
+      { href: '/frames',       label: 'Frames',       match: ['/frames', '/frames/1', '/frames/2'] },
       { href: '/timeline',     label: 'Timeline',     match: ['/timeline'] },
       { href: '/glossary',     label: 'Glossary',     match: ['/glossary'] },
-      { href: '/debates',      label: 'Objections',   match: ['/debates'] },
-      { href: '/rabbit-holes', label: 'Paths',        match: ['/rabbit-holes'] },
+      { href: '/objections',   label: 'Objections',   match: ['/objections'] },
     ],
   },
   {
@@ -44,6 +63,7 @@ const mmGroups = [
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (m: string[]) => m.includes(path);
+const exploreActive = exploreGroups.some((group) => group.items.some((item) => isActive(item.match)));
 
 /* flat counter for staggered animation delay */
 let mmIdx = 0;
@@ -55,6 +75,38 @@ let mmIdx = 0;
       {navItems.map((n) => (
         <a class={`nl ${isActive(n.match) ? 'on' : ''}`} href={n.href}>{n.label}</a>
       ))}
+      <div class="nav-explore" data-explore-root>
+        <button
+          class={`nl nav-explore-btn ${exploreActive ? 'on' : ''}`}
+          type="button"
+          data-explore-button
+          aria-haspopup="true"
+          aria-expanded="false"
+          aria-controls="explore-menu"
+        >
+          Explore
+        </button>
+        <div id="explore-menu" class="explore-menu" data-explore-menu hidden>
+          {exploreGroups.map((group, groupIndex) => (
+            <div class="explore-group" style={`--explore-col: ${groupIndex + 1}`}>
+              <div class="explore-group-label">{group.label}</div>
+              <div class="explore-group-list">
+                {group.items.map((item, itemIndex) => (
+                  <a
+                    class={`explore-item ${isActive(item.match) ? 'explore-item--on' : ''}`}
+                    href={item.href}
+                    data-explore-item
+                    style={`--explore-row-start: ${itemIndex * 2 + 2}`}
+                  >
+                    <span class="explore-item-title">{item.label}</span>
+                    <span class="explore-item-desc">{item.desc}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
     <button
       class="nav-menu-btn"
@@ -67,33 +119,31 @@ let mmIdx = 0;
 </nav>
 
 <div id="site-menu" class="mm" role="dialog" aria-modal="true" aria-label="Site menu" data-mobile-menu hidden>
-  <div class="mm-bar">
-    <button class="mm-close" data-menu-close aria-label="Close menu">Close</button>
-  </div>
-  <nav class="mm-list" aria-label="Primary">
-    {mmGroups.map((group, gi) => (
-      <>
-        {gi > 0 && <div class="mm-divider" />}
-        <div class="mm-group-label">{group.label}</div>
-        {group.items.map((n) => {
-          const delay = 0.04 + (mmIdx++) * 0.022;
-          return (
-            <a
-              class={`mm-item ${isActive(n.match) ? 'mm-item--on' : ''}`}
-              href={n.href}
-              data-menu-item
-              style={`animation-delay: ${delay}s`}
-            >
-              {n.label}
-            </a>
-          );
-        })}
-      </>
-    ))}
-  </nav>
-  <div class="mm-foot">
-    <div class="mm-foot-rule"></div>
-    <div class="mm-foot-l1">bitcoinmind.com · est. 2017</div>
-    <div class="mm-foot-l2">A public record by Hiei</div>
+  <div class="mm-panel" data-mobile-menu-panel>
+    <nav class="mm-list" aria-label="Primary">
+      {mmGroups.map((group, gi) => (
+        <>
+          {gi > 0 && <div class="mm-divider" />}
+          <div class="mm-group-label">{group.label}</div>
+          {group.items.map((n) => {
+            const delay = 0.04 + (mmIdx++) * 0.022;
+            return (
+              <a
+                class={`mm-item ${isActive(n.match) ? 'mm-item--on' : ''}`}
+                href={n.href}
+                data-menu-item
+                style={`animation-delay: ${delay}s`}
+              >
+                {n.label}
+              </a>
+            );
+          })}
+        </>
+      ))}
+    </nav>
+    <div class="mm-foot">
+      <div class="mm-foot-rule"></div>
+      <div class="mm-foot-l1">bitcoinmind.com · Since 2017</div>
+    </div>
   </div>
 </div>

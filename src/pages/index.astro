@@ -8,12 +8,39 @@ import PulsePlus from '@/components/PulsePlus';
 import { LIBRARY } from '@/data/library';
 import { TEXTS } from '@/data/texts';
 import { TOOLKIT } from '@/data/toolkit';
+import { TIMELINE } from '@/data/timeline';
+import { GLOSSARY } from '@/data/glossary';
+import { DEBATES } from '@/data/debates';
 import { SITE } from '@/lib/seo';
+import pulseSnapshot from '../../public/pulse.json';
 
-const foundationItems = LIBRARY.filter((item) => item.layer === 1);
-const previewTexts = TEXTS.slice(0, 3);
-const previewToolkit = TOOLKIT.slice(0, 3);
-const textCount = TEXTS.length;
+const foundationItems = LIBRARY.filter((item) => item.layer === 1).slice(0, 2);
+const previewTexts = TEXTS.slice(0, 2);
+const previewToolkit = TOOLKIT.slice(0, 2);
+
+const deeperCards = [
+  {
+    href: '/timeline',
+    title: 'Timeline',
+    desc: 'Seventeen years of signal. The ideas and events that shaped Bitcoin, from the whitepaper to the present block.',
+    meta: `${TIMELINE.length} events`,
+    cta: 'EXPLORE →',
+  },
+  {
+    href: '/glossary',
+    title: 'Glossary',
+    desc: 'Not definitions — conceptual anchors. Each entry is a compact note on a core Bitcoin idea.',
+    meta: `${GLOSSARY.length} terms`,
+    cta: 'READ →',
+  },
+  {
+    href: '/objections',
+    title: 'Objections',
+    desc: 'The strongest arguments against Bitcoin, answered without pretending they are weak.',
+    meta: `${DEBATES.length} objections`,
+    cta: 'READ →',
+  },
+];
 
 const websiteLd = {
   '@context': 'https://schema.org',
@@ -21,7 +48,9 @@ const websiteLd = {
   name: SITE.name,
   url: SITE.url,
   description: SITE.tagline,
+  inLanguage: 'en',
   author: { '@type': 'Person', name: SITE.author },
+  publisher: { '@type': 'Person', name: SITE.author },
 };
 ---
 <Base
@@ -31,102 +60,99 @@ const websiteLd = {
   jsonLd={websiteLd}
 >
   <div class="page">
-    <div class="hero">
-      <div class="c">
-        <div class="hero-eye">bitcoinmind.com · est. 2017</div>
-        <h1 class="hero-title">
-          <span class="hero-t1">Bitcoin</span>
-          <span class="hero-t2">Mind</span>
-        </h1>
-        <div class="hero-rule"><div class="hero-rule-dot"></div></div>
-        <p class="hero-quote">"BitcoinMind is a personal map for studying Bitcoin as money, protocol, and sovereignty."</p>
-        <p class="hero-by">A public record by {SITE.author} · Updated {SITE.lastUpdated}</p>
-        <TodaysPick client:only="preact" />
-        <PulsePlus client:idle />
-      </div>
-    </div>
-
     <div class="c">
-      <div class="section">
+      <div class="ph">
+        <div class="ph-eye">bitcoinmind.com</div>
+        <h1 class="ph-title">Bitcoin<em>Mind</em></h1>
+        <p class="ph-desc">A personal map for studying Bitcoin as money, protocol, and sovereignty.</p>
+      </div>
+
+      <div class="home-divider"></div>
+      <TodaysPick />
+      <PulsePlus initialSnapshot={pulseSnapshot} client:idle />
+
+      <div class="section home-primer-section">
+        <a class="home-primer" href="/primer">
+          <span class="home-primer-label">Start Here</span>
+          <span class="home-primer-title">The Source <em>Primer</em></span>
+          <span class="home-primer-body">Five steps from the original paper to money, sovereignty, and a personal 2011 note. This is where to begin.</span>
+          <span class="home-primer-cta">Begin the Primer →</span>
+        </a>
+      </div>
+
+      <div class="section home-preview-section">
         <div class="sec-hd">
-          <h2 class="sec-title">Begin with the <em>Primer</em></h2>
-          <a class="va" href="/library">Open the Library →</a>
+          <h2 class="sec-title">Preview the <em>Library</em></h2>
+          <a class="va" href="/library">Browse the Library →</a>
         </div>
-        <div class="grid3">
+        <div class="grid-auto home-preview-grid">
           {foundationItems.map((item) => <LibraryCard item={item} preview />)}
         </div>
       </div>
 
-      <div class="section">
+      <div class="section home-preview-section">
         <div class="sec-hd">
-          <h2 class="sec-title">Read the <em>Texts</em></h2>
-          <a class="va" href="/texts">View all {textCount} texts →</a>
+          <h2 class="sec-title">Preview the <em>Texts</em></h2>
+          <a class="va" href="/texts">View all texts →</a>
         </div>
-        <div class="grid3">
+        <div class="grid-auto home-preview-grid">
           {previewTexts.map((item) => <TextCard item={item} preview />)}
         </div>
       </div>
 
-      <div class="section">
+      <div class="section home-preview-section">
         <div class="sec-hd">
-          <h2 class="sec-title">Use the <em>Toolkit</em></h2>
-          <a class="va" href="/toolkit">Open the Toolkit →</a>
+          <h2 class="sec-title">Preview the <em>Toolkit</em></h2>
+          <a class="va" href="/toolkit">Use the Toolkit →</a>
         </div>
-        <div class="grid3">
+        <div class="grid-auto home-preview-grid">
           {previewToolkit.map((item) => <ToolkitCard item={item} preview />)}
         </div>
       </div>
 
-      <div class="section">
+      <div class="section home-deeper-section">
         <div class="sec-hd">
-          <h2 class="sec-title">Go <em>Deeper</em></h2>
-          <a class="va" href="/rabbit-holes">View all paths →</a>
+          <h2 class="sec-title">Trace the <em>Paths</em></h2>
+          <a class="va" href="/paths">Follow all paths →</a>
         </div>
         <div class="grid3">
-          <a class="card" href="/timeline">
-            <div class="card-layer">Chronology</div>
-            <div class="card-title">Timeline</div>
-            <div class="card-desc card-desc--top">Seventeen years of signal. The ideas and events that shaped Bitcoin, from the whitepaper to the present block.</div>
-            <div class="card-ft">
-              <span class="card-meta">16 events</span>
-              <span class="card-cta">EXPLORE →</span>
-            </div>
-          </a>
-          <a class="card" href="/glossary">
-            <div class="card-layer">Concepts</div>
-            <div class="card-title">Glossary</div>
-            <div class="card-desc card-desc--top">Not definitions — conceptual anchors. Each entry is a compact note on a core Bitcoin idea.</div>
-            <div class="card-ft">
-              <span class="card-meta">15 terms</span>
-              <span class="card-cta">READ →</span>
-            </div>
-          </a>
-          <a class="card" href="/debates">
-            <div class="card-layer">Objections</div>
-            <div class="card-title">Objections</div>
-            <div class="card-desc card-desc--top">The strongest arguments against Bitcoin, answered without pretending they are weak.</div>
-            <div class="card-ft">
-              <span class="card-meta">6 objections</span>
-              <span class="card-cta">READ →</span>
-            </div>
-          </a>
+          {deeperCards.map((card) => (
+            <a class="card" href={card.href}>
+              <div class="card-title">{card.title}</div>
+              <div class="card-desc card-desc--top">{card.desc}</div>
+              <div class="card-ft">
+                <span class="card-meta">{card.meta}</span>
+                <span class="card-cta">{card.cta}</span>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
 
-      <div class="section">
+      <div class="section home-deeper-section">
         <div class="sec-hd">
           <h2 class="sec-title">From <em>Hiei</em></h2>
         </div>
-        <div class="hiei-links">
-          <a class="hiei-link" href="/stack">
-            <span class="hiei-link-title">Stack</span>
-            <span class="hiei-link-desc">How I hold Bitcoin — not how much, but how and why.</span>
-            <span class="hiei-link-cta">Read →</span>
+        <div class="hiei-list">
+          <a class="hiei-row" href="/stack">
+            <span class="hiei-row-title">Stack</span>
+            <span class="hiei-row-desc">How I hold Bitcoin — not how much, but how and why.</span>
+            <span class="hiei-row-cta">Read →</span>
           </a>
-          <a class="hiei-link" href="/questions">
-            <span class="hiei-link-title">Questions</span>
-            <span class="hiei-link-desc">Reader questions, answered when I have something worth saying.</span>
-            <span class="hiei-link-cta">Read →</span>
+          <a class="hiei-row" href="/questions">
+            <span class="hiei-row-title">Questions</span>
+            <span class="hiei-row-desc">Reader questions, answered when I have something worth saying.</span>
+            <span class="hiei-row-cta">Read →</span>
+          </a>
+          <a class="hiei-row" href="/notes">
+            <span class="hiei-row-title">Notes</span>
+            <span class="hiei-row-desc">Original writing from the archive — including what I wrote in April 2011.</span>
+            <span class="hiei-row-cta">Read →</span>
+          </a>
+          <a class="hiei-row" href="/about">
+            <span class="hiei-row-title">About</span>
+            <span class="hiei-row-desc">The story behind this site, and the principles that guide its curation.</span>
+            <span class="hiei-row-cta">Read →</span>
           </a>
         </div>
       </div>
@@ -135,57 +161,202 @@ const websiteLd = {
 </Base>
 
 <style>
-  .hiei-links {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--sp-4);
+  :global(.page .ph) {
+    border-bottom: none;
+    margin-bottom: 0;
   }
 
-  .hiei-link {
+  .home-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--bdr);
+    margin-bottom: var(--sp-9);
+  }
+
+  /* ── Primer CTA ── */
+  .home-primer-section {
+    padding-top: var(--sp-12);
+    padding-bottom: var(--sp-10);
+  }
+
+  .home-primer {
     display: flex;
     flex-direction: column;
-    padding: var(--sp-6) var(--sp-6);
+    padding: var(--sp-6);
     border: 1px solid var(--bdr);
     border-radius: var(--radius);
-    transition: border-color var(--ease-card), background var(--ease-card);
-    cursor: pointer;
+    background: var(--surf);
     text-decoration: none;
     color: inherit;
+    transition: border-color var(--ease-card), background var(--ease-card), box-shadow var(--ease-card);
   }
 
-  .hiei-link:hover {
-    border-color: var(--gold);
-    background: var(--surf);
+  .home-primer:hover {
+    border-color: var(--bdr-2);
+    background: var(--surf-2);
+    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.12);
   }
 
-  .hiei-link-title {
-    font-family: var(--font-serif);
-    font-size: var(--fz-lg);
-    font-weight: var(--fw-semi);
-    letter-spacing: var(--ls-normal);
-    margin-bottom: var(--sp-2);
-  }
-
-  .hiei-link-desc {
+  .home-primer-label {
     font-family: var(--font-body);
-    font-size: var(--fz-base);
-    color: var(--tx-2);
-    line-height: var(--lh-relaxed);
-    flex: 1;
+    font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
+    color: var(--gold-hi);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
     margin-bottom: var(--sp-3);
   }
 
-  .hiei-link-cta {
-    font-family: var(--font-mono);
-    font-size: var(--fz-3xs);
+  .home-primer-title {
+    font-family: var(--font-display);
+    font-size: var(--fz-3xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-snug);
+    line-height: var(--lh-title);
+    margin-bottom: var(--sp-4);
+  }
+
+  .home-primer-title em {
+    font-style: italic;
+    color: var(--gold-hi);
+  }
+
+  .home-primer-body {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    line-height: var(--lh-relaxed);
+    color: var(--tx-2);
+    max-width: 640px;
+    flex: 1;
+  }
+
+  .home-primer-cta {
+    font-family: var(--font-body);
+    font-size: var(--fz-xs);
+    font-weight: var(--fw-semi);
     color: var(--gold);
     letter-spacing: var(--ls-5);
     text-transform: uppercase;
+    align-self: flex-end;
+    margin-top: var(--sp-6);
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--bdr);
   }
 
+  /* ── Preview Sections ── */
+  .home-preview-section {
+    padding: var(--sp-9) 0;
+  }
+
+  .home-preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-preview-grid .card {
+    background: transparent;
+  }
+
+  /* ── Hiei Links ── */
+  /* ── Hiei Links ── */
+  .hiei-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hiei-row {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-4) 0;
+    border-bottom: 1px solid var(--bdr);
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--ease-fast);
+  }
+
+  .hiei-row:first-child {
+    border-top: 1px solid var(--bdr);
+  }
+
+  /* Hover recolor is gated behind `@media (hover: hover)` so it only
+     fires on true pointer devices. On touch, `:hover` is sticky — it
+     latches on tap and only clears on the next interaction — which made
+     the tapped row (or any row the finger crossed while swiping) stay
+     gold. With the query in place, mobile gets no hover at all and
+     behaves normally. */
+  @media (hover: hover) {
+    .hiei-row:hover {
+      color: var(--gold-hi);
+    }
+  }
+
+  .hiei-row-title {
+    font-family: var(--font-body);
+    font-size: var(--fz-base);
+    font-weight: var(--fw-semi);
+    letter-spacing: var(--ls-normal);
+    flex-shrink: 0;
+    min-width: 100px;
+  }
+
+  .hiei-row-desc {
+    font-family: var(--font-body);
+    font-size: var(--fz-sm);
+    color: var(--tx-3);
+    line-height: var(--lh-relaxed);
+    flex: 1;
+  }
+
+  .hiei-row-cta {
+    font-family: var(--font-body);
+    font-size: var(--fz-xs);
+    font-weight: var(--fw-semi);
+    color: var(--gold);
+    letter-spacing: var(--ls-5);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  /* ── Deeper Sections ── */
+  /* Match the vertical rhythm of .home-preview-section (var(--sp-9))
+     instead of inheriting .section's default var(--sp-12). The default
+     was producing ~80px top/bottom padding, which felt oversized next
+     to the 48px preview sections above and below. */
+  .home-deeper-section {
+    padding: var(--sp-9) 0;
+    margin-left: calc(-1 * var(--pad));
+    margin-right: calc(-1 * var(--pad));
+    padding-left: var(--pad);
+    padding-right: var(--pad);
+    border-radius: var(--radius);
+  }
+  .home-deeper-section:last-child {
+    padding-bottom: 0;
+  }
+
+  /* Previously `.home-deeper-section + .home-deeper-section` added
+     var(--sp-6) on top, which stacked on the sibling's padding-top and
+     made the gap between Trace the Paths and From Hiei 120px, vs the
+     96px rhythm (sp-9 + sp-9) every other pair of sections uses.
+     Removed so all section-to-section spacing is uniform. */
+
   @media (max-width: 640px) {
-    .hiei-links {
+    .home-preview-grid {
       grid-template-columns: 1fr;
+    }
+
+    .home-primer {
+      padding: var(--sp-5);
+    }
+
+    .hiei-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--sp-2);
+    }
+
+    .hiei-row-cta {
+      align-self: flex-end;
     }
   }
 </style>

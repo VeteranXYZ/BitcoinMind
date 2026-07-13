@@ -36,7 +36,7 @@ export const TIMELINE: TimelineEvent[] = [
   {
     id: 'tl-04', year: 2010, month: 'May',
     title: 'The Pizza',
-    body: 'Laszlo Hanyecz pays 10,000 BTC for two Papa John\'s pizzas. The first known commercial Bitcoin transaction. At today\'s price, each pizza cost more than most people will earn in a lifetime.',
+    body: 'Laszlo Hanyecz pays 10,000 BTC for two Papa John\'s pizzas. The first known commercial Bitcoin transaction. The transaction became a permanent reminder that monetary value is easier to see in hindsight than in the moment.',
     tags: ['History'],
   },
   {
@@ -73,7 +73,7 @@ export const TIMELINE: TimelineEvent[] = [
   {
     id: 'tl-09', year: 2014, month: 'Feb',
     title: 'Mt. Gox Collapse',
-    body: 'The largest Bitcoin exchange loses 850,000 BTC. Critics declare Bitcoin dead. The network keeps producing blocks. The protocol doesn\'t care about exchanges.',
+    body: 'The largest Bitcoin exchange loses 850,000 BTC. Critics declare Bitcoin dead. The network keeps producing blocks. The failure was institutional, not protocol-level.',
     tags: ['History'],
   },
   {
@@ -116,7 +116,7 @@ export const TIMELINE: TimelineEvent[] = [
   {
     id: 'tl-15', year: 2024, month: 'Jan',
     title: 'Spot ETF Approved',
-    body: 'The U.S. SEC approves spot Bitcoin ETFs. Within weeks, billions flow in. The irony: an asset designed to eliminate intermediaries is now packaged inside one. The network doesn\'t notice.',
+    body: 'The U.S. SEC approves spot Bitcoin ETFs. Within weeks, billions flow in. The irony: an asset designed to eliminate intermediaries is now packaged inside one. The institutional wrapper changed access, not the protocol itself.',
     tags: ['Economics'],
   },
   {

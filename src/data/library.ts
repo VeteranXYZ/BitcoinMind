@@ -71,6 +71,28 @@ export const LIBRARY: LibraryItem[] = [
     link: "https://www.harpercollins.com/products/digital-gold-nathaniel-popper"
   },
   {
+    id: "inventing-bitcoin",
+    title: "Inventing Bitcoin",
+    author: "Yan Pritzker",
+    group: "Core Library",
+    pathStage: "Protocol",
+    resourceType: "work",
+    layer: 2,
+    layerLabel: "Layer 2 - Systems",
+    learningRole: "Short technical primer",
+    shortDescription: "A short explanation of how Bitcoin works, written for readers who want a fast but serious technical introduction.",
+    whyItBelongs: "It belongs here because not every reader is ready for a full technical work. This is a useful bridge between curiosity and protocol literacy.",
+    bestFor: "Beginners who want a concise explanation of mining, keys, transactions, and consensus.",
+    learningPathPosition: "Read before Grokking Bitcoin if you want a shorter first technical pass.",
+    difficulty: "Beginner",
+    tags: [
+      "Technical Primer",
+      "Consensus",
+      "Mining"
+    ],
+    link: "https://inventingbitcoin.com/"
+  },
+  {
     id: "grokking-bitcoin",
     title: "Grokking Bitcoin",
     author: "Kalle Rosenbaum",
@@ -254,36 +276,14 @@ export const LIBRARY: LibraryItem[] = [
     link: "https://21lessons.com/"
   },
   {
-    id: "inventing-bitcoin",
-    title: "Inventing Bitcoin",
-    author: "Yan Pritzker",
-    group: "Further Reading",
-    pathStage: "Protocol",
-    resourceType: "work",
-    layer: 3,
-    layerLabel: "Layer 3 - Sovereignty",
-    learningRole: "Short technical primer",
-    shortDescription: "A short explanation of how Bitcoin works, written for readers who want a fast but serious technical introduction.",
-    whyItBelongs: "It belongs here because not every reader is ready for a full technical work. This is a useful bridge between curiosity and protocol literacy.",
-    bestFor: "Beginners who want a concise explanation of mining, keys, transactions, and consensus.",
-    learningPathPosition: "Read before Grokking Bitcoin if you want a shorter first technical pass.",
-    difficulty: "Beginner",
-    tags: [
-      "Technical Primer",
-      "Consensus",
-      "Mining"
-    ],
-    link: "https://inventingbitcoin.com/"
-  },
-  {
     id: "the-price-of-tomorrow",
     title: "The Price of Tomorrow",
     author: "Jeff Booth",
-    group: "Further Reading",
-    pathStage: "Money",
+    group: "Further Reading / Macro Companion",
+    pathStage: "Macro",
     resourceType: "work",
-    layer: 3,
-    layerLabel: "Layer 3 - Sovereignty",
+    layer: 2,
+    layerLabel: "Layer 2 - Systems",
     learningRole: "Deflationary technology frame",
     shortDescription: "A work about technology-driven deflation, debt-based systems, and the tension between productivity and inflationary monetary design.",
     whyItBelongs: "It belongs here because it helps explain why technology tends to lower costs while debt-based systems often require rising nominal prices. Bitcoin appears more clearly inside that tension.",
@@ -294,7 +294,7 @@ export const LIBRARY: LibraryItem[] = [
       "Technology",
       "Deflation",
       "Debt",
-      "Macro"
+      "Macro Companion"
     ],
     link: "https://www.jeffbooth.ca/the-price-of-tomorrow"
   }

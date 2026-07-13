@@ -12,7 +12,8 @@ export const SITE = {
   contactEmail: 'hiei1988@gmail.com',
   foundedYear: 2017,
   currentYear: 2026,
-  lastUpdated: 'May 2026',
+  lastUpdated: 'July 2026',
+  socialImage: 'https://bitcoinmind.com/og-image.png',
 };
 
 export function fullTitle(title: string): string {

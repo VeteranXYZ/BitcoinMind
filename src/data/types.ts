@@ -56,4 +56,7 @@ export interface ToolkitItem {
   cost: Cost;
   tags: string[];
   link: string;
+  reviewedAt: string;
+  timeSensitive: boolean;
+  sourceLabel: string;
 }

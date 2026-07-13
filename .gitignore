@@ -4,6 +4,8 @@ node_modules/
 # Build output
 dist/
 .astro/
+test-results/
+playwright-report/
 
 # Environment / secrets
 .env*
@@ -33,3 +35,20 @@ pnpm-debug.log*
 *.zip
 *.tar
 *.tar.gz
+
+# Security-sensitive local files
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+*.sqlite
+*.sqlite3
+*.db
+*.bak
+backup*

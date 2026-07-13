@@ -1,8 +1,8 @@
 {
-  "height": 948389,
-  "hashRate": 972653884227059300000,
-  "mempoolCount": 49216,
+  "height": 957784,
+  "hashRate": 873978647820942400000,
+  "mempoolCount": 95532,
   "nodeCount": null,
-  "fetchedAt": "2026-05-08T02:08:51.408Z",
-  "source": "snapshot"
+  "fetchedAt": "2026-07-13T01:39:46.735Z",
+  "source": "partial-snapshot"
 }

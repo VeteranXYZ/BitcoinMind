@@ -1,0 +1,33 @@
+---
+interface LinkItem { href: string; label: string; description: string; }
+interface Props { previous?: LinkItem; next: LinkItem; }
+const { previous, next } = Astro.props;
+---
+<nav class="study-next" aria-label="Continue studying">
+  {previous ? (
+    <a class="study-next-link" href={previous.href}>
+      <span>Previous</span><strong>{previous.label}</strong><small>{previous.description}</small>
+    </a>
+  ) : <span></span>}
+  <a class="study-next-link study-next-link--next" href={next.href}>
+    <span>Continue</span><strong>{next.label}</strong><small>{next.description}</small>
+  </a>
+</nav>
+
+<style>
+  .study-next {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-4);
+    margin-top: var(--sp-10);
+    padding-top: var(--sp-7);
+    border-top: 1px solid var(--bdr);
+  }
+  .study-next-link { display: flex; flex-direction: column; gap: var(--sp-1); padding: var(--sp-4); border: 1px solid var(--bdr); border-radius: var(--radius); }
+  .study-next-link:hover { border-color: var(--border-accent); background: var(--surf); }
+  .study-next-link--next { text-align: right; }
+  .study-next-link span { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
+  .study-next-link strong { font-size: var(--fz-md); color: var(--tx); }
+  .study-next-link small { font-size: var(--fz-xs); color: var(--tx-3); line-height: var(--lh-card); }
+  @media (max-width: 640px) { .study-next { grid-template-columns: 1fr; } .study-next-link--next { text-align: left; } }
+</style>

@@ -59,38 +59,53 @@ async function fetchText(url) {
 
 const existing = readExisting();
 const next = { ...existing, source: 'cached' };
+let refreshedFields = 0;
 
 try {
   const text = (await fetchText('https://mempool.space/api/blocks/tip/height')).trim();
   const height = parseInt(text, 10);
-  if (Number.isFinite(height) && height > 0) next.height = Math.max(height, next.height ?? 0);
+  if (Number.isFinite(height) && height > 0) {
+    next.height = Math.max(height, next.height ?? 0);
+    refreshedFields += 1;
+  }
 } catch (e) {
   console.warn('[fetch-pulse] height fetch failed:', e.message);
 }
 
 try {
   const data = await fetchJson('https://mempool.space/api/v1/mining/hashrate/1m');
-  if (Number.isFinite(data?.currentHashrate) && data.currentHashrate > 0) next.hashRate = data.currentHashrate;
+  if (Number.isFinite(data?.currentHashrate) && data.currentHashrate > 0) {
+    next.hashRate = data.currentHashrate;
+    refreshedFields += 1;
+  }
 } catch (e) {
   console.warn('[fetch-pulse] hash rate fetch failed:', e.message);
 }
 
 try {
   const data = await fetchJson('https://mempool.space/api/mempool');
-  if (Number.isFinite(data?.count) && data.count >= 0) next.mempoolCount = data.count;
+  if (Number.isFinite(data?.count) && data.count >= 0) {
+    next.mempoolCount = data.count;
+    refreshedFields += 1;
+  }
 } catch (e) {
   console.warn('[fetch-pulse] mempool fetch failed:', e.message);
 }
 
 try {
   const data = await fetchJson('https://bitnodes.io/api/v1/snapshots/latest/');
-  if (Number.isFinite(data?.total_nodes) && data.total_nodes > 0) next.nodeCount = data.total_nodes;
+  if (Number.isFinite(data?.total_nodes) && data.total_nodes > 0) {
+    next.nodeCount = data.total_nodes;
+    refreshedFields += 1;
+  }
 } catch (e) {
   console.warn('[fetch-pulse] node count fetch failed:', e.message);
 }
 
-next.fetchedAt = new Date().toISOString();
-next.source = 'snapshot';
+if (refreshedFields > 0) {
+  next.fetchedAt = new Date().toISOString();
+  next.source = refreshedFields === 4 ? 'snapshot' : 'partial-snapshot';
+}
 
 writeFileSync(target, JSON.stringify(next, null, 2) + '\n', 'utf8');
 console.log(`[fetch-pulse] wrote ${target}`);

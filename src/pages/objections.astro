@@ -1,11 +1,12 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { DEBATES } from '@/data/debates';
+import { formatReviewedAt } from '@/lib/study';
 ---
 <Base
   title="Objections"
   description="The strongest arguments against Bitcoin, answered without pretending they are weak."
-  path="/debates"
+  path="/objections"
 >
   <div class="page">
     <div class="c">
@@ -29,6 +30,10 @@ import { DEBATES } from '@/data/debates';
                 <div class="db-col-lbl">The Objection</div>
                 <p class="db-col-body">{d.objection}</p>
               </div>
+              <div class="db-col db-col--right">
+                <div class="db-col-lbl">What this objection gets right</div>
+                <p class="db-col-body db-col-body--gets">{d.getsRight}</p>
+              </div>
               <div class="db-col db-col--res">
                 <div class="db-col-lbl">The Response</div>
                 <p class="db-col-body">{d.response}</p>
@@ -43,6 +48,14 @@ import { DEBATES } from '@/data/debates';
                 ))}
               </div>
             )}
+            <div class="db-sources">
+              <span class="db-further-lbl">Sources · reviewed {formatReviewedAt(d.reviewedAt)}</span>
+              {d.sources.map((source) => (
+                <a class="db-source-link" href={source.href} target="_blank" rel="noopener noreferrer">
+                  <span>{source.perspective}</span>{source.label} ↗
+                </a>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -51,12 +64,14 @@ import { DEBATES } from '@/data/debates';
 </Base>
 
 <style>
-  .db-list {
-    padding-bottom: var(--sp-12);
-  }
-
+  /* Bottom gap to the footer is governed by .page's padding-bottom, not
+     here. Only the per-item spacing remains, and the last item's margin
+     is zeroed so it doesn't stack. */
   .db-item {
     margin-bottom: var(--sp-11);
+  }
+  .db-item:last-child {
+    margin-bottom: 0;
   }
 
   .db-num-row {
@@ -69,9 +84,9 @@ import { DEBATES } from '@/data/debates';
   .db-num {
     font-family: var(--font-mono);
     font-size: var(--fz-3xs);
-    color: var(--gold);
+    color: var(--gold-hi);
     letter-spacing: var(--ls-7);
-    border: 1px solid var(--gold);
+    border: 1px solid var(--border-accent);
     padding: 3px var(--sp-2);
     border-radius: var(--radius-sm);
     flex-shrink: 0;
@@ -84,7 +99,7 @@ import { DEBATES } from '@/data/debates';
   }
 
   .db-title {
-    font-family: var(--font-serif);
+    font-family: var(--font-body);
     font-size: var(--fz-2xl);
     font-weight: var(--fw-bold);
     letter-spacing: var(--ls-snug);
@@ -93,8 +108,8 @@ import { DEBATES } from '@/data/debates';
 
   .db-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--sp-4);
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-5);
   }
 
   .db-col {
@@ -109,12 +124,18 @@ import { DEBATES } from '@/data/debates';
 
   .db-col--res {
     background: var(--surf);
-    border-left: 3px solid var(--gold);
+    border-left: 3px solid var(--border-accent);
+  }
+
+  .db-col--right {
+    background: var(--accent-hover);
+    border-color: var(--border-accent);
   }
 
   .db-col-lbl {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
     letter-spacing: var(--ls-9);
     text-transform: uppercase;
     margin-bottom: var(--sp-4);
@@ -124,15 +145,20 @@ import { DEBATES } from '@/data/debates';
     color: var(--tx-3);
   }
 
-  .db-col--res .db-col-lbl {
-    color: var(--gold);
+  .db-col--res .db-col-lbl,
+  .db-col--right .db-col-lbl {
+    color: var(--gold-hi);
   }
 
   .db-col-body {
     font-family: var(--font-body);
-    font-size: var(--fz-md);
+    font-size: var(--fz-prose);
     line-height: var(--lh-loose);
     color: var(--tx-2);
+  }
+
+  .db-col-body--gets {
+    color: var(--tx-3);
   }
 
   .db-further {
@@ -142,19 +168,24 @@ import { DEBATES } from '@/data/debates';
     margin-top: var(--sp-4);
     padding-top: var(--sp-3);
   }
+  .db-sources { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; margin-top: var(--sp-3); }
+  .db-source-link { font-size: var(--fz-xs); color: var(--tx-2); }
+  .db-source-link span { margin-right: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); text-transform: uppercase; }
 
   .db-further-lbl {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
     color: var(--tx-3);
     letter-spacing: var(--ls-7);
     text-transform: uppercase;
   }
 
   .db-further-link {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-size: var(--fz-xs);
-    color: var(--gold);
+    font-weight: var(--fw-semi);
+    color: var(--gold-hi);
     letter-spacing: var(--ls-3);
     transition: color var(--ease-fast);
   }
@@ -164,11 +195,20 @@ import { DEBATES } from '@/data/debates';
 
   @media (max-width: 1024px) {
     .db-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
+    }
+    .db-col--res {
+      grid-column: 1 / -1;
     }
   }
 
   @media (max-width: 640px) {
+    .db-grid {
+      grid-template-columns: 1fr;
+    }
+    .db-col--res {
+      grid-column: auto;
+    }
     .db-col {
       padding: var(--sp-5) var(--sp-4);
     }

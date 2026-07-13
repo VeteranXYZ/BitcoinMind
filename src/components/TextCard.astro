@@ -1,13 +1,29 @@
 ---
 import Tag from './Tag.astro';
 import type { TextItem } from '@/data/types';
+import { studyStageFor } from '@/lib/study';
 interface Props {
   item: TextItem;
   preview?: boolean;
 }
 const { item, preview = false } = Astro.props;
+const visibleTags = item.tags.slice(0, 3);
+const getTypeLabel = (text: TextItem) => {
+  const title = text.title.toLowerCase();
+  if (text.resourceType === 'paper' || text.tags.includes('Whitepaper')) return 'Paper';
+  if (text.resourceType === 'series') return 'Series';
+  if (text.resourceType === 'reference') return 'Reference';
+  if (title.includes('documentation') || title.includes('running a full node')) return 'Documentation';
+  if (title.includes('gradually, then suddenly')) return 'Series';
+  if (title.includes('questions') || title.includes('faq')) return 'Q&A';
+  if (text.tags.includes('Reference')) return 'Reference';
+  return 'Essay';
+};
+const typeLabel = getTypeLabel(item);
+const stage = studyStageFor(item.pathStage);
 ---
-<a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
+<article class="card" id={item.id}>
+  <div class="card-stage">Stage {stage.number} · {stage.label}</div>
   <div class="card-layer card-layer--row">
     <span>{item.layer}</span>
     {item.year > 0 && <span>{item.year}</span>}
@@ -17,18 +33,24 @@ const { item, preview = false } = Astro.props;
   <div class="card-author">{item.author}</div>
   <div class="card-desc card-desc--top">{item.shortDescription}</div>
   <div class="card-tags">
-    {item.tags.map((t) => <Tag label={t} />)}
-    <Tag label={item.difficulty} />
+    <Tag label={typeLabel} />
+    {visibleTags.filter((t) => t !== typeLabel).slice(0, 3).map((t) => <Tag label={t} />)}
   </div>
   {!preview && (
-    <div class="card-review">
-      <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
-      <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
-      <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
-    </div>
+    <details class="card-details">
+      <summary>Details</summary>
+      <div class="card-review">
+        <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
+        <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
+        <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
+      </div>
+    </details>
   )}
   <div class="card-ft">
-    <span class="card-meta">{item.timeCommitment}</span>
-    <span class="card-cta">Read →</span>
+    <span class="card-meta">{item.difficulty} · {item.timeCommitment}</span>
+    <span class="card-actions">
+      {!preview && <button type="button" class="study-save study-enhanced" data-study-save data-study-id={`text:${item.id}`} data-study-title={item.title} data-study-href={`/texts#${item.id}`} data-study-kind="Text" aria-pressed="false">Save</button>}
+      <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Read →</a>
+    </span>
   </div>
-</a>
+</article>

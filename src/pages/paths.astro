@@ -1,0 +1,468 @@
+---
+import Base from '@/layouts/Base.astro';
+import Tag from '@/components/Tag.astro';
+import StudyLoop from '@/components/StudyLoop.astro';
+import StudyLedger from '@/components/StudyLedger.astro';
+import StudyNext from '@/components/StudyNext.astro';
+import { RABBIT_HOLES } from '@/data/rabbit-holes';
+import { LIBRARY } from '@/data/library';
+import { TEXTS } from '@/data/texts';
+import { TOOLKIT } from '@/data/toolkit';
+
+const typeIcon: Record<string, string> = {
+  library: 'Library',
+  text: 'Text',
+  toolkit: 'Toolkit',
+  frame: 'Frame',
+  external: 'External',
+};
+const routeQuestions: Record<string, string> = {
+  'rh-monetary': 'What is money, and why does scarcity matter?',
+  'rh-technical': 'How does Bitcoin actually work?',
+  'rh-custody': 'What changes when custody and verification become personal?',
+  'rh-philosophy': 'What kind of institution is Bitcoin replacing?',
+  'rh-economics': 'How should long-term Bitcoin data be read?',
+};
+const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/, '');
+const catalogs = {
+  library: { route: '/library', items: LIBRARY },
+  text: { route: '/texts', items: TEXTS },
+  toolkit: { route: '/toolkit', items: TOOLKIT },
+};
+const paths = RABBIT_HOLES.map((path) => ({
+  ...path,
+  steps: path.steps.map((step) => {
+    if ('resourceId' in step) {
+      const catalog = catalogs[step.type];
+      const resource = catalog.items.find((item) => item.id === step.resourceId);
+      if (!resource) throw new Error(`Unknown ${step.type} resource: ${step.resourceId}`);
+      return {
+        ...step,
+        title: resource.title,
+        author: 'author' in resource ? resource.author : undefined,
+        href: `${catalog.route}#${resource.id}`,
+      };
+    }
+    return step;
+  }),
+}));
+---
+<Base
+  title="Bitcoin Learning Paths"
+  metaTitle="Bitcoin Learning Paths — Guided Routes Through Money, Protocol, and Custody"
+  description="Guided Bitcoin study paths through money, protocol, self-custody, sovereignty, philosophy, and long-term economic context."
+  ogTitle="The Study Paths — BitcoinMind"
+  ogDescription="Guided routes through money, protocol, custody, sovereignty, and long-term Bitcoin study."
+  twitterTitle="The Study Paths — BitcoinMind"
+  twitterDescription="Guided routes through money, protocol, custody, sovereignty, and long-term Bitcoin study."
+  path="/paths"
+>
+  <div class="page">
+    <div class="c">
+      <div class="ph">
+        <div class="ph-eye">Paths</div>
+        <h1 class="ph-title">The Study <em>Paths</em></h1>
+        <p class="ph-desc">Guided routes through money, protocol, custody, sovereignty, and long-term Bitcoin study.</p>
+      </div>
+
+      <StudyLoop />
+      <StudyLedger />
+
+      <div class="rh-route-grid" aria-label="Learning path routes">
+        {paths.map((rh) => (
+          <a class="rh-route-card" href={`#${rh.id}`}>
+            <div class="rh-route-kicker">{routeName(rh.title)}</div>
+            <h2 class="rh-route-question">{routeQuestions[rh.id]}</h2>
+            <div class="rh-route-meta">
+              <Tag label={rh.difficulty} />
+              <span>{rh.totalTime}</span>
+              <span>{rh.steps.length} steps</span>
+            </div>
+            <span class="rh-route-cta">Start →</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="rh-list">
+        {paths.map((rh, idx) => (
+          <article class="rh-card" id={rh.id} data-study-path data-path-id={rh.id} data-path-title={rh.title}>
+            <div class="rh-header">
+              <div class="rh-index" aria-hidden="true">{String(idx + 1).padStart(2, '0')}</div>
+              <div class="rh-header-text">
+                <div class="rh-path-num">Path {idx + 1} of {paths.length}</div>
+                <h2 class="rh-title">{rh.title}</h2>
+                <p class="rh-subtitle">{rh.subtitle}</p>
+              </div>
+              <div class="rh-meta-col">
+                <Tag label={rh.difficulty} />
+                <span class="rh-time">{rh.totalTime}</span>
+              </div>
+            </div>
+
+            <p class="rh-desc">{rh.desc}</p>
+            <div class="rh-contract">
+              <div><strong>Prerequisite</strong><span>{rh.prerequisite}</span></div>
+              <div><strong>Outcome</strong><span>{rh.outcome}</span></div>
+            </div>
+
+            <div class="rh-steps">
+              {rh.steps.map((step, si) => (
+                <div class="rh-step">
+                  <a class="rh-step-main" href={step.href}>
+                    <span class="rh-step-num">{si + 1}</span>
+                    <span class="rh-step-body">
+                      <span class="rh-step-title">{step.title}</span>
+                      {step.author && <span class="rh-step-author">{step.author}</span>}
+                    </span>
+                    <span class="rh-step-right">
+                      <span class="rh-step-type">{typeIcon[step.type]}</span>
+                      {step.time && <span class="rh-step-time">{step.time}</span>}
+                    </span>
+                  </a>
+                  <button
+                    type="button"
+                    class="study-progress study-enhanced"
+                    data-study-progress
+                    data-path-id={rh.id}
+                    data-path-title={rh.title}
+                    data-step-index={si}
+                    data-step-count={rh.steps.length}
+                    aria-pressed="false"
+                  >Done</button>
+                </div>
+              ))}
+            </div>
+            <a class="rh-next" href={rh.nextHref}><span>After this path</span>{rh.nextLabel} →</a>
+          </article>
+        ))}
+      </div>
+      <StudyNext
+        previous={{ href: '/toolkit', label: 'Toolkit', description: 'Return to the instruments for verification and practice.' }}
+        next={{ href: '/objections', label: 'Objections', description: 'Pressure-test the thesis before treating conviction as knowledge.' }}
+      />
+    </div>
+  </div>
+
+  <script>
+    import '@/scripts/study-list';
+  </script>
+</Base>
+
+<style>
+  .rh-route-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--sp-4);
+    /* margin-top was previously calc(sp-3 * -1) = -12px, which pulled
+       the grid up and broke the unified 48px divider→content gap
+       provided by .ph margin-bottom. Zeroed so the gap is exactly
+       sp-9 (48px) on paths like every other page. */
+    margin: 0 0 var(--sp-9);
+  }
+
+  .rh-route-card {
+    display: flex;
+    min-height: 220px;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    background: var(--surf);
+    color: inherit;
+    text-decoration: none;
+    transition: border-color var(--ease-card), background var(--ease-card);
+  }
+
+  .rh-route-card:hover {
+    border-color: var(--bdr-2);
+    background: var(--surf-2);
+  }
+
+  .rh-route-kicker {
+    font-family: var(--font-body);
+    font-size: var(--fz-3xs);
+    font-weight: var(--fw-semi);
+    color: var(--gold);
+    letter-spacing: var(--ls-7);
+    text-transform: uppercase;
+  }
+
+  .rh-route-question {
+    font-family: var(--font-body);
+    font-size: var(--fz-lg);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-normal);
+    font-weight: var(--fw-semi);
+    flex: 1;
+  }
+
+  .rh-route-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    font-family: var(--font-body);
+    font-size: var(--fz-3xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-3);
+  }
+
+  .rh-route-cta {
+    font-family: var(--font-body);
+    font-size: var(--fz-xs);
+    font-weight: var(--fw-semi);
+    color: var(--gold);
+    letter-spacing: var(--ls-5);
+    text-transform: uppercase;
+    margin-top: auto;
+    align-self: flex-end;
+    padding-top: var(--sp-3);
+    border-top: 1px solid var(--bdr);
+    width: 100%;
+    text-align: right;
+  }
+
+  .rh-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-9);
+  }
+
+  .rh-card {
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    padding: var(--sp-7);
+    background: var(--surf);
+    transition: border-color var(--ease-card);
+  }
+  .rh-card:hover {
+    border-color: var(--bdr-2);
+  }
+
+  .rh-header {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-5);
+  }
+
+  .rh-index {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: var(--fz-sm);
+    color: var(--gold-hi);
+    letter-spacing: var(--ls-5);
+    background: var(--bg-deep);
+  }
+
+  .rh-header-text {
+    min-width: 0;
+  }
+
+  .rh-path-num {
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-9);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-2);
+  }
+
+  .rh-title {
+    font-family: var(--font-body);
+    font-size: var(--fz-2xl);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-snug);
+    line-height: var(--lh-snug);
+    margin-bottom: var(--sp-1);
+  }
+
+  .rh-subtitle {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    font-style: italic;
+    color: var(--tx-2);
+  }
+
+  .rh-meta-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--sp-2);
+    flex-shrink: 0;
+  }
+
+  .rh-time {
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-3);
+  }
+
+  .rh-desc {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    line-height: var(--lh-relaxed);
+    color: var(--tx-2);
+    max-width: 768px;
+    margin-bottom: var(--sp-6);
+  }
+
+  .rh-contract {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-4);
+    margin-bottom: var(--sp-6);
+  }
+  .rh-contract > div { padding: var(--sp-4); border: 1px solid var(--bdr); background: var(--bg-deep); }
+  .rh-contract strong { display: block; margin-bottom: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
+  .rh-contract span { display: block; font-size: var(--fz-sm); line-height: var(--lh-relaxed); color: var(--tx-2); }
+
+  .rh-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--bdr);
+  }
+
+  .rh-step {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--sp-3);
+    border-bottom: 1px solid var(--bdr);
+    transition: background var(--ease-fast);
+  }
+  .rh-step:hover {
+    background: var(--surf-2);
+  }
+  .rh-step-main {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--sp-4);
+    min-width: 0;
+    padding: var(--sp-4) var(--sp-3);
+  }
+
+  .rh-step-num {
+    font-family: var(--font-mono);
+    font-size: var(--fz-3xs);
+    color: var(--gold);
+    letter-spacing: var(--ls-5);
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius-sm);
+    text-align: center;
+  }
+
+  .rh-step-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .rh-step-title {
+    font-family: var(--font-body);
+    font-size: var(--fz-md);
+    font-weight: var(--fw-semi);
+    letter-spacing: var(--ls-normal);
+    color: var(--tx);
+  }
+
+  .rh-step-author {
+    font-family: var(--font-body);
+    font-size: var(--fz-3xs);
+    color: var(--tx-3);
+    letter-spacing: var(--ls-3);
+  }
+
+  .rh-step-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--sp-2);
+    flex-wrap: wrap;
+  }
+
+  .rh-step-type,
+  .rh-step-time {
+    font-family: var(--font-body);
+    font-size: var(--fz-3xs);
+    letter-spacing: var(--ls-5);
+    text-transform: uppercase;
+    border: 1px solid var(--bdr);
+    border-radius: var(--radius-sm);
+    padding: 3px var(--sp-2);
+  }
+
+  .rh-step-type {
+    color: var(--tx-3);
+  }
+
+  .rh-step-time {
+    color: var(--gold);
+  }
+  .study-progress { margin-right: var(--sp-3); padding: var(--sp-2); border: 1px solid var(--bdr); border-radius: var(--radius); font-size: var(--fz-3xs); color: var(--tx-3); }
+  .study-progress[aria-pressed='true'] { color: var(--gold-hi); border-color: var(--border-accent); background: var(--accent-hover); }
+  .rh-next { display: flex; justify-content: flex-end; gap: var(--sp-2); margin-top: var(--sp-5); font-size: var(--fz-sm); color: var(--gold-hi); }
+  .rh-next span { color: var(--tx-3); }
+
+  @media (max-width: 1024px) {
+    .rh-route-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .rh-header {
+      grid-template-columns: 48px minmax(0, 1fr);
+    }
+    .rh-index { width: 48px; height: 48px; }
+    .rh-meta-col {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      grid-column: 2;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .rh-card {
+      padding: var(--sp-6) var(--sp-4);
+    }
+    .rh-header {
+      grid-template-columns: 1fr;
+      gap: var(--sp-3);
+    }
+    .rh-index {
+      width: auto;
+      height: auto;
+      place-items: start;
+      border: 0;
+      background: transparent;
+    }
+    .rh-meta-col {
+      grid-column: 1;
+    }
+    .rh-step {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .rh-step-main { grid-template-columns: 28px minmax(0, 1fr); gap: var(--sp-2); }
+    .rh-step-right {
+      grid-column: 2;
+      justify-content: flex-start;
+    }
+    .rh-contract { grid-template-columns: 1fr; }
+    .rh-next { flex-direction: column; }
+  }
+</style>

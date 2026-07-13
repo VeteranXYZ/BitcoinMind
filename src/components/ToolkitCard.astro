@@ -1,31 +1,65 @@
 ---
 import Tag from './Tag.astro';
 import type { ToolkitItem } from '@/data/types';
+import { formatReviewedAt, studyStageFor } from '@/lib/study';
 interface Props {
   item: ToolkitItem;
   preview?: boolean;
 }
 const { item, preview = false } = Astro.props;
+const toolkitCategories = (tool: ToolkitItem) => {
+  const categories = new Set<string>();
+  const title = tool.title.toLowerCase();
+  const tags = tool.tags.join(' ').toLowerCase();
+
+  if (tool.pathStage === 'Observation') categories.add('Observe');
+  if (tool.pathStage === 'Verification') categories.add('Verify');
+  if (tool.pathStage === 'Payments') categories.add('Payments');
+  if (tool.group === 'Research and Context' || tool.pathStage === 'Research') categories.add('Research');
+  if (tags.includes('reference') || tool.layer === 'Reference') categories.add('Reference');
+  if (tags.includes('wallet') || ['sparrow', 'bluewallet', 'electrum'].some((name) => title.includes(name))) categories.add('Wallet');
+  if (tags.includes('multisig') || title.includes('nunchuk')) categories.add('Multisig');
+  if (
+    tags.includes('hardware') ||
+    tags.includes('signing') ||
+    tags.includes('cold storage') ||
+    tags.includes('air-gapped') ||
+    ['trezor', 'coldcard', 'seedsigner', 'jade', 'bitbox'].some((name) => title.includes(name))
+  ) categories.add('Hardware');
+
+  return Array.from(categories).slice(0, 4);
+};
+const visibleCategories = toolkitCategories(item);
+const stage = studyStageFor(item.pathStage);
 ---
-<a class="card" href={item.link} target="_blank" rel="noopener noreferrer">
+<article class="card" id={item.id}>
+  <div class="card-stage">Stage {stage.number} · {stage.label}</div>
   <div class="card-layer">{item.layer}</div>
   <div class="card-role">{item.learningRole}</div>
   <div class="card-title">{item.title}</div>
   <div class="card-desc card-desc--top">{item.shortDescription}</div>
   <div class="card-tags">
-    {item.tags.map((t) => <Tag label={t} />)}
-    <Tag label={item.difficulty} />
-    <Tag label={item.cost} />
+    {visibleCategories.map((t) => <Tag label={t} />)}
   </div>
   {!preview && (
-    <div class="card-review">
-      <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
-      <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
-      <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
-    </div>
+    <details class="card-details">
+      <summary>Details</summary>
+      <div class="card-review">
+        <div class="card-ri"><strong>Why it belongs</strong>{item.whyItBelongs}</div>
+        <div class="card-ri"><strong>Best for</strong>{item.bestFor}</div>
+        <div class="card-ri"><strong>Path position</strong>{item.learningPathPosition}</div>
+        <div class="card-review-meta">
+          Reviewed {formatReviewedAt(item.reviewedAt)}{item.timeSensitive ? ' · Time-sensitive' : ''} ·
+          <a href={item.link} target="_blank" rel="noopener noreferrer">{item.sourceLabel}</a>
+        </div>
+      </div>
+    </details>
   )}
   <div class="card-ft">
-    <span class="card-meta">{item.cost}</span>
-    <span class="card-cta">Visit →</span>
+    <span class="card-meta">{item.difficulty} · {item.cost}</span>
+    <span class="card-actions">
+      {!preview && <button type="button" class="study-save study-enhanced" data-study-save data-study-id={`toolkit:${item.id}`} data-study-title={item.title} data-study-href={`/toolkit#${item.id}`} data-study-kind="Toolkit" aria-pressed="false">Save</button>}
+      <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Visit →</a>
+    </span>
   </div>
-</a>
+</article>
