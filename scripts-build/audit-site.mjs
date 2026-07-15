@@ -6,6 +6,7 @@ const DIST = join(ROOT, "dist");
 const EXPECTED_PUBLIC_ROUTES = 16;
 const failures = [];
 const warnings = [];
+const configuredGa4Id = process.env.PUBLIC_GA4_MEASUREMENT_ID?.trim() ?? '';
 
 const fail = (message) => failures.push(message);
 const warn = (message) => warnings.push(message);
@@ -35,6 +36,7 @@ for (const route of [...sitemapRoutes, "/404"]) {
 
 const pageTitles = new Map();
 const pageDescriptions = new Map();
+const pageCanonicals = new Map();
 
 for (const [route, html] of pages) {
   const h1s = html.match(/<h1(?:\s|>)/g) ?? [];
@@ -47,6 +49,25 @@ for (const [route, html] of pages) {
   if (!/<meta\s+property="og:image"\s+content="https:\/\/[^"]+"/.test(html)) fail(`${route}: missing absolute og:image`);
   if (!/<meta\s+name="twitter:card"\s+content="summary_large_image"/.test(html)) fail(`${route}: missing large-image Twitter card`);
   if (!/<script[^>]+type="application\/ld\+json"/.test(html)) fail(`${route}: missing structured data`);
+
+  const canonicalUrl = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"/)?.[1];
+  const openGraphUrl = html.match(/<meta\s+property="og:url"\s+content="([^"]+)"/)?.[1];
+  if (canonicalUrl && openGraphUrl && canonicalUrl !== openGraphUrl) fail(`${route}: canonical and og:url differ`);
+  if (route !== '/404' && canonicalUrl) {
+    const expectedCanonical = route === '/' ? 'https://bitcoinmind.com' : `https://bitcoinmind.com${route}`;
+    if (canonicalUrl !== expectedCanonical) fail(`${route}: canonical is ${canonicalUrl}, expected ${expectedCanonical}`);
+    const prior = pageCanonicals.get(canonicalUrl);
+    if (prior) fail(`${route}: duplicate canonical also used by ${prior}`);
+    pageCanonicals.set(canonicalUrl, route);
+  }
+
+  for (const block of html.matchAll(/<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) {
+    try {
+      JSON.parse(block[1]);
+    } catch {
+      fail(`${route}: invalid JSON-LD`);
+    }
+  }
 
   const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
   const description = html.match(/<meta\s+name="description"\s+content="([^"]+)"/)?.[1];
@@ -64,6 +85,14 @@ for (const [route, html] of pages) {
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
   const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
   if (duplicateIds.length) fail(`${route}: duplicate ids ${duplicateIds.join(", ")}`);
+}
+
+if (configuredGa4Id) {
+  if (!/^G-[A-Z0-9]+$/i.test(configuredGa4Id)) fail('analytics: invalid PUBLIC_GA4_MEASUREMENT_ID');
+  for (const [route, html] of pages) {
+    if (!html.includes(configuredGa4Id.toUpperCase())) fail(`${route}: GA4 Measurement ID is missing`);
+    if (!html.includes('bitcoinmind_analytics_consent')) fail(`${route}: consent-first GA4 bootstrap is missing`);
+  }
 }
 
 const sitemapLastmods = [...sitemap.matchAll(/<lastmod>(.*?)<\/lastmod>/g)].map((match) => match[1]);

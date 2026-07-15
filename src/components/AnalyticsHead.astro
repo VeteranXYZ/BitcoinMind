@@ -1,0 +1,84 @@
+---
+const configuredId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID?.trim() ?? '';
+
+if (configuredId && !/^G-[A-Z0-9]+$/i.test(configuredId)) {
+  throw new Error('PUBLIC_GA4_MEASUREMENT_ID must be a GA4 web stream ID such as G-XXXXXXXXXX.');
+}
+
+const measurementId = configuredId.toUpperCase();
+---
+{measurementId && (
+  <script is:inline define:vars={{ measurementId }}>
+    (function () {
+      var storageKey = 'bitcoinmind_analytics_consent';
+      var savedConsent = null;
+
+      try {
+        var stored = localStorage.getItem(storageKey);
+        if (stored === 'granted' || stored === 'denied') savedConsent = stored;
+      } catch (_) {
+        // Storage can be unavailable in hardened browser contexts. Consent remains session-only.
+      }
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+
+      window.gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+      });
+      window.gtag('set', 'ads_data_redaction', true);
+
+      var analytics = window.BitcoinMindAnalytics = {
+        consent: savedConsent,
+        loaded: false,
+        load: function () {
+          if (analytics.loaded || analytics.consent !== 'granted') return;
+          analytics.loaded = true;
+
+          var tag = document.createElement('script');
+          tag.async = true;
+          tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
+          document.head.appendChild(tag);
+
+          window.gtag('js', new Date());
+          window.gtag('config', measurementId, {
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false,
+          });
+        },
+        setConsent: function (nextConsent) {
+          if (nextConsent !== 'granted' && nextConsent !== 'denied') return;
+          analytics.consent = nextConsent;
+
+          try {
+            localStorage.setItem(storageKey, nextConsent);
+          } catch (_) {
+            // The in-memory choice still applies for the current page.
+          }
+
+          window.gtag('consent', 'update', {
+            analytics_storage: nextConsent,
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+          });
+
+          if (nextConsent === 'granted') analytics.load();
+          document.dispatchEvent(new CustomEvent('bitcoinmind:analytics-consent', { detail: nextConsent }));
+        },
+        track: function (eventName, parameters) {
+          if (analytics.consent !== 'granted') return;
+          window.gtag('event', eventName, parameters || {});
+        },
+      };
+
+      if (savedConsent === 'granted') {
+        window.gtag('consent', 'update', { analytics_storage: 'granted' });
+        analytics.load();
+      }
+    })();
+  </script>
+)}

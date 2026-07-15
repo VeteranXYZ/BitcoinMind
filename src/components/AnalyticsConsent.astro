@@ -1,0 +1,104 @@
+---
+const configuredId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID?.trim() ?? '';
+const analyticsEnabled = /^G-[A-Z0-9]+$/i.test(configuredId);
+---
+{analyticsEnabled && (
+  <aside class="analytics-consent" data-analytics-consent hidden aria-labelledby="analytics-consent-title">
+    <div>
+      <strong id="analytics-consent-title">Optional analytics</strong>
+      <p>BitcoinMind uses GA4 to understand page use and outbound resource clicks. Analytics loads only if you allow it; advertising features remain disabled.</p>
+    </div>
+    <div class="analytics-consent-actions">
+      <button type="button" data-analytics-decline>Decline</button>
+      <button class="analytics-consent-allow" type="button" data-analytics-allow>Allow analytics</button>
+    </div>
+  </aside>
+)}
+
+{analyticsEnabled && (
+  <script is:inline>
+    (function () {
+      var panel = document.querySelector('[data-analytics-consent]');
+      if (!panel) return;
+
+      function hidePanel() {
+        panel.hidden = true;
+      }
+
+      function showPanel() {
+        panel.hidden = false;
+      }
+
+      panel.querySelector('[data-analytics-allow]').addEventListener('click', function () {
+        window.BitcoinMindAnalytics && window.BitcoinMindAnalytics.setConsent('granted');
+        hidePanel();
+      });
+
+      panel.querySelector('[data-analytics-decline]').addEventListener('click', function () {
+        window.BitcoinMindAnalytics && window.BitcoinMindAnalytics.setConsent('denied');
+        hidePanel();
+      });
+
+      document.querySelectorAll('[data-analytics-preferences]').forEach(function (button) {
+        button.addEventListener('click', showPanel);
+      });
+
+      if (!window.BitcoinMindAnalytics || window.BitcoinMindAnalytics.consent === null) showPanel();
+    })();
+  </script>
+)}
+
+<style>
+  .analytics-consent {
+    position: fixed;
+    right: var(--sp-4);
+    bottom: var(--sp-4);
+    z-index: 10000;
+    display: grid;
+    width: min(440px, calc(100vw - (2 * var(--sp-4))));
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+  }
+
+  .analytics-consent[hidden] { display: none; }
+  .analytics-consent strong { color: var(--text-heading); }
+  .analytics-consent p {
+    margin: var(--sp-2) 0 0;
+    color: var(--text-secondary);
+    font-size: var(--fz-xs);
+    line-height: var(--lh-relaxed);
+  }
+
+  .analytics-consent-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--sp-2);
+  }
+
+  .analytics-consent button {
+    min-height: 40px;
+    padding: 0 var(--sp-4);
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--text-body);
+    font: 500 var(--fz-xs) var(--font-body);
+    cursor: pointer;
+  }
+
+  .analytics-consent button:hover { border-color: var(--border-accent); }
+  .analytics-consent .analytics-consent-allow {
+    border-color: var(--border-accent);
+    color: var(--accent-bright);
+  }
+
+  @media (max-width: 560px) {
+    .analytics-consent {
+      right: var(--sp-3);
+      bottom: var(--sp-3);
+      width: calc(100vw - (2 * var(--sp-3)));
+    }
+  }
+</style>

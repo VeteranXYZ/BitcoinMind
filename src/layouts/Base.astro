@@ -1,6 +1,8 @@
 ---
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
+import AnalyticsHead from '@/components/AnalyticsHead.astro';
+import AnalyticsConsent from '@/components/AnalyticsConsent.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
 
 // Critical fonts preloaded in <head> below. The first paint uses the same
@@ -102,6 +104,7 @@ const ldArray = [pageLd, ...(breadcrumbLd ? [breadcrumbLd] : []), ...suppliedLd]
   <link rel="canonical" href={url} />
   <link rel="sitemap" href="/sitemap.xml" />
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <AnalyticsHead />
   <script is:inline>document.documentElement.classList.add('js');</script>
 
   <link rel="preload" href={literata700Normal} as="font" type="font/woff2" crossorigin="anonymous" />
@@ -159,6 +162,7 @@ const ldArray = [pageLd, ...(breadcrumbLd ? [breadcrumbLd] : []), ...suppliedLd]
   </main>
 
   {showFooter && <Footer />}
+  <AnalyticsConsent />
 
   <script>
     import '@/scripts/reading-progress';
@@ -208,8 +212,15 @@ const ldArray = [pageLd, ...(breadcrumbLd ? [breadcrumbLd] : []), ...suppliedLd]
       window.BitcoinMindFilterClick = function (button) {
         var scope = button && button.closest('[data-filter-scope]');
         if (!scope) return;
-        scope.setAttribute('data-active-filter', button.getAttribute('data-filter') || 'all');
+        var selectedFilter = button.getAttribute('data-filter') || 'all';
+        scope.setAttribute('data-active-filter', selectedFilter);
         update(scope);
+        if (window.BitcoinMindAnalytics) {
+          window.BitcoinMindAnalytics.track('select_content', {
+            content_type: 'resource_filter',
+            item_id: location.pathname + ':' + selectedFilter.toLowerCase(),
+          });
+        }
       };
 
       window.BitcoinMindFilterInput = function (input) {

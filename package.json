@@ -29,7 +29,8 @@
     "@astrojs/check": "^0.9.9",
     "@playwright/test": "^1.61.1",
     "@types/node": "^22.20.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.111.0"
   },
   "overrides": {
     "yaml-language-server": "1.23.0"

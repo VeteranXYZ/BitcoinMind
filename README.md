@@ -239,6 +239,18 @@ Preview the production build:
 npm run preview
 ```
 
+### Google Analytics 4
+
+GA4 is wired into every page through the shared layout and is disabled unless a valid web-stream Measurement ID is supplied at build time:
+
+```bash
+cp .env.example .env
+# Set PUBLIC_GA4_MEASUREMENT_ID=G-XXXXXXXXXX in .env
+npm run build
+```
+
+Visitors are asked before the Google tag is loaded. Analytics storage is denied by default, advertising storage and personalization remain disabled, and consent can be changed from the footer. With Enhanced Measurement enabled in the GA4 web stream, page views, scroll depth, outbound resource clicks, and file downloads are collected without additional page code. Resource-filter selections are sent as the recommended `select_content` event; free-form search terms are not sent.
+
 ## Working With AI Agents
 
 This repository includes two guidance files for AI-assisted maintenance:
