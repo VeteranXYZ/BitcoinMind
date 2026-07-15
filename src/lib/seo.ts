@@ -7,6 +7,7 @@ export interface PageSeo {
 export const SITE = {
   name: 'BitcoinMind',
   url: 'https://bitcoinmind.com',
+  ga4MeasurementId: import.meta.env.PUBLIC_GA4_MEASUREMENT_ID?.trim() || 'G-EW3470R00V',
   tagline: 'A curated, first-principles guide to Bitcoin: money, protocol, verification, self-custody, history, and the strongest objections.',
   author: 'Hiei',
   contactEmail: 'hiei1988@gmail.com',

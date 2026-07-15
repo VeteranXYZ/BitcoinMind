@@ -38,7 +38,7 @@ const footerGroups: { label: string; items: FooterItem[] }[] = [
     ],
   },
 ];
-const analyticsEnabled = /^G-[A-Z0-9]+$/i.test(import.meta.env.PUBLIC_GA4_MEASUREMENT_ID?.trim() ?? '');
+const analyticsEnabled = /^G-[A-Z0-9]+$/i.test(SITE.ga4MeasurementId);
 ---
 <footer>
   <div class="ft-in">

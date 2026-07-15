@@ -6,7 +6,6 @@ const DIST = join(ROOT, "dist");
 const EXPECTED_PUBLIC_ROUTES = 16;
 const failures = [];
 const warnings = [];
-const configuredGa4Id = process.env.PUBLIC_GA4_MEASUREMENT_ID?.trim() ?? '';
 
 const fail = (message) => failures.push(message);
 const warn = (message) => warnings.push(message);
@@ -87,13 +86,14 @@ for (const [route, html] of pages) {
   if (duplicateIds.length) fail(`${route}: duplicate ids ${duplicateIds.join(", ")}`);
 }
 
-if (configuredGa4Id) {
-  if (!/^G-[A-Z0-9]+$/i.test(configuredGa4Id)) fail('analytics: invalid PUBLIC_GA4_MEASUREMENT_ID');
-  for (const [route, html] of pages) {
-    if (!html.includes(configuredGa4Id.toUpperCase())) fail(`${route}: GA4 Measurement ID is missing`);
-    if (!html.includes('bitcoinmind_analytics_consent')) fail(`${route}: consent-first GA4 bootstrap is missing`);
-  }
+const builtGa4Ids = new Set();
+for (const [route, html] of pages) {
+  const ga4Id = html.match(/(?:const|var) measurementId\s*=\s*["'](G-[A-Z0-9]+)["']/i)?.[1]?.toUpperCase();
+  if (!ga4Id) fail(`${route}: GA4 Measurement ID is missing`);
+  else builtGa4Ids.add(ga4Id);
+  if (!html.includes('bitcoinmind_analytics_consent')) fail(`${route}: consent-first GA4 bootstrap is missing`);
 }
+if (builtGa4Ids.size > 1) fail(`analytics: multiple GA4 Measurement IDs found: ${[...builtGa4Ids].join(', ')}`);
 
 const sitemapLastmods = [...sitemap.matchAll(/<lastmod>(.*?)<\/lastmod>/g)].map((match) => match[1]);
 if (sitemapLastmods.length !== sitemapRoutes.length) fail('sitemap: every URL must have a lastmod value');

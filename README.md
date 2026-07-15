@@ -241,11 +241,11 @@ npm run preview
 
 ### Google Analytics 4
 
-GA4 is wired into every page through the shared layout and is disabled unless a valid web-stream Measurement ID is supplied at build time:
+GA4 is wired into every page through the shared layout. The production web-stream Measurement ID is part of the public site configuration; forks or alternate environments can override it at build time:
 
 ```bash
 cp .env.example .env
-# Set PUBLIC_GA4_MEASUREMENT_ID=G-XXXXXXXXXX in .env
+# Change PUBLIC_GA4_MEASUREMENT_ID in .env when using another GA4 property.
 npm run build
 ```
 

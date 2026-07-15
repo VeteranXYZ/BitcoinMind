@@ -1,5 +1,7 @@
 ---
-const configuredId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID?.trim() ?? '';
+import { SITE } from '@/lib/seo';
+
+const configuredId = SITE.ga4MeasurementId;
 const analyticsEnabled = /^G-[A-Z0-9]+$/i.test(configuredId);
 ---
 {analyticsEnabled && (
