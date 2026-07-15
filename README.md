@@ -249,7 +249,7 @@ cp .env.example .env
 npm run build
 ```
 
-Visitors are asked before the Google tag is loaded. Analytics storage is denied by default, advertising storage and personalization remain disabled, and consent can be changed from the footer. With Enhanced Measurement enabled in the GA4 web stream, page views, scroll depth, outbound resource clicks, and file downloads are collected without additional page code. Resource-filter selections are sent as the recommended `select_content` event; free-form search terms are not sent.
+The Google tag loads immediately on every page. Analytics storage is granted by default, while advertising storage, advertising user data, advertising personalization, and Google Signals remain disabled. With Enhanced Measurement enabled in the GA4 web stream, page views, scroll depth, outbound resource clicks, and file downloads are collected without additional page code. Resource-filter selections are sent as the recommended `select_content` event; free-form search terms are not sent.
 
 ## Working With AI Agents
 

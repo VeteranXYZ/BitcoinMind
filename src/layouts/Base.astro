@@ -2,7 +2,6 @@
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import AnalyticsHead from '@/components/AnalyticsHead.astro';
-import AnalyticsConsent from '@/components/AnalyticsConsent.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
 
 // Critical fonts preloaded in <head> below. The first paint uses the same
@@ -162,7 +161,6 @@ const ldArray = [pageLd, ...(breadcrumbLd ? [breadcrumbLd] : []), ...suppliedLd]
   </main>
 
   {showFooter && <Footer />}
-  <AnalyticsConsent />
 
   <script>
     import '@/scripts/reading-progress';

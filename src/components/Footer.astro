@@ -38,7 +38,6 @@ const footerGroups: { label: string; items: FooterItem[] }[] = [
     ],
   },
 ];
-const analyticsEnabled = /^G-[A-Z0-9]+$/i.test(SITE.ga4MeasurementId);
 ---
 <footer>
   <div class="ft-in">
@@ -58,22 +57,6 @@ const analyticsEnabled = /^G-[A-Z0-9]+$/i.test(SITE.ga4MeasurementId);
       <span class="ft-copy">
         <span class="ft-seg">Since {SITE.foundedYear} · Built with AI · Powered by Hiei</span>
       </span>
-      {analyticsEnabled && <button class="ft-analytics" type="button" data-analytics-preferences>Analytics preferences</button>}
     </div>
   </div>
 </footer>
-
-<style>
-  .ft-analytics {
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--text-muted);
-    font: inherit;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-    cursor: pointer;
-  }
-
-  .ft-analytics:hover { color: var(--text-body); }
-</style>

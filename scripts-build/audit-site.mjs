@@ -91,7 +91,11 @@ for (const [route, html] of pages) {
   const ga4Id = html.match(/(?:const|var) measurementId\s*=\s*["'](G-[A-Z0-9]+)["']/i)?.[1]?.toUpperCase();
   if (!ga4Id) fail(`${route}: GA4 Measurement ID is missing`);
   else builtGa4Ids.add(ga4Id);
-  if (!html.includes('bitcoinmind_analytics_consent')) fail(`${route}: consent-first GA4 bootstrap is missing`);
+  if (!html.includes("analytics_storage: 'granted'")) fail(`${route}: forced GA4 analytics storage is missing`);
+  if (!html.includes("ad_storage: 'denied'")) fail(`${route}: denied GA4 advertising storage is missing`);
+  if (html.includes('bitcoinmind_analytics_consent') || html.includes('data-analytics-consent')) {
+    fail(`${route}: obsolete GA4 consent UI is still present`);
+  }
 }
 if (builtGa4Ids.size > 1) fail(`analytics: multiple GA4 Measurement IDs found: ${[...builtGa4Ids].join(', ')}`);
 
