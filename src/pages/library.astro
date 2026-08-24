@@ -3,7 +3,9 @@ import Base from '@/layouts/Base.astro';
 import LibraryCard from '@/components/LibraryCard.astro';
 import StudyLoop from '@/components/StudyLoop.astro';
 import StudyNext from '@/components/StudyNext.astro';
+import ResourceFilter from '@/components/ResourceFilter.astro';
 import { LIBRARY } from '@/data/library';
+import { filterValues, searchValues } from '@/lib/resources';
 
 const TAGS = ['All', 'Money', 'Economics', 'Foundations', 'Technical', 'Protocol', 'History', 'Macro Companion', 'Sovereignty', 'Beginner', 'Intermediate', 'Advanced'];
 const LAYER_DESC: Record<number, string> = {
@@ -20,7 +22,6 @@ const CURATED_ORDER = [
 const orderIndex = new Map(CURATED_ORDER.map((id, index) => [id, index]));
 const ORDERED_LIBRARY = [...LIBRARY].sort((a, b) =>
   (orderIndex.get(a.id) ?? Number.MAX_SAFE_INTEGER) - (orderIndex.get(b.id) ?? Number.MAX_SAFE_INTEGER));
-const filterValues = (values: string[]) => values.map((value) => value.toLowerCase()).join('|');
 const libraryValues = (item: typeof LIBRARY[number]) => filterValues([
   ...item.tags,
   item.difficulty,
@@ -28,13 +29,13 @@ const libraryValues = (item: typeof LIBRARY[number]) => filterValues([
   item.pathStage,
   item.layerLabel.replace(/^Layer \d+ - /, ''),
 ]);
-const librarySearch = (item: typeof LIBRARY[number]) => [
+const librarySearch = (item: typeof LIBRARY[number]) => searchValues([
   item.title,
   item.author,
   item.learningRole,
   item.shortDescription,
   ...item.tags,
-].join(' ').toLowerCase();
+]);
 
 const itemList = {
   '@context': 'https://schema.org',
@@ -59,8 +60,6 @@ const itemList = {
   description="A selective Bitcoin book list ordered from money and history through protocol mechanics, governance, self-custody, human rights, and institutional change."
   ogTitle="The Bitcoin Library — BitcoinMind"
   ogDescription="A short shelf ordered by learning role: orientation, mechanism, governance, and consequences."
-  twitterTitle="The Bitcoin Library — BitcoinMind"
-  twitterDescription="A short shelf ordered by learning role: orientation, mechanism, governance, and consequences."
   path="/library"
   jsonLd={itemList}
 >
@@ -72,29 +71,7 @@ const itemList = {
         <p class="ph-desc">A short shelf ordered by learning role: orientation, mechanism, governance, and consequences. Inclusion is not agreement.</p>
       </div>
       <StudyLoop compact />
-      <div data-filter-scope data-active-filter="all">
-        <div class="fb" role="group" aria-label="Filter library">
-          <span class="fb-lbl">Filter:</span>
-          <input
-            class="srch"
-            type="search"
-            aria-label="Search library"
-            placeholder="Search..."
-            data-filter-search
-            oninput="window.BitcoinMindFilterInput && window.BitcoinMindFilterInput(this)"
-          />
-          {TAGS.map((t) => (
-            <button
-              type="button"
-              class={`fb-btn ${t === 'All' ? 'on' : ''}`}
-              aria-pressed={t === 'All' ? 'true' : 'false'}
-              data-filter-button
-              data-filter={t.toLowerCase()}
-              onclick="window.BitcoinMindFilterClick && window.BitcoinMindFilterClick(this)"
-            >{t}</button>
-          ))}
-        </div>
-
+      <ResourceFilter filters={TAGS} searchLabel="library" emptyMessage="No library items match this filter.">
         {[1, 2, 3].map((layer) => {
           const layerItems = ORDERED_LIBRARY.filter((item) => item.layer === layer);
           return (
@@ -115,8 +92,7 @@ const itemList = {
           );
         })}
 
-        <p class="no-res" data-filter-empty hidden>No library items match this filter.</p>
-      </div>
+      </ResourceFilter>
       <StudyNext
         previous={{ href: '/primer', label: 'Primer', description: 'Return to the five-step entrance.' }}
         next={{ href: '/texts', label: 'Foundational Texts', description: 'Move from curated interpretation to primary and foundational writing.' }}

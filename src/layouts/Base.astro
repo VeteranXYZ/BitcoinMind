@@ -3,6 +3,7 @@ import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import AnalyticsHead from '@/components/AnalyticsHead.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
+import { LEGACY_HASH_REDIRECTS } from '@/lib/routes';
 
 // Critical fonts preloaded in <head> below. The first paint uses the same
 // three-family system as the rest of the site: display, body/UI, and mono.
@@ -89,16 +90,17 @@ const breadcrumbLd = path === '/' ? null : {
   ],
 };
 const ldArray = [pageLd, ...(breadcrumbLd ? [breadcrumbLd] : []), ...suppliedLd];
+const legacyHashRedirects = LEGACY_HASH_REDIRECTS;
 ---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style={`--bg: ${SITE.themeColor}`}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{pageTitle}</title>
   <meta name="description" content={description} />
   <meta name="author" content={SITE.author} />
-  <meta name="theme-color" content="#0d0b08" />
+  <meta name="theme-color" content={SITE.themeColor} />
   <meta name="robots" content={robotsDirective} />
   <link rel="canonical" href={url} />
   <link rel="sitemap" href="/sitemap.xml" />
@@ -128,17 +130,10 @@ const ldArray = [pageLd, ...(breadcrumbLd ? [breadcrumbLd] : []), ...suppliedLd]
   <meta name="twitter:description" content={tweetDescription} />
   <meta name="twitter:image" content={SITE.socialImage} />
 
-  <script is:inline>
+  <script is:inline define:vars={{ legacyHashRedirects }}>
     // Hash redirect — must run before render so old SPA hash links land on the right page.
     (function () {
-      var map = {
-        '#home': '/', '#primer': '/primer', '#library': '/library', '#texts': '/texts',
-        '#toolkit': '/toolkit', '#frames': '/frames', '#frames-1': '/frames/1',
-        '#frames-2': '/frames/2', '#about': '/about', '#notes': '/notes',
-        '#timeline': '/timeline', '#glossary': '/glossary', '#objections': '/objections',
-        '#paths': '/paths', '#stack': '/stack', '#questions': '/questions'
-      };
-      var t = map[location.hash];
+      var t = legacyHashRedirects[location.hash];
       if (t && location.pathname === '/') {
         location.replace(t + location.search);
       }

@@ -60,7 +60,6 @@ const primerLd = {
   description="Understand Bitcoin from first principles in five steps: money, the whitepaper, protocol mechanics, verification, self-custody, and serious objections."
   ogTitle="The First-Principles Bitcoin Primer"
   ogDescription="Five questions for understanding Bitcoin without price hype, tribal slogans, or borrowed conviction."
-  twitterTitle="The First-Principles Bitcoin Primer"
   twitterDescription="Money, protocol, verification, custody, and objections—in the order that makes Bitcoin intelligible."
   path="/primer"
   jsonLd={primerLd}
@@ -121,6 +120,8 @@ const primerLd = {
 </Base>
 
 <style>
+  @import '../styles/breakpoints.css';
+
   /* ── Closing block ──
      A proper editorial close: eyebrow label establishes the end of
      the primer, display headline carries the weight, one paragraph
@@ -197,7 +198,7 @@ const primerLd = {
     text-transform: uppercase;
   }
 
-  @media (max-width: 640px) {
+  @media (--viewport-sm) {
     .steps-closing-lead {
       font-size: var(--fz-3xl);
     }

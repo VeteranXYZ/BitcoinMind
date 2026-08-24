@@ -88,6 +88,8 @@ const glossaryLd = {
 </Base>
 
 <style>
+  @import '../styles/breakpoints.css';
+
   .gl-section {
     margin-bottom: var(--sp-11);
   }
@@ -218,7 +220,7 @@ const glossaryLd = {
     margin-top: auto;
   }
 
-  @media (max-width: 640px) {
+  @media (--viewport-sm) {
     .gl-index { grid-template-columns: 1fr; }
     .gl-section { margin-bottom: var(--sp-9); }
     .gl-section:last-of-type { margin-bottom: 0; }

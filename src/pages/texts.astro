@@ -3,18 +3,11 @@ import Base from '@/layouts/Base.astro';
 import TextCard from '@/components/TextCard.astro';
 import StudyLoop from '@/components/StudyLoop.astro';
 import StudyNext from '@/components/StudyNext.astro';
+import ResourceFilter from '@/components/ResourceFilter.astro';
 import { TEXTS } from '@/data/texts';
+import { filterValues, searchValues, textTypeLabel } from '@/lib/resources';
 
 const TAGS = ['All', 'Primary', 'Security', 'Verification', 'Adoption', 'Sovereignty', 'Reference', 'Beginner', 'Intermediate', 'Advanced'];
-const getTypeLabel = (item: typeof TEXTS[number]) => {
-  const title = item.title.toLowerCase();
-  if (title.includes('whitepaper')) return 'Paper';
-  if (title.includes('documentation') || title.includes('running a full node')) return 'Documentation';
-  if (title.includes('gradually, then suddenly')) return 'Series';
-  if (title.includes('questions') || title.includes('faq')) return 'Q&A';
-  if (item.tags.includes('Reference')) return 'Reference';
-  return 'Essay';
-};
 const textFilterAliases = (item: typeof TEXTS[number]) => {
   const aliases: string[] = [];
   if (item.group === 'Primary Texts' || item.tags.includes('Whitepaper')) aliases.push('Primary');
@@ -22,23 +15,22 @@ const textFilterAliases = (item: typeof TEXTS[number]) => {
   if (item.tags.some((tag) => ['Adoption', 'Institutional', 'History'].includes(tag))) aliases.push('Adoption');
   return aliases;
 };
-const filterValues = (values: string[]) => values.map((value) => value.toLowerCase()).join('|');
 const textValues = (item: typeof TEXTS[number]) => filterValues([
   ...item.tags,
   ...textFilterAliases(item),
   item.difficulty,
   item.group,
   item.pathStage,
-  getTypeLabel(item),
+  textTypeLabel(item),
 ]);
-const textSearch = (item: typeof TEXTS[number]) => [
+const textSearch = (item: typeof TEXTS[number]) => searchValues([
   item.title,
   item.author,
   item.learningRole,
   item.shortDescription,
   item.layer,
   ...item.tags,
-].join(' ').toLowerCase();
+]);
 const authorType = (author: string) =>
   author === 'Bitcoin.org' || author.toLowerCase().includes('contributors') ? 'Organization' : 'Person';
 
@@ -66,8 +58,6 @@ const itemList = {
   description="Foundational Bitcoin texts: the whitepaper, monetary history, protocol security, full-node verification, adoption arguments, and critical references."
   ogTitle="Foundational Bitcoin Texts — BitcoinMind"
   ogDescription="Primary sources and influential arguments, selected for study rather than treated as doctrine."
-  twitterTitle="Foundational Bitcoin Texts — BitcoinMind"
-  twitterDescription="Primary sources and influential arguments, selected for study rather than treated as doctrine."
   path="/texts"
   jsonLd={itemList}
 >
@@ -79,29 +69,7 @@ const itemList = {
         <p class="ph-desc">Primary sources and influential arguments, selected for study rather than treated as doctrine.</p>
       </div>
       <StudyLoop compact />
-      <div data-filter-scope data-active-filter="all">
-        <div class="fb" role="group" aria-label="Filter texts">
-          <span class="fb-lbl">Filter:</span>
-          <input
-            class="srch"
-            type="search"
-            aria-label="Search texts"
-            placeholder="Search..."
-            data-filter-search
-            oninput="window.BitcoinMindFilterInput && window.BitcoinMindFilterInput(this)"
-          />
-          {TAGS.map((t) => (
-            <button
-              type="button"
-              class={`fb-btn ${t === 'All' ? 'on' : ''}`}
-              aria-pressed={t === 'All' ? 'true' : 'false'}
-              data-filter-button
-              data-filter={t.toLowerCase()}
-              onclick="window.BitcoinMindFilterClick && window.BitcoinMindFilterClick(this)"
-            >{t}</button>
-          ))}
-        </div>
-        <p class="no-res" data-filter-empty hidden>No texts match this filter.</p>
+      <ResourceFilter filters={TAGS} searchLabel="texts" emptyMessage="No texts match this filter.">
         <div class="grid-auto">
           {TEXTS.map((item) => (
             <div data-filter-card data-filter-values={textValues(item)} data-filter-search={textSearch(item)}>
@@ -109,7 +77,7 @@ const itemList = {
             </div>
           ))}
         </div>
-      </div>
+      </ResourceFilter>
       <StudyNext
         previous={{ href: '/library', label: 'Library', description: 'Return to the curated books and learning roles.' }}
         next={{ href: '/toolkit', label: 'Toolkit', description: 'Move from reading claims to observing and verifying systems.' }}

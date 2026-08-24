@@ -1,8 +1,9 @@
 import { defineConfig } from 'astro/config';
 import preact from '@astrojs/preact';
+import siteData from './src/data/site.json' with { type: 'json' };
 
 export default defineConfig({
-  site: 'https://bitcoinmind.com',
+  site: siteData.url,
   trailingSlash: 'never',
   build: {
     format: 'file',
@@ -12,6 +13,12 @@ export default defineConfig({
     preact({ compat: true }),
   ],
   vite: {
+    css: {
+      transformer: 'lightningcss',
+      lightningcss: {
+        drafts: { customMedia: true },
+      },
+    },
     build: {
       cssCodeSplit: true,
     },

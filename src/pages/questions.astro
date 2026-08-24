@@ -73,6 +73,8 @@ const questionsLd = {
 </Base>
 
 <style>
+  @import '../styles/breakpoints.css';
+
   .qa-list {
     width: 100%;
   }
@@ -237,7 +239,7 @@ const questionsLd = {
     overflow-wrap: anywhere;
   }
 
-  @media (max-width: 900px) {
+  @media (--viewport-layout) {
     .qa-submit {
       grid-template-columns: 1fr;
       row-gap: var(--sp-3);
@@ -247,7 +249,7 @@ const questionsLd = {
     }
   }
 
-  @media (max-width: 640px) {
+  @media (--viewport-sm) {
     .qa-q-row {
       grid-template-columns: 1fr;
       gap: var(--sp-2);

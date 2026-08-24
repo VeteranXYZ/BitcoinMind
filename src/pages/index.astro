@@ -73,7 +73,7 @@ const websiteLd = {
   <div class="page">
     <div class="c">
       <div class="ph">
-        <div class="ph-eye">bitcoinmind.com</div>
+        <div class="ph-eye">{SITE.host}</div>
         <h1 class="ph-title">Bitcoin<em>Mind</em></h1>
         <p class="ph-desc">A curated map for studying Bitcoin as money, protocol, custody practice, and a contested institution.</p>
       </div>
@@ -196,6 +196,8 @@ const websiteLd = {
 </Base>
 
 <style>
+  @import '../styles/breakpoints.css';
+
   :global(.page .ph) {
     border-bottom: none;
     margin-bottom: 0;
@@ -229,7 +231,7 @@ const websiteLd = {
   .home-primer:hover {
     border-color: var(--bdr-2);
     background: var(--surf-2);
-    box-shadow: 0 16px 44px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-card-soft);
   }
 
   .home-primer-label {
@@ -408,7 +410,7 @@ const websiteLd = {
     padding-bottom: 0;
   }
 
-  @media (max-width: 1000px) {
+  @media (--viewport-home) {
     .home-question-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -420,7 +422,7 @@ const websiteLd = {
      96px rhythm (sp-9 + sp-9) every other pair of sections uses.
      Removed so all section-to-section spacing is uniform. */
 
-  @media (max-width: 640px) {
+  @media (--viewport-sm) {
     .home-question-grid {
       grid-template-columns: 1fr;
     }

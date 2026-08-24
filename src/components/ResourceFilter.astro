@@ -1,0 +1,32 @@
+---
+interface Props {
+  filters: string[];
+  searchLabel: string;
+  emptyMessage: string;
+}
+
+const { filters, searchLabel, emptyMessage } = Astro.props;
+---
+<div data-filter-scope data-active-filter="all">
+  <div class="fb" role="group" aria-label={`Filter ${searchLabel}`}>
+    <span class="fb-lbl">Filter:</span>
+    <input
+      class="srch"
+      type="search"
+      aria-label={`Search ${searchLabel}`}
+      placeholder="Search..."
+      data-filter-search
+    />
+    {filters.map((filter) => (
+      <button
+        type="button"
+        class={`fb-btn ${filter === 'All' ? 'on' : ''}`}
+        aria-pressed={filter === 'All' ? 'true' : 'false'}
+        data-filter-button
+        data-filter={filter.toLowerCase()}
+      >{filter}</button>
+    ))}
+  </div>
+  <slot />
+  <p class="no-res" data-filter-empty hidden>{emptyMessage}</p>
+</div>

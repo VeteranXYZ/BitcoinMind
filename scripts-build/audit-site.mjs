@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 const ROOT = new URL("../", import.meta.url).pathname;
 const DIST = join(ROOT, "dist");
-const EXPECTED_PUBLIC_ROUTES = 16;
+const siteConfig = JSON.parse(await readFile(join(ROOT, "src/data/site.json"), "utf8"));
 const failures = [];
 const warnings = [];
 
@@ -12,15 +12,45 @@ const warn = (message) => warnings.push(message);
 const read = (path) => readFile(path, "utf8");
 const routeFile = (route) => route === "/" ? join(DIST, "index.html") : join(DIST, `${route.slice(1)}.html`);
 const routeFromUrl = (value) => {
-  const url = new URL(value, "https://bitcoinmind.org");
+  const url = new URL(value, siteConfig.url);
   return `${url.pathname.replace(/\/$/, "") || "/"}${url.hash}`;
 };
 
+async function builtHtmlRoutes(directory, prefix = '') {
+  const routes = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    if (entry.name.startsWith('_')) continue;
+    const relative = `${prefix}${entry.name}`;
+    if (entry.isDirectory()) {
+      routes.push(...await builtHtmlRoutes(join(directory, entry.name), `${relative}/`));
+    } else if (entry.name.endsWith('.html')) {
+      const stem = relative.slice(0, -'.html'.length);
+      routes.push(stem === 'index' ? '/' : `/${stem}`);
+    }
+  }
+  return routes;
+}
+
 const sitemap = await read(join(DIST, "sitemap.xml"));
 const sitemapRoutes = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => routeFromUrl(match[1]));
+const routeRegistry = JSON.parse(await read(join(ROOT, "src/data/routes.json")));
+const expectedPublicRoutes = routeRegistry.map((route) => route.path);
+const generatedPublicRoutes = (await builtHtmlRoutes(DIST)).filter((route) => route !== '/404');
 
-if (sitemapRoutes.length !== EXPECTED_PUBLIC_ROUTES) {
-  fail(`sitemap: expected ${EXPECTED_PUBLIC_ROUTES} public routes, found ${sitemapRoutes.length}`);
+if (sitemapRoutes.length !== expectedPublicRoutes.length) {
+  fail(`sitemap: expected ${expectedPublicRoutes.length} registered public routes, found ${sitemapRoutes.length}`);
+}
+for (const route of expectedPublicRoutes) {
+  if (!sitemapRoutes.includes(route)) fail(`sitemap: registered route ${route} is missing`);
+}
+for (const route of sitemapRoutes) {
+  if (!expectedPublicRoutes.includes(route)) fail(`sitemap: unregistered route ${route} is present`);
+}
+for (const route of generatedPublicRoutes) {
+  if (!expectedPublicRoutes.includes(route)) fail(`routes: generated page ${route} is not registered`);
+}
+for (const route of expectedPublicRoutes) {
+  if (!generatedPublicRoutes.includes(route)) fail(`routes: registered page ${route} was not generated`);
 }
 if (sitemapRoutes.includes("/404")) fail("sitemap: /404 must not be indexed");
 
@@ -53,7 +83,7 @@ for (const [route, html] of pages) {
   const openGraphUrl = html.match(/<meta\s+property="og:url"\s+content="([^"]+)"/)?.[1];
   if (canonicalUrl && openGraphUrl && canonicalUrl !== openGraphUrl) fail(`${route}: canonical and og:url differ`);
   if (route !== '/404' && canonicalUrl) {
-    const expectedCanonical = route === '/' ? 'https://bitcoinmind.com' : `https://bitcoinmind.com${route}`;
+    const expectedCanonical = route === '/' ? siteConfig.url : `${siteConfig.url}${route}`;
     if (canonicalUrl !== expectedCanonical) fail(`${route}: canonical is ${canonicalUrl}, expected ${expectedCanonical}`);
     const prior = pageCanonicals.get(canonicalUrl);
     if (prior) fail(`${route}: duplicate canonical also used by ${prior}`);

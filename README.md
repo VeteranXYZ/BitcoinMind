@@ -99,7 +99,10 @@ README.md                    Project overview and development notes
 DESIGN.md                    Design system and editorial constraints
 AGENTS.md                    Rules for AI coding agents and scripted edits
 src/styles/design-system.css Design tokens
+src/styles/breakpoints.css   Build-time responsive breakpoints
 src/styles/styles.css        Global component/page styling
+src/data/routes.json         Public-route and navigation registry
+src/data/site.json           Site identity and origin configuration
 src/layouts/Base.astro       Shared page shell and metadata
 src/components/Nav.astro     Main navigation
 src/lib/seo.ts               SEO metadata helpers
@@ -285,7 +288,7 @@ The production build outputs static assets from Astro. Cloudflare deployment is 
 - Keep the visual system restrained and editorial.
 - Prefer small coherent changes over broad rewrites.
 - Update `DESIGN.md` and `AGENTS.md` when project rules or architecture change.
-- Treat `package.json`, `astro.config.mjs`, `wrangler.jsonc`, and `src/pages/**` as the source of truth for current stack and routes.
+- Treat `package.json`, `astro.config.mjs`, and `wrangler.jsonc` as the source of truth for the stack and deployment; use `src/pages/**` with `src/data/routes.json` for current route implementations and registration.
 
 ## Current Limitations
 

@@ -1,6 +1,7 @@
 ---
 import Tag from './Tag.astro';
 import type { TextItem } from '@/data/types';
+import { textTypeLabel } from '@/lib/resources';
 import { studyStageFor } from '@/lib/study';
 interface Props {
   item: TextItem;
@@ -8,18 +9,7 @@ interface Props {
 }
 const { item, preview = false } = Astro.props;
 const visibleTags = item.tags.slice(0, 3);
-const getTypeLabel = (text: TextItem) => {
-  const title = text.title.toLowerCase();
-  if (text.resourceType === 'paper' || text.tags.includes('Whitepaper')) return 'Paper';
-  if (text.resourceType === 'series') return 'Series';
-  if (text.resourceType === 'reference') return 'Reference';
-  if (title.includes('documentation') || title.includes('running a full node')) return 'Documentation';
-  if (title.includes('gradually, then suddenly')) return 'Series';
-  if (title.includes('questions') || title.includes('faq')) return 'Q&A';
-  if (text.tags.includes('Reference')) return 'Reference';
-  return 'Essay';
-};
-const typeLabel = getTypeLabel(item);
+const typeLabel = textTypeLabel(item);
 const stage = studyStageFor(item.pathStage);
 ---
 <article class="card" id={item.id}>

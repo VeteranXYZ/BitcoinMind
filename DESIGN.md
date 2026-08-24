@@ -171,17 +171,20 @@ Keep ownership language factual and quiet. Do not turn it into a pitch, campaign
 
 ## 4. Color System
 
-The token source of truth is:
+The visual token sources of truth are:
 
 ```text
 src/styles/design-system.css
+src/styles/breakpoints.css
+src/data/site.json           root background / browser theme color
 ```
 
 Use CSS custom properties. Do not hardcode new hex, RGB, HSL, or OKLCH values inside components unless the task is explicitly to update the design system.
 
 ### Current Color Roles
 
-Core roles include:
+Core roles include. `--bg` is injected by `Base.astro` from the shared site
+configuration so the page and browser chrome cannot drift:
 
 ```css
 --bg              main warm dark background
@@ -405,9 +408,12 @@ Use these files as source-of-truth references:
 package.json                    dependencies and commands
 astro.config.mjs                Astro integrations and build behavior
 wrangler.jsonc                  Cloudflare Workers static assets config
-src/pages/**                    public routes
-src/components/Nav.astro        navigation structure
+src/pages/**                    route implementations
+src/components/Nav.astro        navigation rendering
+src/data/routes.json            public route/navigation registry
+src/data/site.json              site identity, origin, dates, and theme color
 src/styles/design-system.css    tokens
+src/styles/breakpoints.css      responsive breakpoints
 src/styles/styles.css           global styling
 src/data/**                     curated datasets
 src/lib/seo.ts                  metadata helpers

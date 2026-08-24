@@ -79,6 +79,8 @@ const objectionsLd = {
 </Base>
 
 <style>
+  @import '../styles/breakpoints.css';
+
   /* Bottom gap to the footer is governed by .page's padding-bottom, not
      here. Only the per-item spacing remains, and the last item's margin
      is zeroed so it doesn't stack. */
@@ -208,7 +210,7 @@ const objectionsLd = {
     color: var(--gold-hi);
   }
 
-  @media (max-width: 1024px) {
+  @media (--viewport-lg) {
     .db-grid {
       grid-template-columns: 1fr 1fr;
     }
@@ -217,7 +219,7 @@ const objectionsLd = {
     }
   }
 
-  @media (max-width: 640px) {
+  @media (--viewport-sm) {
     .db-grid {
       grid-template-columns: 1fr;
     }

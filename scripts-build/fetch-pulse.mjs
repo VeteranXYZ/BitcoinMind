@@ -5,9 +5,9 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const target = join(__dirname, '..', 'public', 'pulse.json');
 const blockHeightSource = join(__dirname, '..', 'src', 'lib', 'block-height.ts');
+const MEMPOOL_API = 'https://mempool.space/api';
 
 const FALLBACK = {
-  height: 948364,
   hashRate: null,
   mempoolCount: null,
   nodeCount: null,
@@ -19,15 +19,15 @@ function readFallbackHeight() {
   try {
     const body = readFileSync(blockHeightSource, 'utf8');
     const match = body.match(/FALLBACK_BLOCK_HEIGHT\s*=\s*(\d+)/);
-    return match ? parseInt(match[1], 10) : FALLBACK.height;
+    return match ? parseInt(match[1], 10) : 0;
   } catch {
-    return FALLBACK.height;
+    return 0;
   }
 }
 
 function readExisting() {
   try {
-    return { ...FALLBACK, ...JSON.parse(readFileSync(target, 'utf8')) };
+    return { ...FALLBACK, height: readFallbackHeight(), ...JSON.parse(readFileSync(target, 'utf8')) };
   } catch {
     return { ...FALLBACK, height: readFallbackHeight() };
   }
@@ -62,7 +62,7 @@ const next = { ...existing, source: 'cached' };
 let refreshedFields = 0;
 
 try {
-  const text = (await fetchText('https://mempool.space/api/blocks/tip/height')).trim();
+  const text = (await fetchText(`${MEMPOOL_API}/blocks/tip/height`)).trim();
   const height = parseInt(text, 10);
   if (Number.isFinite(height) && height > 0) {
     next.height = Math.max(height, next.height ?? 0);
@@ -73,7 +73,7 @@ try {
 }
 
 try {
-  const data = await fetchJson('https://mempool.space/api/v1/mining/hashrate/1m');
+  const data = await fetchJson(`${MEMPOOL_API}/v1/mining/hashrate/1m`);
   if (Number.isFinite(data?.currentHashrate) && data.currentHashrate > 0) {
     next.hashRate = data.currentHashrate;
     refreshedFields += 1;
@@ -83,7 +83,7 @@ try {
 }
 
 try {
-  const data = await fetchJson('https://mempool.space/api/mempool');
+  const data = await fetchJson(`${MEMPOOL_API}/mempool`);
   if (Number.isFinite(data?.count) && data.count >= 0) {
     next.mempoolCount = data.count;
     refreshedFields += 1;
@@ -108,4 +108,12 @@ if (refreshedFields > 0) {
 }
 
 writeFileSync(target, JSON.stringify(next, null, 2) + '\n', 'utf8');
+if (Number.isFinite(next.height) && next.height > 0) {
+  const body = `// Fallback block height used when the generated pulse snapshot has no valid
+// height. Refresh manually with \`npm run refresh-data\` when you want this
+// constant pulled forward — it is NOT auto-updated on each build.
+export const FALLBACK_BLOCK_HEIGHT = ${Math.max(next.height, readFallbackHeight())};
+`;
+  writeFileSync(blockHeightSource, body, 'utf8');
+}
 console.log(`[fetch-pulse] wrote ${target}`);

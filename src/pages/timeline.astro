@@ -73,6 +73,8 @@ const timelineLd = {
 </Base>
 
 <style>
+  @import '../styles/breakpoints.css';
+
   .tl-wrap {
     max-width: 1100px;
   }
@@ -244,7 +246,7 @@ const timelineLd = {
     color: var(--gold-hi);
   }
 
-  @media (max-width: 640px) {
+  @media (--viewport-sm) {
     .tl-node {
       grid-template-columns: 24px 1fr;
       gap: var(--sp-3);

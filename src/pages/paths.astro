@@ -66,8 +66,6 @@ const pathsLd = {
   description="Five guided Bitcoin learning paths through money, protocol mechanics, independent verification, self-custody, objections, and sovereignty."
   ogTitle="The Study Paths — BitcoinMind"
   ogDescription="Five question-led routes through money, protocol, verification, custody, and reflection."
-  twitterTitle="The Study Paths — BitcoinMind"
-  twitterDescription="Five question-led routes through money, protocol, verification, custody, and reflection."
   path="/paths"
   jsonLd={pathsLd}
 >
@@ -149,6 +147,8 @@ const pathsLd = {
 </Base>
 
 <style>
+  @import '../styles/breakpoints.css';
+
   .rh-route-grid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -311,7 +311,7 @@ const pathsLd = {
     font-size: var(--fz-md);
     line-height: var(--lh-relaxed);
     color: var(--tx-2);
-    max-width: 768px;
+    max-width: var(--max-prose);
     margin-bottom: var(--sp-6);
   }
 
@@ -420,7 +420,7 @@ const pathsLd = {
   .rh-next { display: flex; justify-content: flex-end; gap: var(--sp-2); margin-top: var(--sp-5); font-size: var(--fz-sm); color: var(--gold-hi); }
   .rh-next span { color: var(--tx-3); }
 
-  @media (max-width: 1024px) {
+  @media (--viewport-lg) {
     .rh-route-grid {
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
@@ -436,7 +436,7 @@ const pathsLd = {
     }
   }
 
-  @media (max-width: 640px) {
+  @media (--viewport-sm) {
     .rh-card {
       padding: var(--sp-6) var(--sp-4);
     }

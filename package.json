@@ -15,7 +15,7 @@
     "validate": "npm run check && npm run build && npm run audit && npm run test:browser",
     "preview": "astro preview",
     "astro": "astro",
-    "refresh-data": "node scripts-build/fetch-block-height.mjs && node scripts-build/fetch-pulse.mjs && node scripts-build/generate-grain.mjs"
+    "refresh-data": "node scripts-build/fetch-pulse.mjs && node scripts-build/generate-grain.mjs"
   },
   "dependencies": {
     "@astrojs/preact": "^6.0.1",

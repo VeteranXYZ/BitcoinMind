@@ -15,6 +15,8 @@ const { previous, next } = Astro.props;
 </nav>
 
 <style>
+  @import '../styles/breakpoints.css';
+
   .study-next {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -29,5 +31,5 @@ const { previous, next } = Astro.props;
   .study-next-link span { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
   .study-next-link strong { font-size: var(--fz-md); color: var(--tx); }
   .study-next-link small { font-size: var(--fz-xs); color: var(--tx-3); line-height: var(--lh-card); }
-  @media (max-width: 640px) { .study-next { grid-template-columns: 1fr; } .study-next-link--next { text-align: left; } }
+  @media (--viewport-sm) { .study-next { grid-template-columns: 1fr; } .study-next-link--next { text-align: left; } }
 </style>
