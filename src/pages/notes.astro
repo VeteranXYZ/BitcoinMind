@@ -8,13 +8,16 @@ const articleLd = {
   headline: 'What I wrote about Bitcoin in April 2011, when it was $1',
   author: { '@type': 'Person', name: SITE.author },
   datePublished: '2011-04-01',
-  dateModified: '2024-01-01',
+  dateModified: SITE.lastModified,
+  image: SITE.socialImage,
+  publisher: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
   mainEntityOfPage: canonical('/notes'),
 };
 ---
 <Base
   title="Notes"
-  description="Original writing from Hiei's archive and the present — including what was written about Bitcoin in April 2011, when it was one dollar."
+  metaTitle="Bitcoin in 2011 at $1 — An Early Skeptic’s Original Note"
+  description="An English translation of Hiei’s April 2011 Bitcoin note at roughly $1, preserving early questions about supply, cryptography, speculation, and exchange value."
   path="/notes"
   ogType="article"
   jsonLd={articleLd}
@@ -24,7 +27,7 @@ const articleLd = {
       <div class="ph">
         <div class="ph-eye">Notes</div>
         <h1 class="ph-title">Field <em>Notes</em></h1>
-        <p class="ph-desc">Original writing from the archive and the present. Notes I am willing to leave on the record.</p>
+        <p class="ph-desc">A primary record of meeting Bitcoin early, asking some durable questions, and reaching the wrong practical conclusion.</p>
       </div>
 
       <div class="note-wrap">

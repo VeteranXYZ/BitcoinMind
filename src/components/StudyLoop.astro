@@ -27,6 +27,8 @@ const { active, compact = false } = Astro.props;
 </section>
 
 <style>
+  @import '../styles/breakpoints.css';
+
   .study-loop {
     margin-bottom: var(--sp-9);
     padding: var(--sp-5);
@@ -69,10 +71,10 @@ const { active, compact = false } = Astro.props;
   .study-loop-copy strong { font-size: var(--fz-sm); color: var(--tx); }
   .study-loop-copy span { font-size: var(--fz-3xs); line-height: var(--lh-card); color: var(--tx-3); }
   .study-loop--compact .study-loop-head { margin-bottom: var(--sp-3); }
-  @media (max-width: 900px) {
+  @media (--viewport-layout) {
     .study-loop-list { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
   }
-  @media (max-width: 640px) {
+  @media (--viewport-sm) {
     .study-loop-head { flex-direction: column; gap: var(--sp-2); }
     .study-loop-list { grid-template-columns: 1fr; }
   }

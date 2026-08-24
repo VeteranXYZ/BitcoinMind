@@ -1,5 +1,6 @@
 ---
 import { SITE } from '@/lib/seo';
+import { GROUPED_NAV_ROUTES } from '@/lib/routes';
 
 type FooterItem = {
   href: string;
@@ -7,36 +8,17 @@ type FooterItem = {
   external?: boolean;
 };
 
-const footerGroups: { label: string; items: FooterItem[] }[] = [
-  {
-    label: 'Core',
-    items: [
-      { href: '/primer', label: 'Primer' },
-      { href: '/library', label: 'Library' },
-      { href: '/texts', label: 'Texts' },
-      { href: '/toolkit', label: 'Toolkit' },
-      { href: '/paths', label: 'Paths' },
-    ],
-  },
-  {
-    label: 'Lens',
-    items: [
-      { href: '/frames', label: 'Frames' },
-      { href: '/timeline', label: 'Timeline' },
-      { href: '/glossary', label: 'Glossary' },
-      { href: '/objections', label: 'Objections' },
-    ],
-  },
-  {
-    label: 'Hiei',
-    items: [
-      { href: '/about', label: 'About' },
-      { href: '/notes', label: 'Notes' },
-      { href: '/questions', label: 'Questions' },
-      { href: '/stack', label: 'Stack' },
-    ],
-  },
-];
+const footerGroups: { label: string; items: FooterItem[] }[] = GROUPED_NAV_ROUTES.map((group) => ({
+  label: group.label,
+  items: [
+    ...group.routes
+      .filter((route) => route.path !== '/')
+      .map((route) => ({ href: route.path, label: route.label })),
+    ...(group.label === 'Hiei' ? [
+      { href: '/about#privacy', label: 'Privacy' },
+    ] : []),
+  ],
+}));
 ---
 <footer>
   <div class="ft-in">
@@ -54,7 +36,7 @@ const footerGroups: { label: string; items: FooterItem[] }[] = [
     </div>
     <div class="ft-bottom">
       <span class="ft-copy">
-        <span class="ft-seg">Since {SITE.foundedYear} · Built with AI · Powered by Hiei</span>
+        <span class="ft-seg">Since {SITE.foundedYear} · Powered by Hiei</span>
       </span>
     </div>
   </div>

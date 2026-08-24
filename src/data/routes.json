@@ -1,0 +1,18 @@
+[
+  { "path": "/", "label": "Home", "section": "Core", "legacyHash": "#home", "navOrder": 0 },
+  { "path": "/primer", "label": "Primer", "section": "Core", "legacyHash": "#primer", "navArea": "primary", "navOrder": 1 },
+  { "path": "/library", "label": "Library", "section": "Core", "legacyHash": "#library", "navArea": "primary", "navOrder": 3 },
+  { "path": "/texts", "label": "Texts", "section": "Core", "legacyHash": "#texts", "navArea": "primary", "navOrder": 4 },
+  { "path": "/toolkit", "label": "Toolkit", "section": "Core", "legacyHash": "#toolkit", "navArea": "primary", "navOrder": 5 },
+  { "path": "/paths", "label": "Paths", "section": "Core", "legacyHash": "#paths", "navArea": "primary", "navOrder": 2 },
+  { "path": "/frames", "label": "Frames", "section": "Lens", "legacyHash": "#frames", "navArea": "explore", "navOrder": 1, "description": "Two lenses to read Bitcoin through." },
+  { "path": "/frames/1", "label": "A History of Hardness", "section": "Lens", "legacyHash": "#frames-1", "parentPath": "/frames" },
+  { "path": "/frames/2", "label": "After the Anchor", "section": "Lens", "legacyHash": "#frames-2", "parentPath": "/frames" },
+  { "path": "/timeline", "label": "Timeline", "section": "Lens", "legacyHash": "#timeline", "navArea": "explore", "navOrder": 2, "description": "Bitcoin history and personal milestones." },
+  { "path": "/glossary", "label": "Glossary", "section": "Lens", "legacyHash": "#glossary", "navArea": "explore", "navOrder": 3, "description": "Conceptual anchors, not dictionary entries." },
+  { "path": "/objections", "label": "Objections", "section": "Lens", "legacyHash": "#objections", "navArea": "explore", "navOrder": 4, "description": "Strong arguments answered carefully." },
+  { "path": "/notes", "label": "Notes", "section": "Hiei", "legacyHash": "#notes", "navArea": "explore", "navOrder": 1, "description": "Personal writing and archive notes." },
+  { "path": "/questions", "label": "Questions", "section": "Hiei", "legacyHash": "#questions", "navArea": "explore", "navOrder": 2, "description": "Reader questions and serious answers." },
+  { "path": "/stack", "label": "Stack", "section": "Hiei", "legacyHash": "#stack", "navArea": "explore", "navOrder": 3, "description": "How I think about holding Bitcoin." },
+  { "path": "/about", "label": "About", "section": "Hiei", "legacyHash": "#about", "navArea": "explore", "navOrder": 4, "description": "The story and curation principles." }
+]

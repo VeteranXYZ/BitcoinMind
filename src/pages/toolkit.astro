@@ -3,7 +3,9 @@ import Base from '@/layouts/Base.astro';
 import ToolkitCard from '@/components/ToolkitCard.astro';
 import StudyLoop from '@/components/StudyLoop.astro';
 import StudyNext from '@/components/StudyNext.astro';
+import ResourceFilter from '@/components/ResourceFilter.astro';
 import { TOOLKIT } from '@/data/toolkit';
+import { filterValues, searchValues } from '@/lib/resources';
 
 const FILTERS = ['All', 'Observation', 'Verification', 'Custody', 'Protocol', 'Research', 'Free', 'Beginner', 'Intermediate', 'Advanced'];
 const GROUPS = [
@@ -29,7 +31,6 @@ const toolkitAliases = (item: typeof TOOLKIT[number]) => {
   if (item.cost === 'Free') aliases.push('Free');
   return aliases;
 };
-const filterValues = (values: string[]) => values.map((value) => value.toLowerCase()).join('|');
 const toolkitValues = (item: typeof TOOLKIT[number]) => filterValues([
   ...item.tags,
   ...toolkitAliases(item),
@@ -39,14 +40,14 @@ const toolkitValues = (item: typeof TOOLKIT[number]) => filterValues([
   item.pathStage,
   item.layer,
 ]);
-const toolkitSearch = (item: typeof TOOLKIT[number]) => [
+const toolkitSearch = (item: typeof TOOLKIT[number]) => searchValues([
   item.title,
   item.learningRole,
   item.shortDescription,
   item.group,
   item.layer,
   ...item.tags,
-].join(' ').toLowerCase();
+]);
 
 const itemList = {
   '@context': 'https://schema.org',
@@ -56,9 +57,9 @@ const itemList = {
     '@type': 'ListItem',
     position: i + 1,
     item: {
-      '@type': 'SoftwareApplication',
+      '@type': 'Thing',
       name: item.title,
-      applicationCategory: item.layer,
+      category: item.layer,
       description: item.shortDescription,
       url: item.link,
     },
@@ -67,12 +68,10 @@ const itemList = {
 ---
 <Base
   title="Bitcoin Toolkit"
-  metaTitle="Bitcoin Toolkit — Tools for Verification, Custody, Payments, and Research"
-  description="A practical Bitcoin toolkit for observing the network, running a node, managing custody, receiving payments, and studying long-term data."
-  ogTitle="The Sovereignty Toolkit — BitcoinMind"
-  ogDescription="Practical instruments for observing, verifying, holding, receiving, and studying Bitcoin."
-  twitterTitle="The Sovereignty Toolkit — BitcoinMind"
-  twitterDescription="Practical instruments for observing, verifying, holding, receiving, and studying Bitcoin."
+  metaTitle="Bitcoin Tools — Nodes, Wallets, Custody, and Research"
+  description="A selective Bitcoin toolkit for observing blocks, running a node, managing UTXOs, comparing custody designs, accepting payments, and checking network data."
+  ogTitle="The Bitcoin Toolkit — BitcoinMind"
+  ogDescription="A small, reviewed set of instruments for observation, verification, custody, payments, and research."
   path="/toolkit"
   jsonLd={itemList}
 >
@@ -80,37 +79,15 @@ const itemList = {
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Toolkit</div>
-        <h1 class="ph-title">The Sovereignty <em>Toolkit</em></h1>
-        <p class="ph-desc">Practical instruments for observing, verifying, holding, receiving, and studying Bitcoin.</p>
+        <h1 class="ph-title">The Bitcoin <em>Toolkit</em></h1>
+        <p class="ph-desc">A small set of instruments for observation, verification, custody, and research. Inclusion is not a security guarantee.</p>
       </div>
       <StudyLoop active="practice" compact />
       <aside class="review-policy" aria-label="Toolkit review policy">
         <strong>Review policy</strong>
         <p>Tools change. Each entry shows when its official project or product source was last reviewed. Verify current releases, device support, and recovery guidance before using a tool with meaningful value.</p>
       </aside>
-      <div data-filter-scope data-active-filter="all">
-        <div class="fb" role="group" aria-label="Filter toolkit">
-          <span class="fb-lbl">Filter:</span>
-          <input
-            class="srch"
-            type="search"
-            aria-label="Search toolkit"
-            placeholder="Search..."
-            data-filter-search
-            oninput="window.BitcoinMindFilterInput && window.BitcoinMindFilterInput(this)"
-          />
-          {FILTERS.map((f) => (
-            <button
-              type="button"
-              class={`fb-btn ${f === 'All' ? 'on' : ''}`}
-              aria-pressed={f === 'All' ? 'true' : 'false'}
-              data-filter-button
-              data-filter={f.toLowerCase()}
-              onclick="window.BitcoinMindFilterClick && window.BitcoinMindFilterClick(this)"
-            >{f}</button>
-          ))}
-        </div>
-
+      <ResourceFilter filters={FILTERS} searchLabel="toolkit" emptyMessage="No toolkit items match this filter.">
         {GROUPS.map((group, index) => {
           const groupItems = TOOLKIT.filter((item) => item.group === group.name);
           return (
@@ -128,13 +105,11 @@ const itemList = {
           );
         })}
 
-        <p class="no-res" data-filter-empty hidden>No toolkit items match this filter.</p>
-      </div>
+      </ResourceFilter>
       <StudyNext
-        previous={{ href: '/texts', label: 'Canonical Texts', description: 'Return to the protocol and verification references.' }}
+        previous={{ href: '/texts', label: 'Foundational Texts', description: 'Return to the protocol and verification references.' }}
         next={{ href: '/paths', label: 'Study Paths', description: 'Put reading and instruments into a question-led sequence.' }}
       />
     </div>
   </div>
-  <script>import '@/scripts/study-list';</script>
 </Base>

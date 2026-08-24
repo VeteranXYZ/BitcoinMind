@@ -7,7 +7,8 @@
 :root {
 
   /* ── Base colors ────────────────────────────────────── */
-  --bg: #0d0b08;
+  /* --bg is injected from src/data/site.json by Base.astro so the browser
+     chrome color and page background share one source. */
   --surface: #14110d;
   --card: #19150f;
   --card-hover: #1e1912;
@@ -28,7 +29,10 @@
 
   --hover: rgba(242, 237, 227, 0.04);
   --accent-hover: rgba(200, 145, 58, 0.10);
+  --accent-soft: rgba(200, 145, 58, 0.06);
   --focus-ring: rgba(216, 162, 74, 0.45);
+  --overlay-backdrop: rgba(13, 11, 8, 0.58);
+  --overlay-panel: rgba(20, 17, 13, 0.96);
 
   /* Legacy aliases used throughout the existing CSS. */
   --bg-deep: var(--surface);
@@ -170,16 +174,26 @@
 
   /* ── Layout ─────────────────────────────────────────── */
   --max-w:     1200px;
+  --max-readable: 860px;
+  --max-prose: 768px;
+  --card-min: 320px;
+  --nav-height: 60px;
   --pad:       clamp(24px, 5.5vw, 88px);
   --page-x-mobile: var(--pad);
   --radius:    3px;
   --radius-sm: 2px;
   --radius-lg: 6px;
 
-  /* Standard breakpoints — all @media queries should reference one of these. */
-  --bp-sm: 640px;
-  --bp-md: 768px;
-  --bp-lg: 1024px;
+  /* Breakpoints use the definitions in breakpoints.css. Lightning CSS
+     resolves them to ordinary media queries during the build. */
+
+  /* ── Elevation ──────────────────────────────────────── */
+  --shadow-deep: 0 24px 60px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 16px 44px rgba(0, 0, 0, 0.18);
+  --shadow-card-soft: 0 16px 44px rgba(0, 0, 0, 0.12);
+  --shadow-control: 0 6px 28px rgba(0, 0, 0, 0.14);
+  --shadow-panel: 0 4px 22px rgba(0, 0, 0, 0.14);
+  --shadow-menu: 0 18px 60px rgba(0, 0, 0, 0.28);
 
   /* ── Transitions ────────────────────────────────────── */
   --ease-card: 0.22s ease;

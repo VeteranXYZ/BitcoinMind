@@ -204,7 +204,7 @@ export default function PulsePlus({ initialSnapshot }: Props) {
           <div class="pp-stat">
             <span class="pp-stat-lbl">Hash Rate</span>
             <span class="pp-stat-val">{formatHash(hashRate)}</span>
-            <span class="pp-stat-note">Energy protecting the network</span>
+          <span class="pp-stat-note">Estimated computation committed to mining</span>
           </div>
         )}
 

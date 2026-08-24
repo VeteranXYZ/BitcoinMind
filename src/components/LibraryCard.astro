@@ -33,7 +33,6 @@ const stage = studyStageFor(item.pathStage);
   <div class="card-ft">
     <span class="card-meta">{item.difficulty}</span>
     <span class="card-actions">
-      {!preview && <button type="button" class="study-save study-enhanced" data-study-save data-study-id={`library:${item.id}`} data-study-title={item.title} data-study-href={`/library#${item.id}`} data-study-kind="Library" aria-pressed="false">Save</button>}
       <a class="card-cta" href={item.link} target="_blank" rel="noopener noreferrer">Read →</a>
     </span>
   </div>

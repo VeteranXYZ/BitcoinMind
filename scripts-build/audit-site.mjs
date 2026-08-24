@@ -3,7 +3,7 @@ import { join } from "node:path";
 
 const ROOT = new URL("../", import.meta.url).pathname;
 const DIST = join(ROOT, "dist");
-const EXPECTED_PUBLIC_ROUTES = 16;
+const siteConfig = JSON.parse(await readFile(join(ROOT, "src/data/site.json"), "utf8"));
 const failures = [];
 const warnings = [];
 
@@ -12,15 +12,45 @@ const warn = (message) => warnings.push(message);
 const read = (path) => readFile(path, "utf8");
 const routeFile = (route) => route === "/" ? join(DIST, "index.html") : join(DIST, `${route.slice(1)}.html`);
 const routeFromUrl = (value) => {
-  const url = new URL(value, "https://bitcoinmind.org");
+  const url = new URL(value, siteConfig.url);
   return `${url.pathname.replace(/\/$/, "") || "/"}${url.hash}`;
 };
 
+async function builtHtmlRoutes(directory, prefix = '') {
+  const routes = [];
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    if (entry.name.startsWith('_')) continue;
+    const relative = `${prefix}${entry.name}`;
+    if (entry.isDirectory()) {
+      routes.push(...await builtHtmlRoutes(join(directory, entry.name), `${relative}/`));
+    } else if (entry.name.endsWith('.html')) {
+      const stem = relative.slice(0, -'.html'.length);
+      routes.push(stem === 'index' ? '/' : `/${stem}`);
+    }
+  }
+  return routes;
+}
+
 const sitemap = await read(join(DIST, "sitemap.xml"));
 const sitemapRoutes = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => routeFromUrl(match[1]));
+const routeRegistry = JSON.parse(await read(join(ROOT, "src/data/routes.json")));
+const expectedPublicRoutes = routeRegistry.map((route) => route.path);
+const generatedPublicRoutes = (await builtHtmlRoutes(DIST)).filter((route) => route !== '/404');
 
-if (sitemapRoutes.length !== EXPECTED_PUBLIC_ROUTES) {
-  fail(`sitemap: expected ${EXPECTED_PUBLIC_ROUTES} public routes, found ${sitemapRoutes.length}`);
+if (sitemapRoutes.length !== expectedPublicRoutes.length) {
+  fail(`sitemap: expected ${expectedPublicRoutes.length} registered public routes, found ${sitemapRoutes.length}`);
+}
+for (const route of expectedPublicRoutes) {
+  if (!sitemapRoutes.includes(route)) fail(`sitemap: registered route ${route} is missing`);
+}
+for (const route of sitemapRoutes) {
+  if (!expectedPublicRoutes.includes(route)) fail(`sitemap: unregistered route ${route} is present`);
+}
+for (const route of generatedPublicRoutes) {
+  if (!expectedPublicRoutes.includes(route)) fail(`routes: generated page ${route} is not registered`);
+}
+for (const route of expectedPublicRoutes) {
+  if (!generatedPublicRoutes.includes(route)) fail(`routes: registered page ${route} was not generated`);
 }
 if (sitemapRoutes.includes("/404")) fail("sitemap: /404 must not be indexed");
 
@@ -33,6 +63,10 @@ for (const route of [...sitemapRoutes, "/404"]) {
   }
 }
 
+const pageTitles = new Map();
+const pageDescriptions = new Map();
+const pageCanonicals = new Map();
+
 for (const [route, html] of pages) {
   const h1s = html.match(/<h1(?:\s|>)/g) ?? [];
   if (h1s.length !== 1) fail(`${route}: expected one h1, found ${h1s.length}`);
@@ -40,10 +74,67 @@ for (const [route, html] of pages) {
   if (!/<meta\s+name="description"\s+content="[^"]+"/.test(html)) fail(`${route}: missing meta description`);
   if (!/<link\s+rel="canonical"\s+href="[^"]+"/.test(html)) fail(`${route}: missing canonical URL`);
   if (!/<meta\s+property="og:url"\s+content="[^"]+"/.test(html)) fail(`${route}: missing og:url`);
+  if (!/<meta\s+name="robots"\s+content="[^"]+"/.test(html)) fail(`${route}: missing robots directive`);
+  if (!/<meta\s+property="og:image"\s+content="https:\/\/[^"]+"/.test(html)) fail(`${route}: missing absolute og:image`);
+  if (!/<meta\s+name="twitter:card"\s+content="summary_large_image"/.test(html)) fail(`${route}: missing large-image Twitter card`);
+  if (!/<script[^>]+type="application\/ld\+json"/.test(html)) fail(`${route}: missing structured data`);
+
+  const canonicalUrl = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"/)?.[1];
+  const openGraphUrl = html.match(/<meta\s+property="og:url"\s+content="([^"]+)"/)?.[1];
+  if (canonicalUrl && openGraphUrl && canonicalUrl !== openGraphUrl) fail(`${route}: canonical and og:url differ`);
+  if (route !== '/404' && canonicalUrl) {
+    const expectedCanonical = route === '/' ? siteConfig.url : `${siteConfig.url}${route}`;
+    if (canonicalUrl !== expectedCanonical) fail(`${route}: canonical is ${canonicalUrl}, expected ${expectedCanonical}`);
+    const prior = pageCanonicals.get(canonicalUrl);
+    if (prior) fail(`${route}: duplicate canonical also used by ${prior}`);
+    pageCanonicals.set(canonicalUrl, route);
+  }
+
+  for (const block of html.matchAll(/<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) {
+    try {
+      JSON.parse(block[1]);
+    } catch {
+      fail(`${route}: invalid JSON-LD`);
+    }
+  }
+
+  const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
+  const description = html.match(/<meta\s+name="description"\s+content="([^"]+)"/)?.[1];
+  if (title) {
+    const prior = pageTitles.get(title);
+    if (prior) fail(`${route}: duplicate title also used by ${prior}`);
+    pageTitles.set(title, route);
+  }
+  if (description) {
+    const prior = pageDescriptions.get(description);
+    if (prior) fail(`${route}: duplicate description also used by ${prior}`);
+    pageDescriptions.set(description, route);
+  }
 
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
   const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
   if (duplicateIds.length) fail(`${route}: duplicate ids ${duplicateIds.join(", ")}`);
+}
+
+const builtGa4Ids = new Set();
+for (const [route, html] of pages) {
+  const ga4Id = html.match(/(?:const|var) measurementId\s*=\s*["'](G-[A-Z0-9]+)["']/i)?.[1]?.toUpperCase();
+  if (!ga4Id) fail(`${route}: GA4 Measurement ID is missing`);
+  else builtGa4Ids.add(ga4Id);
+  if (!html.includes("analytics_storage: 'granted'")) fail(`${route}: granted GA4 analytics storage is missing`);
+  if (!html.includes("ad_storage: 'denied'")) fail(`${route}: denied GA4 advertising storage is missing`);
+  if (html.includes('bitcoinmind_analytics_consent') || html.includes('data-analytics-consent')) {
+    fail(`${route}: obsolete GA4 consent UI is still present`);
+  }
+}
+if (builtGa4Ids.size > 1) fail(`analytics: multiple GA4 Measurement IDs found: ${[...builtGa4Ids].join(', ')}`);
+
+const sitemapLastmods = [...sitemap.matchAll(/<lastmod>(.*?)<\/lastmod>/g)].map((match) => match[1]);
+if (sitemapLastmods.length !== sitemapRoutes.length) fail('sitemap: every URL must have a lastmod value');
+for (const value of sitemapLastmods) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(Date.parse(value))) {
+    fail(`sitemap: invalid lastmod ${value}`);
+  }
 }
 
 for (const [route, html] of pages) {
@@ -70,14 +161,9 @@ for (const [route, html] of pages) {
 }
 
 const contracts = [
-  ["/paths", /data-study-ledger/, "local study ledger"],
-  ["/paths", /data-study-progress/, "path progress controls"],
   ["/library", /data-filter-scope/, "library filters"],
-  ["/library", /data-study-save/, "library save controls"],
   ["/texts", /data-filter-scope/, "text filters"],
-  ["/texts", /data-study-save/, "text save controls"],
   ["/toolkit", /data-filter-scope/, "toolkit filters"],
-  ["/toolkit", /data-study-save/, "toolkit save controls"],
   ["/frames/2", /aria-labelledby="f2-chart-title f2-chart-desc"/, "accessible chart fallback"],
   ["/", /aria-modal="true"/, "welcome dialog semantics"],
 ];

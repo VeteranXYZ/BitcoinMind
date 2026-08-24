@@ -105,7 +105,21 @@ Use the shared study sequence when a surface benefits from orientation or contin
 Orient -> Understand -> Verify -> Practice -> Reflect
 ```
 
-The stages describe reader intent, not completion badges or a gamified funnel. Paths should state prerequisites, outcomes, and a meaningful next step. Resource cards may expose their stage and a quiet local save action, but reading must never depend on saved state.
+The stages describe reader intent, not completion badges or a gamified funnel. Paths should state prerequisites, outcomes, and a meaningful next step. The site is display-first: resource cards may expose their learning stage, but they should not accumulate account-shaped controls, saved state, progress tracking, or engagement mechanics.
+
+### Questions Before Conclusions
+
+Use the shared first-principles questions to keep the site coherent:
+
+```text
+What problem is being solved?
+How can the rules hold?
+Which claims can be verified?
+Which risks move to the user?
+What remains uncertain?
+```
+
+Separate protocol facts from historical interpretation, personal practice, political values, and forecasts. Do not turn a favorable thesis into a certainty. Where evidence supports only a conditional claim, state the condition.
 
 ## 3. Brand Rules
 
@@ -157,17 +171,20 @@ Keep ownership language factual and quiet. Do not turn it into a pitch, campaign
 
 ## 4. Color System
 
-The token source of truth is:
+The visual token sources of truth are:
 
 ```text
 src/styles/design-system.css
+src/styles/breakpoints.css
+src/data/site.json           root background / browser theme color
 ```
 
 Use CSS custom properties. Do not hardcode new hex, RGB, HSL, or OKLCH values inside components unless the task is explicitly to update the design system.
 
 ### Current Color Roles
 
-Core roles include:
+Core roles include. `--bg` is injected by `Base.astro` from the shared site
+configuration so the page and browser chrome cannot drift:
 
 ```css
 --bg              main warm dark background
@@ -366,8 +383,6 @@ Maintain:
 
 Interactive charts and controls should be understandable without relying only on color.
 
-Browser-local study controls must announce state changes, expose pressed state, remain keyboard usable, and degrade to the complete static reading experience when JavaScript or storage is unavailable. Local state must not be described as synced, private cloud storage, or an account.
-
 ## 10. AI-Assisted Work
 
 AI tools may be used to propose code, copy, refactors, and design alternatives, but changes must be checked against this document and the current codebase.
@@ -393,9 +408,12 @@ Use these files as source-of-truth references:
 package.json                    dependencies and commands
 astro.config.mjs                Astro integrations and build behavior
 wrangler.jsonc                  Cloudflare Workers static assets config
-src/pages/**                    public routes
-src/components/Nav.astro        navigation structure
+src/pages/**                    route implementations
+src/components/Nav.astro        navigation rendering
+src/data/routes.json            public route/navigation registry
+src/data/site.json              site identity, origin, dates, and theme color
 src/styles/design-system.css    tokens
+src/styles/breakpoints.css      responsive breakpoints
 src/styles/styles.css           global styling
 src/data/**                     curated datasets
 src/lib/seo.ts                  metadata helpers

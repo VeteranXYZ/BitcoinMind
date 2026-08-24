@@ -10,31 +10,42 @@ export const GLOSSARY: GlossaryEntry[] = [
   {
     id: 'g-hardness', term: 'Hardness',
     category: 'monetary',
-    body: 'The difficulty of producing new units of a monetary good. Gold is hard because mining more of it is expensive and slow. Fiat is soft because a central bank can create it at very low marginal cost. Bitcoin has a fixed supply schedule enforced by consensus. After all 21 million coins are mined, no more can exist under the current rules.',
+    body: 'The difficulty of increasing the supply of a monetary good. Gold is relatively hard because additional production requires time and capital. Fiat supply is policy-dependent. Bitcoin follows an issuance schedule enforced by validating nodes; under the current consensus rules, issuance declines toward a limit of 21 million bitcoin.',
     links: [{ label: 'Frame: A History of Hardness', href: '/frames/1' }],
   },
   {
     id: 'g-halving', term: 'Halving',
     category: 'monetary',
-    body: 'Every 210,000 blocks, roughly four years, the block reward is cut in half. The first reward was 50 BTC. Today it is 3.125. This is not a discretionary policy decision; it is part of the protocol rules. The halving reduces new issuance on a schedule that no single entity can alter.',
+    body: 'Every 210,000 blocks, roughly four years, Bitcoin’s block subsidy is cut in half. It began at 50 BTC and is currently 3.125 BTC. The schedule is a consensus rule, not a recurring policy meeting. Changing it would require participants to adopt different software rules.',
     links: [{ label: 'The Bitcoin Standard', href: '/library' }],
   },
   {
     id: 'g-sound-money', term: 'Sound Money',
     category: 'monetary',
-    body: 'Money whose supply cannot be easily manipulated by any single entity — government, bank, or individual. The term comes from the metallic ring of a genuine gold coin versus a counterfeit. Sound money holds its value over time because producing more of it is costly. Bitcoin is the digital incarnation of this principle: the supply cap is absolute, the rules are transparent, and no one can print more.',
+    body: 'A normative term for money expected to preserve its monetary properties because issuance is constrained and the rules are credible. Advocates apply it to Bitcoin because its supply schedule is transparent and difficult to change. That does not guarantee stable purchasing power, universal acceptance, or political permanence.',
     links: [{ label: 'The Bitcoin Standard', href: '/library' }],
   },
   {
     id: 'g-stock-to-flow', term: 'Stock-to-Flow',
     category: 'monetary',
-    body: 'The ratio of existing supply (stock) to new annual production (flow). Gold has a stock-to-flow of roughly 60, meaning it would take about 60 years of current mining to double the supply. After the 2024 halving, Bitcoin\'s stock-to-flow exceeds 100. Stock-to-flow is a scarcity metric, not a reliable price model.',
+    body: 'The ratio of existing supply to new annual production. A high ratio describes low new issuance relative to the outstanding stock. It can compare scarcity across monetary goods, but it does not measure demand and should not be treated as a reliable price model.',
   },
   {
     id: 'g-utxo', term: 'UTXO',
     category: 'technical',
     body: 'Unspent Transaction Output. Bitcoin has no "account balance" — only a set of unspent coins from previous transactions. When you "spend" Bitcoin, you consume one or more UTXOs and create new ones. This design is fundamental: it enables parallel validation, prevents double-spending without a central ledger, and gives users granular control over their coins. Understanding UTXOs is understanding how Bitcoin actually works beneath the surface.',
     links: [{ label: 'Mastering Bitcoin', href: '/library' }],
+  },
+  {
+    id: 'g-private-key', term: 'Private Key',
+    category: 'technical',
+    body: 'Secret data used to authorize spending. A wallet manages keys and usually represents their backup as a seed phrase. Whoever can produce a valid signature with the relevant key can spend the associated UTXO; the network does not know whether that person is the intended owner. Key security and recoverability are therefore separate from protocol security.',
+    links: [{ label: 'Custody tools', href: '/toolkit' }],
+  },
+  {
+    id: 'g-signature', term: 'Digital Signature',
+    category: 'technical',
+    body: 'A cryptographic proof that a transaction was authorized by the holder of a required private key without revealing that key. Nodes verify signatures as part of transaction validation. A valid signature proves control of a key, not identity, consent, or freedom from coercion.',
   },
   {
     id: 'g-node', term: 'Full Node',
@@ -49,6 +60,17 @@ export const GLOSSARY: GlossaryEntry[] = [
     links: [{ label: 'Mempool.space', href: '/toolkit' }],
   },
   {
+    id: 'g-confirmation', term: 'Confirmation',
+    category: 'technical',
+    body: 'A transaction has one confirmation when it is included in a valid block. Each block built after it adds another. Confirmations do not make history mathematically irreversible; they make reorganizing that history progressively more costly and less likely under ordinary assumptions.',
+    links: [{ label: 'Mempool.space', href: '/toolkit#mempool-space' }],
+  },
+  {
+    id: 'g-fee-market', term: 'Fee Market',
+    category: 'technical',
+    body: 'The competition to have transactions included in limited block space. Users attach fees; miners generally select transactions by effective fee rate and policy. Fees are also expected to become a larger share of miner revenue as the block subsidy declines, making long-term demand for block space an important open question.',
+  },
+  {
     id: 'g-hash-rate', term: 'Hash Rate',
     category: 'technical',
     body: 'The total computational power securing the Bitcoin network, measured in hashes per second. A higher hash rate generally means more work is being performed to find blocks, which raises the cost of attacking the chain. Hash rate is one proxy for the economic cost of rewriting Bitcoin history.',
@@ -57,6 +79,23 @@ export const GLOSSARY: GlossaryEntry[] = [
     id: 'g-difficulty', term: 'Difficulty Adjustment',
     category: 'technical',
     body: 'Every 2,016 blocks, roughly two weeks, Bitcoin recalibrates the mining difficulty so that blocks continue to arrive approximately every ten minutes regardless of how much hash power joins or leaves the network. This mechanism keeps issuance predictable without a committee setting the schedule.',
+  },
+  {
+    id: 'g-consensus', term: 'Consensus Rules',
+    category: 'technical',
+    body: 'The validity rules independently applied by Bitcoin nodes: transaction authorization, block structure, issuance, proof of work, and more. Consensus does not mean everyone agrees about policy or software. It means nodes that apply compatible rules can recognize the same valid chain.',
+    links: [{ label: 'The Blocksize War', href: '/library#the-blocksize-war' }],
+  },
+  {
+    id: 'g-lightning', term: 'Lightning Network',
+    category: 'technical',
+    body: 'A payment-channel network built on Bitcoin. Participants can update balances off-chain and later settle to the base layer, enabling faster and smaller payments. Lightning improves payment capacity but adds liquidity, routing, availability, backup, and implementation tradeoffs.',
+  },
+  {
+    id: 'g-multisig', term: 'Multisignature',
+    category: 'technical',
+    body: 'A spending policy that requires multiple keys—for example, two of three—to authorize a transaction. Multisignature can reduce reliance on one device or person, but it creates coordination, backup, privacy, and inheritance responsibilities. More keys do not automatically mean more security.',
+    links: [{ label: 'Custody instruments', href: '/toolkit' }],
   },
   {
     id: 'g-sovereignty', term: 'Sovereignty',
@@ -68,6 +107,11 @@ export const GLOSSARY: GlossaryEntry[] = [
     ],
   },
   {
+    id: 'g-censorship-resistance', term: 'Censorship Resistance',
+    category: 'philosophical',
+    body: 'The degree to which a valid transaction can eventually be broadcast, included, and settled despite attempts to block it. Bitcoin can raise the cost of censorship because mining and relay are distributed, but users still face network access, surveillance, legal, liquidity, and custody constraints.',
+  },
+  {
     id: 'g-time-pref', term: 'Time Preference',
     category: 'philosophical',
     body: 'The degree to which an individual values present consumption over future consumption. Low time preference means greater willingness to delay gratification, save, and build. Many Bitcoin arguments claim that harder money can encourage lower time preference because savings are less easily diluted.',
@@ -76,13 +120,13 @@ export const GLOSSARY: GlossaryEntry[] = [
   {
     id: 'g-timechain', term: 'Timechain',
     category: 'philosophical',
-    body: 'Satoshi\'s original name for what the world now calls "blockchain." A blockchain is a technical structure: blocks linked by hashes. Timechain emphasizes ordering: Bitcoin records transactions in a sequence that becomes increasingly expensive to reorganize as more proof of work accumulates.',
+    body: 'A term used in early Bitcoin code and later popularized to emphasize ordering through proof of work. “Blockchain” names the linked data structure; “timechain” is an interpretive label for how Bitcoin establishes a costly ordering of transactions without a central clock.',
     links: [{ label: 'Bitcoin is Time by Gigi', href: '/texts' }],
   },
   {
     id: 'g-proof-of-work', term: 'Proof of Work',
     category: 'technical',
-    body: 'The mechanism by which miners expend real-world energy to earn the right to propose the next block. Proof of work ties block production to an external cost, making attacks expensive in energy and hardware. Proof of stake relies on ownership of the native asset to choose validators. The two models have different security assumptions, tradeoffs, and failure modes.',
+    body: 'The mechanism that requires miners to perform computational work when proposing blocks. Nodes accept the valid chain with the most accumulated work. Proof of work ties chain construction to energy and specialized hardware; this makes attacks costly but also creates environmental, geographic, and industrial concentration questions.',
   },
   {
     id: 'g-trustless', term: 'Trustless',
@@ -93,6 +137,7 @@ export const GLOSSARY: GlossaryEntry[] = [
   {
     id: 'g-21m', term: 'Twenty-One Million',
     category: 'monetary',
-    body: 'Bitcoin\'s supply cap. Under the current consensus rules, there will never be more than 21,000,000 bitcoin. The limit is enforced by validating nodes. Changing it would require broad voluntary adoption of different rules by users, node operators, miners, and economic actors.',
+    body: 'Bitcoin’s approximate supply limit under the current consensus rules. Validating nodes reject blocks that create more subsidy than the schedule permits. Software with a different limit can be written, but changing the economically recognized network would require broad adoption of those new rules and could produce a chain split.',
+    links: [{ label: 'Can the limit change?', href: '/questions#q-06' }],
   },
 ];

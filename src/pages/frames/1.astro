@@ -1,6 +1,7 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { FRAME_ONE, type FrameLinkTarget } from '@/data/frame-one';
+import { SITE, canonical } from '@/lib/seo';
 
 const targetHref: Record<FrameLinkTarget, string> = {
   library: '/library',
@@ -9,12 +10,24 @@ const targetHref: Record<FrameLinkTarget, string> = {
 };
 
 const frame = FRAME_ONE;
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'A History of Monetary Hardness',
+  description: 'A five-thousand-year visual history of monetary goods, scarcity, production, and the recurring problem of supply discipline.',
+  image: SITE.socialImage,
+  dateModified: SITE.lastModified,
+  author: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
+  mainEntityOfPage: canonical('/frames/1'),
+};
 ---
 <Base
   title="A History of Hardness"
-  description="Five thousand years of money, told through the question every era had to answer: what stops you from making more?"
+  metaTitle="History of Money and Monetary Hardness — Shells, Gold, Fiat, Bitcoin"
+  description="A five-thousand-year visual history of monetary hardness—from shells and coinage to gold, fiat money, and Bitcoin—organized around the cost of making more."
   path="/frames/1"
   ogType="article"
+  jsonLd={articleLd}
 >
   <div class="page frames">
     <div class="c">

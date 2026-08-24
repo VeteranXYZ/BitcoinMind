@@ -1,4 +1,6 @@
-const CANONICAL_HOST = 'bitcoinmind.com';
+import siteData from '../src/data/site.json' with { type: 'json' };
+
+const CANONICAL_HOST = new URL(siteData.url).hostname;
 const LEGACY_SITEMAP_PATHS = new Set(['/sitemap-index.xml', '/sitemap-0.xml']);
 
 export default {

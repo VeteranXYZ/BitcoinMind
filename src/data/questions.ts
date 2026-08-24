@@ -9,27 +9,27 @@ export interface Question {
 export const QUESTIONS: Question[] = [
   {
     id: 'q-01',
-    question: 'If Bitcoin succeeds, does the power grid become the new power structure?',
-    date: 'May 2026',
-    answer: 'This is the right question asked slightly wrong. If Bitcoin succeeds, energy production becomes more decentralized, not more centralized. Bitcoin miners are energy buyers of last resort — they seek the cheapest energy, which is almost always stranded, curtailed, or otherwise wasted. A methane flare in Texas. A hydroelectric dam in Paraguay producing more than the grid can absorb. Geothermal in Iceland. Bitcoin doesn\'t concentrate energy — it monetizes energy that would otherwise be lost. The power grid doesn\'t become the power structure. Bitcoin makes more of the power grid economically viable.',
+    question: 'Does proof of work turn energy producers into Bitcoin’s new rulers?',
+    date: 'July 2026',
+    answer: 'Energy gives miners influence over which valid transactions enter blocks and how much work protects a chain. It does not let them create arbitrary coins or make an invalid block valid; independently validating nodes reject rule-breaking blocks. Mining can use curtailed or stranded power, but it also uses ordinary grid electricity, and its local effects depend on the generation mix, contracts, regulation, and competition for power. The sober conclusion is neither “energy controls Bitcoin” nor “the energy is free.” Proof of work deliberately purchases security with a real-world resource, so its concentration and external costs remain questions to measure.',
     links: [
       { label: 'Objections: Energy Consumption', href: '/objections' },
     ],
   },
   {
     id: 'q-02',
-    question: 'I have $500. Is it too late to buy Bitcoin?',
-    date: 'May 2026',
-    answer: 'This question contains an assumption: that Bitcoin is an investment you "get in" on. That framing is wrong. Bitcoin is a savings technology. You don\'t "get in" — you begin saving in a harder currency. And the answer to "is it too late to begin saving in hard money?" is always no. $500 in Bitcoin is not about the price going up next month. It is about opting out of a system that debases your purchasing power by design. The best time to begin was 2009. The second best time is whenever you understand why.',
+    question: 'Is it too late to buy Bitcoin?',
+    date: 'July 2026',
+    answer: 'No one can answer that from the price alone. The relevant questions are personal: what claim are you underwriting, what loss can you absorb, how long can you hold without needing the money, and can you custody it safely? Bitcoin has had deep drawdowns, regulatory shocks, software risks, and long periods when confidence was punished. Study before allocating; use no leverage; treat any purchase as a decision that can be wrong. A sound thesis states both why Bitcoin might matter and what evidence would weaken the case.',
     links: [
       { label: 'Primer', href: '/primer' },
     ],
   },
   {
     id: 'q-03',
-    question: 'How do I explain Bitcoin to my parents?',
-    date: 'May 2026',
-    answer: 'Don\'t begin with technology. Begin with money. Ask them: "When you were young, how much did a house cost? How much does it cost now?" That gap is not because houses got better. It is because the money got worse. The dollar buys less every year because the government prints more of it. Bitcoin is money that no one can print more of. There will only ever be 21 million. That\'s it. That\'s the whole pitch. If they want more, give them The Internet of Money by Andreas Antonopoulos — it was written for exactly this conversation.',
+    question: 'How do I explain Bitcoin to someone who is skeptical?',
+    date: 'July 2026',
+    answer: 'Start with the person’s actual concern, not a memorized pitch. If the concern is inflation, discuss monetary rules. If it is fraud, separate the Bitcoin network from exchanges and promoters. If it is energy, explain proof of work and acknowledge its cost. Then offer the smallest accurate claim: Bitcoin is a public settlement network whose users can hold and transfer a scarce digital asset without asking a central issuer to update the ledger. Everything beyond that—future adoption, price, political significance—is an argument, not a protocol fact.',
     links: [
       { label: 'The Internet of Money', href: '/library' },
       { label: 'Primer', href: '/primer' },
@@ -38,8 +38,8 @@ export const QUESTIONS: Question[] = [
   {
     id: 'q-04',
     question: 'What happens when all 21 million Bitcoin are mined?',
-    date: 'May 2026',
-    answer: 'The last Bitcoin will be mined around the year 2140. After that, miners will be compensated entirely by transaction fees. This is by design — the transition from block rewards to fees is gradual, happening over more than a century. The concern that "miners will quit" assumes fees won\'t be sufficient. But if Bitcoin succeeds as a global settlement layer, block space will be valuable enough that fees alone provide strong security incentives. Bitcoin\'s security budget is a function of demand for block space, not block rewards.',
+    date: 'July 2026',
+    answer: 'The subsidy halves every 210,000 blocks and approaches zero around 2140; transaction fees then become miners’ direct revenue. The schedule is known, but the outcome is not. A durable fee market would require enough demand for scarce block space, while security also depends on Bitcoin’s value, mining economics, and attack incentives. The long transition gives the network time to adapt, but it does not prove that future fee revenue will be sufficient. This is one of Bitcoin’s real open economic questions.',
     links: [
       { label: 'Glossary: Halving', href: '/glossary' },
     ],
@@ -47,7 +47,30 @@ export const QUESTIONS: Question[] = [
   {
     id: 'q-05',
     question: 'Why doesn\'t Bitcoin have smart contracts like Ethereum?',
-    date: 'May 2026',
-    answer: 'Bitcoin does have a scripting language — it is intentionally limited. This is not a weakness. It is a design choice. Bitcoin optimizes for one thing: being the most secure, most decentralized, most reliable monetary network in existence. Every feature you add is an attack surface you create. Ethereum chose expressiveness. Bitcoin chose security. You can build complex financial instruments on layers above Bitcoin (Lightning, sidechains) without compromising the base layer. The foundation of a skyscraper does not need to be flexible. It needs to be unbreakable.',
+    date: 'July 2026',
+    answer: 'Bitcoin transactions are programmable, but Bitcoin Script is deliberately constrained and the base layer changes cautiously. That reduces some classes of complexity while limiting what applications can express directly. Ethereum chose a more general execution environment and therefore a different set of capabilities, costs, and failure modes. Lightning, multisignature policies, timelocks, and other systems extend Bitcoin, but they introduce their own assumptions. “More expressive” and “more secure” are not single-axis rankings; they are design tradeoffs.',
+    links: [
+      { label: 'Mastering Bitcoin', href: '/library#mastering-bitcoin' },
+    ],
+  },
+  {
+    id: 'q-06',
+    question: 'Can Bitcoin’s 21 million limit ever change?',
+    date: 'July 2026',
+    answer: 'The limit is a consensus rule enforced by software run voluntarily across the network. Developers can publish code with a different rule, but they cannot compel nodes, businesses, miners, and holders to adopt it. A changed-supply network could exist if enough participants coordinated around it; dissenting users could keep the old rules, creating a split. The cap is therefore neither a law of nature nor a promise from a company. Its credibility comes from transparent rules, costly coordination, and the interests of participants who chose Bitcoin partly because dilution is difficult.',
+    links: [
+      { label: 'The Blocksize War', href: '/library#the-blocksize-war' },
+      { label: 'Glossary: Twenty-One Million', href: '/glossary#g-21m' },
+    ],
+  },
+  {
+    id: 'q-07',
+    question: 'Is self-custody always more sovereign?',
+    date: 'July 2026',
+    answer: 'Self-custody removes a custodian’s ability to freeze, rehypothecate, or lose your coins, but it transfers key loss, theft, recovery, privacy, and inheritance risk to you. A technically elaborate setup can be less secure if the owner cannot operate or recover it. Sovereignty is not maximum complexity; it is control matched by competence. Begin with small amounts, test recovery, document the right information for the right people, and increase complexity only when it removes a specific failure mode.',
+    links: [
+      { label: 'Custody path', href: '/paths#rh-custody' },
+      { label: 'Toolkit', href: '/toolkit' },
+    ],
   },
 ];

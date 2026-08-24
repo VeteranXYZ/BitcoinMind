@@ -31,54 +31,28 @@ test('resource filters keep one matching card and expose an empty state', async 
   await expect(page.getByText('No library items match this filter.')).toBeVisible();
 });
 
-test('saved resources and path progress persist locally', async ({ page }) => {
-  await page.goto('/library');
-  const save = page.locator('[data-study-save]').first();
-  await save.click();
-  await expect(save).toHaveAttribute('aria-pressed', 'true');
-
-  await page.reload();
-  await expect(page.locator('[data-study-save]').first()).toHaveAttribute('aria-pressed', 'true');
-
-  await page.goto('/paths');
-  await expect(page.locator('[data-study-queue]')).toContainText('The Bitcoin Standard');
-  const firstStep = page.locator('[data-study-progress]').first();
-  await firstStep.click();
-  await expect(firstStep).toHaveAttribute('aria-pressed', 'true');
-
-  await page.reload();
-  await expect(page.locator('[data-study-progress]').first()).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('[data-study-resume]')).toBeVisible();
-  await expect(page.locator('[data-study-resume-link]')).toContainText('step 2 of 5');
-
-  const downloadPromise = page.waitForEvent('download');
-  await page.locator('[data-study-export]').click();
-  expect((await downloadPromise).suggestedFilename()).toBe('bitcoinmind-study.json');
-
-  const imported = {
-    version: 1,
-    saved: [{
-      id: 'text:bitcoin-whitepaper',
-      title: 'Bitcoin: A Peer-to-Peer Electronic Cash System',
-      href: '/texts#bitcoin-whitepaper',
-      kind: 'Text',
-      savedAt: '2026-07-12T00:00:00.000Z',
-    }],
-    progress: { 'rh-technical': [0, 1] },
-  };
-  await page.locator('[data-study-import]').setInputFiles({
-    name: 'bitcoinmind-study.json',
-    mimeType: 'application/json',
-    buffer: Buffer.from(JSON.stringify(imported)),
+test('resource filter types stay consistent and emit one analytics event', async ({ page }) => {
+  await page.goto('/texts');
+  await page.evaluate(() => {
+    const testWindow = window as typeof window & {
+      filterEventCount: number;
+      BitcoinMindAnalytics: { track: () => void };
+    };
+    testWindow.filterEventCount = 0;
+    testWindow.BitcoinMindAnalytics = {
+      track: () => { testWindow.filterEventCount += 1; },
+    };
   });
-  await expect(page.locator('[data-study-queue]')).toContainText('Bitcoin: A Peer-to-Peer Electronic Cash System');
-  await expect(page.locator('[data-study-status]')).toHaveText('Local study data imported.');
+
+  await page.getByRole('button', { name: 'Reference', exact: true }).click();
+  await expect(page.locator('#running-a-full-node')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => (window as typeof window & { filterEventCount: number }).filterEventCount)).toBe(1);
 });
 
 test('Frame 2 keeps its explanation and accessible chart without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
-  await page.goto('http://127.0.0.1:4321/frames/2');
+  await page.goto('/frames/2');
 
   await expect(page.getByRole('heading', { level: 1, name: 'After the Anchor' })).toBeVisible();
   await expect(page.locator('svg[role="img"][aria-labelledby="f2-chart-title f2-chart-desc"]')).toBeVisible();

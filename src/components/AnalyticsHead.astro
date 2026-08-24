@@ -1,0 +1,45 @@
+---
+import { SITE } from '@/lib/seo';
+
+const configuredId = SITE.ga4MeasurementId;
+
+if (configuredId && !/^G-[A-Z0-9]+$/i.test(configuredId)) {
+  throw new Error('PUBLIC_GA4_MEASUREMENT_ID must be a GA4 web stream ID such as G-XXXXXXXXXX.');
+}
+
+const measurementId = configuredId.toUpperCase();
+---
+{measurementId && (
+  <script is:inline define:vars={{ measurementId }}>
+    (function () {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+
+      window.gtag('consent', 'default', {
+        analytics_storage: 'granted',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+      });
+      window.gtag('set', 'ads_data_redaction', true);
+
+      var tag = document.createElement('script');
+      tag.async = true;
+      tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
+      document.head.appendChild(tag);
+
+      window.gtag('js', new Date());
+      window.gtag('config', measurementId, {
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false,
+      });
+
+      window.BitcoinMindAnalytics = {
+        loaded: true,
+        track: function (eventName, parameters) {
+          window.gtag('event', eventName, parameters || {});
+        },
+      };
+    })();
+  </script>
+)}

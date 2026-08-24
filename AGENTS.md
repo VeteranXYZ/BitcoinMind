@@ -62,7 +62,10 @@ src/components/Nav.astro
 src/components/*.astro
 src/components/*.tsx
 src/data/*.ts
+src/data/routes.json
+src/data/site.json
 src/lib/seo.ts
+src/lib/routes.ts
 src/pages/**/*.astro
 src/pages/sitemap.xml.ts
 src/scripts/*.ts
@@ -186,7 +189,8 @@ Likely files:
 src/pages/**
 src/components/Nav.astro
 src/lib/seo.ts
-public/robots.txt
+src/data/routes.json
+src/pages/robots.txt.ts
 ```
 
 Rules:
@@ -206,7 +210,6 @@ src/scripts/*.ts
 src/pages/frames/*.astro
 scripts-build/*.mjs
 public/pulse.json
-src/scripts/study-list.ts
 ```
 
 Rules:
@@ -216,8 +219,6 @@ Rules:
 - Preserve accessible labels, keyboard behavior, and mobile behavior.
 - Keep Frames educational rather than trading-oriented.
 - Handle unavailable live data with fallbacks.
-- Keep study state local-only unless account or synchronization work is explicitly requested.
-- Preserve a complete static reading experience when JavaScript or storage is unavailable.
 
 ### Deployment or Build Task
 
@@ -278,7 +279,7 @@ If route changes are required, also check:
 src/lib/seo.ts
 src/components/Nav.astro
 internal links in src/pages/** and src/data/**
-public/robots.txt
+src/pages/robots.txt.ts
 sitemap behavior
 ```
 
@@ -389,7 +390,6 @@ src/lib/block-height.ts
 Build scripts live in:
 
 ```text
-scripts-build/fetch-block-height.mjs
 scripts-build/fetch-pulse.mjs
 scripts-build/generate-grain.mjs
 ```
@@ -428,8 +428,8 @@ When files disagree, use this priority order:
 
 1. Current codebase files
 2. `package.json`, `astro.config.mjs`, `wrangler.jsonc`, and CI config for stack/build/deploy facts
-3. `src/pages/**` and `Nav.astro` for routes/navigation
-4. `src/styles/design-system.css` and `styles.css` for visual implementation
+3. `src/pages/**` and `src/data/routes.json` for routes/navigation
+4. `src/styles/design-system.css`, `breakpoints.css`, and `styles.css` for visual implementation
 5. `src/data/**` for content inventory
 6. `README.md`, `DESIGN.md`, and this file for documented intent
 
