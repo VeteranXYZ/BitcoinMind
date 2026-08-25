@@ -1,0 +1,125 @@
+<section
+  class="analytics-consent"
+  data-analytics-consent
+  aria-label="Analytics preferences"
+  hidden
+>
+  <div class="analytics-consent-copy">
+    <strong>Optional analytics</strong>
+    <p>Allow privacy-restricted analytics cookies to help improve BitcoinMind. Advertising and personalization remain disabled.</p>
+    <a href="/about#privacy">Read the privacy note</a>
+  </div>
+  <div class="analytics-consent-actions">
+    <button type="button" class="analytics-consent-btn" data-analytics-deny>Only necessary</button>
+    <button type="button" class="analytics-consent-btn analytics-consent-btn--primary" data-analytics-allow>Allow analytics</button>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var panel = document.querySelector('[data-analytics-consent]');
+    if (!panel) return;
+
+    var allow = panel.querySelector('[data-analytics-allow]');
+    var deny = panel.querySelector('[data-analytics-deny]');
+
+    function savedChoice() {
+      try {
+        var value = localStorage.getItem('bitcoinmind_analytics_consent');
+        return value === 'granted' || value === 'denied' ? value : null;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function choose(value) {
+      if (window.BitcoinMindAnalytics) window.BitcoinMindAnalytics.setConsent(value);
+      panel.hidden = true;
+    }
+
+    allow.addEventListener('click', function () { choose('granted'); });
+    deny.addEventListener('click', function () { choose('denied'); });
+
+    document.addEventListener('click', function (event) {
+      var settings = event.target.closest && event.target.closest('[data-analytics-settings]');
+      if (!settings) return;
+      panel.hidden = false;
+      allow.focus();
+    });
+
+    if (savedChoice() === null) panel.hidden = false;
+  })();
+</script>
+
+<style>
+  .analytics-consent[hidden] { display: none; }
+
+  .analytics-consent {
+    position: fixed;
+    right: var(--pad);
+    bottom: var(--sp-5);
+    left: var(--pad);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-6);
+    max-width: 760px;
+    margin-inline: auto;
+    padding: var(--sp-5);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    background: var(--card);
+    box-shadow: var(--shadow-menu);
+  }
+
+  .analytics-consent-copy { max-width: var(--max-readable); }
+  .analytics-consent-copy strong {
+    display: block;
+    margin-bottom: var(--sp-2);
+    color: var(--text-heading);
+    font-family: var(--font-body);
+    font-size: var(--fz-sm);
+  }
+  .analytics-consent-copy p {
+    margin-bottom: var(--sp-2);
+    color: var(--text-secondary);
+    font-size: var(--fz-xs);
+    line-height: var(--lh-relaxed);
+  }
+  .analytics-consent-copy a {
+    color: var(--accent);
+    font-size: var(--fz-xs);
+  }
+
+  .analytics-consent-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: var(--sp-2);
+  }
+  .analytics-consent-btn {
+    padding: var(--sp-2) var(--sp-4);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-body);
+    font: inherit;
+    font-size: var(--fz-xs);
+    cursor: pointer;
+  }
+  .analytics-consent-btn:hover { border-color: var(--border-accent); }
+  .analytics-consent-btn--primary {
+    border-color: var(--border-accent);
+    color: var(--accent-bright);
+  }
+
+  @media (width <= 640px) {
+    .analytics-consent {
+      bottom: var(--sp-3);
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .analytics-consent-actions { flex-wrap: wrap; }
+    .analytics-consent-btn { flex: 1 1 auto; }
+  }
+</style>

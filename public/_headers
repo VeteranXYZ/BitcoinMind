@@ -12,9 +12,6 @@
 /pulse.json
   Cache-Control: public, max-age=300, must-revalidate
 
-# HTML pages — short cache, must revalidate so SEO meta updates propagate
-/*
-  Cache-Control: public, max-age=300, must-revalidate
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: interest-cohort=()
+# HTML caching and common security headers are normalized by worker/index.js.
+# Keeping the catch-all out of this file prevents Cloudflare from joining two
+# Cache-Control values when a fingerprinted asset matches multiple rules.

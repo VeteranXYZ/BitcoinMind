@@ -91,12 +91,19 @@ const articleLd = {
           <div class="frames-idx-rule"></div>
           <ul class="frames-idx-list">
             {frame.nodes.map((node) => (
-              <li data-frame-idx class="fidx">
-                <span class={`fidx-dot fidx-dot--${node.hardness}`} aria-hidden="true"></span>
-                <div class="fidx-text">
-                  <div class="fidx-yr">{node.n} &middot; {node.year}</div>
-                  <div class="fidx-epi">{node.epigraph}</div>
-                </div>
+              <li class="fidx">
+                <button
+                  type="button"
+                  class="fidx-button"
+                  data-frame-idx
+                  aria-label={`Go to ${node.year}: ${node.title}`}
+                >
+                  <span class={`fidx-dot fidx-dot--${node.hardness}`} aria-hidden="true"></span>
+                  <span class="fidx-text">
+                    <span class="fidx-yr">{node.n} &middot; {node.year}</span>
+                    <span class="fidx-epi">{node.epigraph}</span>
+                  </span>
+                </button>
               </li>
             ))}
           </ul>

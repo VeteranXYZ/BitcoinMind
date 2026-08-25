@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import {
-  F2_CPI, F2_BTC_ANCHORS, F2_BIGMAC, F2_EVENTS, F2_RANGE, F2_DATA_AS_OF,
+  F2_CPI, F2_BTC_ANCHORS, F2_EVENTS, F2_RANGE, F2_DATA_AS_OF,
 } from '@/data/frame-two';
 
 const { Y_START, M_START, Y_END, M_END } = F2_RANGE;
-const PRICE_REFRESH_MS = 5 * 60 * 1000;
 
 const f2_toYf = (y: number, m: number): number => y + (m - 1) / 12;
-const f2_isLatestPoint = (y: number, m: number): boolean => y === Y_END && m === M_END;
 
 function f2_annualLerp(table: Record<number, number>, y: number, m: number): number {
   const yf = f2_toYf(y, m);
@@ -38,72 +36,16 @@ function f2_btcAt(y: number, m: number): number | null {
 }
 
 function f2_cpiAt(y: number, m: number): number { return f2_annualLerp(F2_CPI, y, m); }
-function f2_bigmacAt(y: number): number {
-  return F2_BIGMAC[y] !== undefined ? F2_BIGMAC[y]! : F2_BIGMAC[Y_END]!;
-}
 
 const f2_monthName = (m: number): string =>
   ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m - 1]!;
 const f2_dateLabel = (y: number, m: number): string => `${f2_monthName(m)} ${y}`;
-const f2_validPrice = (price: unknown): price is number =>
-  typeof price === 'number' && Number.isFinite(price) && price > 0;
 
 export default function FrameTwoChart() {
   const [cursor, setCursor] = useState({ y: 1971, m: 8 });
   const [dragging, setDragging] = useState(false);
   const latestAnchorPrice = F2_BTC_ANCHORS[F2_BTC_ANCHORS.length - 1]![2];
-  const [livePrice, setLivePrice] = useState<number>(latestAnchorPrice);
-  const [priceSource, setPriceSource] = useState<'live' | 'cached'>('cached');
   const svgRef = useRef<SVGSVGElement | null>(null);
-
-  useEffect(() => {
-    let stopped = false;
-    let inFlight: AbortController | null = null;
-
-    async function refreshLivePrice() {
-      if (inFlight) return;
-      const controller = new AbortController();
-      inFlight = controller;
-      try {
-        try {
-          const res = await fetch('https://mempool.space/api/v1/prices', { signal: controller.signal });
-          if (res.ok) {
-            const data = await res.json();
-            if (!stopped && f2_validPrice(data?.USD)) {
-              setLivePrice(data.USD);
-              setPriceSource('live');
-              return;
-            }
-          }
-        } catch { /* try next */ }
-
-        try {
-          const res = await fetch(
-            'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
-            { signal: controller.signal }
-          );
-          if (res.ok) {
-            const data = await res.json();
-            if (!stopped && f2_validPrice(data?.bitcoin?.usd)) {
-              setLivePrice(data.bitcoin.usd);
-              setPriceSource('live');
-            }
-          }
-        } catch { /* fall through */ }
-      } finally {
-        if (inFlight === controller) inFlight = null;
-      }
-    }
-
-    refreshLivePrice();
-    const intervalId = window.setInterval(refreshLivePrice, PRICE_REFRESH_MS);
-
-    return () => {
-      stopped = true;
-      window.clearInterval(intervalId);
-      inFlight?.abort();
-    };
-  }, []);
 
   const lineData = useMemo(() => {
     const usd: { yf: number; v: number }[] = [];
@@ -115,10 +57,7 @@ export default function FrameTwoChart() {
         const yf = f2_toYf(yr, mo);
         const power = cpiBase / f2_cpiAt(yr, mo);
         usd.push({ yf, v: power });
-        let btcVal = f2_btcAt(yr, mo);
-        if (f2_isLatestPoint(yr, mo) && btcVal !== null) {
-          btcVal = livePrice;
-        }
+        const btcVal = f2_btcAt(yr, mo);
         if (btcVal !== null) {
           const btcPerDollar = 1 / 0.08;
           const todaysDollars = btcPerDollar * btcVal;
@@ -128,7 +67,7 @@ export default function FrameTwoChart() {
       }
     }
     return { usd, btc };
-  }, [livePrice]);
+  }, []);
 
   const W = 1100, H = 480;
   const PAD = { L: 50, R: 30, T: 30, B: 60 };
@@ -152,7 +91,7 @@ export default function FrameTwoChart() {
   const cursorX = xScale(cursorYf);
   const cpiBase = f2_cpiAt(Y_START, M_START);
   const usdPower = cpiBase / f2_cpiAt(cursor.y, cursor.m);
-  const btcVal = f2_isLatestPoint(cursor.y, cursor.m) ? livePrice : f2_btcAt(cursor.y, cursor.m);
+  const btcVal = f2_btcAt(cursor.y, cursor.m);
   const btcInDollars = btcVal !== null ? (1 / 0.08) * btcVal * (cpiBase / f2_cpiAt(cursor.y, cursor.m)) : null;
   const usdY = yScale(usdPower);
   const btcY = btcInDollars !== null ? yScale(btcInDollars) : null;
@@ -188,29 +127,37 @@ export default function FrameTwoChart() {
     };
   }, [dragging, onPointerMove, onPointerUp]);
 
-  const bm_then = f2_bigmacAt(cursor.y);
-  const bm_now = f2_bigmacAt(Y_END);
-  const cashMacsToday = bm_then / bm_now;
-  const cashLost = 1 - cashMacsToday;
-  const btcThenRaw = f2_btcAt(cursor.y, cursor.m);
-  const btcThen = f2_isLatestPoint(cursor.y, cursor.m) ? livePrice : btcThenRaw;
-  const btcMacsToday = btcThen !== null ? (bm_then / btcThen) * livePrice / bm_now : null;
-  const btcLost = btcMacsToday !== null && btcMacsToday < 1 ? 1 - btcMacsToday : null;
+  const startMonthIndex = Y_START * 12 + M_START - 1;
+  const endMonthIndex = Y_END * 12 + M_END - 1;
+  const cursorMonthIndex = cursor.y * 12 + cursor.m - 1 - startMonthIndex;
+  const setCursorFromMonthIndex = useCallback((index: number) => {
+    const absolute = Math.max(startMonthIndex, Math.min(endMonthIndex, startMonthIndex + index));
+    setCursor({ y: Math.floor(absolute / 12), m: absolute % 12 + 1 });
+  }, [endMonthIndex, startMonthIndex]);
+
+  const cpiThen = f2_cpiAt(cursor.y, cursor.m);
+  const cpiAtEnd = f2_cpiAt(Y_END, M_END);
+  const cashPowerAtEnd = cpiThen / cpiAtEnd;
+  const cashLost = 1 - cashPowerAtEnd;
+  const btcThen = f2_btcAt(cursor.y, cursor.m);
+  const btcPowerAtEnd = btcThen !== null
+    ? (latestAnchorPrice / btcThen) * (cpiThen / cpiAtEnd)
+    : null;
+  const btcLost = btcPowerAtEnd !== null && btcPowerAtEnd < 1 ? 1 - btcPowerAtEnd : null;
   const axisYears = [1971, 1980, 1990, 2000, 2010, 2020, Y_END];
 
-  const formatMacs = (n: number): string => {
+  const formatUnits = (n: number): string => {
     if (n >= 1000) return Math.round(n).toLocaleString('en-US');
     if (n >= 100) return Math.round(n).toString();
     if (n >= 10) return n.toFixed(1);
     return n.toFixed(2);
   };
-  const formatPrice = (p: number): string => '$' + p.toFixed(2);
 
   return (
     <>
       <div class="f2-tabs">
         <span class="f2-tab-lbl">Measured in</span>
-        <button type="button" class="f2-tab f2-tab--on">Big Macs</button>
+        <span class="f2-tab f2-tab--on">CPI-adjusted units</span>
       </div>
 
       <div class="f2-chart-wrap">
@@ -227,8 +174,8 @@ export default function FrameTwoChart() {
           <desc id="f2-chart-desc">
             A logarithmic chart comparing the steady decline of one US dollar's
             purchasing power since 1971 against the appreciation of bitcoin held
-            since 2010. Measured in Big Macs with source data through {F2_DATA_AS_OF}.
-            Drag to inspect any month.
+            since 2010. Measured with CPI-U data through {F2_DATA_AS_OF}.
+            Drag the chart or use the month slider to inspect any month.
           </desc>
           {[1, 10, 100, 1000, 10000, 100000, 1000000].map((v, i) => {
             const y = yScale(v);
@@ -254,7 +201,7 @@ export default function FrameTwoChart() {
           {F2_EVENTS.map((ev) => {
             const x = xScale(f2_toYf(ev.y, ev.m));
             return (
-              <g key={ev.short} onClick={() => setCursor({ y: ev.y, m: ev.m })} style={{ cursor: 'pointer' }}>
+              <g key={ev.short} aria-hidden="true">
                 <line class="f2-event-tick" x1={x} x2={x} y1={PAD.T + 10} y2={H - PAD.B} />
                 <text class="f2-event-text" x={x} y={PAD.T + 8} text-anchor="middle">{ev.short}</text>
               </g>
@@ -276,6 +223,20 @@ export default function FrameTwoChart() {
         </svg>
       </div>
 
+      <label class="f2-range" htmlFor="f2-month-range">
+        <span class="f2-range-label">Inspect month</span>
+        <input
+          id="f2-month-range"
+          type="range"
+          min="0"
+          max={String(endMonthIndex - startMonthIndex)}
+          value={String(cursorMonthIndex)}
+          aria-valuetext={f2_dateLabel(cursor.y, cursor.m)}
+          onInput={(event) => setCursorFromMonthIndex(Number(event.currentTarget.value))}
+        />
+        <output htmlFor="f2-month-range" class="f2-range-value">{f2_dateLabel(cursor.y, cursor.m)}</output>
+      </label>
+
       <div class="f2-jumps" role="group" aria-label="Jump to event">
         <span class="f2-jump-lbl">Jump to</span>
         {F2_EVENTS.map((ev) => (
@@ -294,11 +255,9 @@ export default function FrameTwoChart() {
         <div>
           <div class="f2-r-lbl">If you held it as cash</div>
           <p class="f2-r-col">
-            In <em>{f2_dateLabel(cursor.y, cursor.m)}</em>, one Big Mac cost <strong>{formatPrice(bm_then)}</strong>.
-            <br /><br />
-            That same {formatPrice(bm_then)}, held as cash, can buy{' '}
-            <strong>{formatMacs(cashMacsToday)}</strong> Big Macs today &mdash;{' '}
-            <em>{Math.round(cashLost * 100)}% of its purchasing power, lost to inflation.</em>
+            From <em>{f2_dateLabel(cursor.y, cursor.m)}</em> to <em>{F2_DATA_AS_OF}</em>, one dollar held as cash retains{' '}
+            <strong>{formatUnits(cashPowerAtEnd)}</strong> CPI-adjusted purchasing-power units for every 1.00 unit it began with &mdash;{' '}
+            <em>{Math.round(cashLost * 100)}% lost to CPI-measured inflation.</em>
           </p>
         </div>
         <div>
@@ -308,26 +267,25 @@ export default function FrameTwoChart() {
               Bitcoin did not exist yet.<br />
               The first block was mined on January 3, 2009. Drag forward.
             </p>
-          ) : btcMacsToday !== null && btcMacsToday < 1 ? (
+          ) : btcPowerAtEnd !== null && btcPowerAtEnd < 1 ? (
             <p class="f2-r-col">
-              That same {formatPrice(bm_then)}, held as bitcoin, can buy{' '}
-              <strong>{formatMacs(btcMacsToday)}</strong> Big Macs today &mdash;{' '}
+              That same dollar, converted to bitcoin then and measured at the final cached price, represents{' '}
+              <strong>{formatUnits(btcPowerAtEnd)}</strong> purchasing-power units &mdash;{' '}
               <em>{Math.round((btcLost ?? 0) * 100)}% of its purchasing power, lost to volatility.</em>
               <br /><br />
               <em style={{ opacity: 0.7 }}>This is one of the moments bitcoin's volatility worked against you.</em>
             </p>
           ) : (
             <p class="f2-r-col">
-              That same {formatPrice(bm_then)}, held as bitcoin, can buy{' '}
-              <strong>{formatMacs(btcMacsToday ?? 0)}</strong> Big Macs today.
+              That same dollar, converted to bitcoin then and measured at the final cached price, represents{' '}
+              <strong>{formatUnits(btcPowerAtEnd ?? 0)}</strong> CPI-adjusted purchasing-power units at {F2_DATA_AS_OF}.
             </p>
           )}
         </div>
       </div>
 
       <div class="f2-live">
-        {priceSource === 'live' ? '● ' : '○ '}
-        BTC ${Math.round(livePrice).toLocaleString('en-US')} {priceSource === 'live' ? 'live quote' : 'cached quote'} · chart data through {F2_DATA_AS_OF}
+        ○ BTC ${Math.round(latestAnchorPrice).toLocaleString('en-US')} cached anchor · chart data through {F2_DATA_AS_OF}
       </div>
     </>
   );

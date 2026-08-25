@@ -103,7 +103,7 @@ export const RABBIT_HOLES: RabbitHole[] = [
     nextHref: '/questions#q-07',
     nextLabel: 'Ask whether more control always means more sovereignty',
     steps: [
-      { title: 'Why self-custody matters', type: 'external', href: 'https://unchained.com/blog/bitcoin-self-custody/', time: '15 min' },
+      { title: 'Why key ownership matters', type: 'external', href: 'https://www.unchained.com/blog/bitcoin-needs-a-network-of-keys', time: '15 min' },
       { resourceId: 'bluewallet', type: 'toolkit', time: '45 min' },
       { resourceId: 'trezor-safe-3', type: 'toolkit', time: '1 hr' },
       { resourceId: 'sparrow-wallet', type: 'toolkit', time: '2 hrs' },

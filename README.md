@@ -218,6 +218,18 @@ Audit the built site after `npm run build`:
 npm run audit
 ```
 
+Run the Worker routing and security-header tests:
+
+```bash
+npm run test:worker
+```
+
+Run the mobile browser regression tests:
+
+```bash
+npm run test:browser
+```
+
 Run the complete local and CI validation sequence:
 
 ```bash
@@ -244,7 +256,7 @@ npm run preview
 
 ### Google Analytics 4
 
-GA4 is wired into every page through the shared layout. The production web-stream Measurement ID is part of the public site configuration; forks or alternate environments can override it at build time:
+GA4 consent controls are wired into every page through the shared layout. The production web-stream Measurement ID is part of the public site configuration; forks or alternate environments can override it at build time:
 
 ```bash
 cp .env.example .env
@@ -252,7 +264,7 @@ cp .env.example .env
 npm run build
 ```
 
-The Google tag loads immediately on every page. Analytics storage is granted by default, while advertising storage, advertising user data, advertising personalization, and Google Signals remain disabled. With Enhanced Measurement enabled in the GA4 web stream, page views, scroll depth, outbound resource clicks, and file downloads are collected without additional page code. Resource-filter selections are sent as the recommended `select_content` event; free-form search terms are not sent.
+Analytics storage is denied by default. The Google tag loads only on `bitcoinmind.com` or `www.bitcoinmind.com` after the visitor explicitly allows analytics; local previews and automated tests never send data to the production property. Advertising storage, advertising user data, advertising personalization, and Google Signals remain disabled. When analytics is allowed, Enhanced Measurement may collect page views, scroll depth, outbound resource clicks, and file downloads. Resource-filter selections are sent as the recommended `select_content` event; free-form search terms are not sent. Visitors can review or withdraw their preference from the Privacy section on the About page.
 
 ## Working With AI Agents
 

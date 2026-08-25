@@ -10,7 +10,10 @@ function init(): void {
   if (nodes.length === 0 || indexItems.length === 0) return;
 
   const setActive = (i: number): void => {
-    indexItems.forEach((el, j) => el.classList.toggle('fidx--on', i === j));
+    indexItems.forEach((el, j) => {
+      el.closest('.fidx')?.classList.toggle('fidx--on', i === j);
+      el.setAttribute('aria-current', i === j ? 'true' : 'false');
+    });
   };
 
   observer = new IntersectionObserver(

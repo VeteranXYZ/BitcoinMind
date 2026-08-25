@@ -1608,7 +1608,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 /* ── Layout: body + index ───────────────────────────────── */
 .frames-layout {
   display: grid;
-  grid-template-columns: 1fr 220px;
+  grid-template-columns: minmax(0, 1fr) 220px;
   gap: var(--sp-12);
   align-items: start;
 }
@@ -1765,6 +1765,8 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 .frames-idx {
   position: sticky;
   top: var(--sp-11);
+  min-width: 0;
+  max-width: 100%;
   font-family: var(--font-body);
 }
 
@@ -1802,6 +1804,25 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   cursor: pointer;
   border-left: 2px solid transparent;
   transition: border-color var(--ease-fast), color var(--ease-fast);
+}
+.fidx-button {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.fidx-button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }
 .fidx:hover .fidx-yr {
   color: var(--tx-2);
@@ -1871,7 +1892,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 /* ── Mobile: index becomes a horizontal strip on top ────── */
 @media (--viewport-lg) {
   .frames-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-8);
   }
 
@@ -1886,6 +1907,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   .frames-idx-list {
     flex-direction: row;
     overflow-x: auto;
+    max-width: 100%;
     gap: var(--sp-5);
     padding-bottom: var(--sp-2);
     /* hide scrollbar on webkit */
@@ -1908,6 +1930,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
     margin: 0;
     border-left: none;
     border-top: 2px solid transparent;
+  }
+  .fidx-button {
+    flex-direction: column;
+    align-items: flex-start;
   }
   .fidx--on {
     border-left-color: transparent;
@@ -2054,13 +2080,12 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;
-  cursor: pointer;
+  cursor: default;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   transition: color var(--ease-fast), border-color var(--ease-fast);
   flex-shrink: 0;
 }
-.f2-tab:hover { color: var(--tx-2); }
 .f2-tab--on {
   color: var(--gold-hi);
   border-bottom-color: var(--gold-hi);
@@ -2133,14 +2158,53 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   font-size: 9px;
   fill: var(--tx-3);
   letter-spacing: 0.15em;
-  cursor: pointer;
+  cursor: default;
 }
-.f2-chart .f2-event-text:hover { fill: var(--gold-hi); }
 
 .f2-chart .f2-legend {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
+}
+
+.f2-range {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--sp-4);
+  margin: calc(-1 * var(--sp-5)) 0 var(--sp-7);
+  color: var(--tx-3);
+  font-family: var(--font-mono);
+  font-size: var(--fz-3xs);
+  letter-spacing: var(--ls-7);
+  text-transform: uppercase;
+}
+
+.f2-range input {
+  width: 100%;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.f2-range input:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.f2-range-value {
+  min-width: 7ch;
+  color: var(--tx-2);
+  text-align: right;
+}
+
+@media (--viewport-sm) {
+  .f2-range {
+    grid-template-columns: 1fr auto;
+  }
+  .f2-range input {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
 }
 
 /* Quick-jump buttons */

@@ -94,6 +94,7 @@ const objectionsLd = {
   .db-num-row {
     display: flex;
     align-items: center;
+    min-width: 0;
     gap: var(--sp-3);
     margin-bottom: var(--sp-6);
   }
@@ -120,7 +121,9 @@ const objectionsLd = {
     font-size: var(--fz-2xl);
     font-weight: var(--fw-bold);
     letter-spacing: var(--ls-snug);
-    flex-shrink: 0;
+    min-width: 0;
+    flex: 0 1 auto;
+    overflow-wrap: break-word;
   }
 
   .db-grid {
