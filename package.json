@@ -14,8 +14,6 @@
     "test:browser": "playwright test",
     "validate": "npm run check && npm run build && npm run audit && npm run test:browser",
     "preview": "astro preview",
-    "indexnow:submit": "node scripts-build/submit-indexnow.mjs",
-    "cloudflare:deploy": "npm run build && wrangler deploy && npm run indexnow:submit",
     "astro": "astro",
     "refresh-data": "node scripts-build/fetch-pulse.mjs && node scripts-build/generate-grain.mjs"
   },
