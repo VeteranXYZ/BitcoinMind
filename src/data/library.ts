@@ -296,6 +296,6 @@ export const LIBRARY: LibraryItem[] = [
       "Debt",
       "Macro Companion"
     ],
-    link: "https://www.jeffbooth.ca/the-price-of-tomorrow"
+    link: "https://www.jeffbooth.ca/books"
   }
 ];

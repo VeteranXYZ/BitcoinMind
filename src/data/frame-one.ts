@@ -27,9 +27,9 @@ export const FRAME_ONE: Frame = {
   title: 'A History of Hardness',
   subtitle: 'Five thousand years of money, told through the question every era had to answer:',
   question: '"What stops you from making more?"',
-  reviewedAt: '2026-07-12',
+  reviewedAt: '2026-08-25',
   sources: [
-    { label: 'Smithsonian — The Stone Money of Yap', href: 'https://www.smithsonianmag.com/history/the-stone-money-of-yap-98029050/' },
+    { label: 'Smithsonian — Stone Money of Yap: A Numismatic Survey', href: 'https://repository.si.edu/items/1e60ad21-d0ce-4421-a5be-8a41248644e9/full' },
     { label: 'Federal Reserve History — Gold Reserve Act of 1934', href: 'https://www.federalreservehistory.org/essays/gold-reserve-act' },
     { label: 'American Presidency Project — Address of August 15, 1971', href: 'https://www.presidency.ucsb.edu/documents/address-the-nation-outlining-new-economic-policy-the-challenge-peace' },
     { label: 'Bitcoin whitepaper', href: 'https://bitcoin.org/bitcoin.pdf' },

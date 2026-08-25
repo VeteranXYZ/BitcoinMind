@@ -11,8 +11,9 @@
     "build": "astro build",
     "check": "astro check",
     "audit": "node scripts-build/audit-site.mjs",
+    "test:worker": "node --test tests/worker.test.mjs",
     "test:browser": "playwright test",
-    "validate": "npm run check && npm run build && npm run audit && npm run test:browser",
+    "validate": "npm run check && npm run build && npm run audit && npm run test:worker && npm run test:browser",
     "preview": "astro preview",
     "astro": "astro",
     "refresh-data": "node scripts-build/fetch-pulse.mjs && node scripts-build/generate-grain.mjs"

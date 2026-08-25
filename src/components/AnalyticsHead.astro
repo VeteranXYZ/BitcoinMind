@@ -2,6 +2,7 @@
 import { SITE } from '@/lib/seo';
 
 const configuredId = SITE.ga4MeasurementId;
+const analyticsHost = SITE.host;
 
 if (configuredId && !/^G-[A-Z0-9]+$/i.test(configuredId)) {
   throw new Error('PUBLIC_GA4_MEASUREMENT_ID must be a GA4 web stream ID such as G-XXXXXXXXXX.');
@@ -10,36 +11,90 @@ if (configuredId && !/^G-[A-Z0-9]+$/i.test(configuredId)) {
 const measurementId = configuredId.toUpperCase();
 ---
 {measurementId && (
-  <script is:inline define:vars={{ measurementId }}>
+  <script is:inline data-analytics-host={analyticsHost} define:vars={{ measurementId }}>
     (function () {
+      var consentKey = 'bitcoinmind_analytics_consent';
+      var analyticsScript = document.currentScript;
+      var productionHost = analyticsScript ? analyticsScript.getAttribute('data-analytics-host') : '';
+      var isProductionHost = location.hostname === productionHost || location.hostname === 'www.' + productionHost;
+      var tagLoaded = false;
+
       window.dataLayer = window.dataLayer || [];
       window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
 
       window.gtag('consent', 'default', {
-        analytics_storage: 'granted',
+        analytics_storage: 'denied',
         ad_storage: 'denied',
         ad_user_data: 'denied',
         ad_personalization: 'denied',
+        wait_for_update: 500,
       });
       window.gtag('set', 'ads_data_redaction', true);
 
-      var tag = document.createElement('script');
-      tag.async = true;
-      tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
-      document.head.appendChild(tag);
+      function readConsent() {
+        try {
+          var stored = localStorage.getItem(consentKey);
+          return stored === 'granted' || stored === 'denied' ? stored : null;
+        } catch (_) {
+          return null;
+        }
+      }
 
-      window.gtag('js', new Date());
-      window.gtag('config', measurementId, {
-        allow_google_signals: false,
-        allow_ad_personalization_signals: false,
-      });
+      function storeConsent(value) {
+        try { localStorage.setItem(consentKey, value); } catch (_) { /* storage unavailable */ }
+      }
 
-      window.BitcoinMindAnalytics = {
-        loaded: true,
+      function clearAnalyticsCookies() {
+        document.cookie.split(';').forEach(function (cookie) {
+          var name = cookie.split('=')[0].trim();
+          if (name === '_ga' || name.indexOf('_ga_') === 0) {
+            document.cookie = name + '=; Max-Age=0; Path=/; SameSite=Lax';
+          }
+        });
+      }
+
+      function loadTag() {
+        if (!isProductionHost || tagLoaded) return;
+        tagLoaded = true;
+
+        var tag = document.createElement('script');
+        tag.async = true;
+        tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
+        document.head.appendChild(tag);
+
+        window.gtag('js', new Date());
+        window.gtag('config', measurementId, {
+          allow_google_signals: false,
+          allow_ad_personalization_signals: false,
+        });
+        window.BitcoinMindAnalytics.loaded = true;
+      }
+
+      var analytics = {
+        loaded: false,
+        enabled: isProductionHost,
+        consent: 'denied',
         track: function (eventName, parameters) {
+          if (!isProductionHost || analytics.consent !== 'granted') return;
           window.gtag('event', eventName, parameters || {});
         },
+        setConsent: function (value) {
+          var next = value === 'granted' ? 'granted' : 'denied';
+          var reloadAfterUpdate = next === 'denied' && analytics.loaded;
+          analytics.consent = next;
+          storeConsent(next);
+          window.gtag('consent', 'update', { analytics_storage: next });
+
+          if (next === 'granted') loadTag();
+          else clearAnalyticsCookies();
+
+          window.dispatchEvent(new CustomEvent('bitcoinmind:analytics-consent', { detail: next }));
+          if (reloadAfterUpdate) window.setTimeout(function () { location.reload(); }, 0);
+        },
       };
+
+      window.BitcoinMindAnalytics = analytics;
+      if (readConsent() === 'granted') analytics.setConsent('granted');
     })();
   </script>
 )}

@@ -6,11 +6,14 @@ interface Props {
 }
 
 const { filters, searchLabel, emptyMessage } = Astro.props;
+const searchId = `resource-search-${searchLabel.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 ---
 <div data-filter-scope data-active-filter="all">
   <div class="fb" role="group" aria-label={`Filter ${searchLabel}`}>
     <span class="fb-lbl">Filter:</span>
     <input
+      id={searchId}
+      name={searchId}
       class="srch"
       type="search"
       aria-label={`Search ${searchLabel}`}

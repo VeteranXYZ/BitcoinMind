@@ -98,11 +98,12 @@ const aboutPageLd = {
 
           <div class="a-sec" id="privacy">
             <div class="a-eye">Privacy</div>
-            <h2 class="a-h">Measured quietly, without advertising.</h2>
+            <h2 class="a-h">Optional measurement, without advertising.</h2>
             <div class="a-body">
-              <p>BitcoinMind uses Google Analytics 4 to understand visits, page usage, and site performance. Google Analytics uses first-party analytics cookies to distinguish visits and sessions, and may process approximate location and browser or device information.</p>
+              <p>BitcoinMind offers optional Google Analytics 4 measurement to understand visits, page usage, and site performance. Analytics is disabled until you choose to allow it, and it never loads from local previews or other non-production hosts. If enabled, Google Analytics uses first-party analytics cookies to distinguish visits and sessions, and may process approximate location and browser or device information.</p>
               <p>Analytics is not used for advertising or ad personalization. BitcoinMind does not intentionally send names, email addresses, wallet addresses, or other directly identifying information to Google Analytics. Google processes analytics data under its own terms; learn more about <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">how Google uses information from sites that use its services</a>.</p>
-              <p>You can limit this collection by blocking or deleting cookies in your browser. For privacy questions, contact <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.</p>
+              <p>Your preference is stored only in this browser. You can change it at any time; withdrawing permission removes BitcoinMind's analytics cookies and reloads the page without the Google tag. For privacy questions, contact <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.</p>
+              <p><button type="button" class="a-privacy-settings" data-analytics-settings>Review analytics preference</button></p>
             </div>
           </div>
 
@@ -148,3 +149,17 @@ const aboutPageLd = {
     </div>
   </div>
 </Base>
+
+<style>
+  .a-privacy-settings {
+    padding: var(--sp-2) var(--sp-4);
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--accent-bright);
+    font: inherit;
+    font-size: var(--fz-sm);
+    cursor: pointer;
+  }
+  .a-privacy-settings:hover { background: var(--accent-hover); }
+</style>
