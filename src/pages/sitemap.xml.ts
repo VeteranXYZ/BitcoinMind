@@ -1,5 +1,5 @@
 import { SITE } from '@/lib/seo';
-import { CANONICAL_PATHS } from '@/lib/routes';
+import { PUBLIC_ROUTES } from '@/lib/routes';
 
 function xmlEscape(value: string): string {
   return value
@@ -16,8 +16,8 @@ function toUrl(path: string): string {
 }
 
 export function GET() {
-  const urls = CANONICAL_PATHS
-    .map((path) => `  <url><loc>${xmlEscape(toUrl(path))}</loc><lastmod>${SITE.lastModified}</lastmod></url>`)
+  const urls = PUBLIC_ROUTES
+    .map((route) => `  <url><loc>${xmlEscape(toUrl(route.path))}</loc><lastmod>${route.lastModified}</lastmod></url>`)
     .join('\n');
 
   return new Response(

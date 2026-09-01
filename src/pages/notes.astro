@@ -1,15 +1,18 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { SITE, canonical } from '@/lib/seo';
+import { publicRoute } from '@/lib/routes';
 
+const route = publicRoute('/notes');
+const socialImage = canonical('/og/bitcoin-2011-note.png');
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: 'What I wrote about Bitcoin in April 2011, when it was $1',
-  author: { '@type': 'Person', name: SITE.author },
+  author: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
   datePublished: '2011-04-01',
-  dateModified: SITE.lastModified,
-  image: SITE.socialImage,
+  dateModified: route.lastModified,
+  image: socialImage,
   publisher: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
   mainEntityOfPage: canonical('/notes'),
 };
@@ -20,13 +23,16 @@ const articleLd = {
   description="An English translation of Hiei’s April 2011 Bitcoin note at roughly $1, preserving early questions about supply, cryptography, speculation, and exchange value."
   path="/notes"
   ogType="article"
+  socialImage={socialImage}
+  socialImageAlt="An archival handwritten note on a dark reading-room desk"
+  dateModified={route.lastModified}
   jsonLd={articleLd}
 >
   <div class="page">
     <div class="c">
       <div class="ph">
         <div class="ph-eye">Notes</div>
-        <h1 class="ph-title">Field <em>Notes</em></h1>
+        <h1 class="ph-title">What I wrote about Bitcoin<br />in April 2011, when it was <em>$1</em></h1>
         <p class="ph-desc">A primary record of meeting Bitcoin early, asking some durable questions, and reaching the wrong practical conclusion.</p>
       </div>
 
@@ -34,7 +40,7 @@ const articleLd = {
         <article class="note-doc note-doc--archive">
           <div class="note-hd">
             <div class="note-num">Archive Document · April 2011, republished 2024</div>
-            <h2 class="note-title">What I wrote about Bitcoin<br />in April 2011, when it was $1</h2>
+            <div class="note-title">Original English Translation</div>
             <div class="note-subtitle">Originally published April 2011 · Translated from Chinese · Nothing has been changed</div>
           </div>
 

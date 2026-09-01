@@ -10,6 +10,20 @@ const warnings = [];
 const fail = (message) => failures.push(message);
 const warn = (message) => warnings.push(message);
 const read = (path) => readFile(path, "utf8");
+const normalizeText = (value = '') => value
+  .replace(/<br\s*\/?>/gi, ' ')
+  .replace(/<[^>]+>/g, '')
+  .replace(/&amp;/g, '&')
+  .replace(/&#x27;|&#39;/g, '’')
+  .replace(/&quot;/g, '"')
+  .replace(/\s+/g, ' ')
+  .trim();
+const validDate = (value) => /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value));
+const pngDimensions = (buffer) => {
+  const signature = buffer.subarray(0, 8).toString('hex');
+  if (signature !== '89504e470d0a1a0a' || buffer.subarray(12, 16).toString('ascii') !== 'IHDR') return null;
+  return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+};
 const routeFile = (route) => route === "/" ? join(DIST, "index.html") : join(DIST, `${route.slice(1)}.html`);
 const routeFromUrl = (value) => {
   const url = new URL(value, siteConfig.url);
@@ -34,8 +48,17 @@ async function builtHtmlRoutes(directory, prefix = '') {
 const sitemap = await read(join(DIST, "sitemap.xml"));
 const sitemapRoutes = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => routeFromUrl(match[1]));
 const routeRegistry = JSON.parse(await read(join(ROOT, "src/data/routes.json")));
+const routeByPath = new Map(routeRegistry.map((route) => [route.path, route]));
 const expectedPublicRoutes = routeRegistry.map((route) => route.path);
 const generatedPublicRoutes = (await builtHtmlRoutes(DIST)).filter((route) => route !== '/404');
+
+for (const route of routeRegistry) {
+  if (!route.heading?.trim()) fail(`routes: ${route.path} is missing its reviewed h1 heading`);
+  if (!validDate(route.lastModified)) fail(`routes: ${route.path} has invalid lastModified ${route.lastModified}`);
+  if (route.parentPath && !routeByPath.has(route.parentPath)) {
+    fail(`routes: ${route.path} has unknown parent ${route.parentPath}`);
+  }
+}
 
 if (sitemapRoutes.length !== expectedPublicRoutes.length) {
   fail(`sitemap: expected ${expectedPublicRoutes.length} registered public routes, found ${sitemapRoutes.length}`);
@@ -66,10 +89,16 @@ for (const route of [...sitemapRoutes, "/404"]) {
 const pageTitles = new Map();
 const pageDescriptions = new Map();
 const pageCanonicals = new Map();
+const inspectedImages = new Map();
 
 for (const [route, html] of pages) {
   const h1s = html.match(/<h1(?:\s|>)/g) ?? [];
   if (h1s.length !== 1) fail(`${route}: expected one h1, found ${h1s.length}`);
+  const h1 = normalizeText(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/)?.[1]);
+  const expectedHeading = routeByPath.get(route)?.heading;
+  if (expectedHeading && h1 !== expectedHeading) {
+    fail(`${route}: h1 is "${h1}", expected reviewed heading "${expectedHeading}"`);
+  }
   if (!/<title>[^<]+<\/title>/.test(html)) fail(`${route}: missing title`);
   if (!/<meta\s+name="description"\s+content="[^"]+"/.test(html)) fail(`${route}: missing meta description`);
   if (!/<link\s+rel="canonical"\s+href="[^"]+"/.test(html)) fail(`${route}: missing canonical URL`);
@@ -77,6 +106,7 @@ for (const [route, html] of pages) {
   if (!/<meta\s+name="robots"\s+content="[^"]+"/.test(html)) fail(`${route}: missing robots directive`);
   if (!/<meta\s+property="og:image"\s+content="https:\/\/[^"]+"/.test(html)) fail(`${route}: missing absolute og:image`);
   if (!/<meta\s+name="twitter:card"\s+content="summary_large_image"/.test(html)) fail(`${route}: missing large-image Twitter card`);
+  if (!/<meta\s+name="twitter:image:alt"\s+content="[^"]+"/.test(html)) fail(`${route}: missing Twitter image alt text`);
   if (!/<script[^>]+type="application\/ld\+json"/.test(html)) fail(`${route}: missing structured data`);
 
   const canonicalUrl = html.match(/<link\s+rel="canonical"\s+href="([^"]+)"/)?.[1];
@@ -90,11 +120,82 @@ for (const [route, html] of pages) {
     pageCanonicals.set(canonicalUrl, route);
   }
 
+  const structuredData = [];
   for (const block of html.matchAll(/<script[^>]+type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)) {
     try {
-      JSON.parse(block[1]);
+      structuredData.push(JSON.parse(block[1]));
     } catch {
       fail(`${route}: invalid JSON-LD`);
+    }
+  }
+
+  if (route !== '/') {
+    const breadcrumb = structuredData.find((item) => item['@type'] === 'BreadcrumbList');
+    const ancestors = [];
+    let cursor = routeByPath.get(route);
+    while (cursor && cursor.path !== '/') {
+      ancestors.unshift(cursor);
+      cursor = cursor.parentPath ? routeByPath.get(cursor.parentPath) : undefined;
+    }
+    const expectedBreadcrumbs = route === '/404'
+      ? [{ name: siteConfig.name, item: siteConfig.url }, { name: 'Not Found', item: `${siteConfig.url}/404` }]
+      : [{ name: siteConfig.name, item: siteConfig.url }, ...ancestors.map((item) => ({ name: item.label, item: `${siteConfig.url}${item.path}` }))];
+    const actualBreadcrumbs = breadcrumb?.itemListElement ?? [];
+    if (actualBreadcrumbs.length !== expectedBreadcrumbs.length) {
+      fail(`${route}: expected ${expectedBreadcrumbs.length} breadcrumb levels, found ${actualBreadcrumbs.length}`);
+    } else {
+      expectedBreadcrumbs.forEach((expected, index) => {
+        const actual = actualBreadcrumbs[index];
+        if (actual?.position !== index + 1 || actual?.name !== expected.name || actual?.item !== expected.item) {
+          fail(`${route}: breadcrumb ${index + 1} does not match ${expected.name} (${expected.item})`);
+        }
+      });
+    }
+  }
+
+  const ogImage = html.match(/<meta\s+property="og:image"\s+content="([^"]+)"/)?.[1];
+  const twitterImage = html.match(/<meta\s+name="twitter:image"\s+content="([^"]+)"/)?.[1];
+  const declaredWidth = Number(html.match(/<meta\s+property="og:image:width"\s+content="([^"]+)"/)?.[1]);
+  const declaredHeight = Number(html.match(/<meta\s+property="og:image:height"\s+content="([^"]+)"/)?.[1]);
+  if (ogImage && twitterImage !== ogImage) fail(`${route}: twitter:image differs from og:image`);
+  if (ogImage) {
+    const imageUrl = new URL(ogImage);
+    if (imageUrl.origin !== siteConfig.url) {
+      fail(`${route}: social image must use the canonical site origin`);
+    } else {
+      let dimensions = inspectedImages.get(imageUrl.pathname);
+      if (!dimensions) {
+        try {
+          dimensions = pngDimensions(await readFile(join(DIST, imageUrl.pathname.slice(1))));
+          inspectedImages.set(imageUrl.pathname, dimensions);
+        } catch {
+          fail(`${route}: social image ${imageUrl.pathname} is missing from the build`);
+        }
+      }
+      if (!dimensions) fail(`${route}: social image ${imageUrl.pathname} is not a valid PNG`);
+      else {
+        if (dimensions.width !== declaredWidth || dimensions.height !== declaredHeight) {
+          fail(`${route}: declared social image size ${declaredWidth}x${declaredHeight} differs from ${dimensions.width}x${dimensions.height}`);
+        }
+        const ratio = dimensions.width / dimensions.height;
+        if (ratio < 1.8 || ratio > 2) fail(`${route}: summary_large_image ratio ${ratio.toFixed(3)} is not wide-card safe`);
+      }
+    }
+  }
+
+  const article = structuredData.find((item) => item['@type'] === 'Article');
+  const expectedModified = routeByPath.get(route)?.lastModified;
+  const webPage = structuredData.find((item) => item['@type'] === 'WebPage');
+  if (expectedModified && webPage?.dateModified !== expectedModified) {
+    fail(`${route}: WebPage dateModified is ${webPage?.dateModified}, expected ${expectedModified}`);
+  }
+  if (article) {
+    const articleImage = Array.isArray(article.image) ? article.image[0] : article.image;
+    if (articleImage !== ogImage) fail(`${route}: Article image must match the page-specific social image`);
+    if (articleImage === siteConfig.url + '/og/bitcoinmind.png') fail(`${route}: Article uses the generic site image`);
+    if (!article.publisher) fail(`${route}: Article is missing publisher identity`);
+    if (expectedModified && article.dateModified !== expectedModified) {
+      fail(`${route}: Article dateModified is ${article.dateModified}, expected ${expectedModified}`);
     }
   }
 
@@ -131,10 +232,13 @@ if (builtGa4Ids.size > 1) fail(`analytics: multiple GA4 Measurement IDs found: $
 
 const sitemapLastmods = [...sitemap.matchAll(/<lastmod>(.*?)<\/lastmod>/g)].map((match) => match[1]);
 if (sitemapLastmods.length !== sitemapRoutes.length) fail('sitemap: every URL must have a lastmod value');
-for (const value of sitemapLastmods) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || !Number.isFinite(Date.parse(value))) {
+for (const [index, value] of sitemapLastmods.entries()) {
+  if (!validDate(value)) {
     fail(`sitemap: invalid lastmod ${value}`);
   }
+  const route = sitemapRoutes[index];
+  const expected = routeByPath.get(route)?.lastModified;
+  if (expected && value !== expected) fail(`sitemap: ${route} lastmod is ${value}, expected ${expected}`);
 }
 
 for (const [route, html] of pages) {

@@ -10,7 +10,7 @@ export const SITE = {
   ...siteData,
   host: new URL(siteData.url).hostname,
   ga4MeasurementId: import.meta.env.PUBLIC_GA4_MEASUREMENT_ID?.trim() || 'G-EW3470R00V',
-  socialImage: `${siteData.url}/og-image.png`,
+  socialImage: `${siteData.url}/og/bitcoinmind.png`,
 };
 
 export function fullTitle(title: string): string {

@@ -1,10 +1,12 @@
 ---
 import Base from '@/layouts/Base.astro';
 import { SITE } from '@/lib/seo';
+import { publicRoute } from '@/lib/routes';
 import { LIBRARY } from '@/data/library';
 import { TEXTS } from '@/data/texts';
 import { TOOLKIT } from '@/data/toolkit';
 
+const route = publicRoute('/about');
 const stats: [string, string][] = [
   ['Library items', String(LIBRARY.length)], ['Primary texts', String(TEXTS.length)], ['Toolkit items', String(TOOLKIT.length)],
   ['First contact', 'April 2011'], ['Last updated', SITE.lastUpdated],
@@ -34,7 +36,7 @@ const aboutPageLd = {
     name: SITE.name,
     url: SITE.url,
   },
-  dateModified: SITE.lastModified,
+  dateModified: route.lastModified,
   author: { '@type': 'Person', name: SITE.author },
 };
 ---
@@ -49,7 +51,7 @@ const aboutPageLd = {
     <div class="c">
       <div class="ph">
         <div class="ph-eye">About</div>
-        <h1 class="ph-title"><em>Hiei</em></h1>
+        <h1 class="ph-title"><em>About</em> BitcoinMind</h1>
         <p class="ph-desc">First wrote about Bitcoin in April 2011, at roughly one dollar. The questions survived better than the conclusion.</p>
       </div>
 

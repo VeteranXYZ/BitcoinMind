@@ -2,14 +2,18 @@
 import Base from '@/layouts/Base.astro';
 import FrameTwoChart from '@/components/FrameTwoChart';
 import { SITE, canonical } from '@/lib/seo';
+import { publicRoute } from '@/lib/routes';
+const route = publicRoute('/frames/2');
+const socialImage = canonical('/og/after-the-anchor.png');
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: 'After the Anchor: Dollar Purchasing Power and Bitcoin',
   description: 'An interactive, source-labeled comparison of U.S. dollar purchasing power since 1971 and Bitcoin since 2009.',
-  image: SITE.socialImage,
-  dateModified: SITE.lastModified,
+  image: socialImage,
+  dateModified: route.lastModified,
   author: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
+  publisher: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
   mainEntityOfPage: canonical('/frames/2'),
 };
 ---
@@ -19,6 +23,9 @@ const articleLd = {
   description="An interactive, source-labeled view of U.S. dollar purchasing power since 1971 beside Bitcoin since 2009, with CPI methodology and explicit limitations."
   path="/frames/2"
   ogType="article"
+  socialImage={socialImage}
+  socialImageAlt="An editorial chart contrasting declining dollar purchasing power with Bitcoin’s volatile history"
+  dateModified={route.lastModified}
   jsonLd={articleLd}
 >
   <div class="page f2">
