@@ -222,10 +222,12 @@ for (const [route, html] of pages) {
   const ga4Id = html.match(/(?:const|var) measurementId\s*=\s*["'](G-[A-Z0-9]+)["']/i)?.[1]?.toUpperCase();
   if (!ga4Id) fail(`${route}: GA4 Measurement ID is missing`);
   else builtGa4Ids.add(ga4Id);
-  if (!html.includes("analytics_storage: 'denied'")) fail(`${route}: denied-by-default GA4 analytics storage is missing`);
+  if (!html.includes("analytics_storage: 'granted'")) fail(`${route}: enabled GA4 analytics storage is missing`);
   if (!html.includes("ad_storage: 'denied'")) fail(`${route}: denied GA4 advertising storage is missing`);
-  if (!html.includes('bitcoinmind_analytics_consent')) fail(`${route}: analytics preference storage is missing`);
-  if (!html.includes('data-analytics-consent')) fail(`${route}: analytics consent UI is missing`);
+  if (!html.includes("ad_user_data: 'denied'")) fail(`${route}: denied GA4 advertising user data is missing`);
+  if (!html.includes("ad_personalization: 'denied'")) fail(`${route}: denied GA4 advertising personalization is missing`);
+  if (html.includes('bitcoinmind_analytics_consent')) fail(`${route}: obsolete analytics preference storage is present`);
+  if (html.includes('data-analytics-consent')) fail(`${route}: obsolete analytics consent UI is present`);
   if (!html.includes('isProductionHost')) fail(`${route}: analytics production-host guard is missing`);
 }
 if (builtGa4Ids.size > 1) fail(`analytics: multiple GA4 Measurement IDs found: ${[...builtGa4Ids].join(', ')}`);

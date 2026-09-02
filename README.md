@@ -256,7 +256,7 @@ npm run preview
 
 ### Google Analytics 4
 
-GA4 consent controls are wired into every page through the shared layout. The production web-stream Measurement ID is part of the public site configuration; forks or alternate environments can override it at build time:
+GA4 is wired into every page through the shared layout. The production web-stream Measurement ID is part of the public site configuration; forks or alternate environments can override it at build time:
 
 ```bash
 cp .env.example .env
@@ -264,7 +264,7 @@ cp .env.example .env
 npm run build
 ```
 
-Analytics storage is denied by default. The Google tag loads only on `bitcoinmind.com` or `www.bitcoinmind.com` after the visitor explicitly allows analytics; local previews and automated tests never send data to the production property. Advertising storage, advertising user data, advertising personalization, and Google Signals remain disabled. When analytics is allowed, Enhanced Measurement may collect page views, scroll depth, outbound resource clicks, and file downloads. Resource-filter selections are sent as the recommended `select_content` event; free-form search terms are not sent. Visitors can review or withdraw their preference from the Privacy section on the About page.
+The Google tag loads automatically only on `bitcoinmind.com` or `www.bitcoinmind.com`; local previews and automated tests never send data to the production property. Analytics storage is enabled for ordinary GA4 visit and session measurement. Advertising storage, advertising user data, advertising personalization, and Google Signals remain disabled. Enhanced Measurement may collect page views, scroll depth, outbound resource clicks, and file downloads. Resource-filter selections are sent as the recommended `select_content` event; free-form search terms are not sent. No site-wide consent prompt or analytics-preference state is rendered.
 
 ## Working With AI Agents
 

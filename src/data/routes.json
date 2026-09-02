@@ -14,5 +14,5 @@
   { "path": "/notes", "label": "Notes", "heading": "What I wrote about Bitcoin in April 2011, when it was $1", "lastModified": "2026-08-31", "section": "Hiei", "legacyHash": "#notes", "navArea": "explore", "navOrder": 1, "description": "Personal writing and archive notes." },
   { "path": "/questions", "label": "Questions", "heading": "Open Questions", "lastModified": "2026-08-31", "section": "Hiei", "legacyHash": "#questions", "navArea": "explore", "navOrder": 2, "description": "Reader questions and serious answers." },
   { "path": "/stack", "label": "Stack", "heading": "The Stack", "lastModified": "2026-08-31", "section": "Hiei", "legacyHash": "#stack", "navArea": "explore", "navOrder": 3, "description": "How I think about holding Bitcoin." },
-  { "path": "/about", "label": "About", "heading": "About BitcoinMind", "lastModified": "2026-08-31", "section": "Hiei", "legacyHash": "#about", "navArea": "explore", "navOrder": 4, "description": "The story and curation principles." }
+  { "path": "/about", "label": "About", "heading": "About BitcoinMind", "lastModified": "2026-09-01", "section": "Hiei", "legacyHash": "#about", "navArea": "explore", "navOrder": 4, "description": "The story and curation principles." }
 ]

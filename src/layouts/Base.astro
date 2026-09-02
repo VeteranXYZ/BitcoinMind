@@ -2,7 +2,6 @@
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import AnalyticsHead from '@/components/AnalyticsHead.astro';
-import AnalyticsConsent from '@/components/AnalyticsConsent.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
 import { LEGACY_HASH_REDIRECTS, PUBLIC_ROUTES } from '@/lib/routes';
 
@@ -175,7 +174,6 @@ const legacyHashRedirects = LEGACY_HASH_REDIRECTS;
   </main>
 
   {showFooter && <Footer />}
-  <AnalyticsConsent />
 
   <script>
     import '@/scripts/reading-progress';

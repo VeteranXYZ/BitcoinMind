@@ -55,30 +55,26 @@ test('resource filter types stay consistent and emit one analytics event', async
   await expect.poll(() => page.evaluate(() => (window as typeof window & { filterEventCount: number }).filterEventCount)).toBe(1);
 });
 
-test('analytics is opt-in and never calls the production property from preview', async ({ page }) => {
+test('analytics has no consent prompt and never calls the production property from preview', async ({ page }) => {
   const googleRequests: string[] = [];
   page.on('request', (request) => {
     if (/google(tagmanager|-analytics)\.com/.test(request.url())) googleRequests.push(request.url());
   });
 
   await page.goto('/');
-  const preferences = page.getByRole('region', { name: 'Analytics preferences' });
-  await expect(preferences).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Analytics preferences' })).toHaveCount(0);
   await expect.poll(() => page.evaluate(() => {
     const analytics = (window as typeof window & {
-      BitcoinMindAnalytics?: { consent: string; enabled: boolean; loaded: boolean };
+      BitcoinMindAnalytics?: { enabled: boolean; loaded: boolean };
     }).BitcoinMindAnalytics;
     return analytics && {
-      consent: analytics.consent,
       enabled: analytics.enabled,
       loaded: analytics.loaded,
     };
-  })).toEqual({ consent: 'denied', enabled: false, loaded: false });
+  })).toEqual({ enabled: false, loaded: false });
 
-  await page.getByRole('button', { name: 'Allow analytics' }).click();
-  await expect(preferences).toBeHidden();
-  await expect.poll(() => page.evaluate(() => localStorage.getItem('bitcoinmind_analytics_consent'))).toBe('granted');
   await page.waitForTimeout(100);
+  expect(await page.evaluate(() => localStorage.getItem('bitcoinmind_analytics_consent'))).toBeNull();
   expect(googleRequests).toEqual([]);
   expect((await page.context().cookies()).filter((cookie) => cookie.name.startsWith('_ga'))).toEqual([]);
 });
