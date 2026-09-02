@@ -63,7 +63,7 @@ const questionsLd = {
           <h2 class="qa-submit-title">Have a question?</h2>
         </div>
         <p class="qa-submit-body">Send a question that survives a quick search and deserves a careful answer. The most useful questions expose an assumption, a tradeoff, or evidence that could change the conclusion.</p>
-        <a class="qa-submit-cta" href={`mailto:${SITE.contactEmail}?subject=Question for BitcoinMind`} target="_blank" rel="noopener noreferrer">
+        <a class="qa-submit-cta" href={`mailto:${SITE.contactEmail}?subject=Question for BitcoinMind`}>
           <span class="qa-submit-arrow">→</span>
           <span>{SITE.contactEmail}</span>
         </a>
@@ -100,7 +100,7 @@ const questionsLd = {
 
   .qa-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--gold);
     letter-spacing: var(--ls-5);
     border: 1px solid var(--border-accent);
@@ -136,7 +136,7 @@ const questionsLd = {
 
   .qa-date {
     font-family: var(--font-mono);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-7);
     text-transform: uppercase;
@@ -144,7 +144,7 @@ const questionsLd = {
 
   .qa-by {
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--gold);
     letter-spacing: var(--ls-7);
     text-transform: uppercase;
@@ -152,7 +152,7 @@ const questionsLd = {
 
   .qa-answer {
     font-family: var(--font-body);
-    font-size: var(--fz-md);
+    font-size: var(--fz-base);
     line-height: var(--lh-loose);
     color: var(--tx-2);
   }
@@ -195,14 +195,14 @@ const questionsLd = {
 
   .qa-submit-title {
     font-family: var(--font-body);
-    font-size: var(--fz-2xl);
+    font-size: var(--fz-xl);
     font-weight: var(--fw-bold);
     letter-spacing: var(--ls-snug);
   }
 
   .qa-submit-body {
     font-family: var(--font-body);
-    font-size: var(--fz-md);
+    font-size: var(--fz-base);
     line-height: var(--lh-relaxed);
     color: var(--tx-2);
     margin-bottom: var(--sp-5);

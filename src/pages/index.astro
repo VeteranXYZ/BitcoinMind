@@ -12,6 +12,7 @@ import { TIMELINE } from '@/data/timeline';
 import { GLOSSARY } from '@/data/glossary';
 import { DEBATES } from '@/data/debates';
 import { SITE } from '@/lib/seo';
+import { spellNumberSentence } from '@/lib/numbers';
 import pulseSnapshot from '../../public/pulse.json';
 
 const byId = <T extends { id: string }>(items: T[], ids: string[]) =>
@@ -46,7 +47,7 @@ const deeperCards = [
   {
     href: '/objections',
     title: 'Objections',
-    desc: 'Nine serious criticisms. Each begins with what it gets right before attempting a narrower response.',
+    desc: `${spellNumberSentence(DEBATES.length)} serious criticisms. Each begins with what it gets right before attempting a narrower response.`,
     meta: `${DEBATES.length} objections`,
     cta: 'READ →',
   },
@@ -236,7 +237,7 @@ const websiteLd = {
 
   .home-primer-label {
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     font-weight: var(--fw-semi);
     color: var(--gold-hi);
     letter-spacing: var(--ls-7);
@@ -260,7 +261,7 @@ const websiteLd = {
 
   .home-primer-body {
     font-family: var(--font-body);
-    font-size: var(--fz-md);
+    font-size: var(--fz-base);
     line-height: var(--lh-relaxed);
     color: var(--tx-2);
     max-width: 640px;
@@ -319,7 +320,7 @@ const websiteLd = {
   .home-question-num,
   .home-question > span:last-child {
     font-family: var(--font-mono);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--gold);
     letter-spacing: var(--ls-5);
     text-transform: uppercase;

@@ -17,13 +17,6 @@ const typeIcon: Record<string, string> = {
   internal: 'BitcoinMind',
   external: 'External',
 };
-const routeQuestions: Record<string, string> = {
-  'rh-monetary': 'What is money, and why does scarcity matter?',
-  'rh-technical': 'How does Bitcoin actually work?',
-  'rh-verification': 'Which claims can you verify for yourself?',
-  'rh-custody': 'Which risks become yours when you hold the keys?',
-  'rh-philosophy': 'Which conclusions follow—and which remain arguments?',
-};
 const routeName = (title: string) => title.replace(/^The /, '').replace(/ Path$/, '');
 const catalogs = {
   library: { route: '/library', items: LIBRARY },
@@ -83,7 +76,7 @@ const pathsLd = {
         {paths.map((rh) => (
           <a class="rh-route-card" href={`#${rh.id}`}>
             <div class="rh-route-kicker">{routeName(rh.title)}</div>
-            <h2 class="rh-route-question">{routeQuestions[rh.id]}</h2>
+            <h2 class="rh-route-question">{rh.question}</h2>
             <div class="rh-route-meta">
               <Tag label={rh.difficulty} />
               <span>{rh.totalTime}</span>
@@ -181,7 +174,7 @@ const pathsLd = {
 
   .rh-route-kicker {
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     font-weight: var(--fw-semi);
     color: var(--gold);
     letter-spacing: var(--ls-7);
@@ -203,7 +196,7 @@ const pathsLd = {
     flex-wrap: wrap;
     gap: var(--sp-2);
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-3);
   }
@@ -268,16 +261,16 @@ const pathsLd = {
 
   .rh-path-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--tx-3);
-    letter-spacing: var(--ls-9);
+    letter-spacing: var(--ls-7);
     text-transform: uppercase;
     margin-bottom: var(--sp-2);
   }
 
   .rh-title {
     font-family: var(--font-body);
-    font-size: var(--fz-2xl);
+    font-size: var(--fz-xl);
     font-weight: var(--fw-bold);
     letter-spacing: var(--ls-snug);
     line-height: var(--lh-snug);
@@ -286,7 +279,7 @@ const pathsLd = {
 
   .rh-subtitle {
     font-family: var(--font-body);
-    font-size: var(--fz-md);
+    font-size: var(--fz-base);
     font-style: italic;
     color: var(--tx-2);
   }
@@ -301,14 +294,14 @@ const pathsLd = {
 
   .rh-time {
     font-family: var(--font-mono);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-3);
   }
 
   .rh-desc {
     font-family: var(--font-body);
-    font-size: var(--fz-md);
+    font-size: var(--fz-base);
     line-height: var(--lh-relaxed);
     color: var(--tx-2);
     max-width: var(--max-prose);
@@ -322,7 +315,7 @@ const pathsLd = {
     margin-bottom: var(--sp-6);
   }
   .rh-contract > div { padding: var(--sp-4); border: 1px solid var(--bdr); background: var(--bg-deep); }
-  .rh-contract strong { display: block; margin-bottom: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
+  .rh-contract strong { display: block; margin-bottom: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
   .rh-contract span { display: block; font-size: var(--fz-sm); line-height: var(--lh-relaxed); color: var(--tx-2); }
 
   .rh-steps {
@@ -354,7 +347,7 @@ const pathsLd = {
 
   .rh-step-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--gold);
     letter-spacing: var(--ls-5);
     width: 32px;
@@ -376,7 +369,7 @@ const pathsLd = {
 
   .rh-step-title {
     font-family: var(--font-body);
-    font-size: var(--fz-md);
+    font-size: var(--fz-base);
     font-weight: var(--fw-semi);
     letter-spacing: var(--ls-normal);
     color: var(--tx);
@@ -384,7 +377,7 @@ const pathsLd = {
 
   .rh-step-author {
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--tx-3);
     letter-spacing: var(--ls-3);
   }
@@ -400,7 +393,7 @@ const pathsLd = {
   .rh-step-type,
   .rh-step-time {
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     letter-spacing: var(--ls-5);
     text-transform: uppercase;
     border: 1px solid var(--bdr);
@@ -415,7 +408,7 @@ const pathsLd = {
   .rh-step-time {
     color: var(--gold);
   }
-  .study-progress { margin-right: var(--sp-3); padding: var(--sp-2); border: 1px solid var(--bdr); border-radius: var(--radius); font-size: var(--fz-3xs); color: var(--tx-3); }
+  .study-progress { margin-right: var(--sp-3); padding: var(--sp-2); border: 1px solid var(--bdr); border-radius: var(--radius); font-size: var(--fz-xs); color: var(--tx-3); }
   .study-progress[aria-pressed='true'] { color: var(--gold-hi); border-color: var(--border-accent); background: var(--accent-hover); }
   .rh-next { display: flex; justify-content: flex-end; gap: var(--sp-2); margin-top: var(--sp-5); font-size: var(--fz-sm); color: var(--gold-hi); }
   .rh-next span { color: var(--tx-3); }

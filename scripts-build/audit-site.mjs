@@ -1,8 +1,14 @@
 import { readFile, readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { collectScriptHashes } from "./csp-hashes.mjs";
 
-const ROOT = new URL("../", import.meta.url).pathname;
+// fileURLToPath, not .pathname: the latter stays percent-encoded, so any
+// checkout under a directory with a space in its name resolved to a path
+// that does not exist.
+const ROOT = fileURLToPath(new URL("../", import.meta.url));
 const DIST = join(ROOT, "dist");
+const assetDirectory = join(DIST, "_astro");
 const siteConfig = JSON.parse(await readFile(join(ROOT, "src/data/site.json"), "utf8"));
 const failures = [];
 const warnings = [];
@@ -271,7 +277,7 @@ const contracts = [
   ["/texts", /data-filter-scope/, "text filters"],
   ["/toolkit", /data-filter-scope/, "toolkit filters"],
   ["/frames/2", /aria-labelledby="f2-chart-title f2-chart-desc"/, "accessible chart fallback"],
-  ["/", /aria-modal="true"/, "welcome dialog semantics"],
+  ["/", /id="site-menu"[\s\S]{0,240}?aria-modal="true"/, "modal mobile-menu semantics"],
 ];
 for (const [route, pattern, label] of contracts) {
   if (!pattern.test(pages.get(route) ?? "")) fail(`${route}: missing ${label}`);
@@ -279,6 +285,44 @@ for (const [route, pattern, label] of contracts) {
 
 if (!/name="robots"\s+content="noindex, (?:no)?follow"/.test(pages.get("/404") ?? "")) {
   fail("/404: missing noindex directive");
+}
+
+const builtCss = (await Promise.all(
+  (await readdir(assetDirectory)).filter((name) => name.endsWith(".css"))
+    .map((name) => read(join(assetDirectory, name))),
+)).join("\n");
+
+// Inline prose links inherit the global anchor reset, so without an explicit
+// rule they render identically to the paragraph around them.
+if (!/\.a-body a[^{]*\{[^}]*text-decoration:\s*underline/.test(builtCss)) {
+  fail("styles: inline prose links are missing their underline affordance");
+}
+
+// Fontsource emits a legacy .woff beside every .woff2; the build strips the
+// fallback so those files are never referenced or shipped.
+const legacyFonts = (await readdir(assetDirectory)).filter((name) => name.endsWith(".woff"));
+if (legacyFonts.length) fail(`performance: ${legacyFonts.length} legacy .woff font(s) shipped`);
+if (/format\((["'])woff\1\)/.test(builtCss)) fail("performance: built CSS still references legacy .woff");
+
+// The resource filter belongs only to the pages that render a filter scope.
+// It used to be an inline block in the shared layout, so every page paid for
+// it. The marker is the code's own attribute lookup, not the card markup.
+for (const [route, html] of pages) {
+  if (/data-filter-card/.test(html)) continue;
+  const shipsFilterCode = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)]
+    .some(([, body]) => body.includes("filter-values"));
+  if (shipsFilterCode) fail(`${route}: ships resource-filter code but renders no filters`);
+}
+
+// worker/index.js names every inline script by hash. If the committed list
+// does not match what this build emitted, the deployed CSP would block them.
+const builtHashes = await collectScriptHashes(DIST);
+const declaredHashes = JSON.parse(await read(join(ROOT, "worker/script-hashes.json")));
+for (const hash of builtHashes) {
+  if (!declaredHashes.includes(hash)) fail(`csp: worker/script-hashes.json is missing ${hash}`);
+}
+for (const hash of declaredHashes) {
+  if (!builtHashes.includes(hash)) fail(`csp: worker/script-hashes.json has a stale entry ${hash}`);
 }
 
 for (const filename of await readdir(join(ROOT, "src/data"))) {
@@ -295,9 +339,8 @@ if (!Number.isFinite(pulseAgeDays)) fail("public/pulse.json: invalid fetchedAt")
 else if (pulseAgeDays > 14) warn(`public/pulse.json: snapshot is ${Math.floor(pulseAgeDays)} days old`);
 if (pulse.source !== "snapshot") warn(`public/pulse.json: source is ${pulse.source}; one or more feeds used a fallback`);
 
-const assetDir = join(DIST, "_astro");
-const assets = await readdir(assetDir);
-const sizes = await Promise.all(assets.map(async (name) => ({ name, bytes: (await stat(join(assetDir, name))).size })));
+const assets = await readdir(assetDirectory);
+const sizes = await Promise.all(assets.map(async (name) => ({ name, bytes: (await stat(join(assetDirectory, name))).size })));
 const css = sizes.filter(({ name }) => name.endsWith(".css"));
 const js = sizes.filter(({ name }) => name.endsWith(".js"));
 const fonts = sizes.filter(({ name }) => /\.(woff2?|ttf)$/.test(name));
@@ -309,7 +352,7 @@ const totalFonts = fonts.reduce((sum, { bytes }) => sum + bytes, 0);
 if (largestCss > 65_536) fail(`performance: largest CSS asset is ${largestCss} bytes (budget 65,536)`);
 if (largestJs > 32_768) fail(`performance: largest JS asset is ${largestJs} bytes (budget 32,768)`);
 if (totalJs > 98_304) fail(`performance: total JS is ${totalJs} bytes (budget 98,304)`);
-if (totalFonts > 550_000) fail(`performance: total fonts are ${totalFonts} bytes (budget 550,000)`);
+if (totalFonts > 260_000) fail(`performance: total fonts are ${totalFonts} bytes (budget 260,000)`);
 
 for (const message of warnings) console.warn(`WARN  ${message}`);
 if (failures.length) {

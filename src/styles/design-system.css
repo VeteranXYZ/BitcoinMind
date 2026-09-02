@@ -13,11 +13,12 @@
   --card: #19150f;
   --card-hover: #1e1912;
 
+  /* Three steps is what the site actually uses. --text-secondary (#a89d90)
+     and --text-faint (#6d6358) were defined but referenced nowhere, and the
+     latter only reached 3.35:1 on --bg, below AA for body copy. */
   --text-heading: #f2ede3;
   --text-body: #c4bcb0;
-  --text-secondary: #a89d90;
   --text-muted: #9a8f82;
-  --text-faint: #6d6358;
 
   --accent: #c8913a;
   --accent-bright: #d8a24a;
@@ -42,7 +43,6 @@
   --bdr-2: var(--border-strong);
   --tx: var(--text-heading);
   --tx-2: var(--text-body);
-  --tx-2b: var(--text-secondary);
   --tx-3: var(--text-muted);
   --gold: var(--accent);
   --gold-dim: var(--accent-hover);
@@ -58,8 +58,9 @@
   --pb-beg:        var(--accent-muted);           /* reading-progress bar gradient */
 
   /* ── Tag base palette ──────────────────────────────────
-     7 unique color families. Tag classes alias these — eliminates
-     the duplication where two tags pointed at identical hex pairs. */
+     Two families. Only "essential" is warm; every other tag is neutral by
+     design, so the aliases below exist to make a future re-colouring a
+     one-line change, not because the palette is wide. */
   --c-tag-neutral-bg: rgba(242, 237, 227, 0.055);
   --c-tag-neutral-fg: var(--text-muted);
   --c-tag-warm-bg:    rgba(200, 145, 58, 0.095);
@@ -93,10 +94,8 @@
   --font-display: 'Literata', serif;
   --font-body:    'Inter', sans-serif;
   --font-mono:    'Geist Mono', monospace;
-  --font-serif:   var(--font-display); /* compatibility alias for display roles */
 
   /* Display sizes — restrained, archival, and page-consistent. */
-  --fz-hero:    clamp(44px, 6.4vw, 76px);
   --fz-page:    clamp(36px, 5.2vw, 56px);
   --fz-section: clamp(26px, 3.2vw, 36px);
   --fz-step:    clamp(22px, 2.3vw, 28px);
@@ -111,20 +110,16 @@
   --text-xl:   20px;
   --text-2xl:  24px;
   --text-3xl:  32px;
-  --text-4xl:  40px;
-  --text-5xl:  56px;
-  --text-6xl:  72px;
 
-  /* Compatibility aliases used by existing components. */
-  --fz-3xs:  var(--text-xs);
+  /* Role aliases used by components. Every one resolves to a distinct size:
+     --fz-3xs/--fz-md/--fz-2xl were removed because they were exact duplicates
+     of --fz-xs/--fz-base/--fz-xl and implied a granularity that did not exist. */
   --fz-xs:   var(--text-xs);
   --fz-sm:   var(--text-sm);
   --fz-base: var(--text-base);
-  --fz-md:   var(--text-base);
   --fz-prose: var(--text-lg);
   --fz-lg:   var(--text-xl);
   --fz-xl:   var(--text-2xl);
-  --fz-2xl:  var(--text-2xl);
   --fz-3xl:  var(--text-3xl);
 
   /* Font weights */
@@ -132,10 +127,8 @@
   --fw-medium: 500;
   --fw-semi:   600;
   --fw-bold:   700;
-  --fw-black:  900;
 
   /* Line heights. */
-  --lh-hero:    0.98;
   --lh-title:   1.18;
   --lh-snug:    1.22;
   --lh-card:    1.38;
@@ -144,16 +137,14 @@
   --lh-base:    1.7;
   --lh-loose:   1.78;
 
-  /* Letter spacing — semantic for tight, anchored decimals for wide.
-     Was 18 tokens (mixed semantic + numeric), now 8. */
+  /* Letter spacing. Five distinct values: --ls-9 and --ls-11 were also
+     0.08em, so three names described one measurement. */
   --ls-tighter: -0.02em;  /* large display titles */
   --ls-snug:    -0.01em;  /* compact display headings */
   --ls-normal:   0;       /* body/card text */
   --ls-3:        0.04em;  /* metadata */
   --ls-5:        0.06em;  /* labels */
-  --ls-7:        0.08em;  /* uppercase labels */
-  --ls-9:        0.08em;  /* dense labels */
-  --ls-11:       0.08em;  /* eyebrow labels */
+  --ls-7:        0.08em;  /* uppercase, eyebrow, and dense labels */
 
   /* ── Spacing scale ──────────────────────────────────── */
   /* T-shirt scale — was 26 tokens (sp-1..sp-26 with 2px steps) folded
@@ -170,7 +161,6 @@
   --sp-10: 56px;
   --sp-11: 64px;
   --sp-12: 80px;
-  --sp-13: 96px;
 
   /* ── Layout ─────────────────────────────────────────── */
   --max-w:     1200px;
@@ -195,8 +185,11 @@
   --shadow-panel: 0 4px 22px rgba(0, 0, 0, 0.14);
   --shadow-menu: 0 18px 60px rgba(0, 0, 0, 0.28);
 
-  /* ── Transitions ────────────────────────────────────── */
-  --ease-card: 0.22s ease;
+  /* ── Transitions ──────────────────────────────────────
+     Durations only. --ease-card used to carry a trailing `ease`, which is
+     the CSS default anyway, so dropping it changes nothing visually and
+     gives all three tokens the same shape. */
+  --ease-card: 0.22s;
   --ease-fast: 0.15s;
   --ease-slow: 0.3s;
 }

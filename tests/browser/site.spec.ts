@@ -16,11 +16,42 @@ test('mobile menu is modal, closes with Escape, and restores focus', async ({ pa
   await expect(opener).toHaveAttribute('aria-expanded', 'true');
   await expect(opener).toHaveAccessibleName('Close menu');
 
+  // Focus has to land inside the dialog: the Tab trap only engages once the
+  // active element is one of the panel's own focusables, so leaving focus on
+  // <body> left the trap inert and the background reachable.
+  const firstItem = page.locator('[data-menu-item]').first();
+  await expect(firstItem).toBeFocused();
+
+  await page.keyboard.press('Shift+Tab');
+  await expect(page.locator('[data-menu-item]').last()).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(firstItem).toBeFocused();
+
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog', { name: 'Site menu' })).toBeHidden();
   await expect(opener).toHaveAttribute('aria-expanded', 'false');
   await expect(opener).toHaveAccessibleName('Open menu');
   await expect(opener).toBeFocused();
+});
+
+test('the open mobile menu makes the page behind it inert', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('[data-menu-open]').click();
+  await expect(page.getByRole('dialog', { name: 'Site menu' })).toBeVisible();
+
+  const inertState = await page.evaluate(() => ({
+    main: document.querySelector('main')?.inert,
+    footer: document.querySelector('footer')?.inert,
+    skipLink: document.querySelector<HTMLElement>('.skip-link')?.inert,
+    logo: document.querySelector<HTMLElement>('.nav-logo')?.inert,
+    opener: document.querySelector<HTMLElement>('[data-menu-open]')?.inert,
+  }));
+  expect(inertState).toEqual({
+    main: true, footer: true, skipLink: true, logo: true, opener: false,
+  });
+
+  await page.keyboard.press('Escape');
+  await expect(page.evaluate(() => document.querySelector('main')?.inert)).resolves.toBe(false);
 });
 
 test('resource filters keep one matching card and expose an empty state', async ({ page }) => {
@@ -98,6 +129,24 @@ test('Frame 1 timeline index is keyboard operable', async ({ page }) => {
   await expect(lastIndexButton).toBeFocused();
   await page.keyboard.press('Enter');
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(100);
+});
+
+test('Frame 2 scales its chart uniformly at mobile width', async ({ page }) => {
+  await page.goto('/frames/2');
+  const geometry = await page.locator('.f2-chart').evaluate((svg: SVGSVGElement) => {
+    const box = svg.getBoundingClientRect();
+    const view = svg.viewBox.baseVal;
+    return { scaleX: box.width / view.width, scaleY: box.height / view.height };
+  });
+
+  // preserveAspectRatio="none" against a fixed 1100x480 viewBox squeezed the
+  // chart to 0.45 horizontal distortion here, turning the cursor dots into
+  // ellipses and the axis labels into overlapping mush.
+  expect(geometry.scaleX).toBeCloseTo(1, 2);
+  expect(geometry.scaleY).toBeCloseTo(1, 2);
+
+  const dot = await page.locator('.f2-cursor-dot').first().boundingBox();
+  expect(dot!.width).toBeCloseTo(dot!.height, 1);
 });
 
 test('Frame 2 exposes arbitrary month inspection to the keyboard', async ({ page }) => {

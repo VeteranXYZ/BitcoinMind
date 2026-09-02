@@ -393,7 +393,17 @@ Build scripts live in:
 ```text
 scripts-build/fetch-pulse.mjs
 scripts-build/generate-grain.mjs
+scripts-build/csp-hashes.mjs
 ```
+
+`csp-hashes.mjs` runs as part of `npm run build` and rewrites
+`worker/script-hashes.json`. The Worker's `script-src` names those hashes, so
+changing any inline script without rebuilding would make the deployed CSP
+block it. The audit fails on a stale list.
+
+`generate-grain.mjs` is seeded: repeated runs must stay byte-identical.
+`public/pulse.json` is read at build time only — the Network Clock renders it
+as a snapshot and does not poll it at runtime.
 
 Rules:
 

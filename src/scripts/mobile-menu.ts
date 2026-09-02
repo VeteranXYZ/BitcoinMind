@@ -22,8 +22,14 @@ function getFocusable(root: HTMLElement): HTMLElement[] {
   )).filter((el) => !el.hasAttribute('hidden') && el.offsetParent !== null);
 }
 
+// Everything outside the dialog is inert while it is open — including the
+// skip link and the nav's own links. The Menu button itself is deliberately
+// left out: the overlay starts below the nav bar, so the button stays
+// visible and has to remain operable as the dialog's own control.
+const BACKGROUND_SELECTOR = 'main, footer, .skip-link, .nav-logo, .nav-links';
+
 function setBackgroundInert(inert: boolean): void {
-  document.querySelectorAll<HTMLElement>('main, footer').forEach((el) => {
+  document.querySelectorAll<HTMLElement>(BACKGROUND_SELECTOR).forEach((el) => {
     el.inert = inert;
   });
 }
@@ -76,6 +82,10 @@ function open(): void {
   setExpanded(true);
   root.removeAttribute('hidden');
   addOutsideListener();
+  // Move focus into the dialog. Without this the active element stays on
+  // <body>, which leaves the Tab trap below inert — it only engages once
+  // focus is already on the first or last item in the panel.
+  getFocusable(root)[0]?.focus();
 }
 
 function close(restoreFocus = true): void {
@@ -138,12 +148,7 @@ function bindButtons(): void {
   }
   items.forEach((a) => {
     if (a[BOUND]) return;
-    a.addEventListener('click', () => {
-      menuOpen = false;
-      removeOutsideListener();
-      hideVisual();
-      menuOpener = null;
-    });
+    a.addEventListener('click', () => close(false));
     a[BOUND] = true;
   });
 }
