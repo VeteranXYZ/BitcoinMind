@@ -28,8 +28,8 @@ const { previous, next } = Astro.props;
   .study-next-link { display: flex; flex-direction: column; gap: var(--sp-1); padding: var(--sp-4); border: 1px solid var(--bdr); border-radius: var(--radius); }
   .study-next-link:hover { border-color: var(--border-accent); background: var(--surf); }
   .study-next-link--next { text-align: right; }
-  .study-next-link span { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
-  .study-next-link strong { font-size: var(--fz-md); color: var(--tx); }
+  .study-next-link span { font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
+  .study-next-link strong { font-size: var(--fz-base); color: var(--tx); }
   .study-next-link small { font-size: var(--fz-xs); color: var(--tx-3); line-height: var(--lh-card); }
   @media (--viewport-sm) { .study-next { grid-template-columns: 1fr; } .study-next-link--next { text-align: left; } }
 </style>

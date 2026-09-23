@@ -284,7 +284,7 @@ body > nav {
   font-family: var(--font-mono);
   font-size: var(--fz-xs);
   color: var(--gold-hi);
-  letter-spacing: var(--ls-11);
+  letter-spacing: var(--ls-7);
   text-transform: uppercase;
   margin-bottom: var(--sp-4);
   display: flex;
@@ -317,7 +317,7 @@ body > nav {
 }
 .pick-label {
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   color: var(--gold-hi);
   letter-spacing: var(--ls-7);
@@ -444,7 +444,7 @@ body > nav {
 
 .card-layer  {
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   color: var(--tx-3);
   letter-spacing: var(--ls-7);
@@ -454,7 +454,7 @@ body > nav {
 .card-layer--row { display: flex; justify-content: space-between; }
 .card-role {
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   color: var(--gold-hi);
   letter-spacing: var(--ls-5);
@@ -494,10 +494,10 @@ body > nav {
   margin-top: auto;
 }
 .card-actions { display: flex; align-items: center; gap: var(--sp-3); }
-.card-stage { margin-bottom: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
-.card-review-meta { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--bdr); font-size: var(--fz-3xs); color: var(--tx-3); }
+.card-stage { margin-bottom: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--gold); letter-spacing: var(--ls-7); text-transform: uppercase; }
+.card-review-meta { margin-top: var(--sp-3); padding-top: var(--sp-3); border-top: 1px solid var(--bdr); font-size: var(--fz-xs); color: var(--tx-3); }
 .review-policy { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: var(--sp-5); margin-bottom: var(--sp-7); padding: var(--sp-4); border: 1px solid var(--border-accent); background: var(--accent-hover); }
-.review-policy strong { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold-hi); letter-spacing: var(--ls-7); text-transform: uppercase; }
+.review-policy strong { font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--gold-hi); letter-spacing: var(--ls-7); text-transform: uppercase; }
 .review-policy p { font-size: var(--fz-sm); line-height: var(--lh-relaxed); color: var(--tx-2); }
 @media (--viewport-sm) { .review-policy { grid-template-columns: 1fr; gap: var(--sp-2); } }
 .card-meta { font-family: var(--font-body); font-size: var(--fz-xs); color: var(--tx-3); letter-spacing: 0; }
@@ -514,7 +514,7 @@ body > nav {
   cursor: pointer;
   list-style: none;
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   color: var(--tx-3);
   letter-spacing: var(--ls-5);
@@ -548,7 +548,7 @@ body > nav {
 .card-ri strong {
   display: block;
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   color: var(--tx);
   letter-spacing: var(--ls-5);
@@ -559,7 +559,7 @@ body > nav {
 /* ── Tags ───────────────────────────────────────────── */
 .tag {
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-5);
   text-transform: uppercase;
@@ -653,7 +653,7 @@ body > nav {
    follows accordingly. */
 .ph-desc {
   font-family: var(--font-body);
-  font-size: var(--fz-md);
+  font-size: var(--fz-base);
   color: var(--tx-2);
   margin-top: var(--sp-5);
   line-height: var(--lh-loose);
@@ -665,7 +665,7 @@ body > nav {
 .frames-ix-sub,
 .f2-sub {
   font-family: var(--font-body);
-  font-size: var(--fz-md);
+  font-size: var(--fz-base);
   color: var(--tx-2);
   margin-top: var(--sp-5);
   line-height: var(--lh-loose);
@@ -673,10 +673,10 @@ body > nav {
 
 /* ── Filter Bar ─────────────────────────────────────── */
 .fb       { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-8); align-items: center; }
-.fb-lbl   { font-family: var(--font-body); font-size: var(--fz-3xs); font-weight: var(--fw-semi); color: var(--tx-3); letter-spacing: var(--ls-7); text-transform: uppercase; margin-right: var(--sp-1); }
+.fb-lbl   { font-family: var(--font-body); font-size: var(--fz-xs); font-weight: var(--fw-semi); color: var(--tx-3); letter-spacing: var(--ls-7); text-transform: uppercase; margin-right: var(--sp-1); }
 .fb-btn   {
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   letter-spacing: var(--ls-5);
   text-transform: uppercase;
@@ -716,7 +716,7 @@ body > nav {
 .layer-hd   { display: flex; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-2); }
 .layer-n    {
   font-family: var(--font-mono);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   color: var(--gold-hi);
   letter-spacing: var(--ls-7);
   text-transform: uppercase;
@@ -724,7 +724,7 @@ body > nav {
   padding: 3px var(--sp-2);
   border-radius: var(--radius-sm);
 }
-.layer-name { font-family: var(--font-display); font-size: var(--fz-2xl); font-weight: var(--fw-bold); letter-spacing: var(--ls-snug); }
+.layer-name { font-family: var(--font-display); font-size: var(--fz-xl); font-weight: var(--fw-bold); letter-spacing: var(--ls-snug); }
 .layer-desc {
   font-family: var(--font-body);
   font-size: var(--fz-sm);
@@ -780,7 +780,7 @@ body > nav {
   font-family: var(--font-mono);
   font-size: var(--fz-xs);
   color: var(--gold-hi);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   grid-column: 1;
   grid-row: 1 / span 4;
   margin-bottom: 0;
@@ -839,7 +839,7 @@ body > nav {
 .steps-closing     { max-width: var(--max-readable); margin-left: calc(72px + var(--sp-6)); padding-top: var(--sp-2); }
 .steps-closing-p   { font-family: var(--font-body); font-size: var(--fz-prose); line-height: var(--lh-loose); color: var(--tx-2); margin-bottom: 6px; }
 .steps-closing-p--gap { margin-bottom: var(--sp-7); }
-.steps-signature   { font-family: var(--font-body); font-size: var(--fz-md); color: var(--tx-3); font-style: italic; }
+.steps-signature   { font-family: var(--font-body); font-size: var(--fz-base); color: var(--tx-3); font-style: italic; }
 
 /* ── Notes ──────────────────────────────────────────── */
 .note-wrap {
@@ -862,9 +862,9 @@ body > nav {
 .note-hd   { border-bottom: 1px solid var(--bdr); padding-bottom: var(--sp-5); margin-bottom: var(--sp-8); }
 .note-num  {
   font-family: var(--font-mono);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   color: var(--gold-hi);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   text-transform: uppercase;
   margin-bottom: var(--sp-3);
 }
@@ -888,7 +888,7 @@ body > nav {
 .note-body em { font-style: italic; color: var(--tx); }
 .note-closing-line { font-weight: var(--fw-medium); color: var(--tx); }
 .note-sig-block { margin-top: var(--sp-8); padding-top: var(--sp-7); border-top: 1px solid var(--bdr); }
-.note-sig { font-family: var(--font-body); font-size: var(--fz-md); color: var(--tx-2); font-style: italic; margin-bottom: 6px; }
+.note-sig { font-family: var(--font-body); font-size: var(--fz-base); color: var(--tx-2); font-style: italic; margin-bottom: 6px; }
 .note-kicker {
   margin-top: 0;
   padding: var(--sp-6) var(--sp-7);
@@ -897,8 +897,8 @@ body > nav {
   border-left: 3px solid var(--gold);
   border-radius: var(--radius);
 }
-.note-kicker-lbl  { font-family: var(--font-body); font-size: var(--fz-3xs); font-weight: var(--fw-semi); color: var(--gold-hi); letter-spacing: var(--ls-7); text-transform: uppercase; margin-bottom: var(--sp-3); }
-.note-kicker-body { font-family: var(--font-body); font-size: var(--fz-md); line-height: var(--lh-loose); color: var(--tx-2); }
+.note-kicker-lbl  { font-family: var(--font-body); font-size: var(--fz-xs); font-weight: var(--fw-semi); color: var(--gold-hi); letter-spacing: var(--ls-7); text-transform: uppercase; margin-bottom: var(--sp-3); }
+.note-kicker-body { font-family: var(--font-body); font-size: var(--fz-base); line-height: var(--lh-loose); color: var(--tx-2); }
 
 /* ── About ──────────────────────────────────────────── */
 /* .page provides the bottom gap to the footer via padding-bottom; the
@@ -908,10 +908,10 @@ body > nav {
 .a-sec:last-child { margin-bottom: 0; }
 .a-eye  {
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   color: var(--gold-hi);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   text-transform: uppercase;
   margin-bottom: var(--sp-4);
   display: flex;
@@ -932,6 +932,29 @@ body > nav {
 .a-body p:last-child { margin-bottom: 0; }
 .a-body em   { font-style: italic; color: var(--tx); }
 
+/* Inline prose links. The global reset strips colour and underline from
+   every anchor, which left links inside running text indistinguishable
+   from the paragraph around them. Gold alone cannot carry the job here —
+   accent against body text is only ~1.5:1 — so the underline is the
+   non-colour indicator WCAG 1.4.1 asks for, and the lift to --tx does
+   the rest. */
+.a-body a,
+.review-policy a {
+  color: var(--tx);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--accent-muted);
+  text-underline-offset: 0.18em;
+  transition: color var(--ease-fast), text-decoration-color var(--ease-fast);
+}
+.a-body a:hover,
+.a-body a:focus-visible,
+.review-policy a:hover,
+.review-policy a:focus-visible {
+  color: var(--gold-hi);
+  text-decoration-color: var(--gold-hi);
+}
+
 .contacts    { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-6); }
 .contact-row {
   display: flex;
@@ -947,7 +970,7 @@ body > nav {
   transition: border-color var(--ease-fast), background var(--ease-fast);
 }
 .contact-row:hover { border-color: var(--border-accent); background: var(--surf); }
-.contact-lbl { font-size: var(--fz-3xs); color: var(--tx-3); letter-spacing: var(--ls-7); text-transform: uppercase; width: 52px; flex-shrink: 0; }
+.contact-lbl { font-size: var(--fz-xs); color: var(--tx-3); letter-spacing: var(--ls-7); text-transform: uppercase; width: 52px; flex-shrink: 0; }
 
 /* ── Aside Cards ────────────────────────────────────── */
 .aside-card { background: var(--surf); border: 1px solid var(--bdr); border-radius: var(--radius); padding: var(--sp-6); margin-bottom: var(--sp-3); }
@@ -965,7 +988,7 @@ body > nav {
   border-color: var(--border-accent);
   box-shadow: var(--shadow-panel);
 }
-.aside-card-title { font-family: var(--font-body); font-size: var(--fz-md); font-weight: var(--fw-semi); margin-bottom: var(--sp-3); letter-spacing: var(--ls-normal); }
+.aside-card-title { font-family: var(--font-body); font-size: var(--fz-base); font-weight: var(--fw-semi); margin-bottom: var(--sp-3); letter-spacing: var(--ls-normal); }
 .aside-item {
   font-family: var(--font-body);
   font-size: var(--fz-xs);
@@ -1163,7 +1186,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   align-items: center;
   gap: var(--sp-2);
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   letter-spacing: var(--ls-5);
   color: var(--gold-hi);
@@ -1178,14 +1201,6 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   border-radius: 50%;
   background: var(--gold);
   display: inline-block;
-}
-
-.pulse-live--flash { animation: pulse-live-flash 0.7s ease-out; }
-
-@keyframes pulse-live-flash {
-  0%   { opacity: 0.9; transform: scale(1); }
-  30%  { opacity: 1;    transform: scale(1.08); }
-  100% { opacity: 0.9; transform: scale(1); }
 }
 
 .pulse-line {
@@ -1213,14 +1228,6 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   border-radius: 2px;
 }
 
-.pulse-num--flash { animation: pulse-num-flash 0.7s ease-out; }
-
-@keyframes pulse-num-flash {
-  0%   { opacity: 0.4; }
-  60%  { opacity: 1; }
-  100% { opacity: 1; }
-}
-
 .pulse-track {
   position: relative;
   height: 1px;
@@ -1241,19 +1248,11 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   transition: left 0.4s ease-out;
 }
 
-.pulse-mark--step { animation: pulse-mark-step 0.7s ease-out; }
-
-@keyframes pulse-mark-step {
-  0%   { box-shadow: 0 0 0 3px var(--gold-dim); }
-  40%  { box-shadow: 0 0 0 7px var(--gold-glow); }
-  100% { box-shadow: 0 0 0 3px var(--gold-dim); }
-}
-
 .pulse-ends {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;
@@ -1269,10 +1268,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 
 @media (prefers-reduced-motion: reduce) {
   .pulse-live,
-  .pulse-live--flash,
-  .pulse-num--flash,
-  .pulse-mark,
-  .pulse-mark--step {
+  .pulse-mark {
     animation: none !important;
     transition: none !important;
   }
@@ -1300,10 +1296,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 .pp-stat-lbl {
   display: block;
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   color: var(--tx-3);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   text-transform: uppercase;
   margin-bottom: var(--sp-2);
 }
@@ -1321,7 +1317,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 .pp-stat-note {
   display: block;
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   color: var(--tx-3);
   letter-spacing: 0;
   line-height: var(--lh-normal);
@@ -1343,10 +1339,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 
 .pp-supply-lbl {
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
   color: var(--tx-3);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   text-transform: uppercase;
 }
 
@@ -1377,7 +1373,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   color: var(--tx-3);
   letter-spacing: var(--ls-5);
 }
@@ -1407,7 +1403,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   font-family: var(--font-body);
   font-size: var(--fz-sm);
   font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   color: var(--gold-hi);
   text-transform: uppercase;
   padding: var(--sp-2) var(--sp-2);
@@ -1474,9 +1470,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 
 .mm-group-label {
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   color: var(--tx-3);
-  letter-spacing: var(--ls-11);
+  letter-spacing: var(--ls-7);
   text-transform: uppercase;
   text-align: right;
   padding: var(--sp-1) 0 var(--sp-1) var(--sp-2);
@@ -1557,16 +1553,10 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 
 .mm-foot-l1 {
   font-size: var(--fz-xs);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;
   margin-bottom: var(--sp-2);
-}
-
-.mm-foot-l2 {
-  font-size: var(--fz-sm);
-  color: var(--tx-3);
-  letter-spacing: var(--ls-3);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1638,7 +1628,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   font-family: var(--font-mono);
   font-size: var(--fz-xs);
   font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;
 }
@@ -1771,9 +1761,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 }
 
 .frames-idx-lbl {
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;
   margin-bottom: var(--sp-2);
@@ -1871,7 +1861,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 }
 
 .fidx-yr {
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;
@@ -1998,7 +1988,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   margin-bottom: var(--sp-5);
   font-family: var(--font-mono);
   font-size: var(--fz-xs);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;
 }
@@ -2018,7 +2008,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 
 .frames-ix-card-sub {
   font-family: var(--font-body);
-  font-size: var(--fz-md);
+  font-size: var(--fz-base);
   line-height: var(--lh-relaxed);
   color: var(--tx-2);
   margin-bottom: var(--sp-7);
@@ -2047,48 +2037,26 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
    blocks at top of file. */
 
 /* Tabs */
-.f2-tabs {
-  display: flex;
-  gap: 0;
+/* Basis caption. This replaced a one-item "tab" row: a non-interactive
+   <span> carrying full tab styling, including the active underline. */
+.f2-basis {
+  max-width: var(--max-readable);
   margin-bottom: var(--sp-8);
+  padding-bottom: var(--sp-4);
   border-bottom: 1px solid var(--bdr);
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.f2-tabs::-webkit-scrollbar { display: none; }
-
-.f2-tab-lbl {
-  font-family: var(--font-body);
-  font-size: var(--fz-3xs);
-  font-weight: var(--fw-semi);
-  letter-spacing: var(--ls-9);
-  color: var(--tx-3);
-  text-transform: uppercase;
-  padding: var(--sp-2) 0;
-  margin-right: var(--sp-8);
-  flex-shrink: 0;
-  align-self: center;
-}
-
-.f2-tab {
-  background: none;
-  border: none;
-  padding: var(--sp-2) var(--sp-5);
   font-family: var(--font-body);
   font-size: var(--fz-sm);
-  font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-7);
+  line-height: var(--lh-relaxed);
   color: var(--tx-3);
-  text-transform: uppercase;
-  cursor: default;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color var(--ease-fast), border-color var(--ease-fast);
-  flex-shrink: 0;
 }
-.f2-tab--on {
+
+.f2-basis-lbl {
+  margin-right: var(--sp-3);
+  font-size: var(--fz-xs);
+  font-weight: var(--fw-semi);
+  letter-spacing: var(--ls-7);
   color: var(--gold-hi);
-  border-bottom-color: var(--gold-hi);
+  text-transform: uppercase;
 }
 
 /* Chart */
@@ -2097,6 +2065,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   margin-bottom: var(--sp-9);
 }
 
+/* The component mirrors this box into its viewBox, so one SVG user unit is
+   one CSS pixel and both axes scale by exactly 1. Change the height here and
+   the chart re-lays itself out; it no longer stretches to fill. */
 .f2-chart {
   width: 100%;
   height: 480px;
@@ -2107,7 +2078,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 }
 
 @media (--viewport-md) {
-  .f2-chart { height: 320px; }
+  .f2-chart { height: 380px; }
 }
 
 .f2-chart .f2-grid {
@@ -2175,7 +2146,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   margin: calc(-1 * var(--sp-5)) 0 var(--sp-7);
   color: var(--tx-3);
   font-family: var(--font-mono);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   letter-spacing: var(--ls-7);
   text-transform: uppercase;
 }
@@ -2218,9 +2189,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 
 .f2-jump-lbl {
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;
   align-self: center;
@@ -2232,7 +2203,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   border: 1px solid var(--bdr);
   padding: var(--sp-2) var(--sp-4);
   font-family: var(--font-body);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   letter-spacing: var(--ls-7);
   color: var(--tx-2);
   text-transform: uppercase;
@@ -2283,9 +2254,9 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
   display: block;
   font-family: var(--font-body);
   font-style: normal;
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   font-weight: var(--fw-semi);
-  letter-spacing: var(--ls-9);
+  letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;
   margin-bottom: var(--sp-5);
@@ -2301,7 +2272,7 @@ footer { border-top: 1px solid var(--bdr); padding: var(--sp-8) 0; margin-top: 0
 /* Live price status */
 .f2-live {
   font-family: var(--font-mono);
-  font-size: var(--fz-3xs);
+  font-size: var(--fz-xs);
   letter-spacing: var(--ls-7);
   color: var(--tx-3);
   text-transform: uppercase;

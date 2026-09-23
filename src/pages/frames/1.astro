@@ -2,6 +2,7 @@
 import Base from '@/layouts/Base.astro';
 import { FRAME_ONE, type FrameLinkTarget } from '@/data/frame-one';
 import { SITE, canonical } from '@/lib/seo';
+import { publicRoute } from '@/lib/routes';
 
 const targetHref: Record<FrameLinkTarget, string> = {
   library: '/library',
@@ -10,14 +11,17 @@ const targetHref: Record<FrameLinkTarget, string> = {
 };
 
 const frame = FRAME_ONE;
+const route = publicRoute('/frames/1');
+const socialImage = canonical('/og/history-of-hardness.png');
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: 'A History of Monetary Hardness',
   description: 'A five-thousand-year visual history of monetary goods, scarcity, production, and the recurring problem of supply discipline.',
-  image: SITE.socialImage,
-  dateModified: SITE.lastModified,
+  image: socialImage,
+  dateModified: route.lastModified,
   author: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
+  publisher: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
   mainEntityOfPage: canonical('/frames/1'),
 };
 ---
@@ -27,6 +31,9 @@ const articleLd = {
   description="A five-thousand-year visual history of monetary hardness—from shells and coinage to gold, fiat money, and Bitcoin—organized around the cost of making more."
   path="/frames/1"
   ogType="article"
+  socialImage={socialImage}
+  socialImageAlt="A visual progression from stone money and coinage through gold, fiat money, and digital scarcity"
+  dateModified={route.lastModified}
   jsonLd={articleLd}
 >
   <div class="page frames">
@@ -119,6 +126,6 @@ const articleLd = {
 
 <style>
   .frame-sources { display: grid; gap: var(--sp-2); margin-top: var(--sp-5); padding-top: var(--sp-4); border-top: 1px solid var(--bdr); }
-  .frame-sources div { font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--tx-3); letter-spacing: var(--ls-7); text-transform: uppercase; }
+  .frame-sources div { font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--tx-3); letter-spacing: var(--ls-7); text-transform: uppercase; }
   .frame-sources a { font-size: var(--fz-xs); color: var(--gold); }
 </style>

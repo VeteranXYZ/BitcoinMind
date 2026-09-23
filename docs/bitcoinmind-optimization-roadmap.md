@@ -157,7 +157,7 @@ Phase result, 2026-07-12:
 
 - `npm run audit` verifies the 16-route sitemap, built documents, one-H1 structure, metadata, canonicals, internal routes and fragments, duplicate IDs, selected accessibility/interaction contracts, pulse freshness, and asset budgets.
 - `npm run test:browser` runs three Chrome checks for the modal mobile menu, resource filtering, and the Frame 2 no-JavaScript reading experience.
-- `npm run validate` composes type checking, production build, deterministic audit, and browser tests; it defines that single local contract.
+- `npm run validate` composes type checking, production build, deterministic audit, and browser tests into one local contract.
 - Direct and transitive dependencies were updated, followed by a dedicated Astro 7 migration. Astro 7.0.7, `@astrojs/preact` 6.0.1, Vite 8.1.4, and esbuild 0.28.1 now install with zero reported npm vulnerabilities.
 - Generated-data fallback remains a warning instead of a build failure. The current `partial-snapshot` warning records an upstream node-count failure while keeping the cached metric behavior explicit.
 

@@ -2,9 +2,8 @@
 import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 import AnalyticsHead from '@/components/AnalyticsHead.astro';
-import AnalyticsConsent from '@/components/AnalyticsConsent.astro';
 import { SITE, fullTitle, canonical } from '@/lib/seo';
-import { LEGACY_HASH_REDIRECTS } from '@/lib/routes';
+import { LEGACY_HASH_REDIRECTS, PUBLIC_ROUTES } from '@/lib/routes';
 
 // Critical fonts preloaded in <head> below. The first paint uses the same
 // three-family system as the rest of the site: display, body/UI, and mono.
@@ -36,6 +35,8 @@ interface Props {
   ogDescription?: string;
   twitterTitle?: string;
   twitterDescription?: string;
+  socialImage?: string;
+  socialImageAlt?: string;
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
   ogType?: 'website' | 'article';
   robots?: string;
@@ -52,19 +53,25 @@ const {
   ogDescription,
   twitterTitle,
   twitterDescription,
+  socialImage: socialImageOverride,
+  socialImageAlt = 'BitcoinMind — a first-principles guide to Bitcoin',
   jsonLd,
   ogType = 'website',
   robots,
   showFooter = true,
-  dateModified = SITE.lastModified,
+  dateModified,
 } = Astro.props;
 
+const routeByPath = new Map(PUBLIC_ROUTES.map((route) => [route.path, route]));
+const currentRoute = routeByPath.get(path);
 const pageTitle = metaTitle ?? fullTitle(title);
 const socialTitle = ogTitle ?? pageTitle;
 const socialDescription = ogDescription ?? description;
 const tweetTitle = twitterTitle ?? socialTitle;
 const tweetDescription = twitterDescription ?? socialDescription;
 const url = canonical(path);
+const socialImage = socialImageOverride ?? SITE.socialImage;
+const resolvedDateModified = dateModified ?? currentRoute?.lastModified ?? SITE.lastModified;
 const robotsDirective = robots ?? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 const suppliedLd = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 const pageLd = {
@@ -74,7 +81,7 @@ const pageLd = {
   description,
   url,
   inLanguage: 'en',
-  dateModified,
+  dateModified: resolvedDateModified,
   isPartOf: {
     '@type': 'WebSite',
     name: SITE.name,
@@ -82,12 +89,21 @@ const pageLd = {
   },
   author: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
 };
+const breadcrumbRoutes: (typeof PUBLIC_ROUTES)[number][] = [];
+let breadcrumbRoute = currentRoute;
+while (breadcrumbRoute && breadcrumbRoute.path !== '/') {
+  breadcrumbRoutes.unshift(breadcrumbRoute);
+  breadcrumbRoute = breadcrumbRoute.parentPath ? routeByPath.get(breadcrumbRoute.parentPath) : undefined;
+}
+const breadcrumbItems = breadcrumbRoutes.length > 0
+  ? breadcrumbRoutes.map((route) => ({ name: route.label, item: canonical(route.path) }))
+  : [{ name: title, item: url }];
 const breadcrumbLd = path === '/' ? null : {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: SITE.name, item: SITE.url },
-    { '@type': 'ListItem', position: 2, name: title, item: url },
+    ...breadcrumbItems.map((item, index) => ({ '@type': 'ListItem', position: index + 2, ...item })),
   ],
 };
 const ldArray = [pageLd, ...(breadcrumbLd ? [breadcrumbLd] : []), ...suppliedLd];
@@ -119,17 +135,18 @@ const legacyHashRedirects = LEGACY_HASH_REDIRECTS;
   <meta property="og:url" content={url} />
   <meta property="og:site_name" content={SITE.name} />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:image" content={SITE.socialImage} />
-  <meta property="og:image:secure_url" content={SITE.socialImage} />
-  <meta property="og:image:width" content="1024" />
-  <meta property="og:image:height" content="1024" />
-  <meta property="og:image:alt" content="BitcoinMind — a first-principles guide to Bitcoin" />
-  {ogType === 'article' && <meta property="article:modified_time" content={dateModified} />}
+  <meta property="og:image" content={socialImage} />
+  <meta property="og:image:secure_url" content={socialImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={socialImageAlt} />
+  {ogType === 'article' && <meta property="article:modified_time" content={resolvedDateModified} />}
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={tweetTitle} />
   <meta name="twitter:description" content={tweetDescription} />
-  <meta name="twitter:image" content={SITE.socialImage} />
+  <meta name="twitter:image" content={socialImage} />
+  <meta name="twitter:image:alt" content={socialImageAlt} />
 
   <script is:inline define:vars={{ legacyHashRedirects }}>
     // Hash redirect — must run before render so old SPA hash links land on the right page.
@@ -157,89 +174,11 @@ const legacyHashRedirects = LEGACY_HASH_REDIRECTS;
   </main>
 
   {showFooter && <Footer />}
-  <AnalyticsConsent />
 
   <script>
     import '@/scripts/reading-progress';
     import '@/scripts/mobile-menu';
     import '@/scripts/explore-menu';
-  </script>
-  <script is:inline data-cfasync="false">
-    (function () {
-      function tokens(value) {
-        return (value || '').split('|').map(function (v) { return v.trim().toLowerCase(); }).filter(Boolean);
-      }
-
-      function update(scope) {
-        var active = (scope.getAttribute('data-active-filter') || 'all').toLowerCase();
-        var input = scope.querySelector('[data-filter-search]');
-        var query = input ? input.value.trim().toLowerCase() : '';
-        var visibleCount = 0;
-
-        scope.querySelectorAll('[data-filter-button]').forEach(function (button) {
-          var isActive = (button.getAttribute('data-filter') || '').toLowerCase() === active;
-          button.classList.toggle('on', isActive);
-          button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-        });
-
-        scope.querySelectorAll('[data-filter-card]').forEach(function (card) {
-          var values = tokens(card.getAttribute('data-filter-values'));
-          var search = (card.getAttribute('data-filter-search') || '').toLowerCase();
-          var matchesFilter = active === 'all' || values.indexOf(active) !== -1;
-          var matchesSearch = !query || search.indexOf(query) !== -1;
-          var show = matchesFilter && matchesSearch;
-          card.hidden = !show;
-          if (show) visibleCount += 1;
-        });
-
-        scope.querySelectorAll('[data-filter-group]').forEach(function (group) {
-          group.hidden = group.querySelectorAll('[data-filter-card]:not([hidden])').length === 0;
-        });
-
-        var empty = scope.querySelector('[data-filter-empty]');
-        if (empty) empty.hidden = visibleCount !== 0;
-      }
-
-      function init(root) {
-        (root || document).querySelectorAll('[data-filter-scope]').forEach(update);
-      }
-
-      window.BitcoinMindFilterClick = function (button) {
-        var scope = button && button.closest('[data-filter-scope]');
-        if (!scope) return;
-        var selectedFilter = button.getAttribute('data-filter') || 'all';
-        scope.setAttribute('data-active-filter', selectedFilter);
-        update(scope);
-        if (window.BitcoinMindAnalytics) {
-          window.BitcoinMindAnalytics.track('select_content', {
-            content_type: 'resource_filter',
-            item_id: location.pathname + ':' + selectedFilter.toLowerCase(),
-          });
-        }
-      };
-
-      window.BitcoinMindFilterInput = function (input) {
-        var scope = input && input.closest('[data-filter-scope]');
-        if (scope) update(scope);
-      };
-
-      document.addEventListener('click', function (event) {
-        var button = event.target.closest && event.target.closest('[data-filter-button]');
-        if (!button) return;
-        window.BitcoinMindFilterClick(button);
-      });
-
-      document.addEventListener('input', function (event) {
-        if (!event.target.matches || !event.target.matches('[data-filter-search]')) return;
-        window.BitcoinMindFilterInput(event.target);
-      });
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function () { init(document); });
-      } else {
-        init(document);
-      }
-    })();
   </script>
 </body>
 </html>

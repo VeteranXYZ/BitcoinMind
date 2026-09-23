@@ -10,7 +10,6 @@ const MEMPOOL_API = 'https://mempool.space/api';
 const FALLBACK = {
   hashRate: null,
   mempoolCount: null,
-  nodeCount: null,
   fetchedAt: null,
   source: 'fallback',
 };
@@ -58,7 +57,11 @@ async function fetchText(url) {
 }
 
 const existing = readExisting();
-const next = { ...existing, source: 'cached' };
+const { nodeCount: _retiredNodeCount, ...carried } = existing;
+const next = { ...carried, source: 'cached' };
+// One per successful upstream call below. Kept next to the fetches so the
+// snapshot/partial-snapshot distinction cannot silently drift out of step.
+const EXPECTED_FIELDS = 3;
 let refreshedFields = 0;
 
 try {
@@ -92,19 +95,9 @@ try {
   console.warn('[fetch-pulse] mempool fetch failed:', e.message);
 }
 
-try {
-  const data = await fetchJson('https://bitnodes.io/api/v1/snapshots/latest/');
-  if (Number.isFinite(data?.total_nodes) && data.total_nodes > 0) {
-    next.nodeCount = data.total_nodes;
-    refreshedFields += 1;
-  }
-} catch (e) {
-  console.warn('[fetch-pulse] node count fetch failed:', e.message);
-}
-
 if (refreshedFields > 0) {
   next.fetchedAt = new Date().toISOString();
-  next.source = refreshedFields === 4 ? 'snapshot' : 'partial-snapshot';
+  next.source = refreshedFields === EXPECTED_FIELDS ? 'snapshot' : 'partial-snapshot';
 }
 
 writeFileSync(target, JSON.stringify(next, null, 2) + '\n', 'utf8');

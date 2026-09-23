@@ -5,6 +5,8 @@ export type RouteSection = 'Core' | 'Lens' | 'Hiei';
 export interface SiteRoute {
   path: string;
   label: string;
+  heading: string;
+  lastModified: string;
   section: RouteSection;
   legacyHash: string;
   navArea?: 'primary' | 'explore';
@@ -15,6 +17,12 @@ export interface SiteRoute {
 
 export const PUBLIC_ROUTES = routeData as SiteRoute[];
 export const CANONICAL_PATHS = PUBLIC_ROUTES.map((route) => route.path);
+
+export function publicRoute(path: string): SiteRoute {
+  const route = PUBLIC_ROUTES.find((candidate) => candidate.path === path);
+  if (!route) throw new Error(`Unknown public route: ${path}`);
+  return route;
+}
 
 const visibleRoutes = PUBLIC_ROUTES.filter((route) => !route.parentPath);
 const byNavOrder = (a: SiteRoute, b: SiteRoute) => (a.navOrder ?? 0) - (b.navOrder ?? 0);

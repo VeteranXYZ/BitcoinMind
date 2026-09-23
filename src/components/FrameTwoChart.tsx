@@ -41,11 +41,51 @@ const f2_monthName = (m: number): string =>
   ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m - 1]!;
 const f2_dateLabel = (y: number, m: number): string => `${f2_monthName(m)} ${y}`;
 
+// The bitcoin series answers "what became of one dollar converted at the
+// first anchor price?", so its scale is entirely determined by that anchor.
+// Deriving it here keeps the whole curve correct if the anchor is revised.
+const [FIRST_ANCHOR_Y, FIRST_ANCHOR_M, FIRST_ANCHOR_PRICE] = F2_BTC_ANCHORS[0]!;
+const BTC_PER_DOLLAR = 1 / FIRST_ANCHOR_PRICE;
+const BASIS_LABEL = f2_dateLabel(FIRST_ANCHOR_Y, FIRST_ANCHOR_M);
+
+// Fallback geometry for the server render and the first client paint. It
+// matches the desktop CSS box so the no-JavaScript output is already close.
+const DEFAULT_SIZE = { w: 1100, h: 480 };
+/** Below this width the event labels collide, so only their ticks are drawn. */
+const COMPACT_WIDTH = 700;
+
 export default function FrameTwoChart() {
   const [cursor, setCursor] = useState({ y: 1971, m: 8 });
   const [dragging, setDragging] = useState(false);
+  const [size, setSize] = useState(DEFAULT_SIZE);
   const latestAnchorPrice = F2_BTC_ANCHORS[F2_BTC_ANCHORS.length - 1]![2];
   const svgRef = useRef<SVGSVGElement | null>(null);
+
+  // The viewBox tracks the element's own CSS box, so one user unit is one
+  // CSS pixel and the scale is exactly 1 in both axes. The chart used to pin
+  // a 1100x480 viewBox to a fluid width with preserveAspectRatio="none",
+  // which squeezed every label and turned the cursor dots into ellipses —
+  // 0.45 horizontal distortion at a 375px viewport.
+  //
+  // Measured on mount and on resize rather than with a ResizeObserver: the
+  // width here is driven entirely by the viewport, and a plain listener is
+  // one less thing that can silently not fire.
+  useEffect(() => {
+    const measure = () => {
+      const svg = svgRef.current;
+      if (!svg) return;
+      const box = svg.getBoundingClientRect();
+      if (box.width === 0 || box.height === 0) return;
+      setSize((previous) => {
+        const next = { w: Math.round(box.width), h: Math.round(box.height) };
+        return previous.w === next.w && previous.h === next.h ? previous : next;
+      });
+    };
+
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
   const lineData = useMemo(() => {
     const usd: { yf: number; v: number }[] = [];
@@ -59,8 +99,7 @@ export default function FrameTwoChart() {
         usd.push({ yf, v: power });
         const btcVal = f2_btcAt(yr, mo);
         if (btcVal !== null) {
-          const btcPerDollar = 1 / 0.08;
-          const todaysDollars = btcPerDollar * btcVal;
+          const todaysDollars = BTC_PER_DOLLAR * btcVal;
           const in1971Dollars = todaysDollars * (cpiBase / f2_cpiAt(yr, mo));
           btc.push({ yf, v: in1971Dollars });
         }
@@ -69,7 +108,8 @@ export default function FrameTwoChart() {
     return { usd, btc };
   }, []);
 
-  const W = 1100, H = 480;
+  const W = size.w, H = size.h;
+  const compact = W < COMPACT_WIDTH;
   const PAD = { L: 50, R: 30, T: 30, B: 60 };
   const xMin = f2_toYf(Y_START, M_START);
   const xMax = f2_toYf(Y_END, M_END);
@@ -80,11 +120,11 @@ export default function FrameTwoChart() {
 
   const usdPath = useMemo(
     () => lineData.usd.map((p, i) => (i === 0 ? 'M' : 'L') + xScale(p.yf).toFixed(1) + ' ' + yScale(p.v).toFixed(1)).join(' '),
-    [lineData]
+    [lineData, W, H]
   );
   const btcPath = useMemo(
     () => lineData.btc.map((p, i) => (i === 0 ? 'M' : 'L') + xScale(p.yf).toFixed(1) + ' ' + yScale(p.v).toFixed(1)).join(' '),
-    [lineData]
+    [lineData, W, H]
   );
 
   const cursorYf = f2_toYf(cursor.y, cursor.m);
@@ -92,7 +132,7 @@ export default function FrameTwoChart() {
   const cpiBase = f2_cpiAt(Y_START, M_START);
   const usdPower = cpiBase / f2_cpiAt(cursor.y, cursor.m);
   const btcVal = f2_btcAt(cursor.y, cursor.m);
-  const btcInDollars = btcVal !== null ? (1 / 0.08) * btcVal * (cpiBase / f2_cpiAt(cursor.y, cursor.m)) : null;
+  const btcInDollars = btcVal !== null ? BTC_PER_DOLLAR * btcVal * (cpiBase / f2_cpiAt(cursor.y, cursor.m)) : null;
   const usdY = yScale(usdPower);
   const btcY = btcInDollars !== null ? yScale(btcInDollars) : null;
 
@@ -144,7 +184,7 @@ export default function FrameTwoChart() {
     ? (latestAnchorPrice / btcThen) * (cpiThen / cpiAtEnd)
     : null;
   const btcLost = btcPowerAtEnd !== null && btcPowerAtEnd < 1 ? 1 - btcPowerAtEnd : null;
-  const axisYears = [1971, 1980, 1990, 2000, 2010, 2020, Y_END];
+  const axisYears = compact ? [1971, 1990, 2010, Y_END] : [1971, 1980, 1990, 2000, 2010, 2020, Y_END];
 
   const formatUnits = (n: number): string => {
     if (n >= 1000) return Math.round(n).toLocaleString('en-US');
@@ -155,17 +195,18 @@ export default function FrameTwoChart() {
 
   return (
     <>
-      <div class="f2-tabs">
-        <span class="f2-tab-lbl">Measured in</span>
-        <span class="f2-tab f2-tab--on">CPI-adjusted units</span>
-      </div>
+      <p class="f2-basis">
+        <span class="f2-basis-lbl">Measured in</span>
+        CPI-adjusted units, both series rebased to {f2_dateLabel(Y_START, M_START)}. The
+        bitcoin line follows one dollar converted at the {BASIS_LABEL} anchor
+        price of ${FIRST_ANCHOR_PRICE.toFixed(2)}.
+      </p>
 
       <div class="f2-chart-wrap">
         <svg
           ref={svgRef}
           class="f2-chart"
           viewBox={`0 0 ${W} ${H}`}
-          preserveAspectRatio="none"
           role="img"
           aria-labelledby="f2-chart-title f2-chart-desc"
           onPointerDown={onPointerDown}
@@ -202,8 +243,8 @@ export default function FrameTwoChart() {
             const x = xScale(f2_toYf(ev.y, ev.m));
             return (
               <g key={ev.short} aria-hidden="true">
-                <line class="f2-event-tick" x1={x} x2={x} y1={PAD.T + 10} y2={H - PAD.B} />
-                <text class="f2-event-text" x={x} y={PAD.T + 8} text-anchor="middle">{ev.short}</text>
+                <line class="f2-event-tick" x1={x} x2={x} y1={compact ? PAD.T : PAD.T + 10} y2={H - PAD.B} />
+                {!compact && <text class="f2-event-text" x={x} y={PAD.T + 8} text-anchor="middle">{ev.short}</text>}
               </g>
             );
           })}
@@ -270,10 +311,10 @@ export default function FrameTwoChart() {
           ) : btcPowerAtEnd !== null && btcPowerAtEnd < 1 ? (
             <p class="f2-r-col">
               That same dollar, converted to bitcoin then and measured at the final cached price, represents{' '}
-              <strong>{formatUnits(btcPowerAtEnd)}</strong> purchasing-power units &mdash;{' '}
-              <em>{Math.round((btcLost ?? 0) * 100)}% of its purchasing power, lost to volatility.</em>
+              <strong>{formatUnits(btcPowerAtEnd)}</strong> CPI-adjusted purchasing-power units &mdash;{' '}
+              <em>a {Math.round((btcLost ?? 0) * 100)}% loss, because bitcoin was priced higher then than at the end of the series.</em>
               <br /><br />
-              <em style={{ opacity: 0.7 }}>This is one of the moments bitcoin's volatility worked against you.</em>
+              <em style={{ opacity: 0.7 }}>This is one of the entry points where bitcoin's drawdowns worked against you.</em>
             </p>
           ) : (
             <p class="f2-r-col">

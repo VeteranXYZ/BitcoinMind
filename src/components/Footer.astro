@@ -5,7 +5,6 @@ import { GROUPED_NAV_ROUTES } from '@/lib/routes';
 type FooterItem = {
   href: string;
   label: string;
-  external?: boolean;
 };
 
 const footerGroups: { label: string; items: FooterItem[] }[] = GROUPED_NAV_ROUTES.map((group) => ({
@@ -28,7 +27,7 @@ const footerGroups: { label: string; items: FooterItem[] }[] = GROUPED_NAV_ROUTE
           <div class="ft-map-label">{group.label}</div>
           <div class="ft-map-links">
             {group.items.map((item) => (
-              <a href={item.href} {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{item.label}</a>
+              <a href={item.href}>{item.label}</a>
             ))}
           </div>
         </div>

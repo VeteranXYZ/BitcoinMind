@@ -3,6 +3,11 @@ import Base from '@/layouts/Base.astro';
 import { DEBATES } from '@/data/debates';
 import { formatReviewedAt } from '@/lib/study';
 import { SITE } from '@/lib/seo';
+import { spellNumberSentence } from '@/lib/numbers';
+
+// The count in the meta description is derived so adding a tenth objection
+// cannot leave the page claiming nine.
+const objectionCount = spellNumberSentence(DEBATES.length);
 
 const objectionsLd = {
   '@context': 'https://schema.org',
@@ -19,7 +24,7 @@ const objectionsLd = {
 <Base
   title="Bitcoin Objections"
   metaTitle="Bitcoin Criticisms — Energy, Scale, Custody, and Governance"
-  description="Nine serious Bitcoin objections—energy, volatility, quantum risk, regulation, backing, scale, custody, and governance—answered with sources and limits."
+  description={`${objectionCount} serious Bitcoin objections—energy, volatility, quantum risk, bans, better technology, backing, scale, custody, and governance—answered with sources and limits.`}
   path="/objections"
   jsonLd={objectionsLd}
 >
@@ -101,7 +106,7 @@ const objectionsLd = {
 
   .db-num {
     font-family: var(--font-mono);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     color: var(--gold-hi);
     letter-spacing: var(--ls-7);
     border: 1px solid var(--border-accent);
@@ -118,7 +123,7 @@ const objectionsLd = {
 
   .db-title {
     font-family: var(--font-body);
-    font-size: var(--fz-2xl);
+    font-size: var(--fz-xl);
     font-weight: var(--fw-bold);
     letter-spacing: var(--ls-snug);
     min-width: 0;
@@ -154,9 +159,9 @@ const objectionsLd = {
 
   .db-col-lbl {
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     font-weight: var(--fw-semi);
-    letter-spacing: var(--ls-9);
+    letter-spacing: var(--ls-7);
     text-transform: uppercase;
     margin-bottom: var(--sp-4);
   }
@@ -190,11 +195,11 @@ const objectionsLd = {
   }
   .db-sources { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; margin-top: var(--sp-3); }
   .db-source-link { font-size: var(--fz-xs); color: var(--tx-2); }
-  .db-source-link span { margin-right: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold); text-transform: uppercase; }
+  .db-source-link span { margin-right: var(--sp-2); font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--gold); text-transform: uppercase; }
 
   .db-further-lbl {
     font-family: var(--font-body);
-    font-size: var(--fz-3xs);
+    font-size: var(--fz-xs);
     font-weight: var(--fw-semi);
     color: var(--tx-3);
     letter-spacing: var(--ls-7);

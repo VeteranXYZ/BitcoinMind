@@ -37,10 +37,6 @@ pnpm-debug.log*
 *.tar.gz
 
 # Security-sensitive local files
-.env
-.env.*
-!.env.example
-!.env.sample
 *.pem
 *.key
 *.p12

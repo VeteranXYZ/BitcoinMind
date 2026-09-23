@@ -2,14 +2,18 @@
 import Base from '@/layouts/Base.astro';
 import FrameTwoChart from '@/components/FrameTwoChart';
 import { SITE, canonical } from '@/lib/seo';
+import { publicRoute } from '@/lib/routes';
+const route = publicRoute('/frames/2');
+const socialImage = canonical('/og/after-the-anchor.png');
 const articleLd = {
   '@context': 'https://schema.org',
   '@type': 'Article',
   headline: 'After the Anchor: Dollar Purchasing Power and Bitcoin',
   description: 'An interactive, source-labeled comparison of U.S. dollar purchasing power since 1971 and Bitcoin since 2009.',
-  image: SITE.socialImage,
-  dateModified: SITE.lastModified,
+  image: socialImage,
+  dateModified: route.lastModified,
   author: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
+  publisher: { '@type': 'Person', name: SITE.author, url: canonical('/about') },
   mainEntityOfPage: canonical('/frames/2'),
 };
 ---
@@ -19,6 +23,9 @@ const articleLd = {
   description="An interactive, source-labeled view of U.S. dollar purchasing power since 1971 beside Bitcoin since 2009, with CPI methodology and explicit limitations."
   path="/frames/2"
   ogType="article"
+  socialImage={socialImage}
+  socialImageAlt="An editorial chart contrasting declining dollar purchasing power with Bitcoin’s volatile history"
+  dateModified={route.lastModified}
   jsonLd={articleLd}
 >
   <div class="page f2">
@@ -35,7 +42,8 @@ const articleLd = {
       <FrameTwoChart client:load />
       <aside class="f2-method" aria-label="Data sources and method">
         <div class="f2-method-title">Sources and method · data through April 2026</div>
-        <p>CPI uses annual U.S. CPI-U averages through 2025 with monthly interpolation; the final 2026 value is the April index. Bitcoin anchors preserve selected monthly price inflections and use logarithmic interpolation between them. Both series stop at the stated review date, so a current market quote is never plotted against an older endpoint. Comparing a consumer-price index with an asset price is a frame for inquiry, not proof that one caused the other or a forecast of future returns.</p>
+        <p>CPI uses annual U.S. CPI-U averages through 2025 with monthly interpolation; the final 2026 value is the April index. Bitcoin anchors preserve selected monthly price inflections and use logarithmic interpolation between them, so that line is a stylised reconstruction rather than a tick-by-tick series. Both series stop at the stated review date, so a current market quote is never plotted against an older endpoint.</p>
+        <p>The two lines answer different questions and that is the chart's largest assumption. The dollar line is an index: what one 1971 dollar still buys. The bitcoin line is a position: what one dollar became after being converted at the July 2010 anchor price of $0.08 and never sold, expressed in the same 1971 units. A purchasing-power index and a lump-sum return are not the same quantity, and putting them on one logarithmic axis is a frame for inquiry — not proof that one caused the other, not a claim that the entry point was available or obvious at the time, and not a forecast of future returns.</p>
         <div class="f2-method-links">
           <a href="https://www.bls.gov/cpi/data.htm" target="_blank" rel="noopener noreferrer">U.S. Bureau of Labor Statistics CPI data ↗</a>
           <a href="https://mempool.space/api/v1/prices" target="_blank" rel="noopener noreferrer">Mempool.space price endpoint ↗</a>
@@ -47,7 +55,7 @@ const articleLd = {
 
 <style>
   .f2-method { margin-top: var(--sp-7); padding: var(--sp-5); border: 1px solid var(--bdr); background: var(--bg-deep); }
-  .f2-method-title { margin-bottom: var(--sp-3); font-family: var(--font-mono); font-size: var(--fz-3xs); color: var(--gold-hi); letter-spacing: var(--ls-7); text-transform: uppercase; }
+  .f2-method-title { margin-bottom: var(--sp-3); font-family: var(--font-mono); font-size: var(--fz-xs); color: var(--gold-hi); letter-spacing: var(--ls-7); text-transform: uppercase; }
   .f2-method p { max-width: var(--max-readable); font-size: var(--fz-sm); line-height: var(--lh-relaxed); color: var(--tx-2); }
   .f2-method-links { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-4); }
   .f2-method-links a { font-size: var(--fz-xs); color: var(--gold); }

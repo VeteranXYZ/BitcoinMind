@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts-build/csp-hashes.mjs",
     "check": "astro check",
     "audit": "node scripts-build/audit-site.mjs",
     "test:worker": "node --test tests/worker.test.mjs",

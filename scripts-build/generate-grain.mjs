@@ -10,13 +10,30 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const target = join(__dirname, '..', 'public', 'grain.png');
 
 const SIZE = 256;
+// Seeded so the texture is byte-identical on every run. With Math.random()
+// each `npm run refresh-data` rewrote the whole PNG, putting a fresh ~64KB
+// binary blob in the diff for a texture nobody could tell apart.
+const SEED = 0x9e3779b9;
+
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const random = mulberry32(SEED);
 
 // Build raw scanlines: 1 filter byte + SIZE pixels per row, 8-bit grayscale.
 const raw = Buffer.alloc(SIZE * (SIZE + 1));
 for (let y = 0; y < SIZE; y++) {
   raw[y * (SIZE + 1)] = 0; // filter: None
   for (let x = 0; x < SIZE; x++) {
-    raw[y * (SIZE + 1) + 1 + x] = Math.floor(Math.random() * 256);
+    raw[y * (SIZE + 1) + 1 + x] = Math.floor(random() * 256);
   }
 }
 

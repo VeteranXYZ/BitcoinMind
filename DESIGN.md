@@ -253,10 +253,19 @@ Do not reintroduce older font systems such as Playfair Display, Lora, or DM Mono
 
 Use the existing type tokens in `design-system.css`:
 
-- display sizes: `--fz-hero`, `--fz-page`, `--fz-section`, `--fz-step`, `--fz-note`, `--fz-quote`
-- fixed scale: `--text-xs` through `--text-6xl`
-- line heights: `--lh-title`, `--lh-card`, `--lh-base`, `--lh-loose`
-- tracking: `--ls-tighter`, `--ls-snug`, `--ls-normal`, `--ls-3`, `--ls-5`, `--ls-7`, `--ls-9`, `--ls-11`
+- display sizes: `--fz-page`, `--fz-section`, `--fz-step`, `--fz-note`, `--fz-quote`
+- role aliases: `--fz-xs`, `--fz-sm`, `--fz-base`, `--fz-prose`, `--fz-lg`, `--fz-xl`, `--fz-3xl`
+- fixed scale: `--text-xs` through `--text-3xl`
+- line heights: `--lh-title`, `--lh-snug`, `--lh-card`, `--lh-normal`, `--lh-relaxed`, `--lh-base`, `--lh-loose`
+- tracking: `--ls-tighter`, `--ls-snug`, `--ls-normal`, `--ls-3`, `--ls-5`, `--ls-7`
+- text colour: `--tx` (headings), `--tx-2` (body), `--tx-3` (muted)
+
+Every token above resolves to a distinct value. Aliases that duplicated an
+existing size or tracking value (`--fz-hero`, `--fz-3xs`, `--fz-md`,
+`--fz-2xl`, `--ls-9`, `--ls-11`, `--text-4xl`/`5xl`/`6xl`, `--tx-2b`) were
+removed: they implied a granularity the design did not have. If a new step is
+genuinely needed, give it a real value rather than a second name for an
+existing one.
 
 Avoid oversized hero typography on inner pages. The site should feel archival and editorial, not like a launch-page template.
 
@@ -271,7 +280,7 @@ Use existing spacing and layout tokens:
 ```css
 --max-w
 --pad
---sp-1 through --sp-13
+--sp-1 through --sp-12
 --radius
 --radius-sm
 --radius-lg

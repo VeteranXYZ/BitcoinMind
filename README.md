@@ -51,6 +51,8 @@ flowchart TD
   H[Preact islands] --> B
   I[Browser scripts] --> B
   B --> J[Static HTML output]
+  J --> S[Inline script hashes]
+  S --> K
   J --> K[Cloudflare Worker routing script]
   K --> L[Cloudflare Workers static assets]
   M[Local validation] --> N[npm ci / npm run validate]
@@ -62,18 +64,17 @@ flowchart TD
 
 The repository currently uses:
 
-- Astro 7
+- Astro 7 (a small Vite plugin drops Fontsource's legacy `.woff` fallbacks)
 - `@astrojs/preact` 6
 - Preact 10 islands
 - TypeScript 5
 - CSS custom properties for the design system
 - Fontsource packages for Literata, Inter, and Geist Mono
-- Local validation
 - Cloudflare Workers static assets via Wrangler with a small Worker routing script
 
 The dependency source of truth is `package.json`. Deployment details are in `astro.config.mjs`, `wrangler.jsonc`, `worker/index.js`, and `public/_headers`.
 
-Local and CI builds require Node.js 22.12 or newer. Astro 7 uses Vite 8 and its Rust-based compiler/bundling pipeline; the project does not depend on custom Vite plugins or legacy Markdown processors.
+Local and CI builds require Node.js 22.12 or newer. Astro 7 uses Vite 8 and its Rust-based compiler/bundling pipeline. The only custom Vite plugin is the woff2-only transform in `astro.config.mjs`; there are no legacy Markdown processors.
 
 ## Project Structure
 
@@ -105,7 +106,8 @@ src/data/site.json           Site identity and origin configuration
 src/layouts/Base.astro       Shared page shell and metadata
 src/components/Nav.astro     Main navigation
 src/lib/seo.ts               SEO metadata helpers
-worker/index.js              Canonical host and legacy sitemap redirects before static assets
+worker/index.js              Canonical host redirects, security headers, cache policy
+worker/script-hashes.json    Generated CSP hashes for the build's inline scripts
 ```
 
 ## Content Model
@@ -187,9 +189,11 @@ Time-sensitive Toolkit entries include a review date and source label. Objection
 
 - latest block-height fallback
 - `public/pulse.json` network snapshot
-- `public/grain.png` texture asset
+- `public/grain.png` texture asset (seeded, so repeated runs are byte-identical)
 
 The refresh path should be defensive. If a live source fails, the site should preserve a cached or fallback value rather than fail unnecessarily.
+
+`public/pulse.json` is a build-time artifact, and the Network Clock renders it as one. The clock does not poll: the file cannot change between deploys, so a poll could only ever re-fetch an identical body. Run `refresh-data` and redeploy to move the numbers.
 
 ## Development
 
@@ -255,7 +259,7 @@ npm run preview
 
 ### Google Analytics 4
 
-GA4 consent controls are wired into every page through the shared layout. The production web-stream Measurement ID is part of the public site configuration; forks or alternate environments can override it at build time:
+GA4 is wired into every page through the shared layout. The production web-stream Measurement ID is part of the public site configuration; forks or alternate environments can override it at build time:
 
 ```bash
 cp .env.example .env
@@ -263,7 +267,7 @@ cp .env.example .env
 npm run build
 ```
 
-Analytics storage is denied by default. The Google tag loads only on `bitcoinmind.com` or `www.bitcoinmind.com` after the visitor explicitly allows analytics; local previews and automated tests never send data to the production property. Advertising storage, advertising user data, advertising personalization, and Google Signals remain disabled. When analytics is allowed, Enhanced Measurement may collect page views, scroll depth, outbound resource clicks, and file downloads. Resource-filter selections are sent as the recommended `select_content` event; free-form search terms are not sent. Visitors can review or withdraw their preference from the Privacy section on the About page.
+The Google tag loads automatically only on `bitcoinmind.com` or `www.bitcoinmind.com`; local previews and automated tests never send data to the production property. Analytics storage is enabled for ordinary GA4 visit and session measurement. Advertising storage, advertising user data, advertising personalization, and Google Signals remain disabled. Enhanced Measurement may collect page views, scroll depth, outbound resource clicks, and file downloads. Resource-filter selections are sent as the recommended `select_content` event; free-form search terms are not sent. No site-wide consent prompt or analytics-preference state is rendered.
 
 ## Working With AI Agents
 
@@ -278,7 +282,7 @@ Before making automated or AI-assisted changes, read both files. Keep diffs cohe
 
 If documentation conflicts with the current codebase, treat the codebase source files as authoritative, then update the documentation so the mismatch does not persist.
 
-## CI and Deployment
+## Validation and Deployment
 
 Run the complete validation contract before merging or deploying changes:
 
@@ -287,9 +291,11 @@ npm ci
 npm run validate
 ```
 
-The audit runs against the generated `dist` output. It checks the sitemap route set, document metadata, one-H1 structure, internal routes and fragments, duplicate IDs, selected interactive/accessibility contracts, generated-data freshness, and static asset budgets. Playwright then checks the mobile menu, resource filtering, and the Frame 2 no-JavaScript experience in Chrome. Freshness fallback states are reported as warnings so a temporary upstream outage does not make a static build unavailable.
+The audit runs against the generated `dist` output. It checks the sitemap route set, document metadata, one-H1 structure, internal routes and fragments, duplicate IDs, selected interactive/accessibility contracts, generated-data freshness, static asset budgets, CSP script-hash freshness, that no legacy `.woff` is shipped, that inline prose links keep their underline affordance, and that the resource-filter script only reaches pages that render filters. Playwright then checks the mobile menu, resource filtering, and the Frame 2 no-JavaScript experience in Chrome. Freshness fallback states are reported as warnings so a temporary upstream outage does not make a static build unavailable.
 
-The production build outputs static assets from Astro. Cloudflare deployment is configured through Wrangler using the `dist` directory as the static assets source. `worker/index.js` runs before assets to redirect `www.bitcoinmind.com` to the apex domain and route legacy sitemap asset paths to the canonical sitemap.
+The production build outputs static assets from Astro. Cloudflare deployment is configured through Wrangler using the `dist` directory as the static assets source. `worker/index.js` runs before assets to redirect `www.bitcoinmind.com` to the apex domain and route legacy sitemap asset paths to the canonical sitemap. It also normalizes security headers and cache lifetimes; error responses never inherit an immutable cache rule from their path.
+
+`npm run build` regenerates `worker/script-hashes.json`, the sha256 of every inline script in `dist`. The Worker names those hashes in `script-src`, so `'unsafe-inline'` survives only as a fallback for browsers that predate hash support. The audit re-derives the hashes and fails if the committed list is stale — if you change an inline script, rebuild before deploying.
 
 ## Maintenance Principles
 

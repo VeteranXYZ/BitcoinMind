@@ -18,6 +18,8 @@ export interface RabbitHole {
   id: string;
   emoji: string;
   title: string;
+  /** The question this route answers, shown on the /paths route cards. */
+  question: string;
   subtitle: string;
   desc: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
@@ -34,6 +36,7 @@ export const RABBIT_HOLES: RabbitHole[] = [
     id: 'rh-monetary',
     emoji: '🏛',
     title: 'The Monetary Path',
+    question: 'What is money, and why does scarcity matter?',
     subtitle: 'Why societies converge on money',
     desc: 'Begin before Bitcoin. Study how monetary goods emerge, how settlement and credit differ, and why scarcity matters only when people demand the other properties of money.',
     difficulty: 'Beginner',
@@ -54,6 +57,7 @@ export const RABBIT_HOLES: RabbitHole[] = [
     id: 'rh-technical',
     emoji: '🔧',
     title: 'The Technical Path',
+    question: 'How does Bitcoin actually work?',
     subtitle: 'How the rules produce a shared ledger',
     desc: 'Move from the original proposal to transactions, keys, proof of work, difficulty, and validation. The aim is not programming fluency; it is knowing which mechanism supports each claim.',
     difficulty: 'Intermediate',
@@ -74,6 +78,7 @@ export const RABBIT_HOLES: RabbitHole[] = [
     id: 'rh-verification',
     emoji: '◉',
     title: 'The Verification Path',
+    question: 'Which claims can you verify for yourself?',
     subtitle: 'Observe less. Verify more.',
     desc: 'Learn the difference between reading a dashboard, querying someone else’s node, and applying Bitcoin’s rules yourself. Verification is a spectrum of dependence, not a badge.',
     difficulty: 'Intermediate',
@@ -94,6 +99,7 @@ export const RABBIT_HOLES: RabbitHole[] = [
     id: 'rh-custody',
     emoji: '🛡',
     title: 'The Custody Path',
+    question: 'Which risks become yours when you hold the keys?',
     subtitle: 'Control, recovery, and human failure',
     desc: 'Learn custody as risk transfer. Removing an intermediary reduces some failures while making key security, recovery, privacy, and inheritance your responsibility.',
     difficulty: 'Intermediate',
@@ -114,6 +120,7 @@ export const RABBIT_HOLES: RabbitHole[] = [
     id: 'rh-philosophy',
     emoji: '📜',
     title: 'The Reflection Path',
+    question: 'Which conclusions follow—and which remain arguments?',
     subtitle: 'Claims, objections, and institutional meaning',
     desc: 'Separate protocol facts from claims about freedom, human rights, institutions, and the future. Read sympathetic arguments beside the strongest objections and keep the unresolved parts visible.',
     difficulty: 'Intermediate',

@@ -29,12 +29,16 @@ function init(): void {
   );
   nodes.forEach((el) => observer!.observe(el));
 
+  // The site disables its CSS animations under prefers-reduced-motion; a
+  // scripted smooth scroll is the same kind of motion and has to honour it.
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
   indexItems.forEach((item, i) => {
     item.addEventListener('click', () => {
       const target = nodes[i];
       if (!target) return;
       const y = target.getBoundingClientRect().top + window.scrollY - 100;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      window.scrollTo({ top: y, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
     });
   });
 }

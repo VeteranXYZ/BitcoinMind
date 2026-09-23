@@ -15,9 +15,3 @@ export function getTodaysPick(now: Date = new Date()): Pick {
   const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
   return ALL[seed % ALL.length]!;
 }
-
-export function formatLongDate(now: Date = new Date()): string {
-  return now.toLocaleDateString('en-US', {
-    month: 'long', day: 'numeric', year: 'numeric',
-  });
-}
